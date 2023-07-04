@@ -163,7 +163,7 @@ namespace ER.Items
 
                 #endregion 填入物品信息
 
-                items.Add(item.Name, item);
+                items.Add(item.NameTmp, item);
                 items_ID.Add(item.ID, item);
             }
         }

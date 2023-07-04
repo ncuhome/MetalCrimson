@@ -189,6 +189,11 @@ namespace ER.Parser
             Output($"description:{LanguagePackDescription}");
 
         }
+        /// <summary>
+        /// 获取语言包配置信息
+        /// </summary>
+        /// <param name="packPath">语言包路径</param>
+        /// <returns></returns>
         public static LanguagePackInfo GetInfo(string packPath)
         {
             INIParser parser = new INIParser();
@@ -332,22 +337,7 @@ namespace ER.Parser
 
         private List<LanguagePackInfo> packs = new List<LanguagePackInfo>();
 
-        public static bool PathExist(string path)
-        {
-            if (File.Exists(path) || Directory.Exists(path))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        public static bool IsDirectory(string path)
-        {
-            FileAttributes attributes = File.GetAttributes(path);
-            return (attributes & FileAttributes.Directory) == FileAttributes.Directory;
-        }
+        
         /// <summary>
         /// 检查并更新语言包
         /// </summary>
@@ -370,12 +360,28 @@ namespace ER.Parser
                 }
             }
         }
-
         public LanguagePackInfo[] GetPackInfos()
         {
             return packs.ToArray();
         }
 
+        #region 静态工具方法
+        public static bool PathExist(string path)
+        {
+            if (File.Exists(path) || Directory.Exists(path))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public static bool IsDirectory(string path)
+        {
+            FileAttributes attributes = File.GetAttributes(path);
+            return (attributes & FileAttributes.Directory) == FileAttributes.Directory;
+        }
         public static void CompressFolder(string sourceFolderPath, string compressedFilePath)
         {
             ZipFile.CreateFromDirectory(sourceFolderPath, compressedFilePath);
@@ -384,6 +390,7 @@ namespace ER.Parser
         {
             ZipFile.ExtractToDirectory(compressedFilePath, decompressedFolderPath);
         }
+        #endregion
     }
 }
 

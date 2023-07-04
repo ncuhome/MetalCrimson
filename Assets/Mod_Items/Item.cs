@@ -14,13 +14,13 @@ namespace ER.Items
     public struct ItemInfo
     {
         /// <summary>
-        /// 物品所在的仓库ID
+        /// 物品模板ID
         /// </summary>
         public int ID;
         /// <summary>
         /// 物品模板的名称
         /// </summary>
-        public string Name;
+        public string NameTmp;
 
         /// <summary>
         /// 文本属性（键名：文本所在的标识头）
@@ -41,19 +41,42 @@ namespace ER.Items
         /// 布尔属性
         /// </summary>
         public Dictionary<string, bool> attributeBool;
+
+        public ItemInfo(Dictionary<string,int> kvInt,Dictionary<string,float> kvFloat, Dictionary<string,bool> kvBool,Dictionary<string,string> kvTxt,int id = 0, string name = "")
+        {
+            ID= id;
+            NameTmp = name;
+            attributeBool = kvBool;
+            attributeFloat = kvFloat;
+            attributeInt = kvInt;
+            attributeText = kvTxt;
+            if(ID == 0)
+            {
+                if(kvInt.TryGetValue("ID",out int value))
+                {
+                    ID = value;
+                }
+            }
+            if(NameTmp == string.Empty)
+            {
+                if(kvTxt.TryGetValue("NameTmp",out string value))
+                {
+                    NameTmp = value;
+                }
+            }
+        }
     }
 
     /// <summary>
     /// 物品对象类
     /// </summary>
-    public class Item
+    public abstract class Item
     {
         #region 物品属性
 
         /// <summary>
-        /// 物品ID（系统内部的物品ID，不计入物品的拓展属性）；
-        /// 赋值使用标识名称“IDLabel”；
-        /// 物品ID只在同一个物品仓库里起作用，脱离仓库使用没有意义
+        /// 物品ID;
+        /// 指物品的母本ID（模板ID）
         /// </summary>
         public int ID { get; protected set; } = 0;
 
@@ -85,58 +108,27 @@ namespace ER.Items
 
         #region 尝试获取属性
 
-        public virtual int GetInt(string key) => attributeInt[key];
-        public virtual float GetFloat(string key) => attributeFloat[key];
-        public virtual bool GetBool(string key) => attributeBool[key];
-        public virtual string GetText(string key) => attributeText[key];
+        public abstract int GetInt(string key);
+        public abstract float GetFloat(string key);
+        public abstract bool GetBool(string key);
+        public abstract string GetText(string key);
 
-        public virtual bool TryGetInt(string key, out int value)
-        {
-            return attributeInt.TryGetValue(key, out value);
-        }
-        public virtual bool TryGetText(string key, out string value)
-        {
-            return attributeText.TryGetValue(key, out value);
-        }
-        public virtual bool TryGetFloat(string key, out float value)
-        {
-            return attributeFloat.TryGetValue(key, out value);
-        }
-        public virtual bool TryGetBool(string key, out bool value)
-        {
-            return attributeBool.TryGetValue(key, out value);
-        }
+        public abstract bool TryGetInt(string key, out int value);
+        public abstract bool TryGetText(string key, out string value);
+        public abstract bool TryGetFloat(string key, out float value);
+        public abstract bool TryGetBool(string key, out bool value);
 
         #endregion 尝试获取属性
 
         #region 创建属性
 
-        public virtual void CreatAttribute(string key, int value)
-        {
-            if (key == "IDLabel")
-            {
-                ID = value;
-            }
-            else
-            {
-                attributeInt[key] = value;
-            }
-        }
+        public abstract void CreatAttribute(string key, int value);
 
-        public virtual void CreatAttribute(string key, float value)
-        {
-            attributeFloat[key] = value;
-        }
+        public abstract void CreatAttribute(string key, float value);
 
-        public virtual void CreatAttribute(string key, string value)
-        {
-            attributeText[key] = value;
-        }
+        public abstract void CreatAttribute(string key, string value);
 
-        public virtual void CreatAttribute(string key, bool value)
-        {
-            attributeBool[key] = value;
-        }
+        public abstract void CreatAttribute(string key, bool value);
 
         #endregion 创建属性
 
@@ -164,15 +156,7 @@ namespace ER.Items
             {
                 info_text[key] = attributeText[key];
             }
-            return new ItemInfo()
-            {
-                ID = ID,
-                attributeBool = info_bool,
-                attributeText = info_text,
-                attributeFloat = info_float,
-                attributeInt = info_int,
-                Name = string.Empty
-            };
+            return new ItemInfo(info_int, info_float, info_bool, info_text, ID);
         }
 
         #endregion 其他方法
@@ -184,9 +168,9 @@ namespace ER.Items
     public class ItemTemplate : Item
     {
         /// <summary>
-        /// 物品名称(系统内部的物品名称，和玩家所见的名称文本不同，不计入物品的拓展属性),属于字符串属性，keyName = "NameLabel"
+        /// 物品名称(系统内部的物品名称，和玩家所见的名称文本不同，不计入物品的拓展属性),属于字符串属性，keyName = "NameTmp"
         /// </summary>
-        public string Name { get; protected set; } = "Null";
+        public string NameTmp { get; protected set; } = "Null";
 
         public ItemTemplate()
         {
@@ -198,9 +182,9 @@ namespace ER.Items
             attributeFloat = ((ItemTemplate)item).attributeFloat;
             attributeInt = ((ItemTemplate)item).attributeInt;
             attributeText = ((ItemTemplate)item).attributeText;
-            if (attributeText.TryGetValue("NameLabel", out string name))
+            if (attributeText.TryGetValue("NameTmp", out string name))
             {
-                Name = name;
+                NameTmp = name;
             }
         }
 
@@ -222,12 +206,8 @@ namespace ER.Items
             {
                 attributeText[key] = info.attributeText[key];
             }
-            Name = info.Name;
-            if (Name != string.Empty) return;
-            if (info.attributeText.TryGetValue("NameLabel", out string name))
-            {
-                Name = name;
-            }
+            NameTmp = info.NameTmp;
+            ID = info.ID;
         }
 
         /// <summary>
@@ -248,25 +228,73 @@ namespace ER.Items
         public new ItemInfo Info()
         {
             ItemInfo info = base.Info();
-            info.Name = Name;
+            info.NameTmp = NameTmp;
             return info;
         }
 
-        public override void CreatAttribute(string key,int value)
+        public sealed override void CreatAttribute(string key,int value)
         {
-            Debug.LogError($"<{Name}>物品模板禁止在创建之后修改属性[Int][{key}:{value}]");
+            Debug.LogError($"<{NameTmp}>物品模板禁止在创建之后修改属性[Int][{key}:{value}]");
         }
-        public override void CreatAttribute(string key, bool value)
+        public sealed override void CreatAttribute(string key, bool value)
         {
-            Debug.LogError($"<{Name}>物品模板禁止在创建之后修改属性[Bool][{key}:{value}]");
+            Debug.LogError($"<{NameTmp}>物品模板禁止在创建之后修改属性[Bool][{key}:{value}]");
         }
-        public override void CreatAttribute(string key, float value)
+        public sealed override void CreatAttribute(string key, float value)
         {
-            Debug.LogError($"<{Name}>物品模板禁止在创建之后修改属性[Float][{key}:{value}]");
+            Debug.LogError($"<{NameTmp}>物品模板禁止在创建之后修改属性[Float][{key}:{value}]");
         }
-        public override void CreatAttribute(string key, string value)
+        public sealed override void CreatAttribute(string key, string value)
         {
-            Debug.LogError($"<{Name}>物品模板禁止在创建之后修改属性[Text][{key}:{value}]");
+            Debug.LogError($"<{NameTmp}>物品模板禁止在创建之后修改属性[Text][{key}:{value}]");
+        }
+
+        public override int GetInt(string key)=> attributeInt[key];
+
+        public override float GetFloat(string key) => attributeFloat[key];
+
+        public override bool GetBool(string key) => attributeBool[key];
+
+        public override string GetText(string key) => attributeText[key];
+
+        public override bool TryGetInt(string key, out int value)
+        {
+            if (attributeInt.TryGetValue(key,out value))
+            {
+                return true;
+            }
+            value = 0;
+            return false;
+        }
+
+        public override bool TryGetText(string key, out string value)
+        {
+            if (attributeText.TryGetValue(key, out value))
+            {
+                return true;
+            }
+            value = string.Empty;
+            return false;
+        }
+
+        public override bool TryGetFloat(string key, out float value)
+        {
+            if (attributeFloat.TryGetValue(key, out value))
+            {
+                return true;
+            }
+            value = 0f;
+            return false;
+        }
+
+        public override bool TryGetBool(string key, out bool value)
+        {
+            if (attributeBool.TryGetValue(key, out value))
+            {
+                return true;
+            }
+            value = false;
+            return false;
         }
     }
 
@@ -288,6 +316,7 @@ namespace ER.Items
         public ItemVariable(ItemTemplate itemTemplate) 
         {
             ID = itemTemplate.ID;
+            attributeText["Name"] = itemTemplate.NameTmp;
         }
         /// <summary>
         /// 基于一个模板创建一个物品对象
@@ -296,10 +325,20 @@ namespace ER.Items
         public ItemVariable(int templateID)
         {
             ID = templateID;
+            ItemTemplate tmp = ItemTemplateStore.Instance[ID];
+            if (tmp!=null)
+            {
+                attributeText["Name"] = tmp.NameTmp;
+            }
+            attributeText["Name"] = "NULL";
         }
         #endregion
 
-        #region 尝试获取属性
+        #region 属性
+        /// <summary>
+        /// 物品的名称
+        /// </summary>
+        public string Name { get => attributeText["Name"]; set => attributeText["Name"] = value; }
         /// <summary>
         /// 获取整型属性，优先获取模板中的属性
         /// </summary>
@@ -413,6 +452,26 @@ namespace ER.Items
                 return true;
             }
             return attributeBool.TryGetValue(key, out value);
+        }
+
+        public override void CreatAttribute(string key, int value)
+        {
+            
+        }
+
+        public override void CreatAttribute(string key, float value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void CreatAttribute(string key, string value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void CreatAttribute(string key, bool value)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion 尝试获取属性
