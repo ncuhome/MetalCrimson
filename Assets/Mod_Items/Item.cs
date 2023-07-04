@@ -1,15 +1,25 @@
 ﻿// Ignore Spelling: Creat
 
+using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace ER.Items
 {
+    [Serializable]
     /// <summary>
     /// 物品信息
     /// </summary>
     public struct ItemInfo
     {
+        /// <summary>
+        /// 物品所在的仓库ID
+        /// </summary>
         public int ID;
+        /// <summary>
+        /// 物品模板的名称
+        /// </summary>
+        public string Name;
 
         /// <summary>
         /// 文本属性（键名：文本所在的标识头）
@@ -158,6 +168,7 @@ namespace ER.Items
                 attributeText = info_text,
                 attributeFloat = info_float,
                 attributeInt = info_int,
+                Name = string.Empty
             };
         }
 
@@ -170,7 +181,7 @@ namespace ER.Items
     public class ItemTemplate : Item
     {
         /// <summary>
-        /// 物品名称(系统内部的物品名称，和玩家所见的名称文本不同，不计入物品的拓展属性)
+        /// 物品名称(系统内部的物品名称，和玩家所见的名称文本不同，不计入物品的拓展属性),属于字符串属性，keyName = "NameLabel"
         /// </summary>
         public string Name { get; protected set; } = "Null";
 
@@ -178,7 +189,19 @@ namespace ER.Items
         {
         }
 
-        public ItemTemplate(string Name, ItemInfo info)
+        public ItemTemplate(Item item)
+        {
+            attributeBool = ((ItemTemplate)item).attributeBool;
+            attributeFloat = ((ItemTemplate)item).attributeFloat;
+            attributeInt = ((ItemTemplate)item).attributeInt;
+            attributeText = ((ItemTemplate)item).attributeText;
+            if (attributeText.TryGetValue("NameLabel", out string name))
+            {
+                Name = name;
+            }
+        }
+
+        public ItemTemplate(ItemInfo info)
         {
             foreach (var key in info.attributeInt.Keys)
             {
@@ -196,6 +219,8 @@ namespace ER.Items
             {
                 attributeText[key] = info.attributeText[key];
             }
+            Name = info.Name;
+            if (Name != string.Empty) return;
             if (info.attributeText.TryGetValue("NameLabel", out string name))
             {
                 Name = name;
@@ -215,6 +240,30 @@ namespace ER.Items
             clone.attributeFloat = info.attributeFloat;
             clone.attributeInt = info.attributeInt;
             return clone;
+        }
+
+        public new ItemInfo Info()
+        {
+            ItemInfo info = base.Info();
+            info.Name = Name;
+            return info;
+        }
+
+        public override void CreatAttribute(string key,int value)
+        {
+            Debug.LogError($"<{Name}>物品模板禁止在创建之后修改属性[Int][{key}:{value}]");
+        }
+        public override void CreatAttribute(string key, bool value)
+        {
+            Debug.LogError($"<{Name}>物品模板禁止在创建之后修改属性[Bool][{key}:{value}]");
+        }
+        public override void CreatAttribute(string key, float value)
+        {
+            Debug.LogError($"<{Name}>物品模板禁止在创建之后修改属性[Float][{key}:{value}]");
+        }
+        public override void CreatAttribute(string key, string value)
+        {
+            Debug.LogError($"<{Name}>物品模板禁止在创建之后修改属性[Text][{key}:{value}]");
         }
     }
 
