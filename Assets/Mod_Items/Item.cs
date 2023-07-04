@@ -1,8 +1,9 @@
-﻿// Ignore Spelling: Creat
+﻿// Ignore Spelling: Creat tmp
 
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using ER.Parser;
 
 namespace ER.Items
 {
@@ -84,21 +85,23 @@ namespace ER.Items
 
         #region 尝试获取属性
 
+        public virtual int GetInt(string key) => attributeInt[key];
+        public virtual float GetFloat(string key) => attributeFloat[key];
+        public virtual bool GetBool(string key) => attributeBool[key];
+        public virtual string GetText(string key) => attributeText[key];
+
         public virtual bool TryGetInt(string key, out int value)
         {
             return attributeInt.TryGetValue(key, out value);
         }
-
         public virtual bool TryGetText(string key, out string value)
         {
             return attributeText.TryGetValue(key, out value);
         }
-
         public virtual bool TryGetFloat(string key, out float value)
         {
             return attributeFloat.TryGetValue(key, out value);
         }
-
         public virtual bool TryGetBool(string key, out bool value)
         {
             return attributeBool.TryGetValue(key, out value);
@@ -268,13 +271,150 @@ namespace ER.Items
     }
 
     /// <summary>
-    /// 动态属性（可任意添加新的属性）
+    /// 动态物品（可任意添加新的属性）
     /// </summary>
     public class ItemVariable : Item
     {
+        //ID表示的使用的模板物品的ID
+        #region 构造函数
+        public ItemVariable()
+        {
+            ID = 0;
+        }
         /// <summary>
-        /// 模板ID
+        /// 基于一个模板创建一个物品对象
         /// </summary>
-        public int TemplateID = 0;
+        /// <param name="itemTemplate"></param>
+        public ItemVariable(ItemTemplate itemTemplate) 
+        {
+            ID = itemTemplate.ID;
+        }
+        /// <summary>
+        /// 基于一个模板创建一个物品对象
+        /// </summary>
+        /// <param name="itemTemplate"></param>
+        public ItemVariable(int templateID)
+        {
+            ID = templateID;
+        }
+        #endregion
+
+        #region 尝试获取属性
+        /// <summary>
+        /// 获取整型属性，优先获取模板中的属性
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public override int GetInt(string key)
+        {
+            ItemTemplate tmp = ItemTemplateStore.Instance[key];
+            if(tmp != null && tmp.TryGetInt(key,out int value))
+            {
+                return value;
+            }
+            return attributeInt[key];
+        }
+        /// <summary>
+        /// 获取浮点型属性，优先获取模板中的属性
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public override float GetFloat(string key)
+        {
+            ItemTemplate tmp = ItemTemplateStore.Instance[key];
+            if (tmp != null && tmp.TryGetFloat(key, out float value))
+            {
+                return value;
+            }
+            return attributeFloat[key];
+        }
+        /// <summary>
+        /// 获取布尔型的属性，优先获取模板中的属性
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public override bool GetBool(string key)
+        {
+            ItemTemplate tmp = ItemTemplateStore.Instance[key];
+            if (tmp != null && tmp.TryGetBool(key, out bool value))
+            {
+                return value;
+            }
+            return attributeBool[key];
+        }
+        /// <summary>
+        /// 获取字符串属性，优先获取模板中的属性
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public override string GetText(string key)
+        {
+            ItemTemplate tmp = ItemTemplateStore.Instance[key];
+            if (tmp != null && tmp.TryGetText(key, out string value))
+            {
+                return value;
+            }
+            return attributeText[key];
+        }
+        /// <summary>
+        /// 尝试获取整形属性，优先获取模板中的属性
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public override bool TryGetInt(string key, out int value)
+        {
+            ItemTemplate tmp = ItemTemplateStore.Instance[key];
+            if (tmp != null && tmp.TryGetInt(key,out value))
+            {
+                return true;
+            }
+            return attributeInt.TryGetValue(key, out value);
+        }
+        /// <summary>
+        /// 尝试获取字符串属性，优先获取模板中的属性
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public override bool TryGetText(string key, out string value)
+        {
+            ItemTemplate tmp = ItemTemplateStore.Instance[key];
+            if (tmp != null && tmp.TryGetText(key, out value))
+            {
+                return true;
+            }
+            return attributeText.TryGetValue(key, out value);
+        }
+        /// <summary>
+        /// 尝试获取浮点型属性，优先获取模板中的属性
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public override bool TryGetFloat(string key, out float value)
+        {
+            ItemTemplate tmp = ItemTemplateStore.Instance[key];
+            if (tmp != null && tmp.TryGetFloat(key, out value))
+            {
+                return true;
+            }
+            return attributeFloat.TryGetValue(key, out value);
+        }
+        /// <summary>
+        /// /// <summary>
+        /// 尝试获取整形属性，优先获取模板中的属性
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        /// </summary>
+        public override bool TryGetBool(string key, out bool value)
+        {
+            ItemTemplate tmp = ItemTemplateStore.Instance[key];
+            if (tmp != null && tmp.TryGetBool(key, out value))
+            {
+                return true;
+            }
+            return attributeBool.TryGetValue(key, out value);
+        }
+
+        #endregion 尝试获取属性
     }
 }

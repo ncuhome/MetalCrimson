@@ -7,26 +7,25 @@ namespace ER.Items
     /// <summary>
     /// 物品系统(静态)，储存物品模板，相当于是一个物品图鉴;(只读)
     /// </summary>
-    public class ItemSystem
+    public class ItemTemplateStore
     {
         #region 单例封装
 
-        private static ItemSystem instance;
+        private static ItemTemplateStore instance;
 
-        public ItemSystem Instance
+        public static ItemTemplateStore Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new ItemSystem();
+                    instance = new ItemTemplateStore();
                 }
                 return instance;
             }
         }
 
-        private ItemSystem()
-        { }
+        private ItemTemplateStore() { }
 
         #endregion 单例封装
 
@@ -200,11 +199,12 @@ namespace ER.Items
         }
 
         /// <summary>
-        /// 获取物品信息
+        /// 获取物品模板
         /// </summary>
         /// <param name="id">物品ID</param>
+        /// <param name="deepCopy">是否是深拷贝</param>
         /// <returns></returns>
-        public Item this[int id, bool deepCopy = false]
+        public ItemTemplate this[int id, bool deepCopy = false]
         {
             get
             {
