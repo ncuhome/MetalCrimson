@@ -82,6 +82,11 @@ namespace Mod_Console
         }
         protected Data CMD_openfile(Data[] parameters)
         {
+            if(parameters.Length == 0)
+            {
+                PrintError("Path parameter is empty!");
+                return Data.Error;
+            }
             Data path = parameters[0];
             if(path.isError())//数据错误或者文件不存在时返回错误
             {
