@@ -51,17 +51,17 @@ namespace Mod_Rouge
         /// </summary>
         /// <param name="_owner"></param>
         /// <param name="layerSeed"></param>
-        public MapLayer(Map _owner,int layerSeed)
+        public MapLayer(Map _owner,int layerSeed,int _deepID)
         {
             owner = _owner;
+            deepID = _deepID;
             random = new System.Random(owner.seed + layerSeed);
             length = owner.length  + random.Next(-owner.roundLength, owner.roundLength);
             count = owner.count + random.Next(-owner.roundCount, owner.roundCount);
+            //生成个房间层包含房间的数量
             romlys = new int[length];
             int width = count / length;//平均
             int amore = count % length;//剩余数
-
-            int times = length;
             for(int i=0;i<owner.roundWidth*length/2; i++)
             {
                 int index = random.Next(0, length);
@@ -84,6 +84,19 @@ namespace Mod_Rouge
             {
                 romlys[i] += width;
             }
+#if Debug
+            ConsolePanel.Instance.Print($"MapLayer Info:\n" +
+                $"layerSeed:{layerSeed}\n" +
+                $"deepID:{deepID}\n" +
+                $"count:{count}\n" +
+                $"length:{length}");
+            string txt = "";
+            for(int i=0;i<length;i++)
+            {
+                txt += romlys[i] + " ";
+            }
+            ConsolePanel.Instance.Print(txt);
+#endif
         }
 
         /// <summary>
@@ -164,7 +177,7 @@ namespace Mod_Rouge
         /// <summary>
         /// 单层房间数量浮动值
         /// </summary>
-        public int roundCount = 10;
+        public int roundCount = 16;
         /// <summary>
         /// 地图长度浮动范围
         /// </summary>
@@ -172,7 +185,7 @@ namespace Mod_Rouge
         /// <summary>
         /// 地图宽度浮动范围
         /// </summary>
-        public int roundWidth = 1;
+        public int roundWidth = 2;
         #endregion
 
         #region 实际属性
@@ -207,10 +220,6 @@ namespace Mod_Rouge
         #endregion
 
         #region 属性
-        /// <summary>
-        /// 所有房间对象
-        /// </summary>
-        public List<Room>[] rooms;
         System.Random random;
         #endregion
 
@@ -242,8 +251,7 @@ namespace Mod_Rouge
             layers = new MapLayer[realDeepth];
             for(int i=0;i<realDeepth;i++)
             {
-                layers[i] = new MapLayer(this,random.Next());
-                layers[i].deepID = i+1;
+                layers[i] = new MapLayer(this,random.Next() + seed,i+1);
             }
 #if Debug
             ConsolePanel.Instance.Print($"map info:\n" +
@@ -254,7 +262,6 @@ namespace Mod_Rouge
                 $"rewardRate:{realRewardRate}\n" +
                 $"restRate:{realRestRate}");
 #endif
-
         }
         #endregion
 
