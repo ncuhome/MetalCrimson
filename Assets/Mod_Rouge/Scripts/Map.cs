@@ -1,11 +1,11 @@
-
+#define Debug
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace Rouge
+namespace Mod_Rouge
 {
     /// <summary>
     /// 地图层
@@ -24,6 +24,11 @@ namespace Rouge
         /// 所有房间对象
         /// </summary>
         public List<Room> rooms;
+        /// <summary>
+        /// 房间层房间个数
+        /// </summary>
+        public int[] romlys;
+
         /// <summary>
         /// 长度
         /// </summary>
@@ -51,6 +56,33 @@ namespace Rouge
             random = new System.Random(owner.seed + layerSeed);
             length = owner.length  + random.Next(-owner.roundLength, owner.roundLength);
             count = owner.count + random.Next(-owner.roundCount, owner.roundCount);
+            romlys = new int[length];
+            int width = count / length;//平均
+            int amore = count % length;//剩余数
+
+            int times = length;
+            for(int i=0;i<owner.roundWidth*length/2; i++)
+            {
+                int index = random.Next(0, length);
+                while (romlys[index] <= -owner.roundWidth)
+                {
+                    index = random.Next(0, length);
+                }
+                romlys[index]--;
+            }
+            for(int i=0;i<owner.roundWidth*length/2+amore;i++)
+            {
+                int index = random.Next(0, length);
+                while(romlys[index] >= owner.roundWidth)
+                {
+                    index = random.Next(0, length);
+                }
+                romlys[index]++;
+            }
+            for(int i=0;i<length;i++)
+            {
+                romlys[i] += width;
+            }
         }
 
         /// <summary>
@@ -58,7 +90,13 @@ namespace Rouge
         /// </summary>
         public void Init()
         {
+            for(int i=0;i<count;i++)
+            {
+                rooms.Add(Room.CreatRandomRoom(random,owner,deepID));
+            }
             
+
+
         }
     }
 
@@ -206,6 +244,16 @@ namespace Rouge
                 layers[i] = new MapLayer(this,random.Next());
                 layers[i].deepID = i+1;
             }
+#if Debug
+            Debug.Log($"地图属性：\n" +
+                $"seed:{seed}\n" +
+                $"deepth:{realDeepth}\n" +
+                $"encounterRate:{realEncounterRate}\n" +
+                $"eventRate:{realEventRate}\n" +
+                $"rewardRate:{realRewardRate}\n" +
+                $"restRate:{realRestRate}");
+#endif
+
         }
         #endregion
 

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Rouge
+namespace Mod_Rouge
 {
     /// <summary>
     /// 房间模板类

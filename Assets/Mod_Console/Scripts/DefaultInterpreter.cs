@@ -104,7 +104,12 @@ namespace Mod_Console
             
         }
         #endregion
-
+        /// <summary>
+        /// 解释指令语句，优先执行EffectuateSuper函数（由子类实现），如果子类没有注册该指令或者执行失败则执行本函数的解释语句
+        /// </summary>
+        /// <param name="commandName"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         public override Data Effectuate(string commandName, Data[] parameters)
         {
             Data data = EffectuateSuper(commandName, parameters);
@@ -130,7 +135,12 @@ namespace Mod_Console
             }
             return data;
         }
-
+        /// <summary>
+        /// 子类需要具体实现的函数
+        /// </summary>
+        /// <param name="commandName"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         public virtual Data EffectuateSuper(string commandName, Data[] parameters)
         {
             return Data.Error;

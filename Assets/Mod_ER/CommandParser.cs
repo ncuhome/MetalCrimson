@@ -289,7 +289,12 @@ namespace ER.Parser
 
             return Effectuate(commandName, parameters);
         }
-
+        /// <summary>
+        /// 解释指令语句
+        /// </summary>
+        /// <param name="commandName">指令头（必定不为空）</param>
+        /// <param name="parameters">参数表（可能为空）</param>
+        /// <returns></returns>
         public abstract Data Effectuate(string commandName, Data[] parameters);
     }
 
