@@ -138,6 +138,14 @@ namespace Mod_Rouge
         /// 地图宽度
         /// </summary>
         public int width = 4;
+        /// <summary>
+        /// 房间出口数量最小值
+        /// </summary>
+        public int exit_min = 1;
+        /// <summary>
+        /// 房间出口数量最大值
+        /// </summary>
+        public int exit_max = 3;
 
         /// <summary>
         /// 遭遇战房间比率
