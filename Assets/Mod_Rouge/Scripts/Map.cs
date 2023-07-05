@@ -29,6 +29,10 @@ namespace Mod_Rouge
         /// 房间层房间个数
         /// </summary>
         public int[] romlys;
+        /// <summary>
+        /// 房间排列
+        /// </summary>
+        public int[][] roomArrage;
 
         /// <summary>
         /// 长度
@@ -104,13 +108,41 @@ namespace Mod_Rouge
         /// </summary>
         public void Init()
         {
+            roomArrage = new int[length][];
+            int index = 0;
+            for(int i=0;i<length;i++)
+            {
+                roomArrage[i] = new int[romlys[i]];
+                for(int k = 0; k < romlys[i];k++)
+                {
+                    roomArrage[i][k] = 0;
+                }
+            }
+            
+
             for(int i=0;i<count;i++)
             {
-                rooms.Add(Room.CreatRandomRoom(random,owner,deepID));
+                rooms.Add(Room.CreatRandomRoom(random,owner,this,FindLayer(i)));
             }
             
 
 
+        }
+        /// <summary>
+        /// 查询制定房间所在的房间层号
+        /// </summary>
+        /// <param name="roomID"></param>
+        /// <returns></returns>
+        public int FindLayer(int roomID)
+        {
+            for(int i=0;i<romlys.Length;i++)
+            {
+                if (roomID < roomArrage[i][0])
+                {
+                    return i - 1;
+                }
+            }
+            return -1;
         }
     }
 
@@ -138,6 +170,14 @@ namespace Mod_Rouge
         /// 地图宽度
         /// </summary>
         public int width = 4;
+        /// <summary>
+        /// 房间出口数量最小值
+        /// </summary>
+        public int exit_min = 1;
+        /// <summary>
+        /// 房间出口数量最大值
+        /// </summary>
+        public int exit_max = 3;
 
         /// <summary>
         /// 遭遇战房间比率

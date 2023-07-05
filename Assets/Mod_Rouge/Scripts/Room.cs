@@ -52,10 +52,17 @@ namespace Mod_Rouge
         /// 使用的房间模板ID
         /// </summary>
         public int useTemplate;
+        /// <summary>
+        /// 出口数量
+        /// </summary>
+        public int exit;
+        /// <summary>
+        /// 出口索引起始位置
+        /// </summary>
+        public int exit_start;
 
         public static Room StartPoint { get => new Room { type = RoomType.start, useTemplate = 0 }; }
         public static Room EndPoint { get => new Room { type = RoomType.end, useTemplate = 0 }; }
-        
         /// <summary>
         /// 创建Boss房间
         /// </summary>
@@ -63,10 +70,11 @@ namespace Mod_Rouge
         /// <param name="map">地图</param>
         /// <param name="deepID">所在深度</param>
         /// <returns></returns>
-        public static Room CreatBossRoom(Random random,Map map,int deepID)
+        public static Room CreatBossRoom(Random random,Map map,MapLayer layer)
         {
             Room room = new Room();
             room.type = RoomType.boss;
+            room.exit = 1;
             /*选取模板*/
             return room;
         }
@@ -75,9 +83,10 @@ namespace Mod_Rouge
         /// </summary>
         /// <param name="random">随机器</param>
         /// <param name="map">地图</param>
-        /// <param name="deepID">所在深度</param>
+        /// <param name="layer">所在地图层</param>
+        /// <param name="romly">所在的房间层</param>
         /// <returns></returns>
-        public static Room CreatRandomRoom(Random random, Map map, int deepID)
+        public static Room CreatRandomRoom(Random random, Map map, MapLayer layer, int romly)
         {
             Room room = new Room();
             double sr = random.NextDouble();
@@ -96,6 +105,17 @@ namespace Mod_Rouge
             else
             {
                 room.type = RoomType.reward;
+            }
+
+            if (romly < layer.romlys.Length - 1)//不是最后的房间层
+            {
+                room.exit = random.Next(map.exit_min, map.exit_max);
+                room.exit_start = random.Next(-1, 1);
+            }
+            else
+            {
+                room.exit = 1;
+                room.exit_start = 0;
             }
             /*选取模板*/
             return room;
