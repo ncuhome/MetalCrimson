@@ -1,5 +1,6 @@
 #define Debug
 using JetBrains.Annotations;
+using Mod_Console;
 using System;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -228,9 +229,9 @@ namespace Mod_Rouge
 
             //生成各房间的实际占比
             double encounterRateTmp = encounterRate + (random.NextDouble() - 0.5) * 2 * encounterRoundRate;
-            double eventRateTmp = encounterRate + (random.NextDouble() - 0.5) * 2 * eventRoundRate;
-            double rewardRateTmp = encounterRate + (random.NextDouble() - 0.5) * 2 * rewardRoundRate;
-            double restRateTmp = encounterRate + (random.NextDouble() - 0.5) * 2 * restRoundRate;
+            double eventRateTmp = eventRoomRate + (random.NextDouble() - 0.5) * 2 * eventRoundRate;
+            double rewardRateTmp = rewardRate + (random.NextDouble() - 0.5) * 2 * rewardRoundRate;
+            double restRateTmp = restRate + (random.NextDouble() - 0.5) * 2 * restRoundRate;
             double sum = encounterRateTmp + eventRateTmp + rewardRateTmp + restRateTmp;
             realEncounterRate = encounterRateTmp / sum;
             realEventRate = eventRateTmp / sum;
@@ -245,7 +246,7 @@ namespace Mod_Rouge
                 layers[i].deepID = i+1;
             }
 #if Debug
-            Debug.Log($"地图属性：\n" +
+            ConsolePanel.Instance.Print($"map info:\n" +
                 $"seed:{seed}\n" +
                 $"deepth:{realDeepth}\n" +
                 $"encounterRate:{realEncounterRate}\n" +

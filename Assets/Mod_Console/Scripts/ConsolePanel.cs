@@ -11,7 +11,6 @@ namespace Mod_Console
     {
         #region 单例封装
         public static ConsolePanel Instance { get; private set; } = null;
-
         public void Awake()
         {
             if (Instance is null) { Instance = this; }
@@ -21,17 +20,35 @@ namespace Mod_Console
         #endregion
 
         #region 组件 | 属性
+        /// <summary>
+        /// 显示器对象
+        /// </summary>
         public TMP_InputField monitor;//显示器
+        /// <summary>
+        /// 输入框对象
+        /// </summary>
         public TMP_InputField input;//输入框
+        /// <summary>
+        /// 使用的指令解释器
+        /// </summary>
         public DefaultInterpreter interpreter = new DefaultInterpreter();//指令器
+        /// <summary>
+        /// 最大消息数
+        /// </summary>
         public int maxLines = 50;//消息最大数量
+        /// <summary>
+        /// 历史输入记录的最大限制
+        /// </summary>
         public int maxHistory = 20;//历史输入最大记录数量
+        /// <summary>
+        /// 历史输入信息
+        /// </summary>
         public List<string> history = new List<string>(20);//历史输入
         private int histortIndex = -1;//历史索引
         private bool inputing = false;//是否正处于输入状态
         #endregion
 
-        #region 功能函数
+        #region 委托
         public void ActiveInput()
         {
             inputing = true;
@@ -40,6 +57,13 @@ namespace Mod_Console
         {
             inputing = false;
         }
+        #endregion
+
+        #region 功能函数
+
+        /// <summary>
+        /// 提交输入框中的信息
+        /// </summary>
         public void SendMessage()
         {
             if (input.text != string.Empty)
@@ -70,12 +94,20 @@ namespace Mod_Console
             monitor.text += txt;
             LimitLines();
         }
+        /// <summary>
+        /// 向控制台打印异常消息
+        /// </summary>
+        /// <param name="txt"></param>
+        /// <param name="newLine"></param>
         public void PrintError(string txt, bool newLine = true)
         {
             if (newLine) { monitor.text += '\n'; }
             monitor.text += new StringBuilder("<color=red>").Append(txt).Append("</color>");
             LimitLines();
         }
+        /// <summary>
+        /// 清空控制台消息
+        /// </summary>
         public void Clear()
         {
             monitor.text = string.Empty;
