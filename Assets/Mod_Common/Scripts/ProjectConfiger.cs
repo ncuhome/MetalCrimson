@@ -19,6 +19,7 @@ namespace Mod_Common
             ConsolePanel.Instance.Print("Loading Settings");
             SettingsManager.Instance.SaveSettings();
             ConsolePanel.Instance.Print("Saving Settings");
+            ConsolePanel.Instance.Print($"“Ù¡ø¥Û–°£∫{SettingsManager.Instance["Volume"]}");
         }
     }
 }

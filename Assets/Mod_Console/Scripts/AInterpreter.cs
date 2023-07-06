@@ -1,5 +1,6 @@
 using ER.Parser;
 using Mod_Rouge;
+using Mod_Save;
 
 namespace Mod_Console
 {
@@ -23,6 +24,12 @@ namespace Mod_Console
             Map map = Map.Creat(seed);
             return Data.Empty;
         }
+        private Data CMD_settings()
+        {
+            string settings = SettingsManager.Instance.GetSettingsTxt();
+            ConsolePanel.Instance.Print(settings);
+            return new Data(settings, DataType.Text);
+        }
         #endregion
 
         public override Data EffectuateSuper(string commandName, Data[] parameters)
@@ -31,6 +38,8 @@ namespace Mod_Console
             {
                 case "creatmap":
                     return CMD_creatmap(parameters);
+                case "settings":
+                    return CMD_settings();
                 default:
                     return Data.Error;
             }

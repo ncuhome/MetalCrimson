@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace ER.Parser
@@ -83,8 +84,16 @@ namespace ER.Parser
         /// <param name="path">INI文件路径</param>
         public void Save(string path)
         {
+            File.WriteAllText(path, GetSaveString());
+        }
+        /// <summary>
+        /// 获取保存信息文本
+        /// </summary>
+        /// <returns></returns>
+        public string GetSaveString()
+        {
             StringBuilder txt = new StringBuilder();
-            foreach(string sectionName in sections.Keys)
+            foreach (string sectionName in sections.Keys)
             {
                 txt.Append('[');
                 txt.Append(sectionName);
@@ -101,6 +110,7 @@ namespace ER.Parser
                     txt.Append('\n');
                 }
             }
+            return txt.ToString();
         }
         /// <summary>
         /// 将指定字符串处理成值字符串（目前功能尚未完善）

@@ -1,3 +1,4 @@
+using Mod_Console;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,16 +37,15 @@ namespace ER.Parser
         /// <param name="key">键名</param>
         /// <param name="value">值名</param>
         /// <returns>如果指定节段不存在则返回false并且添加失败</returns>
-        public bool AddPair(string sectionName, string key, string value)
+        public void AddPair(string sectionName, string key, string value)
         {
-            if (sections.ContainsKey(sectionName))
+            //ConsolePanel.Instance.Print($"正在写入键值对：[{sectionName}]<{key} = {value}>");
+            if (!sections.ContainsKey(sectionName))
             {
-                sections[sectionName][key]= UnescapeValue(value);
-                return true;
+                AddSection(sectionName);
             }
-            AddSection(sectionName);
             sections[sectionName][key] = UnescapeValue(value);
-            return false;
+            //ConsolePanel.Instance.Print($"成功写入键值对：[{sectionName}]<{key} = {sections[sectionName][key]}>");
         }
 
         /// <summary>
@@ -84,6 +84,14 @@ namespace ER.Parser
         /// <param name="path">INI文件路径</param>
         public void Save(string path)
         {
+            File.WriteAllText(path, GetSaveString());
+        }
+        /// <summary>
+        /// 获取保存信息文本
+        /// </summary>
+        /// <returns></returns>
+        public string GetSaveString()
+        {
             StringBuilder txt = new StringBuilder();
             foreach (string sectionName in sections.Keys)
             {
@@ -102,6 +110,7 @@ namespace ER.Parser
                     txt.Append('\n');
                 }
             }
+            return txt.ToString();
         }
         #endregion
 

@@ -68,7 +68,6 @@ namespace Mod_Save
         {
             INIHD.DeletePair("Settings", key);
         }
-
         public string this[string key]
         {
             get
@@ -79,6 +78,13 @@ namespace Mod_Save
             {
                 INIHD.AddPair("settings", key, value);
             }
+        }
+        /// <summary>
+        /// 获取设置字符串
+        /// </summary>
+        public string GetSettingsTxt()
+        {
+            return INIHD.GetSaveString();
         }
     }
 }
