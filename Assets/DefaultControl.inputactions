@@ -2,13 +2,31 @@
     "name": "DefaultControl",
     "maps": [
         {
-            "name": "PlayerCharacter",
+            "name": "Player",
             "id": "0765ea49-66ba-4a08-990a-0a763f57e8ed",
             "actions": [
                 {
                     "name": "Move Up",
                     "type": "Button",
                     "id": "9c44fe50-b3d2-4f6e-97e4-a530e566c0da",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Move Down",
+                    "type": "Button",
+                    "id": "c7f67c21-06c4-4c5d-a4e8-9cc38ec7f005",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Move Left",
+                    "type": "Button",
+                    "id": "14706f36-c556-4d90-977e-126aa8d4dfa2",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -24,6 +42,28 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Move Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "693248f9-6167-46b6-96fa-6d7008fbe09a",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bb62e424-11e3-4e87-8286-cb14a39d7486",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move Left",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

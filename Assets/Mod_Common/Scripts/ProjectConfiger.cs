@@ -1,5 +1,6 @@
-using Mod_Console;
+ï»¿using Mod_Console;
 using Mod_Save;
+using System;
 using UnityEngine;
 
 namespace Mod_Common
@@ -8,18 +9,33 @@ namespace Mod_Common
     {
         private void Start()
         {
-            //ÉèÖÃÊ¹ÓÃµÄÖ¸Áî½âÊÍÆ÷
+            DontDestroyOnLoad(gameObject);
+            //è®¾ç½®ä½¿ç”¨çš„æŒ‡ä»¤è§£é‡Šå™¨
             ConsolePanel.Instance.interpreter = new AInterpreter();
-            SettingsManager.Instance["Volume"] = 100.ToString();
-            SettingsManager.Instance["Move Up"] = KeyCode.W.ToString();
-            SettingsManager.Instance["Move Down"] = KeyCode.S.ToString();
-            SettingsManager.Instance["Move Left"] = KeyCode.A.ToString();
-            SettingsManager.Instance["Move Right"] = KeyCode.D.ToString();
-            SettingsManager.Instance["Attack"] = KeyCode.J.ToString();
+            SettingsManager.Instance["Volume"] = 100 + "";
+            SettingsManager.Instance["Move Up"] = (int)KeyCode.W + "";
+            SettingsManager.Instance["Move Down"] = (int)KeyCode.S + "";
+            SettingsManager.Instance["Move Left"] = (int)KeyCode.A + "";
+            SettingsManager.Instance["Move Right"] = (int)KeyCode.D + "";
+            SettingsManager.Instance["Attack"] = (int)KeyCode.J+"";
+            SettingsManager.Instance["Debug"] = (int)KeyCode.F12 + "";
             ConsolePanel.Instance.Print("Loading Settings");
             SettingsManager.Instance.SaveSettings();
             ConsolePanel.Instance.Print("Saving Settings");
-            ConsolePanel.Instance.Print($"ÒôÁ¿´óĞ¡£º{SettingsManager.Instance["Volume"]}");
+            ConsolePanel.Instance.Print($"éŸ³é‡å¤§å°ï¼š{SettingsManager.Instance["Volume"]}");
+        }
+
+        private void Update()
+        {
+            KeyCode code = (KeyCode)Convert.ToInt32(SettingsManager.Instance["Debug"]);
+
+            if(Input.anyKeyDown)
+            {
+                if (Input.GetKeyDown(code))//å¼€å¯/å…³é—­æ§åˆ¶å°
+                {
+                    ConsolePanel.Instance.SwitchUsing();
+                }
+            }
         }
     }
 }

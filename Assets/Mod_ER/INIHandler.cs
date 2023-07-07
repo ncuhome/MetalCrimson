@@ -1,4 +1,4 @@
-using Mod_Console;
+ï»¿using Mod_Console;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +8,7 @@ using System.Text;
 namespace ER.Parser
 {
     /// <summary>
-    /// INIÎÄ¼ş´¦ÀíÆ÷
+    /// INIæ–‡ä»¶å¤„ç†å™¨
     /// </summary>
     public class INIHandler
     {
@@ -18,9 +18,9 @@ namespace ER.Parser
             sections = new();
         }
 
-        #region Ğ´Èë·½·¨
+        #region å†™å…¥æ–¹æ³•
         /// <summary>
-        /// Ìí¼ÓĞÂµÄ½Ú¶Î
+        /// æ·»åŠ æ–°çš„èŠ‚æ®µ
         /// </summary>
         /// <param name="sectionName"></param>
         public void AddSection(string sectionName)
@@ -31,28 +31,28 @@ namespace ER.Parser
             }
         }
         /// <summary>
-        /// Ìí¼Ó¼üÖµ¶Ô
+        /// æ·»åŠ é”®å€¼å¯¹
         /// </summary>
-        /// <param name="sectionName">ËùÔÚ½Ú¶ÎÃû³Æ</param>
-        /// <param name="key">¼üÃû</param>
-        /// <param name="value">ÖµÃû</param>
-        /// <returns>Èç¹ûÖ¸¶¨½Ú¶Î²»´æÔÚÔò·µ»Øfalse²¢ÇÒÌí¼ÓÊ§°Ü</returns>
+        /// <param name="sectionName">æ‰€åœ¨èŠ‚æ®µåç§°</param>
+        /// <param name="key">é”®å</param>
+        /// <param name="value">å€¼å</param>
+        /// <returns>å¦‚æœæŒ‡å®šèŠ‚æ®µä¸å­˜åœ¨åˆ™è¿”å›falseå¹¶ä¸”æ·»åŠ å¤±è´¥</returns>
         public void AddPair(string sectionName, string key, string value)
         {
-            //ConsolePanel.Instance.Print($"ÕıÔÚĞ´Èë¼üÖµ¶Ô£º[{sectionName}]<{key} = {value}>");
+            //ConsolePanel.Instance.Print($"æ­£åœ¨å†™å…¥é”®å€¼å¯¹ï¼š[{sectionName}]<{key} = {value}>");
             if (!sections.ContainsKey(sectionName))
             {
                 AddSection(sectionName);
             }
             sections[sectionName][key] = UnescapeValue(value);
-            //ConsolePanel.Instance.Print($"³É¹¦Ğ´Èë¼üÖµ¶Ô£º[{sectionName}]<{key} = {sections[sectionName][key]}>");
+            //ConsolePanel.Instance.Print($"æˆåŠŸå†™å…¥é”®å€¼å¯¹ï¼š[{sectionName}]<{key} = {sections[sectionName][key]}>");
         }
 
         /// <summary>
-        /// ÒÆ³ıÖ¸¶¨½Ú¶ÎµÄËùÓĞÊı¾İ
+        /// ç§»é™¤æŒ‡å®šèŠ‚æ®µçš„æ‰€æœ‰æ•°æ®
         /// </summary>
-        /// <param name="sectionName">½Ú¶ÎÃû³Æ</param>
-        /// <returns>ÈôÖ¸¶¨½Ú¶Î²»´æÔÚ£¬Ôò·µ»Øfalse</returns>
+        /// <param name="sectionName">èŠ‚æ®µåç§°</param>
+        /// <returns>è‹¥æŒ‡å®šèŠ‚æ®µä¸å­˜åœ¨ï¼Œåˆ™è¿”å›false</returns>
         public bool DeleteSection(string sectionName)
         {
             if (sections.ContainsKey(sectionName))
@@ -64,11 +64,11 @@ namespace ER.Parser
         }
 
         /// <summary>
-        /// ÒÆ³ıÖ¸¶¨½Ú¶ÎÏÂµÄ¼üÖµ¶Ô
+        /// ç§»é™¤æŒ‡å®šèŠ‚æ®µä¸‹çš„é”®å€¼å¯¹
         /// </summary>
-        /// <param name="sectionName">½Ú¶ÎÃû³Æ</param>
-        /// <param name="key">¼üÃû</param>
-        /// <returns>ÈôÒÆ³ıÊ§°ÜÔò·µ»Øfalse</returns>
+        /// <param name="sectionName">èŠ‚æ®µåç§°</param>
+        /// <param name="key">é”®å</param>
+        /// <returns>è‹¥ç§»é™¤å¤±è´¥åˆ™è¿”å›false</returns>
         public bool DeletePair(string sectionName, string key)
         {
             if (sections.ContainsKey(sectionName) && sections[sectionName].ContainsKey(key))
@@ -79,15 +79,15 @@ namespace ER.Parser
             return false;
         }
         /// <summary>
-        /// ±£´æÄÚÈİµ½±¾µØINIÎÄ¼ş
+        /// ä¿å­˜å†…å®¹åˆ°æœ¬åœ°INIæ–‡ä»¶
         /// </summary>
-        /// <param name="path">INIÎÄ¼şÂ·¾¶</param>
+        /// <param name="path">INIæ–‡ä»¶è·¯å¾„</param>
         public void Save(string path)
         {
             File.WriteAllText(path, GetSaveString());
         }
         /// <summary>
-        /// »ñÈ¡±£´æĞÅÏ¢ÎÄ±¾
+        /// è·å–ä¿å­˜ä¿¡æ¯æ–‡æœ¬
         /// </summary>
         /// <returns></returns>
         public string GetSaveString()
@@ -114,7 +114,7 @@ namespace ER.Parser
         }
         #endregion
 
-        #region ¶ÁÈ¡
+        #region è¯»å–
         public void ParseINIFile(string filePath)
         {
             if (!File.Exists(filePath))
@@ -167,33 +167,33 @@ namespace ER.Parser
         }
         #endregion
 
-        #region ÄÚÈİ²Ù×÷
+        #region å†…å®¹æ“ä½œ
         public void Clear()
         {
             sections.Clear();
         }
         /// <summary>
-        /// Çå¿ÕÎÄ±¾»º´æ£¬Ö»±£ÁôÖ¸¶¨½Ú¶ÎµÄÎÄ±¾
+        /// æ¸…ç©ºæ–‡æœ¬ç¼“å­˜ï¼Œåªä¿ç•™æŒ‡å®šèŠ‚æ®µçš„æ–‡æœ¬
         /// </summary>
-        /// <param name="sections">ĞèÒª±£ÁôµÄ½Ú¶ÎÃû³Æ</param>
+        /// <param name="sections">éœ€è¦ä¿ç•™çš„èŠ‚æ®µåç§°</param>
         public void Clear(params string[] sections)
         {
-            // ´´½¨Ò»¸öĞÂµÄ×ÖµäÓÃÓÚ´æ´¢±£ÁôµÄ½Ú¶ÎĞÅÏ¢
+            // åˆ›å»ºä¸€ä¸ªæ–°çš„å­—å…¸ç”¨äºå­˜å‚¨ä¿ç•™çš„èŠ‚æ®µä¿¡æ¯
             Dictionary<string, Dictionary<string, string>> newSections = new Dictionary<string, Dictionary<string, string>>();
 
-            // ±éÀúÔ­Ê¼µÄ½Ú¶ÎĞÅÏ¢
+            // éå†åŸå§‹çš„èŠ‚æ®µä¿¡æ¯
             foreach (var section in this.sections)
             {
                 string sectionName = section.Key;
 
-                // Èç¹ûÖ¸¶¨µÄ½Ú¶ÎÃû³ÆÔÚ±£ÁôµÄ½Ú¶ÎÊı×éÖĞ£¬Ôò½«¸Ã½Ú¶ÎĞÅÏ¢Ìí¼Óµ½ĞÂµÄ×ÖµäÖĞ
+                // å¦‚æœæŒ‡å®šçš„èŠ‚æ®µåç§°åœ¨ä¿ç•™çš„èŠ‚æ®µæ•°ç»„ä¸­ï¼Œåˆ™å°†è¯¥èŠ‚æ®µä¿¡æ¯æ·»åŠ åˆ°æ–°çš„å­—å…¸ä¸­
                 if (sections.Contains(sectionName))
                 {
                     newSections[sectionName] = section.Value;
                 }
             }
 
-            // ¸üĞÂ½Ú¶ÎĞÅÏ¢Îª±£ÁôµÄ½Ú¶ÎĞÅÏ¢
+            // æ›´æ–°èŠ‚æ®µä¿¡æ¯ä¸ºä¿ç•™çš„èŠ‚æ®µä¿¡æ¯
             this.sections = newSections;
         }
         public string? GetValue(string section, string key)

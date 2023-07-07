@@ -60,7 +60,20 @@ namespace Mod_Console
         #endregion
 
         #region 功能函数
-
+        /// <summary>
+        /// 切换显示状态
+        /// </summary>
+        public void SwitchUsing()
+        {
+            if(gameObject.activeSelf)
+            {
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                gameObject.SetActive(true);
+            }
+        }
         /// <summary>
         /// 提交输入框中的信息
         /// </summary>
@@ -195,7 +208,7 @@ namespace Mod_Console
                             MoveCursorToEnd();
                         }
                     }
-                    if (Input.GetKeyDown(KeyCode.Return))
+                    if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
                     {
                         SendMessage();
                         input.ActivateInputField();
