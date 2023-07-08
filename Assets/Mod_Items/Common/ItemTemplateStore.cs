@@ -1,6 +1,8 @@
 ﻿using ER.Parser;
 using System;
 using System.Collections.Generic;
+using static UnityEditor.LightingExplorerTableColumn;
+using DataType = ER.Parser.DataType;
 
 namespace ER.Items
 {
@@ -198,6 +200,66 @@ namespace ER.Items
             }
         }
 
+        /// <summary>
+        /// 查找拥有指定属性的物品
+        /// </summary>
+        /// <param name="key">键名</param>
+        /// <param name="dataType">属性类型</param>
+        /// <returns></returns>
+        public List<ItemTemplate> Find(string key, DataType dataType)
+        {
+            if (dataType != DataType.Integer || dataType != DataType.Double || dataType != DataType.Text || dataType != DataType.Boolean) return null;
+            List<ItemTemplate> tmps = new List<ItemTemplate>();
+            foreach (int tmp in items_ID.Keys)
+            {
+                ItemTemplate item = items_ID[tmp];
+                if(item.Contains(key, dataType))
+                {
+                    tmps.Add(item);
+                }
+            }
+            return tmps;
+        }
+        /// <summary>
+        /// 查找拥有指定属性的物品，同时匹配目标属性值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public List<ItemTemplate> Find(string key,Data value)
+        {
+            if (value.Type != DataType.Integer || value.Type != DataType.Double || value.Type != DataType.Text || value.Type != DataType.Boolean) return null;
+            List<ItemTemplate> tmps = new List<ItemTemplate>();
+            foreach (int tmp in items_ID.Keys)
+            {
+                ItemTemplate item = items_ID[tmp];
+                if (item.Contains(key, value))
+                {
+                    tmps.Add(item);
+                }
+            }
+            return tmps;
+        }
+        /// <summary>
+        /// 查询指定属性包含指定值的所有物品对象
+        /// </summary>
+        /// <param name="key">属性名</param>
+        /// <param name="value">需要包含的属性值</param>
+        /// <param name="spc">属性值分割符</param>
+        /// <returns></returns>
+        public List<ItemTemplate> FindContainsPart(string key,string value,char spc)
+        {
+            List<ItemTemplate> tmps = new List<ItemTemplate>();
+            foreach (int tmp in items_ID.Keys)
+            {
+                ItemTemplate item = items_ID[tmp];
+                if (item.ContainsSPT(key, spc,value)) 
+                {
+                    tmps.Add(item);
+                }
+            }
+            return tmps;
+        }
         /// <summary>
         /// 获取物品模板
         /// </summary>

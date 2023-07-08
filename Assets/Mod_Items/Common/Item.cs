@@ -1,22 +1,22 @@
 ﻿// Ignore Spelling: Creat tmp
 
+using ER.Parser;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using ER.Parser;
+using static UnityEditor.LightingExplorerTableColumn;
+using DataType = ER.Parser.DataType;
 
 namespace ER.Items
 {
     [Serializable]
-    /// <summary>
-    /// 物品信息
-    /// </summary>
     public struct ItemInfo
     {
         /// <summary>
         /// 物品模板ID
         /// </summary>
         public int ID;
+
         /// <summary>
         /// 物品模板的名称
         /// </summary>
@@ -42,24 +42,24 @@ namespace ER.Items
         /// </summary>
         public Dictionary<string, bool> attributeBool;
 
-        public ItemInfo(Dictionary<string,int> kvInt,Dictionary<string,float> kvFloat, Dictionary<string,bool> kvBool,Dictionary<string,string> kvTxt,int id = 0, string name = "")
+        public ItemInfo(Dictionary<string, int> kvInt, Dictionary<string, float> kvFloat, Dictionary<string, bool> kvBool, Dictionary<string, string> kvTxt, int id = 0, string name = "")
         {
-            ID= id;
+            ID = id;
             NameTmp = name;
             attributeBool = kvBool;
             attributeFloat = kvFloat;
             attributeInt = kvInt;
             attributeText = kvTxt;
-            if(ID == 0)
+            if (ID == 0)
             {
-                if(kvInt.TryGetValue("ID",out int value))
+                if (kvInt.TryGetValue("ID", out int value))
                 {
                     ID = value;
                 }
             }
-            if(NameTmp == string.Empty)
+            if (NameTmp == string.Empty)
             {
-                if(kvTxt.TryGetValue("NameTmp",out string value))
+                if (kvTxt.TryGetValue("NameTmp", out string value))
                 {
                     NameTmp = value;
                 }
@@ -108,14 +108,85 @@ namespace ER.Items
 
         #region 尝试获取属性
 
+        /// <summary>
+        /// 查询该物品是否包含指定属性
+        /// </summary>
+        /// <param name="keyName">属性名称</param>
+        /// <param name="dataType">属性值类型</param>
+        /// <returns></returns>
+        public bool Contains(string keyName, DataType dataType)
+        {
+            switch (dataType)
+            {
+                case DataType.Integer:
+                    if (attributeInt.TryGetValue(keyName, out int value1)) return true;
+                    return false;
+                case DataType.Boolean:
+                    if (attributeBool.TryGetValue(keyName, out bool value2)) return true;
+                    return false;
+                case DataType.Text:
+                    if (attributeText.TryGetValue(keyName, out string value3)) return true;
+                    return false;
+                case DataType.Double:
+                    if (attributeFloat.TryGetValue(keyName, out float value)) return true;
+                    return false;
+                default:
+                    return false;
+            }
+        }
+        /// <summary>
+        /// 判断此物品是否有该属性，并匹配是否属性值相等
+        /// </summary>
+        /// <param name="keyName"></param>
+        /// <param name="_value"></param>
+        /// <returns></returns>
+        public bool Contains(string keyName,Data _value)
+        {
+            switch (_value.Type)
+            {
+                case DataType.Integer:
+                    if (attributeInt.TryGetValue(keyName, out int value1))
+                    {
+                        if (value1 == (int)_value.Value) return true;
+                    }
+                    return false;
+                case DataType.Boolean:
+                    if (attributeBool.TryGetValue(keyName, out bool value2))
+                    {
+                        if (value2 == (bool)_value.Value) return true;
+                    }
+                    return false;
+                case DataType.Text:
+                    if (attributeText.TryGetValue(keyName, out string value3))
+                    {
+                        if (value3 == (string)_value.Value) return true;
+                    }
+                    return false;
+                case DataType.Double:
+                    if (attributeFloat.TryGetValue(keyName, out float value4))
+                    {
+                        if (MathF.Abs(value4 - (float)_value.Value) < 0.000001f) return true;
+                    }
+                    return false;
+                default:
+                    return false;
+            }
+        }
+
         public abstract int GetInt(string key);
+
         public abstract float GetFloat(string key);
+
         public abstract bool GetBool(string key);
+
         public abstract string GetText(string key);
 
         public abstract bool TryGetInt(string key, out int value);
+
         public abstract bool TryGetText(string key, out string value);
+
         public abstract bool TryGetFloat(string key, out float value);
+
         public abstract bool TryGetBool(string key, out bool value);
 
         #endregion 尝试获取属性
@@ -232,24 +303,27 @@ namespace ER.Items
             return info;
         }
 
-        public sealed override void CreatAttribute(string key,int value)
+        public override sealed void CreatAttribute(string key, int value)
         {
             Debug.LogError($"<{NameTmp}>物品模板禁止在创建之后修改属性[Int][{key}:{value}]");
         }
-        public sealed override void CreatAttribute(string key, bool value)
+
+        public override sealed void CreatAttribute(string key, bool value)
         {
             Debug.LogError($"<{NameTmp}>物品模板禁止在创建之后修改属性[Bool][{key}:{value}]");
         }
-        public sealed override void CreatAttribute(string key, float value)
+
+        public override sealed void CreatAttribute(string key, float value)
         {
             Debug.LogError($"<{NameTmp}>物品模板禁止在创建之后修改属性[Float][{key}:{value}]");
         }
-        public sealed override void CreatAttribute(string key, string value)
+
+        public override sealed void CreatAttribute(string key, string value)
         {
             Debug.LogError($"<{NameTmp}>物品模板禁止在创建之后修改属性[Text][{key}:{value}]");
         }
 
-        public override int GetInt(string key)=> attributeInt[key];
+        public override int GetInt(string key) => attributeInt[key];
 
         public override float GetFloat(string key) => attributeFloat[key];
 
@@ -259,7 +333,7 @@ namespace ER.Items
 
         public override bool TryGetInt(string key, out int value)
         {
-            if (attributeInt.TryGetValue(key,out value))
+            if (attributeInt.TryGetValue(key, out value))
             {
                 return true;
             }
@@ -304,20 +378,24 @@ namespace ER.Items
     public class ItemVariable : Item
     {
         //ID表示的使用的模板物品的ID
+
         #region 构造函数
+
         public ItemVariable()
         {
             ID = 0;
         }
+
         /// <summary>
         /// 基于一个模板创建一个物品对象
         /// </summary>
         /// <param name="itemTemplate"></param>
-        public ItemVariable(ItemTemplate itemTemplate) 
+        public ItemVariable(ItemTemplate itemTemplate)
         {
             ID = itemTemplate.ID;
             attributeText["Name"] = itemTemplate.NameTmp;
         }
+
         /// <summary>
         /// 基于一个模板创建一个物品对象
         /// </summary>
@@ -326,19 +404,22 @@ namespace ER.Items
         {
             ID = templateID;
             ItemTemplate tmp = ItemTemplateStore.Instance[ID];
-            if (tmp!=null)
+            if (tmp != null)
             {
                 attributeText["Name"] = tmp.NameTmp;
             }
             attributeText["Name"] = "NULL";
         }
-        #endregion
+
+        #endregion 构造函数
 
         #region 属性
+
         /// <summary>
         /// 物品的名称
         /// </summary>
         public string Name { get => attributeText["Name"]; set => attributeText["Name"] = value; }
+
         /// <summary>
         /// 获取整型属性，优先获取模板中的属性
         /// </summary>
@@ -347,12 +428,13 @@ namespace ER.Items
         public override int GetInt(string key)
         {
             ItemTemplate tmp = ItemTemplateStore.Instance[key];
-            if(tmp != null && tmp.TryGetInt(key,out int value))
+            if (tmp != null && tmp.TryGetInt(key, out int value))
             {
                 return value;
             }
             return attributeInt[key];
         }
+
         /// <summary>
         /// 获取浮点型属性，优先获取模板中的属性
         /// </summary>
@@ -367,6 +449,7 @@ namespace ER.Items
             }
             return attributeFloat[key];
         }
+
         /// <summary>
         /// 获取布尔型的属性，优先获取模板中的属性
         /// </summary>
@@ -381,6 +464,7 @@ namespace ER.Items
             }
             return attributeBool[key];
         }
+
         /// <summary>
         /// 获取字符串属性，优先获取模板中的属性
         /// </summary>
@@ -395,6 +479,7 @@ namespace ER.Items
             }
             return attributeText[key];
         }
+
         /// <summary>
         /// 尝试获取整形属性，优先获取模板中的属性
         /// </summary>
@@ -403,12 +488,13 @@ namespace ER.Items
         public override bool TryGetInt(string key, out int value)
         {
             ItemTemplate tmp = ItemTemplateStore.Instance[key];
-            if (tmp != null && tmp.TryGetInt(key,out value))
+            if (tmp != null && tmp.TryGetInt(key, out value))
             {
                 return true;
             }
             return attributeInt.TryGetValue(key, out value);
         }
+
         /// <summary>
         /// 尝试获取字符串属性，优先获取模板中的属性
         /// </summary>
@@ -423,6 +509,7 @@ namespace ER.Items
             }
             return attributeText.TryGetValue(key, out value);
         }
+
         /// <summary>
         /// 尝试获取浮点型属性，优先获取模板中的属性
         /// </summary>
@@ -437,6 +524,7 @@ namespace ER.Items
             }
             return attributeFloat.TryGetValue(key, out value);
         }
+
         /// <summary>
         /// /// <summary>
         /// 尝试获取整形属性，优先获取模板中的属性
@@ -456,7 +544,6 @@ namespace ER.Items
 
         public override void CreatAttribute(string key, int value)
         {
-            
         }
 
         public override void CreatAttribute(string key, float value)
@@ -474,6 +561,6 @@ namespace ER.Items
             throw new NotImplementedException();
         }
 
-        #endregion 尝试获取属性
+        #endregion 属性
     }
 }
