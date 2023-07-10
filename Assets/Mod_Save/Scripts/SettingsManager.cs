@@ -29,7 +29,7 @@ namespace Mod_Save
         /// <summary>
         /// 设置文件所在的路径
         /// </summary>
-        public string settingsPath;
+        private string settingsPath;
 
         private INIHandler INIHD;
 
