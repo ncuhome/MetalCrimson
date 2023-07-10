@@ -20,19 +20,38 @@ namespace UI.SelectTemplate
         /// 所在面板对象
         /// </summary>
         public UITemplateSelectPanel owner;
-        public Animator animator;
         public Action<ItemTemplate> callback;
 
         #region 鼠标监听
         public void OnMouseDown()
         {
-            callback(tmp);
+            print("选项按下");
+            callback.Invoke(tmp);
         }
 
         public void OnMouseOver()
         {
+            print("选项高亮");
+            if(owner!=null)
+            {
+                owner.showPanel.UpdateTemplate(tmp);
+                owner.showPanel.Show();
+            }
+        }
+        public void OnMouseExit()
+        {
+            print("选项离开");
+            if (owner != null)
+            {
+                owner.showPanel.Hide();
+            }
             
         }
         #endregion
+
+        private void Update()
+        {
+            //print("正在更新:"+ Input.mousePosition);
+        }
     }
 }

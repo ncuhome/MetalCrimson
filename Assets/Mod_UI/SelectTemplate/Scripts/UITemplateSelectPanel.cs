@@ -11,6 +11,10 @@ namespace UI.SelectTemplate
 
         private enum Status { MainTMP,ChildTMP,Make,Closed}
         private Status state;//面板状态
+        /// <summary>
+        /// 信息显示面板
+        /// </summary>
+        public UIItemShow showPanel;
 
         private void Start()
         {
@@ -20,10 +24,28 @@ namespace UI.SelectTemplate
         public void Open()
         {
             state = Status.MainTMP;
+            gameObject.SetActive(true);
+            print("打开模具选择窗口");
         }
         public void Close() 
         {
             state = Status.Closed;
+            gameObject.SetActive(false);
+            print("关闭模具选择窗口");
+        }
+        /// <summary>
+        /// 左翻页
+        /// </summary>
+        public void LeftPage()
+        {
+            print("左翻页");
+        }
+        /// <summary>
+        /// 右翻页
+        /// </summary>
+        public void RightPage()
+        {
+            print("右翻页");
         }
 
         private void ToSelectTemplate(ItemTemplate tmp)
@@ -34,6 +56,8 @@ namespace UI.SelectTemplate
         {
 
         }
+
+
         #endregion
     }
 }

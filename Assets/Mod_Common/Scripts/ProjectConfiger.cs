@@ -23,6 +23,7 @@ namespace Mod_Common
             SettingsManager.Instance.SaveSettings();
             ConsolePanel.Instance.Print("Saving Settings");
             ConsolePanel.Instance.Print($"音量大小：{SettingsManager.Instance["Volume"]}");
+            ConsolePanel.Instance.SwitchUsing();
         }
 
         private void Update()

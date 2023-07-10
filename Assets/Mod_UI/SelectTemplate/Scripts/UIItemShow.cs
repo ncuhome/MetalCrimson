@@ -15,6 +15,7 @@ namespace UI
         /// <param name="_tmp">需要展示信息的物品模板</param>
         public void UpdateTemplate(ItemTemplate _tmp)
         {
+            print("更新显示信息");
             tmp = _tmp;
         }
         /// <summary>
@@ -22,16 +23,17 @@ namespace UI
         /// </summary>
         public void Show()
         {
+            print("显示信息面板");
             animator.SetBool("show",true);
-            gameObject.SetActive(true);
         }
         /// <summary>
         /// 隐藏此面板
         /// </summary>
         public void Hide()
         {
+            print("关闭信息面板");
             animator.SetBool("show", false);
-            gameObject.SetActive(false);
+            
         }
         /// <summary>
         /// 跟随鼠标移动
