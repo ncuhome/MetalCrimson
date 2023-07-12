@@ -111,13 +111,24 @@ public class CordLine : MonoBehaviour
 
     private Vector3[] GetCtrlPoint(Vector3 p0,Vector3 p3,float angleEffect,Vector3? preP2 = null)
     {
+        //判断控制dian p2,垂直偏移的正负方向
+        int dir = 0;
+        if(Vector3.Cross(Vector2.up,p3-p0).x>0) dir = 1;
+        else dir = -1;
+
+        //当前两个点(p0;p3)所在向量和垂直方向的夹角
+        float vAngle = Vector2.Angle(p3-p0,Vector3.down);
+        //向量重合度越高，影响系数越小
+        float vAngleEffect = vAngle > 90 ? (180 - vAngle) / 90f : vAngle / 90f;
+
+
         Vector3 p1, p2;
 
         p1 = p0 + (p3 - p0) * P1HDrift;
         p2 = p0 + (p3 - p0) * P2HDrift;
 
         if(preP2!=null) p1 = p0 + (p0 - (Vector3)preP2);
-        p2 = (Vector2)p2 + Vector2.Perpendicular(p3 - p0).normalized*angleEffect*P2VDrift;
+        p2 = (Vector2)p2 + Vector2.Perpendicular(p3 - p0).normalized*angleEffect*P2VDrift*dir*vAngleEffect;
         return new Vector3[] { p1, p2 };
     }
 
