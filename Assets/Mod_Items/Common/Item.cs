@@ -64,6 +64,28 @@ namespace ER.Items
                 }
             }
         }
+        /// <summary>
+        /// 检查物品信息，并将其中的ID和名称提出出来
+        /// </summary>
+        public void Check()
+        {
+            foreach(var pair in attributeText)
+            {
+                if(pair.Key == "NameTmp")
+                {
+                    NameTmp = pair.Value;
+                    break;
+                }
+            }
+            foreach(var pair in attributeInt)
+            {
+                if(pair.Key == "ID")
+                {
+                    ID = pair.Value;
+                    return;
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -309,6 +331,12 @@ namespace ER.Items
         #endregion 其他方法
     }
 
+    public struct BaseInfo
+    {
+        public int ID;
+        public string Name;
+    }
+
     /// <summary>
     /// 物品模板类（静态的物品类）
     /// </summary>
@@ -382,6 +410,16 @@ namespace ER.Items
             info.NameTmp = NameTmp;
             return info;
         }
+
+        public BaseInfo BaseInfo()
+        {
+            return new BaseInfo()
+            {
+                ID= ID,
+                Name=NameTmp
+            };
+        }
+
 
         #region 物品模板禁止在创建后修改属性
 

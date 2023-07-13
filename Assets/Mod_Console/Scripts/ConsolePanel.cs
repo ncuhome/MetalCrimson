@@ -68,10 +68,12 @@ namespace Mod_Console
             if(gameObject.activeSelf)
             {
                 gameObject.SetActive(false);
+                input.DeactivateInputField();
             }
             else
             {
                 gameObject.SetActive(true);
+                input.ActivateInputField();
             }
         }
         /// <summary>

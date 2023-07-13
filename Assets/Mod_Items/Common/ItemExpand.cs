@@ -37,6 +37,19 @@ namespace ER.Items
             string[] spt = item.SplitText(key, spc);
             return spt.Contains(aimValue);
         }
+        /// <summary>
+        /// 判断一个字符串数组是否全为空字符
+        /// </summary>
+        /// <param name="strings"></param>
+        /// <returns></returns>
+        public static bool isEmpty(this string[] strings)
+        {
+            for(int i=0;i<strings.Length;i++)
+            {
+                if (strings[i] != string.Empty)return false;
+            }
+            return true;
+        }
 
     }
 }
