@@ -7,6 +7,19 @@ namespace Mod_Save
     /// </summary>
     public class SaveManager
     {
+        #region 单例封装
+        private static SaveManager instance;
+        public static SaveManager Instance 
+        {
+            get
+            {
+                if (instance == null) { instance = new SaveManager(); }
+                return instance;
+            }
+        }
+        private SaveManager() { }
+        #endregion
+
         /// <summary>
         /// 存档目录
         /// </summary>

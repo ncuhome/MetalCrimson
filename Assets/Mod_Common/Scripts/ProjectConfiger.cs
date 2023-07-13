@@ -24,6 +24,7 @@ namespace Mod_Common
             ConsolePanel.Instance.Print("Saving Settings");
             ConsolePanel.Instance.Print($"音量大小：{SettingsManager.Instance["Volume"]}");
             ConsolePanel.Instance.SwitchUsing();
+            SaveManager.Instance.savePackPath = @"Assets/StreamingAssets/Saves";
         }
 
         private void Update()
