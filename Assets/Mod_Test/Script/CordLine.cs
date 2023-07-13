@@ -130,6 +130,7 @@ public class CordLine : MonoBehaviour
         if(preP2!=null) p1 = p0 + (p0 - (Vector3)preP2);
         p2 = (Vector2)p2 + Vector2.Perpendicular(p3 - p0).normalized*angleEffect*P2VDrift*dir*vAngleEffect;
         return new Vector3[] { p1, p2 };
+
     }
 
     // Update is called once per frame

@@ -58,5 +58,5 @@ Material:
     - _NoiseWidth: 0.127
     - _Scale: 25
     m_Colors:
-    - _Color: {r: 0.5858004, g: 0.39215684, b: 1, a: 0}
+    - _Color: {r: 0.11792451, g: 1, b: 0.8022056, a: 0}
   m_BuildTextureStacks: []
