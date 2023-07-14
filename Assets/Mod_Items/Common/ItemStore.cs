@@ -1,7 +1,5 @@
 ﻿// Ignore Spelling: Json
 
-using JetBrains.Annotations;
-using System;
 using System.Collections.Generic;
 
 namespace ER.Items
@@ -12,10 +10,12 @@ namespace ER.Items
     public class ItemStore
     {
         private int size = 64;
+
         /// <summary>
         /// 仓库名称
         /// </summary>
         public string storeName;
+
         /// <summary>
         /// 仓库大小
         /// </summary>
@@ -26,9 +26,9 @@ namespace ER.Items
             {
                 size = value;
                 if (size < 0) size = 0;
-                while(items.Count>size)
+                while (items.Count > size)
                 {
-                    items.RemoveAt(items.Count-1);
+                    items.RemoveAt(items.Count - 1);
                 }
             }
         }
@@ -45,13 +45,14 @@ namespace ER.Items
         /// <returns></returns>
         public bool AddItem(ItemVariable item)
         {
-            if(items.Count<size)
+            if (items.Count < size)
             {
                 items.Add(item);
                 return true;
             }
             return false;
         }
+
         /// <summary>
         /// 根据索引从此仓库移除物品，如果物品不存在则返回false
         /// </summary>
@@ -59,13 +60,14 @@ namespace ER.Items
         /// <returns></returns>
         public bool RemoveItem(int index)
         {
-            if(index>=0 || index<items.Count)
+            if (index >= 0 || index < items.Count)
             {
                 items.RemoveAt(index);
                 return true;
             }
             return false;
         }
+
         /// <summary>
         /// 清空仓库
         /// </summary>
@@ -73,6 +75,7 @@ namespace ER.Items
         {
             items.Clear();
         }
+
         /// <summary>
         /// 根据物品索引获取指定物品
         /// </summary>

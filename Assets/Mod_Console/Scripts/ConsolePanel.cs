@@ -1,5 +1,4 @@
 ﻿using ER.Parser;
-using Mod_Console;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
@@ -10,72 +9,104 @@ namespace Mod_Console
     public class ConsolePanel : MonoBehaviour
     {
         #region 单例封装
+
         public static ConsolePanel Instance { get; private set; } = null;
+
         public void Awake()
         {
             if (Instance is null) { Instance = this; }
             else { Destroy(gameObject); }
             DontDestroyOnLoad(this);
         }
-        #endregion
+
+        #endregion 单例封装
 
         #region 组件 | 属性
+
         /// <summary>
         /// 显示器对象
         /// </summary>
         public TMP_InputField monitor;//显示器
+
         /// <summary>
         /// 输入框对象
         /// </summary>
         public TMP_InputField input;//输入框
+
         /// <summary>
         /// 使用的指令解释器
         /// </summary>
         public DefaultInterpreter interpreter = new DefaultInterpreter();//指令器
+
         /// <summary>
         /// 最大消息数
         /// </summary>
         public int maxLines = 50;//消息最大数量
+
         /// <summary>
         /// 历史输入记录的最大限制
         /// </summary>
         public int maxHistory = 20;//历史输入最大记录数量
+
         /// <summary>
         /// 历史输入信息
         /// </summary>
         public List<string> history = new List<string>(20);//历史输入
+
         private int histortIndex = -1;//历史索引
         private bool inputing = false;//是否正处于输入状态
-        #endregion
+
+        #endregion 组件 | 属性
 
         #region 委托
+
         public void ActiveInput()
         {
             inputing = true;
         }
+
         public void InactiveInput()
         {
             inputing = false;
         }
-        #endregion
+
+        #endregion 委托
 
         #region 功能函数
+
+        /// <summary>
+        /// 关闭面板
+        /// </summary>
+        public void CloseUsing()
+        {
+            gameObject.SetActive(false);
+            input.DeactivateInputField();
+        }
+
+        /// <summary>
+        /// 打开面板
+        /// </summary>
+        public void OpenUsing()
+        {
+            gameObject.SetActive(true);
+            input.ActivateInputField();
+        }
+
         /// <summary>
         /// 切换显示状态
         /// </summary>
         public void SwitchUsing()
         {
-            if(gameObject.activeSelf)
+            if (gameObject.activeSelf)
             {
-                gameObject.SetActive(false);
-                input.DeactivateInputField();
+                CloseUsing();
             }
             else
             {
-                gameObject.SetActive(true);
-                input.ActivateInputField();
+                OpenUsing();
             }
         }
+
         /// <summary>
         /// 提交输入框中的信息
         /// </summary>
@@ -99,6 +130,7 @@ namespace Mod_Console
             }
             input.text = string.Empty;
         }
+
         /// <summary>
         /// 向控制台打印消息
         /// </summary>
@@ -109,6 +141,7 @@ namespace Mod_Console
             monitor.text += txt;
             LimitLines();
         }
+
         /// <summary>
         /// 向控制台打印异常消息
         /// </summary>
@@ -120,6 +153,7 @@ namespace Mod_Console
             monitor.text += new StringBuilder("<color=red>").Append(txt).Append("</color>");
             LimitLines();
         }
+
         /// <summary>
         /// 清空控制台消息
         /// </summary>
@@ -127,6 +161,7 @@ namespace Mod_Console
         {
             monitor.text = string.Empty;
         }
+
         /// <summary>
         /// 解释指定指令
         /// </summary>
@@ -140,15 +175,16 @@ namespace Mod_Console
             }
             return true;
         }
-        #endregion
+
+        #endregion 功能函数
 
         #region 内部函数
+
         /// <summary>
         /// 限制消息行数
         /// </summary>
         private void LimitLines()
         {
-
             string[] ts = monitor.text.Split('\n');
             if (ts.Length > maxLines)
             {
@@ -161,6 +197,7 @@ namespace Mod_Console
                 monitor.text = newText.ToString();
             }
         }
+
         /// <summary>
         /// 记录输入历史
         /// </summary>
@@ -173,6 +210,7 @@ namespace Mod_Console
             }
             histortIndex = history.Count;
         }
+
         private void MoveCursorToEnd()
         {
             if (input != null)
@@ -182,6 +220,7 @@ namespace Mod_Console
                 input.selectionFocusPosition = input.text.Length;
             }
         }
+
         private void Update()
         {
             if (inputing)
@@ -218,7 +257,7 @@ namespace Mod_Console
                 }
             }
         }
-        #endregion
-    }
 
+        #endregion 内部函数
+    }
 }

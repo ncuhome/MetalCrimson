@@ -64,22 +64,23 @@ namespace ER.Items
                 }
             }
         }
+
         /// <summary>
         /// 检查物品信息，并将其中的ID和名称提出出来
         /// </summary>
         public void Check()
         {
-            foreach(var pair in attributeText)
+            foreach (var pair in attributeText)
             {
-                if(pair.Key == "NameTmp")
+                if (pair.Key == "NameTmp")
                 {
                     NameTmp = pair.Value;
                     break;
                 }
             }
-            foreach(var pair in attributeInt)
+            foreach (var pair in attributeInt)
             {
-                if(pair.Key == "ID")
+                if (pair.Key == "ID")
                 {
                     ID = pair.Value;
                     return;
@@ -415,11 +416,10 @@ namespace ER.Items
         {
             return new BaseInfo()
             {
-                ID= ID,
-                Name=NameTmp
+                ID = ID,
+                Name = NameTmp
             };
         }
-
 
         #region 物品模板禁止在创建后修改属性
 

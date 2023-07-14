@@ -4,7 +4,6 @@ namespace Mod_Console
 {
     public static class interpreterExpand
     {
-
         /// <summary>
         /// 用于判断一个 Data 数组是否为空数组
         /// </summary>

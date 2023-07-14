@@ -1,13 +1,9 @@
 ﻿using ER.Parser;
-using System;
 using System.Collections.Generic;
-using static UnityEditor.LightingExplorerTableColumn;
 using DataType = ER.Parser.DataType;
 
 namespace ER.Items
 {
-    
-
     /// <summary>
     /// 物品系统(静态)，储存物品模板，相当于是一个物品图鉴;(只读)
     /// </summary>
@@ -29,7 +25,8 @@ namespace ER.Items
             }
         }
 
-        private ItemTemplateStore() { }
+        private ItemTemplateStore()
+        { }
 
         #endregion 单例封装
 
@@ -78,7 +75,7 @@ namespace ER.Items
             {
                 string[] itemInfo = datas[i];
                 if (itemInfo.isEmpty()) continue;//如果为数据空行直接跳过物品封装
-                
+
                 Dictionary<string, int> ints = new();
                 Dictionary<string, float> floats = new();
                 Dictionary<string, string> strings = new();
@@ -142,7 +139,7 @@ namespace ER.Items
                             case DataType.Boolean:
                                 if (info.ToLower() == "true")
                                 {
-                                    bools[head] =  true;
+                                    bools[head] = true;
                                 }
                                 else
                                 {
@@ -177,7 +174,7 @@ namespace ER.Items
                 ItemTemplate item = new(infos);
 
                 items[item.NameTmp] = item;
-                items_ID[item.ID]= item;
+                items_ID[item.ID] = item;
             }
         }
 
@@ -224,20 +221,21 @@ namespace ER.Items
             foreach (int tmp in items_ID.Keys)
             {
                 ItemTemplate item = items_ID[tmp];
-                if(item.Contains(key, dataType))
+                if (item.Contains(key, dataType))
                 {
                     tmps.Add(item);
                 }
             }
             return tmps;
         }
+
         /// <summary>
         /// 查找拥有指定属性的物品，同时匹配目标属性值
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public List<ItemTemplate> Find(string key,Data value)
+        public List<ItemTemplate> Find(string key, Data value)
         {
             if (value.Type != DataType.Integer || value.Type != DataType.Double || value.Type != DataType.Text || value.Type != DataType.Boolean) return null;
             List<ItemTemplate> tmps = new List<ItemTemplate>();
@@ -251,6 +249,7 @@ namespace ER.Items
             }
             return tmps;
         }
+
         /// <summary>
         /// 查询指定属性包含指定值的所有物品对象
         /// </summary>
@@ -258,19 +257,20 @@ namespace ER.Items
         /// <param name="value">需要包含的属性值</param>
         /// <param name="spc">属性值分割符</param>
         /// <returns></returns>
-        public List<ItemTemplate> FindContainsPart(string key,string value,char spc)
+        public List<ItemTemplate> FindContainsPart(string key, string value, char spc)
         {
             List<ItemTemplate> tmps = new List<ItemTemplate>();
             foreach (int tmp in items_ID.Keys)
             {
                 ItemTemplate item = items_ID[tmp];
-                if (item.ContainsSPT(key, spc,value)) 
+                if (item.ContainsSPT(key, spc, value))
                 {
                     tmps.Add(item);
                 }
             }
             return tmps;
         }
+
         /// <summary>
         /// 获取物品模板
         /// </summary>
@@ -292,6 +292,7 @@ namespace ER.Items
                 return null;
             }
         }
+
         /// <summary>
         /// 获取模板的基础信息列表
         /// </summary>
@@ -300,7 +301,7 @@ namespace ER.Items
         {
             BaseInfo[] infos = new BaseInfo[items.Count];
             int i = 0;
-            foreach(string key in items.Keys)
+            foreach (string key in items.Keys)
             {
                 infos[i] = items[key].BaseInfo();
                 i++;

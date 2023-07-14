@@ -1,10 +1,9 @@
 ﻿using ER.Items;
-using JetBrains.Annotations;
 using UnityEngine;
 
 namespace UI
 {
-    public class UIItemShow:MonoBehaviour
+    public class UIItemShow : MonoBehaviour
     {
         public Animator animator;
         private ItemTemplate tmp;
@@ -18,14 +17,16 @@ namespace UI
             print("更新显示信息");
             tmp = _tmp;
         }
+
         /// <summary>
         /// 显示此面板
         /// </summary>
         public void Show()
         {
             print("显示信息面板");
-            animator.SetBool("show",true);
+            animator.SetBool("show", true);
         }
+
         /// <summary>
         /// 隐藏此面板
         /// </summary>
@@ -33,8 +34,8 @@ namespace UI
         {
             print("关闭信息面板");
             animator.SetBool("show", false);
-            
         }
+
         /// <summary>
         /// 跟随鼠标移动
         /// </summary>

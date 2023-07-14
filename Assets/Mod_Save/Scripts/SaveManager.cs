@@ -8,8 +8,10 @@ namespace Mod_Save
     public class SaveManager
     {
         #region 单例封装
+
         private static SaveManager instance;
-        public static SaveManager Instance 
+
+        public static SaveManager Instance
         {
             get
             {
@@ -17,8 +19,11 @@ namespace Mod_Save
                 return instance;
             }
         }
-        private SaveManager() { }
-        #endregion
+
+        private SaveManager()
+        { }
+
+        #endregion 单例封装
 
         /// <summary>
         /// 存档目录
@@ -53,19 +58,20 @@ namespace Mod_Save
                 saves = directory.GetFiles();
             }
         }
+
         /// <summary>
         /// 保存存档
         /// </summary>
         /// <param name="saveName">存档文件名称(不包含后缀)</param>
         public void Save(string saveName)
         {
-            string path = Path.Combine(savePackPath, saveName,".sav");
+            string path = Path.Combine(savePackPath, saveName, ".sav");
             int index = 0;
-            while(File.Exists(path))
+            while (File.Exists(path))
             {
-                path = Path.Combine(savePackPath, saveName,$"({index++})", ".sav");
+                path = Path.Combine(savePackPath, saveName, $"({index++})", ".sav");
             }
-            File.WriteAllText(path,SaveWrapper.Instance.Serialize());
+            File.WriteAllText(path, SaveWrapper.Instance.Serialize());
         }
     }
 }

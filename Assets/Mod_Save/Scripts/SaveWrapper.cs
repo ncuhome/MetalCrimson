@@ -44,6 +44,13 @@ namespace Mod_Save
             }
             return null;
         }
+
+        /// <summary>
+        /// 向控制台输出存档信息
+        /// </summary>
+        public void PrintInfo()
+        {
+        }
     }
 
     /// <summary>

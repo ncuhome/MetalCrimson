@@ -1,12 +1,11 @@
-using JetBrains.Annotations;
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
 namespace ER.Parser
 {
     /// <summary>
-    /// INIÎÄ¼ş±à¼­Æ÷
+    /// INIæ–‡ä»¶ç¼–è¾‘å™¨
     /// </summary>
     public class INIWriter
     {
@@ -17,26 +16,28 @@ namespace ER.Parser
             sections = new();
         }
 
-        #region Ğ´Èë·½·¨
+        #region å†™å…¥æ–¹æ³•
+
         /// <summary>
-        /// Ìí¼ÓĞÂµÄ½Ú¶Î
+        /// æ·»åŠ æ–°çš„èŠ‚æ®µ
         /// </summary>
         /// <param name="sectionName"></param>
         public void AddSection(string sectionName)
         {
-            if(!sections.ContainsKey(sectionName))
+            if (!sections.ContainsKey(sectionName))
             {
                 sections[sectionName] = new Dictionary<string, string>();
             }
         }
+
         /// <summary>
-        /// Ìí¼Ó¼üÖµ¶Ô
+        /// æ·»åŠ é”®å€¼å¯¹
         /// </summary>
-        /// <param name="sectionName">ËùÔÚ½Ú¶ÎÃû³Æ</param>
-        /// <param name="key">¼üÃû</param>
-        /// <param name="value">ÖµÃû</param>
-        /// <returns>Èç¹ûÖ¸¶¨½Ú¶Î²»´æÔÚÔò·µ»Øfalse²¢ÇÒÌí¼ÓÊ§°Ü</returns>
-        public bool AddPair(string sectionName,string key,string value)
+        /// <param name="sectionName">æ‰€åœ¨èŠ‚æ®µåç§°</param>
+        /// <param name="key">é”®å</param>
+        /// <param name="value">å€¼å</param>
+        /// <returns>å¦‚æœæŒ‡å®šèŠ‚æ®µä¸å­˜åœ¨åˆ™è¿”å›falseå¹¶ä¸”æ·»åŠ å¤±è´¥</returns>
+        public bool AddPair(string sectionName, string key, string value)
         {
             if (sections.ContainsKey(sectionName))
             {
@@ -49,13 +50,13 @@ namespace ER.Parser
         }
 
         /// <summary>
-        /// ÒÆ³ıÖ¸¶¨½Ú¶ÎµÄËùÓĞÊı¾İ
+        /// ç§»é™¤æŒ‡å®šèŠ‚æ®µçš„æ‰€æœ‰æ•°æ®
         /// </summary>
-        /// <param name="sectionName">½Ú¶ÎÃû³Æ</param>
-        /// <returns>ÈôÖ¸¶¨½Ú¶Î²»´æÔÚ£¬Ôò·µ»Øfalse</returns>
+        /// <param name="sectionName">èŠ‚æ®µåç§°</param>
+        /// <returns>è‹¥æŒ‡å®šèŠ‚æ®µä¸å­˜åœ¨ï¼Œåˆ™è¿”å›false</returns>
         public bool DeleteSection(string sectionName)
         {
-            if(sections.ContainsKey(sectionName))
+            if (sections.ContainsKey(sectionName))
             {
                 sections.Remove(sectionName);
                 return true;
@@ -64,30 +65,32 @@ namespace ER.Parser
         }
 
         /// <summary>
-        /// ÒÆ³ıÖ¸¶¨½Ú¶ÎÏÂµÄ¼üÖµ¶Ô
+        /// ç§»é™¤æŒ‡å®šèŠ‚æ®µä¸‹çš„é”®å€¼å¯¹
         /// </summary>
-        /// <param name="sectionName">½Ú¶ÎÃû³Æ</param>
-        /// <param name="key">¼üÃû</param>
-        /// <returns>ÈôÒÆ³ıÊ§°ÜÔò·µ»Øfalse</returns>
-        public bool DeletePair(string sectionName,string key)
+        /// <param name="sectionName">èŠ‚æ®µåç§°</param>
+        /// <param name="key">é”®å</param>
+        /// <returns>è‹¥ç§»é™¤å¤±è´¥åˆ™è¿”å›false</returns>
+        public bool DeletePair(string sectionName, string key)
         {
-            if(sections.ContainsKey(sectionName) && sections[sectionName].ContainsKey(key))
+            if (sections.ContainsKey(sectionName) && sections[sectionName].ContainsKey(key))
             {
                 sections[sectionName].Remove(key);
                 return true;
             }
             return false;
         }
+
         /// <summary>
-        /// ±£´æÄÚÈİµ½±¾µØINIÎÄ¼ş
+        /// ä¿å­˜å†…å®¹åˆ°æœ¬åœ°INIæ–‡ä»¶
         /// </summary>
-        /// <param name="path">INIÎÄ¼şÂ·¾¶</param>
+        /// <param name="path">INIæ–‡ä»¶è·¯å¾„</param>
         public void Save(string path)
         {
             File.WriteAllText(path, GetSaveString());
         }
+
         /// <summary>
-        /// »ñÈ¡±£´æĞÅÏ¢ÎÄ±¾
+        /// è·å–ä¿å­˜ä¿¡æ¯æ–‡æœ¬
         /// </summary>
         /// <returns></returns>
         public string GetSaveString()
@@ -112,8 +115,9 @@ namespace ER.Parser
             }
             return txt.ToString();
         }
+
         /// <summary>
-        /// ½«Ö¸¶¨×Ö·û´®´¦Àí³ÉÖµ×Ö·û´®£¨Ä¿Ç°¹¦ÄÜÉĞÎ´ÍêÉÆ£©
+        /// å°†æŒ‡å®šå­—ç¬¦ä¸²å¤„ç†æˆå€¼å­—ç¬¦ä¸²ï¼ˆç›®å‰åŠŸèƒ½å°šæœªå®Œå–„ï¼‰
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -128,14 +132,17 @@ namespace ER.Parser
                         sb.Append('\\');
                         sb.Append('n');
                         break;
+
                     case '\r':
                         sb.Append('\\');
                         sb.Append('r');
                         break;
+
                     case '\t':
                         sb.Append('\\');
                         sb.Append('t');
                         break;
+
                     default:
                         sb.Append(c);
                         break;
@@ -143,6 +150,7 @@ namespace ER.Parser
             }
             return sb.ToString();
         }
-        #endregion
+
+        #endregion å†™å…¥æ–¹æ³•
     }
 }
