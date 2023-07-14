@@ -89,7 +89,7 @@ namespace Mod_Console
             SaveManager.Instance.UpdateList();
             foreach (var save in SaveManager.Instance.saves)
             {
-                Print(save.Name);
+                Print(Path.GetFileNameWithoutExtension(save.Name));
             }
             return Data.Empty;
         }

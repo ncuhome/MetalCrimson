@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace Mod_Save
 {
@@ -33,7 +35,7 @@ namespace Mod_Save
         /// <summary>
         /// 存档列表
         /// </summary>
-        public FileInfo[] saves;
+        public List<FileInfo> saves;
 
         /// <summary>
         /// 从自定义路径中读取存档
@@ -55,7 +57,15 @@ namespace Mod_Save
             if (Directory.Exists(savePackPath))
             {
                 DirectoryInfo directory = new DirectoryInfo(savePackPath);
-                saves = directory.GetFiles();
+                saves = directory.GetFiles().ToList();
+                for(int i=0;i<saves.Count;i++)
+                {
+                    if (Path.GetExtension(saves[i].Name) != ".sav")
+                    {
+                        saves.RemoveAt(i);
+                        i--;
+                    }
+                }
             }
         }
 
@@ -65,12 +75,17 @@ namespace Mod_Save
         /// <param name="saveName">存档文件名称(不包含后缀)</param>
         public void Save(string saveName)
         {
-            string path = Path.Combine(savePackPath, saveName, ".sav");
+            if (!Directory.Exists(savePackPath))
+            {
+                Directory.CreateDirectory(savePackPath);
+            }
+            string path = Path.Combine(savePackPath, saveName + ".sav");
             int index = 0;
             while (File.Exists(path))
             {
-                path = Path.Combine(savePackPath, saveName, $"({index++})", ".sav");
+                path = Path.Combine(savePackPath, saveName + $"({index++}).sav");
             }
+            File.Create(path).Close();
             File.WriteAllText(path, SaveWrapper.Instance.Serialize());
         }
     }
