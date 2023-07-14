@@ -68,6 +68,18 @@ namespace Mod_Save
         /// 存档信息
         /// </summary>
         public Dictionary<string, object> data;
+
+        public SaveEntry()
+        {
+            identifier = "Unkown";
+            data = new Dictionary<string, object>();
+        }
+
+        public SaveEntry(string _identifier)
+        {
+            identifier = _identifier;
+            data = new Dictionary<string, object>();
+        }
     }
 
     /// <summary>
