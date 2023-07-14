@@ -155,6 +155,11 @@ namespace ER.Parser
         }
 
         #region 方法
+        public int ToInt()=> (int)Value;
+        public float ToFloat()=>(float)Value;
+        public double ToDouble()=>(double)Value;
+        public new string ToString()=>Value.ToString();
+
         /// <summary>
         /// 此数据是否为空数据
         /// </summary>

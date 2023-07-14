@@ -14,9 +14,9 @@ namespace ER.Items
         /// <param name="key"></param>
         /// <param name="spc"></param>
         /// <returns></returns>
-        public static string[] SplitText(this Item item,string key,char spc)
+        public static string[] SplitText(this Item item, string key, char spc)
         {
-            if(item.Contains(key,DataType.Text))
+            if (item.Contains(key, DataType.Text))
             {
                 string txt = item.GetText(key);
                 return txt.Split(spc);
@@ -32,11 +32,24 @@ namespace ER.Items
         /// <param name="spc"></param>
         /// <param name="aimValue"></param>
         /// <returns></returns>
-        public static bool ContainsSPT(this Item item,string key,char spc,string aimValue)
+        public static bool ContainsSPT(this Item item, string key, char spc, string aimValue)
         {
             string[] spt = item.SplitText(key, spc);
             return spt.Contains(aimValue);
         }
 
+        /// <summary>
+        /// 判断一个字符串数组是否全为空字符
+        /// </summary>
+        /// <param name="strings"></param>
+        /// <returns></returns>
+        public static bool isEmpty(this string[] strings)
+        {
+            for (int i = 0; i < strings.Length; i++)
+            {
+                if (strings[i] != string.Empty) return false;
+            }
+            return true;
+        }
     }
 }

@@ -11,11 +11,13 @@ namespace Mod_Save
         /// 片段身份标识（唯一身份标识符）
         /// </summary>
         public string Identifier { get; }
+
         /// <summary>
         /// 获取存档片段
         /// </summary>
         /// <returns></returns>
         public SaveEntry GetSaveEntry();
+
         /// <summary>
         /// 根据存档片段还原对象状态
         /// </summary>
@@ -26,12 +28,14 @@ namespace Mod_Save
     public abstract class SaveItem : MonoBehaviour, ISavable
     {
         public string identifier = "Test";
-        public string Identifier { get=>identifier; }
+        public string Identifier { get => identifier; }
+
         /// <summary>
         /// 获取存档片段
         /// </summary>
         /// <returns></returns>
         public abstract SaveEntry GetSaveEntry();
+
         /// <summary>
         /// 根据存档片段还原对象状态
         /// </summary>

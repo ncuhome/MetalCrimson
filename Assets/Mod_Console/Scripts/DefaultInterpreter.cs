@@ -8,31 +8,36 @@ namespace Mod_Console
 {
     public class DefaultInterpreter : Interpreter
     {
-        public static void Print(string txt,bool newline = true)
+        public static void Print(string txt, bool newline = true)
         {
             ConsolePanel.Instance.Print(txt, newline);
         }
+
         public static void PrintError(string txt, bool newline = true)
         {
             ConsolePanel.Instance.PrintError(txt, newline);
         }
 
         #region 指令函数
+
         protected Data CMD_clear()
         {
             ConsolePanel.Instance.Clear();
             return Data.Empty;
         }
+
         protected Data CMD_Erinbone()
         {
             Print("This is the author Erinbone. This version is currently in the testing phase. Welcome to participate in the testing and report errors to us");
             return Data.Empty;
         }
+
         protected Data CMD_exit()
         {
             Application.Quit();
             return Data.Empty;
         }
+
         protected Data CMD_help(Data[] parameters)
         {
             Print("----------help----------");
@@ -40,7 +45,6 @@ namespace Mod_Console
             int page = 1;
             if (parameters.Length == 0)
             {
-
             }
             else if (parameters[0].Type == DataType.Integer)
             {
@@ -61,6 +65,7 @@ namespace Mod_Console
                     Print("clear      *clear console message");
                     Print("help [page]     *get help");
                     break;
+
                 case 2:
                     Print("Oh! Construction is underway here");
                     break;
@@ -69,10 +74,11 @@ namespace Mod_Console
             Print("----------help----------");
             return Data.Empty;
         }
+
         protected Data CMD_print(Data[] parameters)
         {
             Data txt = parameters[0];
-            if(txt.isError())
+            if (txt.isError())
             {
                 return Data.Error;
             }
@@ -80,30 +86,32 @@ namespace Mod_Console
             Print(text);
             return new Data(text, DataType.Text);
         }
+
         protected Data CMD_openfile(Data[] parameters)
         {
-            if(parameters.Length == 0)
+            if (parameters.Length == 0)
             {
                 PrintError("Path parameter is empty!");
                 return Data.Error;
             }
             Data path = parameters[0];
-            if(path.isError())//数据错误或者文件不存在时返回错误
+            if (path.isError())//数据错误或者文件不存在时返回错误
             {
                 PrintError("Path parameter error");
                 return Data.Error;
             }
             string pt = path.Value.ToString();
-            if(File.Exists(pt))
+            if (File.Exists(pt))
             {
                 string txt = File.ReadAllText(pt);
                 return new Data(txt, DataType.Text);
             }
             PrintError($"The file path does not exist:{pt}");
             return Data.Error;
-            
         }
-        #endregion
+
+        #endregion 指令函数
+
         /// <summary>
         /// 解释指令语句，优先执行EffectuateSuper函数（由子类实现），如果子类没有注册该指令或者执行失败则执行本函数的解释语句
         /// </summary>
@@ -113,28 +121,35 @@ namespace Mod_Console
         public override Data Effectuate(string commandName, Data[] parameters)
         {
             Data data = EffectuateSuper(commandName, parameters);
-            if(data.isError())
+            if (data.isError())
             {
                 switch (commandName)
                 {
                     case "clear":
                         return CMD_clear();
+
                     case "Erinbone":
                         return CMD_Erinbone();
+
                     case "exit":
                         return CMD_exit();
+
                     case "help":
                         return CMD_help(parameters);
+
                     case "print":
                         return CMD_print(parameters);
+
                     case "openfile":
                         return CMD_openfile(parameters);
+
                     default:
                         return Data.Error;
                 }
             }
             return data;
         }
+
         /// <summary>
         /// 子类需要具体实现的函数
         /// </summary>

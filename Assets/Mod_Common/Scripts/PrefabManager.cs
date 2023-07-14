@@ -1,15 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class PrefabManager : MonoBehaviour
 {
     #region 单例封装
+
     private PrefabManager instance;
-    public PrefabManager Instance { get{ return instance; } }
+    public PrefabManager Instance
+    { get { return instance; } }
+
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -18,11 +20,14 @@ public class PrefabManager : MonoBehaviour
             Destroy(this);
         }
     }
-    #endregion
+
+    #endregion 单例封装
 
     #region 预制体
+
     public List<GameObject> prefabs = new List<GameObject>();
-    #endregion
+
+    #endregion 预制体
 
     /// <summary>
     /// 通过名称获取指定预制体
@@ -31,15 +36,16 @@ public class PrefabManager : MonoBehaviour
     /// <returns></returns>
     public GameObject GetPrefab(string name)
     {
-        foreach(GameObject pb in prefabs)
+        foreach (GameObject pb in prefabs)
         {
-            if(pb.name == name)
+            if (pb.name == name)
             {
                 return pb;
             }
         }
         return null;
     }
+
     /// <summary>
     /// 添加新的物体作为预制体（一般不使用）
     /// </summary>
@@ -48,6 +54,7 @@ public class PrefabManager : MonoBehaviour
     {
         prefabs.Add(obj);
     }
+
     /// <summary>
     /// 移除指定预制体
     /// </summary>

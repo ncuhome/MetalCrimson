@@ -1,7 +1,5 @@
 ﻿using ER.Parser;
-using System;
 using System.Collections.Generic;
-using static UnityEditor.LightingExplorerTableColumn;
 using DataType = ER.Parser.DataType;
 
 namespace ER.Items
@@ -27,7 +25,8 @@ namespace ER.Items
             }
         }
 
-        private ItemTemplateStore() { }
+        private ItemTemplateStore()
+        { }
 
         #endregion 单例封装
 
@@ -39,7 +38,7 @@ namespace ER.Items
         /// </summary>
         public void LoadItemsList(string path)
         {
-            List<string[]> datas = CSVParser.ParseCSVText(path);
+            List<string[]> datas = CSVParser.ParseCSV(path);
 
             string[] type0 = datas[0];//数据类型(表外表头)
             DataType[] types = new DataType[type0.Length];
@@ -75,7 +74,12 @@ namespace ER.Items
             for (int i = 2; i < datas.Count; i++)
             {
                 string[] itemInfo = datas[i];
-                ItemTemplate item = new();
+                if (itemInfo.isEmpty()) continue;//如果为数据空行直接跳过物品封装
+
+                Dictionary<string, int> ints = new();
+                Dictionary<string, float> floats = new();
+                Dictionary<string, string> strings = new();
+                Dictionary<string, bool> bools = new();
 
                 #region 填入物品信息
 
@@ -83,7 +87,7 @@ namespace ER.Items
                 {
                     string head = heads[k];
                     DataType type = types[k];
-                    if (head == string.Empty) continue;//表头为空直接跳过
+                    if (head == string.Empty) continue;//数据对应的表头为空直接跳过
 
                     #region 封装物品的信息
 
@@ -92,23 +96,23 @@ namespace ER.Items
                         switch (type)
                         {
                             case DataType.Integer:
-                                item.CreatAttribute(head, 0);
+                                ints[head] = 0;
                                 break;
 
                             case DataType.Text:
-                                item.CreatAttribute(head, string.Empty);
+                                strings[head] = string.Empty;
                                 break;
 
                             case DataType.Boolean:
-                                item.CreatAttribute(head, false);
+                                bools[head] = false;
                                 break;
 
                             case DataType.Double:
-                                item.CreatAttribute(head, 0f);
+                                floats[head] = 0f;
                                 break;
 
                             default:
-                                item.CreatAttribute(head, string.Empty);
+                                strings[head] = string.Empty;
                                 break;
                         }
                     }
@@ -120,42 +124,42 @@ namespace ER.Items
                             case DataType.Integer:
                                 if (int.TryParse(info, out int value))
                                 {
-                                    item.CreatAttribute(head, value);
+                                    ints[head] = value;
                                 }
                                 else
                                 {
-                                    item.CreatAttribute(head, 0);
+                                    ints[head] = 0;
                                 }
                                 break;
 
                             case DataType.Text:
-                                item.CreatAttribute(head, info);
+                                strings[head] = info;
                                 break;
 
                             case DataType.Boolean:
                                 if (info.ToLower() == "true")
                                 {
-                                    item.CreatAttribute(head, true);
+                                    bools[head] = true;
                                 }
                                 else
                                 {
-                                    item.CreatAttribute(head, false);
+                                    bools[head] = false;
                                 }
                                 break;
 
                             case DataType.Double:
                                 if (float.TryParse(info, out float value2))
                                 {
-                                    item.CreatAttribute(head, value2);
+                                    floats[head] = value2;
                                 }
                                 else
                                 {
-                                    item.CreatAttribute(head, 0f);
+                                    floats[head] = 0f;
                                 }
                                 break;
 
                             default:
-                                item.CreatAttribute(head, info);
+                                strings[head] = info;
                                 break;
                         }
                     }
@@ -165,8 +169,12 @@ namespace ER.Items
 
                 #endregion 填入物品信息
 
-                items.Add(item.NameTmp, item);
-                items_ID.Add(item.ID, item);
+                ItemInfo infos = new(ints, floats, bools, strings);
+                infos.Check();
+                ItemTemplate item = new(infos);
+
+                items[item.NameTmp] = item;
+                items_ID[item.ID] = item;
             }
         }
 
@@ -213,20 +221,21 @@ namespace ER.Items
             foreach (int tmp in items_ID.Keys)
             {
                 ItemTemplate item = items_ID[tmp];
-                if(item.Contains(key, dataType))
+                if (item.Contains(key, dataType))
                 {
                     tmps.Add(item);
                 }
             }
             return tmps;
         }
+
         /// <summary>
         /// 查找拥有指定属性的物品，同时匹配目标属性值
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public List<ItemTemplate> Find(string key,Data value)
+        public List<ItemTemplate> Find(string key, Data value)
         {
             if (value.Type != DataType.Integer || value.Type != DataType.Double || value.Type != DataType.Text || value.Type != DataType.Boolean) return null;
             List<ItemTemplate> tmps = new List<ItemTemplate>();
@@ -240,6 +249,7 @@ namespace ER.Items
             }
             return tmps;
         }
+
         /// <summary>
         /// 查询指定属性包含指定值的所有物品对象
         /// </summary>
@@ -247,19 +257,20 @@ namespace ER.Items
         /// <param name="value">需要包含的属性值</param>
         /// <param name="spc">属性值分割符</param>
         /// <returns></returns>
-        public List<ItemTemplate> FindContainsPart(string key,string value,char spc)
+        public List<ItemTemplate> FindContainsPart(string key, string value, char spc)
         {
             List<ItemTemplate> tmps = new List<ItemTemplate>();
             foreach (int tmp in items_ID.Keys)
             {
                 ItemTemplate item = items_ID[tmp];
-                if (item.ContainsSPT(key, spc,value)) 
+                if (item.ContainsSPT(key, spc, value))
                 {
                     tmps.Add(item);
                 }
             }
             return tmps;
         }
+
         /// <summary>
         /// 获取物品模板
         /// </summary>
@@ -280,6 +291,22 @@ namespace ER.Items
                 }
                 return null;
             }
+        }
+
+        /// <summary>
+        /// 获取模板的基础信息列表
+        /// </summary>
+        /// <returns></returns>
+        public BaseInfo[] GetBaseInfoList()
+        {
+            BaseInfo[] infos = new BaseInfo[items.Count];
+            int i = 0;
+            foreach (string key in items.Keys)
+            {
+                infos[i] = items[key].BaseInfo();
+                i++;
+            }
+            return infos;
         }
     }
 }
