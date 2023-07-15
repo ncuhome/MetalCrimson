@@ -1,4 +1,5 @@
-﻿using Mod_Console;
+﻿using ER.Items;
+using Mod_Console;
 using Mod_Save;
 using System;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace Mod_Common
     {
         [Tooltip("存档目录路径")]
         public string SavePath = @"Assets/StreamingAssets/Saves";
+        [Tooltip("物品模板数据表路径")]
+        public string DataPath = @"Assets/StreamingAssets/模具信息表.csv";
 
         private void Settings()//设置预设
         {
@@ -42,6 +45,8 @@ namespace Mod_Common
             SaveManager.Instance.savePackPath = SavePath;
             //设置存档解析器为Json解析器
             SaveWrapper.Instance.interpreter = new JsonInterpreter();
+
+            ItemTemplateStore.Instance.LoadItemsList(DataPath);
         }
 
         private void Update()

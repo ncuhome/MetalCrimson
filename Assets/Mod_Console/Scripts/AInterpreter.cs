@@ -57,7 +57,7 @@ namespace Mod_Console
             else
             {
                 PrintError("指令参数类型不匹配，或者指令参数为空");
-                PrintError("正确格式：load_item_list [FilePath]");
+                PrintError("正确格式：itemlist_load [FilePath]");
             }
 
             return Data.Empty;
@@ -121,6 +121,188 @@ namespace Mod_Console
             return Data.Empty;
         }
 
+        private Data CMD_itemstore_creat(Data[] parameters)
+        {
+            if (parameters.Length >= 2)
+            {
+                if (parameters.IsMate(DataType.Text, DataType.Integer))
+                {
+                    ItemStoreManager.Instance.Creat(parameters[0].ToString(), (int)parameters[1].Value);
+                }
+            }
+            else if (parameters.Length == 1)
+            {
+                ItemStoreManager.Instance.Creat(parameters[0].ToString());
+            }
+            else
+            {
+                PrintError("缺少参数：仓库名称");
+            }
+            return Data.Empty;
+        }
+
+        private Data CMD_itemstore_list()
+        {
+            foreach (var pair in ItemStoreManager.Instance.Stores)
+            {
+                Print($"[{pair.Key}]");
+            }
+            return Data.Empty;
+        }
+
+        private Data CMD_itemstore_display(Data[] parameters)
+        {
+            if (!parameters.IsEmpty())
+            {
+                string name = parameters[0].ToString();
+                if (ItemStoreManager.Instance.Exist(name))
+                {
+                    ItemStore store = ItemStoreManager.Instance[name];
+                    store.Print();
+                }
+                else
+                {
+                    PrintError($"指定仓库不存在:{name}");
+                }
+            }
+            else
+            {
+                PrintError("缺少参数：仓库名称");
+            }
+
+            return Data.Empty;
+        }
+
+        private Data CMD_itemstore_item_add(Data[] parameters)
+        {
+            if (parameters.IsMate(DataType.Text, DataType.Function) || parameters.IsMate(DataType.Text, DataType.Integer))
+            {
+                string name = (string)parameters[0].Value;
+                if (ItemStoreManager.Instance.Exist(name))
+                {
+                    ItemStore store = ItemStoreManager.Instance[name];
+
+                    if (int.TryParse(parameters[1].Value.ToString(), out int id))
+                    {
+                        if(ItemTemplateStore.Instance.Exist(id))
+                        {
+
+                            if (store.AddItem(new ItemVariable(id)))
+                            {
+                                Print($"添加物品[{ItemTemplateStore.Instance[id].NameTmp}]成功");
+                                Print($"现在仓库中有{store.Count}");
+                            }
+                            else
+                            {
+                                Print("添加物品失败，背包已满");
+                                Print($"现在仓库[{store.storeName}]中有{store.Count}");
+                            }
+                        }
+                        else
+                        {
+                            PrintError("指定物品不存在");
+                        }
+                    }
+                    else
+                    {
+                        PrintError("传入物品数据有误");
+                    }
+                }
+                else
+                {
+                    PrintError("指定动态仓库不存在");
+                }
+            }
+            else if(parameters.IsMate(DataType.Text, DataType.Text))
+            {
+                string name = (string)parameters[0].Value;
+                if (ItemStoreManager.Instance.Exist(name))
+                {
+                    ItemStore store = ItemStoreManager.Instance[name];
+
+                    if(ItemTemplateStore.Instance.Exist((string)parameters[1].Value))
+                    {
+                        ItemTemplate item = ItemTemplateStore.Instance[name];
+                        if (store.AddItem(new ItemVariable(item.ID)))
+                        {
+                            Print($"添加物品[{item.NameTmp}]成功");
+                            Print($"现在仓库中有{store.Count}");
+                        }
+                        else
+                        {
+                            Print("添加物品失败，背包已满");
+                            Print($"现在仓库[{store.storeName}]中有{store.Count}");
+                        }
+                    }
+                    else
+                    {
+                        PrintError("指定物品不存在");
+                    }
+                }
+                else
+                {
+                    PrintError("指定动态仓库不存在");
+                }
+            }
+            else
+            {
+                PrintError("参数错误");
+            }
+            return Data.Empty;
+        }
+
+        private Data CMD_itemstore_item_del(Data[] parameters)
+        {
+            if (parameters.IsMate(DataType.Text, DataType.Integer))
+            {
+                string name = (string)parameters[0].Value;
+                if (ItemStoreManager.Instance.Exist(name))
+                {
+                    ItemStore store = ItemStoreManager.Instance[name];
+
+                    if (int.TryParse(parameters[0].Value.ToString(), out int index))
+                    {
+                        if (store.RemoveItem(index))
+                        {
+                            Print("移除物品成功");
+                        }
+                        else
+                        {
+                            Print("指定物品不存在");
+                        }
+                    }
+                    else
+                    {
+                        PrintError("传入物品数据有误");
+                    }
+                }
+                else
+                {
+                    PrintError("指定动态仓库不存在");
+                }
+            }
+            return Data.Empty;
+        }
+
+        private Data CMD_itemstore_item_clear(Data[] parameters)
+        {
+            if (parameters.IsMate(DataType.Text))
+            {
+                string name = (string)parameters[0].Value;
+                if (ItemStoreManager.Instance.Exist(name))
+                {
+                    ItemStore store = ItemStoreManager.Instance[name];
+                    store.Clear();
+                    Print($"已清空指定仓库：{name}");
+                }
+                else
+                {
+                    PrintError("指定动态仓库不存在");
+                }
+            }
+            return Data.Empty;
+        }
+
         #endregion 指令函数
 
         public override Data EffectuateSuper(string commandName, Data[] parameters)
@@ -150,6 +332,24 @@ namespace Mod_Console
 
                 case "savedisplay"://显示当前存档信息
                     return CMD_savedisplay();
+
+                case "itemstore_creat"://创建一个动态仓库
+                    return CMD_itemstore_creat(parameters);
+
+                case "itemstore_list"://查看所有动态仓库列表
+                    return CMD_itemstore_list();
+
+                case "itemstore_display"://展示指定动态仓库
+                    return CMD_itemstore_display(parameters);
+
+                case "itemstore_item_add"://向指定动态仓库添加物品
+                    return CMD_itemstore_item_add(parameters);
+
+                case "itemstore_item_del"://删除指定动态仓库中的指定物品
+                    return CMD_itemstore_item_del(parameters);
+
+                case "itemstore_item_clear"://清空指定动态仓库
+                    return CMD_itemstore_item_clear(parameters);
 
                 default:
                     return Data.Error;

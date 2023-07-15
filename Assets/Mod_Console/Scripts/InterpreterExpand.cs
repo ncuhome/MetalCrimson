@@ -22,10 +22,10 @@ namespace Mod_Console
         /// <returns></returns>
         public static bool IsMate(this Data[] parameters, params DataType[] types)
         {
-            if (parameters.Length == 0) return false;
+            if (parameters.Length < types.Length) return false;
             for (int i = 0; i < types.Length; i++)
             {
-                if (parameters[i].Type != types[i]) return false;
+                if (types[i] != DataType.Text && parameters[i].Type != types[i]) return false;
             }
             return true;
         }

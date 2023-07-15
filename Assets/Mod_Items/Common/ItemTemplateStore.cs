@@ -294,6 +294,37 @@ namespace ER.Items
         }
 
         /// <summary>
+        /// 获取物品模板浅拷贝
+        /// </summary>
+        /// <param name="name">物品名称</param>
+        /// <returns></returns>
+        public ItemTemplate this[string name]
+        {
+            get
+            {
+                if (items.TryGetValue(name, out ItemTemplate tmp))
+                {
+                    return tmp;
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 判断指定物品模板是否存在
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public bool Exist(string name) => items.ContainsKey(name);
+
+        /// <summary>
+        /// 判断指定物品模板是否存在
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool Exist(int id) => items_ID.ContainsKey(id);
+
+        /// <summary>
         /// 获取模板的基础信息列表
         /// </summary>
         /// <returns></returns>

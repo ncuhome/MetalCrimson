@@ -1,6 +1,7 @@
 ﻿// Ignore Spelling: Creat tmp
 
 using ER.Parser;
+using Mod_Console;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -329,6 +330,15 @@ namespace ER.Items
             return new ItemInfo(info_int, info_float, info_bool, info_text, ID);
         }
 
+        public virtual void Print()
+        {
+            ConsolePanel.Instance.Print($"[ID = {ID}]");
+            ConsolePanel.Instance.Print($"\t整型属性：{attributeInt.Count}");
+            ConsolePanel.Instance.Print($"\t浮点属性：{attributeFloat.Count}");
+            ConsolePanel.Instance.Print($"\t布尔属性：{attributeBool.Count}");
+            ConsolePanel.Instance.Print($"\t文本属性：{attributeText.Count}");
+        }
+
         #endregion 其他方法
     }
 
@@ -347,6 +357,7 @@ namespace ER.Items
         /// 物品名称(系统内部的物品名称，和玩家所见的名称文本不同，不计入物品的拓展属性),属于字符串属性，keyName = "NameTmp"
         /// </summary>
         public string NameTmp { get; protected set; } = "Null";
+        #region 构造
 
         public ItemTemplate()
         {
@@ -385,6 +396,7 @@ namespace ER.Items
             NameTmp = info.NameTmp;
             ID = info.ID;
         }
+        #endregion
 
         /// <summary>
         /// 获取一个自身的深拷贝对象
@@ -394,11 +406,22 @@ namespace ER.Items
         {
             ItemInfo info = Info();
             ItemTemplate clone = new();
+            clone.ID = ID;
+            clone.NameTmp = NameTmp;
             clone.attributeBool = info.attributeBool;
             clone.attributeText = info.attributeText;
             clone.attributeFloat = info.attributeFloat;
             clone.attributeInt = info.attributeInt;
             return clone;
+        }
+
+        public override void Print()
+        {
+            ConsolePanel.Instance.Print($"[ID = {ID},Name = {NameTmp}]");
+            ConsolePanel.Instance.Print($"\t整型属性：{attributeInt.Count}");
+            ConsolePanel.Instance.Print($"\t浮点属性：{attributeFloat.Count}");
+            ConsolePanel.Instance.Print($"\t布尔属性：{attributeBool.Count}");
+            ConsolePanel.Instance.Print($"\t文本属性：{attributeText.Count}");
         }
 
         /// <summary>
