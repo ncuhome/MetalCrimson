@@ -71,12 +71,12 @@ namespace ER.Items
 
         public void Print()
         {
-            ConsolePanel.Instance.Print($"[{storeName}]");
+            ConsolePanel.Print($"[{storeName}]");
             foreach(var item in items)
             {
                 item.Print();
             }
-            ConsolePanel.Instance.Print($"[{storeName}]");
+            ConsolePanel.Print($"[{storeName}]");
         }
 
         /// <summary>

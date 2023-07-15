@@ -10,12 +10,12 @@ namespace Mod_Console
     {
         public static void Print(string txt, bool newline = true)
         {
-            ConsolePanel.Instance.Print(txt, newline);
+            ConsolePanel.Print(txt, newline);
         }
 
         public static void PrintError(string txt, bool newline = true)
         {
-            ConsolePanel.Instance.PrintError(txt, newline);
+            ConsolePanel.PrintError(txt, newline);
         }
 
         #region 指令函数

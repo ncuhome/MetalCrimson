@@ -332,11 +332,11 @@ namespace ER.Items
 
         public virtual void Print()
         {
-            ConsolePanel.Instance.Print($"[ID = {ID}]");
-            ConsolePanel.Instance.Print($"\t整型属性：{attributeInt.Count}");
-            ConsolePanel.Instance.Print($"\t浮点属性：{attributeFloat.Count}");
-            ConsolePanel.Instance.Print($"\t布尔属性：{attributeBool.Count}");
-            ConsolePanel.Instance.Print($"\t文本属性：{attributeText.Count}");
+            ConsolePanel.Print($"[ID = {ID}]");
+            ConsolePanel.Print($"\t整型属性：{attributeInt.Count}");
+            ConsolePanel.Print($"\t浮点属性：{attributeFloat.Count}");
+            ConsolePanel.Print($"\t布尔属性：{attributeBool.Count}");
+            ConsolePanel.Print($"\t文本属性：{attributeText.Count}");
         }
 
         #endregion 其他方法
@@ -417,11 +417,11 @@ namespace ER.Items
 
         public override void Print()
         {
-            ConsolePanel.Instance.Print($"[ID = {ID},Name = {NameTmp}]");
-            ConsolePanel.Instance.Print($"\t整型属性：{attributeInt.Count}");
-            ConsolePanel.Instance.Print($"\t浮点属性：{attributeFloat.Count}");
-            ConsolePanel.Instance.Print($"\t布尔属性：{attributeBool.Count}");
-            ConsolePanel.Instance.Print($"\t文本属性：{attributeText.Count}");
+            ConsolePanel.Print($"[ID = {ID},Name = {NameTmp}]");
+            ConsolePanel.Print($"\t整型属性：{attributeInt.Count}");
+            ConsolePanel.Print($"\t浮点属性：{attributeFloat.Count}");
+            ConsolePanel.Print($"\t布尔属性：{attributeBool.Count}");
+            ConsolePanel.Print($"\t文本属性：{attributeText.Count}");
         }
 
         /// <summary>

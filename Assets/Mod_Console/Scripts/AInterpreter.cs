@@ -35,7 +35,7 @@ namespace Mod_Console
         private Data CMD_settings()
         {
             string settings = SettingsManager.Instance.GetSettingsTxt();
-            ConsolePanel.Instance.Print(settings);
+            ConsolePanel.Print(settings);
             return new Data(settings, DataType.Text);
         }
 
@@ -128,11 +128,17 @@ namespace Mod_Console
                 if (parameters.IsMate(DataType.Text, DataType.Integer))
                 {
                     ItemStoreManager.Instance.Creat(parameters[0].ToString(), (int)parameters[1].Value);
+                    Print($"仓库创建成功:{parameters[0].ToString()}");
+                }
+                else
+                {
+                    PrintError("参数错误");
                 }
             }
             else if (parameters.Length == 1)
             {
                 ItemStoreManager.Instance.Creat(parameters[0].ToString());
+                Print($"仓库创建成功:{parameters[0].ToString()}");
             }
             else
             {
@@ -219,13 +225,13 @@ namespace Mod_Console
                 if (ItemStoreManager.Instance.Exist(name))
                 {
                     ItemStore store = ItemStoreManager.Instance[name];
-
-                    if(ItemTemplateStore.Instance.Exist((string)parameters[1].Value))
+                    string tmpName = (string)parameters[1].Value;
+                    if(ItemTemplateStore.Instance.Exist(tmpName))
                     {
-                        ItemTemplate item = ItemTemplateStore.Instance[name];
+                        ItemTemplate item = ItemTemplateStore.Instance[tmpName];
                         if (store.AddItem(new ItemVariable(item.ID)))
                         {
-                            Print($"添加物品[{item.NameTmp}]成功");
+                            Print($"添加物品[{tmpName}]成功");
                             Print($"现在仓库中有{store.Count}");
                         }
                         else

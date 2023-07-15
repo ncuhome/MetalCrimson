@@ -132,10 +132,30 @@ namespace Mod_Console
         }
 
         /// <summary>
+        /// 向控制台输出消息
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="txt"></param>
+        public static void Print(string txt, bool newline = true)
+        {
+            ConsolePanel.Instance._Print(txt, newline);
+        }
+
+        /// <summary>
+        /// 向控制台输出消息
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="txt"></param>
+        public static void PrintError(string txt, bool newline = true)
+        {
+            ConsolePanel.Instance._PrintError(txt, newline);
+        }
+
+        /// <summary>
         /// 向控制台打印消息
         /// </summary>
         /// <param name="txt">消息</param>
-        public void Print(string txt, bool newLine = true)
+        private void _Print(string txt, bool newLine = true)
         {
             if (newLine) { monitor.text += '\n'; }
             monitor.text += txt;
@@ -147,7 +167,7 @@ namespace Mod_Console
         /// </summary>
         /// <param name="txt"></param>
         /// <param name="newLine"></param>
-        public void PrintError(string txt, bool newLine = true)
+        private void _PrintError(string txt, bool newLine = true)
         {
             if (newLine) { monitor.text += '\n'; }
             monitor.text += new StringBuilder("<color=red>").Append(txt).Append("</color>");
