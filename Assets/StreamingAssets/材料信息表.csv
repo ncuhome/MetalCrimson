@@ -1,0 +1,6 @@
+﻿string,string,string,int,int,int,int,int,int,int,int,int,int,float,float,float,float,,,,
+NameTmp,Name,Tags,ID,Density,Flexability,Toughness,AntiSolution,HeatPassage,HeatContain,Pretty,ForgeTemp,MeltTemp,HeatPreference,Pressability,Stubborn,AtsGrowth,,,,
+RawIron,生铁,Metal,77691,10,8,14,20,100,100,10,200,500,-1,0.2,0,0,,,,
+WroughtIron,熟铁,Metal,77692,10,12,9,20,100,100,10,190,500,-1,0.2,0,0,,,,
+Copper,铜,Metal,77693,15,8,8,100,100,100,20,200,400,-1,0.2,0,0,,,,
+Bronze,青铜,Metal,77694,12,10,10,60,100,100,25,150,350,-1,0.2,0,0,,,,
