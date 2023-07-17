@@ -84,7 +84,7 @@ PrefabInstance:
     - target: {fileID: 4345702435674402683, guid: 9ed53761987a5284590829d0d96fd237, type: 3}
       propertyPath: materialScript
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3346720235801274646}
     - target: {fileID: 5453935438634262981, guid: 9ed53761987a5284590829d0d96fd237, type: 3}
       propertyPath: m_Name
       value: MaterialVisual

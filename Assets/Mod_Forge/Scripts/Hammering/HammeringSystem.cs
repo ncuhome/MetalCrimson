@@ -57,7 +57,7 @@ public class HammeringSystem : MonoBehaviour
     {
         materialScripts[AddedMaterialNum] = materialScript;
         materialInFurnaces[AddedMaterialNum].SetActive(true);
-        materialScript.materialNum--;
+        materialScript.MaterialItem.CreateAttribute("Num", materialScript.MaterialItem.GetInt("Num") - 1);
         AddedMaterialNum++;
     }
     /// <summary>
@@ -69,10 +69,10 @@ public class HammeringSystem : MonoBehaviour
         {
             if ((materialScripts[i] == null) && (materialScripts[i + 1] != null))
             {
-                materialScripts[i] = materialScripts[i+1];
+                materialScripts[i] = materialScripts[i + 1];
                 materialInFurnaces[i].SetActive(true);
-                materialScripts[i+1] = null;
-                materialInFurnaces[i+1].SetActive(false);
+                materialScripts[i + 1] = null;
+                materialInFurnaces[i + 1].SetActive(false);
             }
         }
     }
@@ -81,10 +81,10 @@ public class HammeringSystem : MonoBehaviour
     /// </summary>
     public void MoveBackMaterial(int id)
     {
-        materialScripts[id].materialNum ++;
+        materialScripts[id].MaterialItem.CreateAttribute("Num", materialScripts[id].MaterialItem.GetInt("Num") + 1);
         materialScripts[id] = null;
         materialInFurnaces[id].SetActive(false);
-        AddedMaterialNum --;     
+        AddedMaterialNum--;
         FixMaterials();
     }
 }
