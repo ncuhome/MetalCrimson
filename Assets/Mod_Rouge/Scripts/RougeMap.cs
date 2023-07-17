@@ -239,6 +239,10 @@ namespace Mod_Rouge
             roomPassedNowLayer = 0;
             counter = new int[7];
             counterNowLayer = new int[7];
+        }
+
+        public void Next()
+        {
 
         }
     }
