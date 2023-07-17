@@ -620,7 +620,7 @@ namespace ER.Items
         /// <returns></returns>
         public override int GetInt(string key)
         {
-            ItemTemplate tmp = ItemTemplateStore.Instance[key];
+            ItemTemplate tmp = ItemTemplateStore.Instance[ID];
             if (tmp != null && tmp.TryGetInt(key, out int value))
             {
                 return value;
@@ -635,7 +635,7 @@ namespace ER.Items
         /// <returns></returns>
         public override float GetFloat(string key)
         {
-            ItemTemplate tmp = ItemTemplateStore.Instance[key];
+            ItemTemplate tmp = ItemTemplateStore.Instance[ID];
             if (tmp != null && tmp.TryGetFloat(key, out float value))
             {
                 return value;
@@ -650,7 +650,7 @@ namespace ER.Items
         /// <returns></returns>
         public override bool GetBool(string key)
         {
-            ItemTemplate tmp = ItemTemplateStore.Instance[key];
+            ItemTemplate tmp = ItemTemplateStore.Instance[ID];
             if (tmp != null && tmp.TryGetBool(key, out bool value))
             {
                 return value;
@@ -665,7 +665,7 @@ namespace ER.Items
         /// <returns></returns>
         public override string GetText(string key)
         {
-            ItemTemplate tmp = ItemTemplateStore.Instance[key];
+            ItemTemplate tmp = ItemTemplateStore.Instance[ID];
             if (tmp != null && tmp.TryGetText(key, out string value))
             {
                 return value;

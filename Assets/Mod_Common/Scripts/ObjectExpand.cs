@@ -19,7 +19,12 @@ namespace Common
             anchor.SetOwner(obj);
             AnchorManager.Instance.AddAnchor(anchor);
         }
-
+        /// <summary>
+        /// 获取字典的深拷贝
+        /// </summary>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="dic"></param>
+        /// <returns></returns>
         public static Dictionary<string,TValue> Copy<TValue>(this Dictionary<string, TValue> dic) 
         {
             Dictionary<string, TValue> d = new();
