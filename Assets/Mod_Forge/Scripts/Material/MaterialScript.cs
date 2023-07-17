@@ -13,6 +13,7 @@ public class MaterialScript : MonoBehaviour
     public TextMeshProUGUI materialNumText = null;
     public Image materialImage = null;
     public MaterialImage imageScript = null;
+    public GameObject materialVisual = null;
     // Start is called before the first frame update
     void Start()
     {
