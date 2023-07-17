@@ -22,6 +22,7 @@ public class MaterialScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (MaterialItem == null) { return; }
         if (MaterialItem.GetInt("Num") == 0)
         {
             materialImage.color = Color.gray;
@@ -33,6 +34,6 @@ public class MaterialScript : MonoBehaviour
             materialImage.color = Color.white;
         }
         materialNameText.text = MaterialItem.GetText("Name");
-        materialNumText.text = "拥有："+ MaterialItem.GetInt("Num");
+        materialNumText.text = "拥有：" + MaterialItem.GetInt("Num");
     }
 }
