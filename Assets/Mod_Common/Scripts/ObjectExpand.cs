@@ -1,4 +1,5 @@
 ﻿using Mod_Console;
+using System.Collections.Generic;
 
 namespace Common
 {
@@ -17,6 +18,16 @@ namespace Common
             VirtAnchor anchor = new VirtAnchor(anchorName);
             anchor.SetOwner(obj);
             AnchorManager.Instance.AddAnchor(anchor);
+        }
+
+        public static Dictionary<string,TValue> Copy<TValue>(this Dictionary<string, TValue> dic) 
+        {
+            Dictionary<string, TValue> d = new();
+            foreach(string key in dic.Keys)
+            {
+                d[key] = dic[key];
+            }
+            return d;
         }
     }
 }
