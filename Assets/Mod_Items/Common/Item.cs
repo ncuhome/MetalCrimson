@@ -856,22 +856,22 @@ namespace ER.Items
 
         public override void CreateAttribute(string key, int value)
         {
-            attributeInt.Add(key, value);
+            attributeInt[key]= value;
         }
 
         public override void CreateAttribute(string key, float value)
         {
-            attributeFloat.Add(key, value);
+            attributeFloat[key] = value;
         }
 
         public override void CreateAttribute(string key, string value)
         {
-            attributeText.Add(key, value);
+            attributeText[key] = value;
         }
 
         public override void CreateAttribute(string key, bool value)
         {
-            attributeBool.Add(key, value);
+            attributeBool[key] = value;
         }
 
         #endregion 创建|修改属性
