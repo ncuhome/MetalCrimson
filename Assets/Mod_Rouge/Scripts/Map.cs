@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace Mod_Rouge
+namespace Mod_Rouge_Test
 {
     /// <summary>
     /// 地图层
@@ -24,15 +24,15 @@ namespace Mod_Rouge
         /// <summary>
         /// 所有房间对象
         /// </summary>
-        public List<Room> rooms;
+        //public List<Room> rooms;
         /// <summary>
         /// 房间层房间个数
         /// </summary>
-        public int[] romlys;
+        public int[] roomCount;
         /// <summary>
         /// 房间排列
         /// </summary>
-        public int[][] roomArrage;
+        public int[][] roomArrange;
 
         /// <summary>
         /// 长度
@@ -63,30 +63,30 @@ namespace Mod_Rouge
             length = owner.length  + random.Next(-owner.roundLength, owner.roundLength);
             count = owner.count + random.Next(-owner.roundCount, owner.roundCount);
             //生成个房间层包含房间的数量
-            romlys = new int[length];
+            roomCount = new int[length];
             int width = count / length;//平均
             int amore = count % length;//剩余数
             for(int i=0;i<owner.roundWidth*length/2; i++)
             {
                 int index = random.Next(0, length);
-                while (romlys[index] <= -owner.roundWidth)
+                while (roomCount[index] <= -owner.roundWidth)
                 {
                     index = random.Next(0, length);
                 }
-                romlys[index]--;
+                roomCount[index]--;
             }
             for(int i=0;i<owner.roundWidth*length/2+amore;i++)
             {
                 int index = random.Next(0, length);
-                while(romlys[index] >= owner.roundWidth)
+                while(roomCount[index] >= owner.roundWidth)
                 {
                     index = random.Next(0, length);
                 }
-                romlys[index]++;
+                roomCount[index]++;
             }
             for(int i=0;i<length;i++)
             {
-                romlys[i] += width;
+                roomCount[i] += width;
             }
 #if Debug
             ConsolePanel.Print($"MapLayer Info:\n" +
@@ -97,7 +97,7 @@ namespace Mod_Rouge
             string txt = "";
             for(int i=0;i<length;i++)
             {
-                txt += romlys[i] + " ";
+                txt += roomCount[i] + " ";
             }
             ConsolePanel.Print(txt);
 #endif
@@ -108,21 +108,20 @@ namespace Mod_Rouge
         /// </summary>
         public void Init()
         {
-            roomArrage = new int[length][];
-            int index = 0;
+            roomArrange = new int[length][];
             for(int i=0;i<length;i++)
             {
-                roomArrage[i] = new int[romlys[i]];
-                for(int k = 0; k < romlys[i];k++)
+                roomArrange[i] = new int[roomCount[i]];
+                for(int k = 0; k < roomCount[i];k++)
                 {
-                    roomArrage[i][k] = 0;
+                    roomArrange[i][k] = 0;
                 }
             }
             
 
             for(int i=0;i<count;i++)
             {
-                rooms.Add(Room.CreatRandomRoom(random,owner,this,FindLayer(i)));
+                //rooms.Add(Room.CreateRandomRoom(random,owner,this,FindLayer(i)));
             }
             
 
@@ -135,9 +134,9 @@ namespace Mod_Rouge
         /// <returns></returns>
         public int FindLayer(int roomID)
         {
-            for(int i=0;i<romlys.Length;i++)
+            for(int i=0;i<roomCount.Length;i++)
             {
-                if (roomID < roomArrage[i][0])
+                if (roomID < roomArrange[i][0])
                 {
                     return i - 1;
                 }
@@ -157,7 +156,7 @@ namespace Mod_Rouge
         /// <summary>
         /// 地图层数
         /// </summary>
-        public int deepth = 3;
+        public int depth = 3;
         /// <summary>
         /// 单层房间数量
         /// </summary>
@@ -236,7 +235,7 @@ namespace Mod_Rouge
         /// <summary>
         /// 实际地图层数（一般来说和deepth等价）
         /// </summary>
-        public int realDeepth = 3;
+        public int realDepth = 3;
         /// <summary>
         /// 实际遭遇战房间比率
         /// </summary>
@@ -264,7 +263,7 @@ namespace Mod_Rouge
         #endregion
 
         #region 函数
-        public static Map Creat(int seed = 0)
+        public static Map Create(int seed = 0)
         {
             Map map = new Map();
             map.Init(seed);
@@ -274,7 +273,7 @@ namespace Mod_Rouge
         {
             this.seed = seed;
             random = new System.Random(seed);
-            realDeepth = deepth;
+            realDepth = depth;
 
             //生成各房间的实际占比
             double encounterRateTmp = encounterRate + (random.NextDouble() - 0.5) * 2 * encounterRoundRate;
@@ -288,15 +287,15 @@ namespace Mod_Rouge
             realRewardRate = rewardRateTmp / sum;
 
             //初始化地图层
-            layers = new MapLayer[realDeepth];
-            for(int i=0;i<realDeepth;i++)
+            layers = new MapLayer[realDepth];
+            for(int i=0;i<realDepth;i++)
             {
                 layers[i] = new MapLayer(this,random.Next() + seed,i+1);
             }
 #if Debug
             ConsolePanel.Print($"map info:\n" +
                 $"seed:{seed}\n" +
-                $"deepth:{realDeepth}\n" +
+                $"depth:{realDepth}\n" +
                 $"encounterRate:{realEncounterRate}\n" +
                 $"eventRate:{realEventRate}\n" +
                 $"rewardRate:{realRewardRate}\n" +

@@ -246,7 +246,7 @@ namespace ER.Parser
         /// <returns>是否加载成功</returns>
         public bool Load(string name)
         {
-            if (PathAdapter.TryGetValue(name, out string? path))
+            if (PathAdapter.TryGetValue(name, out string path))
             {
                 if (File.Exists(path))
                 {
@@ -286,7 +286,7 @@ namespace ER.Parser
         /// </summary>
         /// <param name="key">文本键名</param>
         /// <returns></returns>
-        public string? this[string section, string key]
+        public string this[string section, string key]
         {
             get
             {
@@ -301,7 +301,7 @@ namespace ER.Parser
                 }
                 else
                 {
-                    if (sec.TryGetValue(key, out string? value))
+                    if (sec.TryGetValue(key, out string value))
                     {
                         return value;
                     }

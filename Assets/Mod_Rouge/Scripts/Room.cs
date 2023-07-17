@@ -1,124 +1,91 @@
-using System;
+ï»¿using System;
 
 namespace Mod_Rouge
 {
-    /// <summary>
-    /// ·¿¼äÀàĞÍÃ¶¾Ù
-    /// </summary>
-    public enum RoomType
-    {
-        /// <summary>
-        /// ÔâÓöÕ½
-        /// </summary>
-        encounter,
-        /// <summary>
-        /// ÊÂ¼ş·¿
-        /// </summary>
-        eventRoom,
-        /// <summary>
-        /// ½±Àø·¿
-        /// </summary>
-        reward,
-        /// <summary>
-        /// ĞİÏ¢ÊÒ
-        /// </summary>
-        rest,
 
-        /// <summary>
-        /// boss¹Ø¿¨
-        /// </summary>
-        boss,
-        /// <summary>
-        /// Æğµã
-        /// </summary>
-        start,
-        /// <summary>
-        /// ÖÕµã
-        /// </summary>
-        end
-    }
 
-    /// <summary>
-    /// Èâ¸ëµØÍ¼µ¥Ôª£»
-    /// 
-    /// </summary>
-    public struct Room
-    {
-        /// <summary>
-        /// ·¿¼äÀàĞÍ
-        /// </summary>
-        public RoomType type;
-        /// <summary>
-        /// Ê¹ÓÃµÄ·¿¼äÄ£°åID
-        /// </summary>
-        public int useTemplate;
-        /// <summary>
-        /// ³ö¿ÚÊıÁ¿
-        /// </summary>
-        public int exit;
-        /// <summary>
-        /// ³ö¿ÚË÷ÒıÆğÊ¼Î»ÖÃ
-        /// </summary>
-        public int exit_start;
 
-        public static Room StartPoint { get => new Room { type = RoomType.start, useTemplate = 0 }; }
-        public static Room EndPoint { get => new Room { type = RoomType.end, useTemplate = 0 }; }
-        /// <summary>
-        /// ´´½¨Boss·¿¼ä
-        /// </summary>
-        /// <param name="random">Ëæ»úÆ÷</param>
-        /// <param name="map">µØÍ¼</param>
-        /// <param name="deepID">ËùÔÚÉî¶È</param>
-        /// <returns></returns>
-        public static Room CreatBossRoom(Random random,Map map,MapLayer layer)
-        {
-            Room room = new Room();
-            room.type = RoomType.boss;
-            room.exit = 1;
-            /*Ñ¡È¡Ä£°å*/
-            return room;
-        }
-        /// <summary>
-        /// ´´½¨Ëæ»úµÄÒ»°ã·¿¼ä
-        /// </summary>
-        /// <param name="random">Ëæ»úÆ÷</param>
-        /// <param name="map">µØÍ¼</param>
-        /// <param name="layer">ËùÔÚµØÍ¼²ã</param>
-        /// <param name="romly">ËùÔÚµÄ·¿¼ä²ã</param>
-        /// <returns></returns>
-        public static Room CreatRandomRoom(Random random, Map map, MapLayer layer, int romly)
-        {
-            Room room = new Room();
-            double sr = random.NextDouble();
-            if (sr < map.realEncounterRate)
-            {
-                room.type = RoomType.encounter;
-            }
-            else if (sr < map.realEncounterRate + map.realEventRate)
-            {
-                room.type = RoomType.eventRoom;
-            }
-            else if (sr < map.realEncounterRate + map.realEventRate + map.realRestRate)
-            {
-                room.type = RoomType.rest;
-            }
-            else
-            {
-                room.type = RoomType.reward;
-            }
+    ///// <summary>
+    ///// è‚‰é¸½åœ°å›¾å•å…ƒï¼›
+    ///// 
+    ///// </summary>
+    //public struct Room
+    //{
+    //    /// <summary>
+    //    /// æˆ¿é—´ç±»å‹
+    //    /// </summary>
+    //    public RoomType type;
+    //    /// <summary>
+    //    /// ä½¿ç”¨çš„æˆ¿é—´æ¨¡æ¿ID
+    //    /// </summary>
+    //    public int useTemplate;
+    //    /// <summary>
+    //    /// å‡ºå£æ•°é‡
+    //    /// </summary>
+    //    public int exit;
+    //    /// <summary>
+    //    /// å‡ºå£ç´¢å¼•èµ·å§‹ä½ç½®
+    //    /// </summary>
+    //    public int exit_start;
 
-            if (romly < layer.romlys.Length - 1)//²»ÊÇ×îºóµÄ·¿¼ä²ã
-            {
-                room.exit = random.Next(map.exit_min, map.exit_max);
-                room.exit_start = random.Next(-1, 1);
-            }
-            else
-            {
-                room.exit = 1;
-                room.exit_start = 0;
-            }
-            /*Ñ¡È¡Ä£°å*/
-            return room;
-        }
-    }
+    //    public static Room StartPoint { get => new Room { type = RoomType.start, useTemplate = 0 }; }
+    //    public static Room EndPoint { get => new Room { type = RoomType.end, useTemplate = 0 }; }
+    //    /// <summary>
+    //    /// åˆ›å»ºBossæˆ¿é—´
+    //    /// </summary>
+    //    /// <param name="random">éšæœºå™¨</param>
+    //    /// <param name="map">åœ°å›¾</param>
+    //    /// <param name="deepID">æ‰€åœ¨æ·±åº¦</param>
+    //    /// <returns></returns>
+    //    public static Room CreateBossRoom(Random random,Map map,MapLayer layer)
+    //    {
+    //        Room room = new Room();
+    //        room.type = RoomType.boss;
+    //        room.exit = 1;
+    //        /*é€‰å–æ¨¡æ¿*/
+    //        return room;
+    //    }
+    //    /// <summary>
+    //    /// åˆ›å»ºéšæœºçš„ä¸€èˆ¬æˆ¿é—´
+    //    /// </summary>
+    //    /// <param name="random">éšæœºå™¨</param>
+    //    /// <param name="map">åœ°å›¾</param>
+    //    /// <param name="layer">æ‰€åœ¨åœ°å›¾å±‚</param>
+    //    /// <param name="roomCount">æ‰€åœ¨çš„æˆ¿é—´å±‚</param>
+    //    /// <returns></returns>
+    //    public static Room CreateRandomRoom(Random random, Map map, MapLayer layer, int roomCount)
+    //    {
+    //        Room room = new Room();
+    //        double sr = random.NextDouble();
+    //        if (sr < map.realEncounterRate)
+    //        {
+    //            room.type = RoomType.encounter;
+    //        }
+    //        else if (sr < map.realEncounterRate + map.realEventRate)
+    //        {
+    //            room.type = RoomType.eventRoom;
+    //        }
+    //        else if (sr < map.realEncounterRate + map.realEventRate + map.realRestRate)
+    //        {
+    //            room.type = RoomType.rest;
+    //        }
+    //        else
+    //        {
+    //            room.type = RoomType.reward;
+    //        }
+
+    //        if (roomCount < layer.roomCount.Length - 1)//ä¸æ˜¯æœ€åçš„æˆ¿é—´å±‚
+    //        {
+    //            room.exit = random.Next(map.exit_min, map.exit_max);
+    //            room.exit_start = random.Next(-1, 1);
+    //        }
+    //        else
+    //        {
+    //            room.exit = 1;
+    //            room.exit_start = 0;
+    //        }
+    //        /*é€‰å–æ¨¡æ¿*/
+    //        return room;
+    //    }
+    //}
 }

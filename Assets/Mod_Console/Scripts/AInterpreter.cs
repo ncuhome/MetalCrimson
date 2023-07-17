@@ -28,7 +28,7 @@ namespace Mod_Console
                     PrintError($"无效参数：<{parameters[0]}>，此参数必须为整型");
                 }
             }
-            Map map = Map.Creat(seed);
+            //Map map = Map.Create(seed);
             return Data.Empty;
         }
 

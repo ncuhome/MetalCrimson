@@ -77,14 +77,18 @@ namespace Mod_Console
 
         protected Data CMD_print(Data[] parameters)
         {
-            Data txt = parameters[0];
-            if (txt.isError())
+            if(!parameters.IsEmpty())
             {
-                return Data.Error;
+                Data txt = parameters[0];
+                if (txt.isError())
+                {
+                    return Data.Error;
+                }
+                string text = txt.Value.ToString();
+                Print(text);
+                return new Data(text, DataType.Text);
             }
-            string text = txt.Value.ToString();
-            Print(text);
-            return new Data(text, DataType.Text);
+            return Data.Empty;
         }
 
         protected Data CMD_openfile(Data[] parameters)

@@ -141,7 +141,6 @@ namespace Mod_ControlPanel
         /// <returns></returns>
         public bool GetParallelPower(ControlPanel panel)
         {
-            ControlPanel temp = null;
 
             // 在栈集合中找到一个空栈，并将面板加入
             foreach (var stack in controlStacks)

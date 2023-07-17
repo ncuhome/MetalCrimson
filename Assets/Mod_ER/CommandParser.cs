@@ -85,7 +85,7 @@ namespace ER.Parser
             if(File.Exists(fileName))
             {
                 StreamReader reader = new StreamReader(fileName);
-                string? line = reader.ReadLine();
+                string line = reader.ReadLine();
                 while (line!=null)
                 {
                     Parse(line, interpreter);

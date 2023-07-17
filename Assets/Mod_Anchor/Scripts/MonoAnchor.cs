@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Ignore Spelling: Virt
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -34,7 +36,7 @@ namespace Common
     {
         private string tag;
         private Vector2 point;
-        private object owner;
+        public object owner { get; private set; }
 
         public string AnchorTag { get => tag; set => tag = value; }
         public Vector2 Point { get => point; set => point = value; }

@@ -91,7 +91,7 @@ namespace ER
         }
 
         public static void Print<TKey, TValue>(this KeyValuePair<TKey, TValue> pair,
-            Action<string>? printDelegate = null)
+            Action<string> printDelegate = null)
         {
             string txt = $"<{pair.Key?.ToString()}>:{pair.Value?.ToString()}";
             printDelegate?.Invoke(txt);
