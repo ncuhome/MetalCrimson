@@ -1,9 +1,12 @@
-﻿// Ignore Spelling: Creat tmp
+﻿
 
+using Common;
 using ER.Parser;
 using Mod_Console;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using DataType = ER.Parser.DataType;
 
@@ -265,6 +268,22 @@ namespace ER.Items
         /// <returns></returns>
         public abstract bool TryGetBool(string key, out bool value);
 
+        public Dictionary<string,int> GetIntAll()
+        {
+            return attributeInt.Copy();
+        }
+        public Dictionary<string, float> GetFloatAll()
+        {
+            return attributeFloat.Copy();
+        }
+        public Dictionary<string, string> GetTextAll()
+        {
+            return attributeText.Copy();
+        }
+        public Dictionary<string, bool> GetBoolAll()
+        {
+            return attributeBool.Copy();
+        }
         #endregion 尝试获取属性
 
         #region 创建属性
@@ -274,28 +293,28 @@ namespace ER.Items
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public abstract void CreatAttribute(string key, int value);
+        public abstract void CreateAttribute(string key, int value);
 
         /// <summary>
         /// 创建属性（浮点）,如果已存在则修改该属性
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public abstract void CreatAttribute(string key, float value);
+        public abstract void CreateAttribute(string key, float value);
 
         /// <summary>
         /// 创建属性（文本）,如果已存在则修改该属性
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public abstract void CreatAttribute(string key, string value);
+        public abstract void CreateAttribute(string key, string value);
 
         /// <summary>
         /// 创建属性（布尔）,如果已存在则修改该属性
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public abstract void CreatAttribute(string key, bool value);
+        public abstract void CreateAttribute(string key, bool value);
 
         #endregion 创建属性
 
@@ -446,22 +465,22 @@ namespace ER.Items
 
         #region 物品模板禁止在创建后修改属性
 
-        public override sealed void CreatAttribute(string key, int value)
+        public override sealed void CreateAttribute(string key, int value)
         {
             Debug.LogError($"<{NameTmp}>物品模板禁止在创建之后修改属性[Int][{key}:{value}]");
         }
 
-        public override sealed void CreatAttribute(string key, bool value)
+        public override sealed void CreateAttribute(string key, bool value)
         {
             Debug.LogError($"<{NameTmp}>物品模板禁止在创建之后修改属性[Bool][{key}:{value}]");
         }
 
-        public override sealed void CreatAttribute(string key, float value)
+        public override sealed void CreateAttribute(string key, float value)
         {
             Debug.LogError($"<{NameTmp}>物品模板禁止在创建之后修改属性[Float][{key}:{value}]");
         }
 
-        public override sealed void CreatAttribute(string key, string value)
+        public override sealed void CreateAttribute(string key, string value)
         {
             Debug.LogError($"<{NameTmp}>物品模板禁止在创建之后修改属性[Text][{key}:{value}]");
         }
@@ -539,25 +558,46 @@ namespace ER.Items
         /// 基于一个模板创建一个物品对象
         /// </summary>
         /// <param name="itemTemplate"></param>
-        public ItemVariable(ItemTemplate itemTemplate)
+        /// <param name="copyAll">是否拷贝模板的全部属性（除NameTmp 和 ID）</param>
+        public ItemVariable(ItemTemplate itemTemplate,bool copyAll = false)
         {
             ID = itemTemplate.ID;
-            attributeText["Name"] = itemTemplate.NameTmp;
+            if(copyAll)//copy模板全部属性，作为可变属性
+            {
+                attributeInt = itemTemplate.GetIntAll();
+                attributeFloat = itemTemplate.GetFloatAll();
+                attributeBool = itemTemplate.GetBoolAll();
+                attributeText = itemTemplate.GetTextAll();
+            }
+            attributeText["Name"] = itemTemplate.NameTmp;//设置默认名称
         }
 
         /// <summary>
         /// 基于一个模板创建一个物品对象
         /// </summary>
         /// <param name="itemTemplate"></param>
-        public ItemVariable(int templateID)
+        /// <param name="copyAll">是否拷贝模板的全部属性（除NameTmp 和 ID）</param>
+        public ItemVariable(int templateID,bool copyAll = false)
         {
             ID = templateID;
+
             ItemTemplate tmp = ItemTemplateStore.Instance[ID];
             if (tmp != null)
             {
-                attributeText["Name"] = tmp.NameTmp;
+                if (copyAll)//copy模板全部属性，作为可变属性
+                {
+                    attributeInt = tmp.GetIntAll();
+                    attributeFloat = tmp.GetFloatAll();
+                    attributeBool = tmp.GetBoolAll();
+                    attributeText = tmp.GetTextAll();
+                }
+                attributeText["Name"] = tmp.NameTmp;//设置默认名称
             }
-            attributeText["Name"] = "NULL";
+            else
+            {
+                attributeText["Name"] = "NULL";
+                ConsolePanel.Print($"创建动态物品时未找到物品模板：{templateID}");
+            }
         }
 
         #endregion 构造函数
@@ -634,6 +674,63 @@ namespace ER.Items
         }
 
         /// <summary>
+        /// 获取整型属性，优先获取模板中的属性
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public int GetInt(string key,bool self)
+        {
+            if(self)
+            {
+                return attributeInt[key];
+            }
+            return GetInt(key);
+        }
+
+        /// <summary>
+        /// 获取浮点型属性，优先获取模板中的属性
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public float GetFloat(string key,bool self)
+        {
+            if (self)
+            {
+                return attributeFloat[key];
+            }
+            return GetFloat(key);
+        }
+
+        /// <summary>
+        /// 获取布尔型的属性，优先获取模板中的属性
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public bool GetBool(string key,bool self)
+        {
+            if (self)
+            {
+                return attributeBool[key];
+            }
+            return GetBool(key);
+        }
+
+        /// <summary>
+        /// 获取字符串属性，优先获取模板中的属性
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public string GetText(string key,bool self)
+        {
+            if (self)
+            {
+                return attributeText[key];
+            }
+            return GetText(key);
+        }
+
+
+        /// <summary>
         /// 尝试获取整形属性，优先获取模板中的属性
         /// </summary>
         /// <param name="key"></param>
@@ -695,26 +792,84 @@ namespace ER.Items
             return attributeBool.TryGetValue(key, out value);
         }
 
+        /// <summary>
+        /// 尝试获取整形属性，优先获取模板中的属性
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public bool TryGetInt(string key, out int value,bool self)
+        {
+            if(self)
+            {
+                return attributeInt.TryGetValue(key, out value);
+            }
+            return TryGetInt(key, out value);
+        }
+
+        /// <summary>
+        /// 尝试获取字符串属性，优先获取模板中的属性
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public bool TryGetText(string key, out string value, bool self)
+        {
+            if (self)
+            {
+                return attributeText.TryGetValue(key, out value);
+            }
+            return TryGetText(key, out value);
+        }
+
+        /// <summary>
+        /// 尝试获取浮点型属性，优先获取模板中的属性
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public bool TryGetFloat(string key, out float value, bool self)
+        {
+            if (self)
+            {
+                return attributeFloat.TryGetValue(key, out value);
+            }
+            return TryGetFloat(key, out value);
+        }
+
+        /// <summary>
+        /// /// <summary>
+        /// 尝试获取整形属性，优先获取模板中的属性
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        /// </summary>
+        public bool TryGetBool(string key, out bool value, bool self)
+        {
+            if (self)
+            {
+                return attributeBool.TryGetValue(key, out value);
+            }
+            return TryGetBool(key, out value);
+        }
+
         #endregion 获取属性
 
         #region 创建|修改属性
 
-        public override void CreatAttribute(string key, int value)
+        public override void CreateAttribute(string key, int value)
         {
             attributeInt.Add(key, value);
         }
 
-        public override void CreatAttribute(string key, float value)
+        public override void CreateAttribute(string key, float value)
         {
             attributeFloat.Add(key, value);
         }
 
-        public override void CreatAttribute(string key, string value)
+        public override void CreateAttribute(string key, string value)
         {
             attributeText.Add(key, value);
         }
 
-        public override void CreatAttribute(string key, bool value)
+        public override void CreateAttribute(string key, bool value)
         {
             attributeBool.Add(key, value);
         }

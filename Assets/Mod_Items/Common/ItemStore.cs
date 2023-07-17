@@ -68,6 +68,23 @@ namespace ER.Items
         #endregion 构造
 
         #region 方法
+        /// <summary>
+        /// 通过ID查找物品
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ItemVariable[] Find(int id)
+        {
+            List<ItemVariable> items = new List<ItemVariable> ();
+            foreach (ItemVariable item in items)
+            {
+                if(item.ID == id)
+                {
+                    items.Add(item);
+                }
+            }
+            return items.ToArray();
+        }
 
         public void Print()
         {
