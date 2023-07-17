@@ -1,6 +1,8 @@
-﻿using ER.Parser;
+﻿using Common;
+using ER.Parser;
 using Mod_Console;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Mod_Rouge
 {
@@ -116,6 +118,16 @@ namespace Mod_Rouge
         /// </summary>
         public int[] counterNowLayer;
 
+        /// <summary>
+        /// 检查线，同一层中剩余房间小于这个值，开始检查是否强制生成某些房间
+        /// </summary>
+        private int checkLine = 0;
+
+        /// <summary>
+        /// 本层地图长度
+        /// </summary>
+        public int length = 0;
+
         #endregion 当前属性
 
         /// <summary>
@@ -159,6 +171,8 @@ namespace Mod_Rouge
             }
 
             probabilities_settings = new float[4][];
+            minCount_settings = new int[4][];
+            maxCount_settings = new int[4][];
 
             #endregion 设置基本配置
 
@@ -228,10 +242,11 @@ namespace Mod_Rouge
 
             #endregion 设置房间最小值
         }
+
         /// <summary>
-        /// 从头开始
+        /// 从头开始（地图初始化）
         /// </summary>
-        public void Start()
+        public Room Start()
         {
             roomType = RoomType.start;
             level = 1;
@@ -239,11 +254,122 @@ namespace Mod_Rouge
             roomPassedNowLayer = 0;
             counter = new int[7];
             counterNowLayer = new int[7];
+            length = Random.Range(minLength_settings, maxLength_settings);
+            return new Room(RoomType.start,level);
         }
 
-        public void Next()
+        /// <summary>
+        /// 下一个房间
+        /// </summary>
+        public Room Next()
         {
+            Record();//记录当前房间通过消息
+            switch (roomPassed - length)
+            {
+                case 0://通过boss前的最后房间
+                    return BossRoom();
 
+                case 1://通过boss房
+                    return EndRoom();
+
+                default:
+                    UpdateCheck();
+                    if (length - counterNowLayer.Sum() <= checkLine)//检查是否存在必须生成的房间
+                    {
+                        bool[] ok = new bool[4];
+                        for (int i = 0; i < 4; i++)
+                        {
+                            ok[i] = (counterNowLayer[i] <= minCount_settings[i].TryValue(level, int.MaxValue));
+                        }
+
+                        RoomType type = RandomType(true);
+                        while (!ok[(int)type])//如果结果类型不满足条件则再次随机：已有房间数小于最小要求数
+                        {
+                            type = RandomType(true);
+                        }
+                        return new Room(type, level);
+                    }
+                    return new Room(RandomType(true), level);
+            }
+        }
+
+        public Room BossRoom()
+        {
+            return new Room(RoomType.boss, level);
+        }
+
+        public Room EndRoom()
+        {
+            return new Room(RoomType.end, level);
+        }
+
+        /// <summary>
+        /// 下一层（地图初始化）
+        /// </summary>
+        public Room NextLevel()
+        {
+            level++;
+            roomPassedNowLayer = 0;
+            counterNowLayer = new int[7];
+            length = Random.Range(minLength_settings, maxLength_settings);
+            return new Room(RoomType.start,level);
+        }
+
+        /// <summary>
+        /// 更新检查线
+        /// </summary>
+        private void UpdateCheck()
+        {
+            checkLine = minCount_settings[0][level] + minCount_settings[1][level] + minCount_settings[2][level] + minCount_settings[3][level];
+        }
+
+        /// <summary>
+        /// 根据设置随机生成一个房间类型
+        /// </summary>
+        /// <param name="limitMax">是否受当前房间最大值设定影响</param>
+        /// <returns></returns>
+        private RoomType RandomType(bool limitMax)
+        {
+            if (!limitMax) return RandomType();
+            //首先检测是否存在可随机的余地
+            bool[] filled = new bool[4];
+            for (int i = 0; i < 4; i++)
+            {
+                filled[i] = (counterNowLayer[i] >= maxCount_settings[i].TryValue(level, int.MaxValue));
+            }
+            if (filled.AndAll())
+            {
+                return RandomType();
+            }
+
+            //存在余地
+            RoomType type = RandomType();
+            while (filled[(int)type])//如果目标房间已经填满，则再次随机
+            {
+                type = RandomType();
+            }
+            return type;
+        }
+
+        /// <summary>
+        /// 根据设置随机生成一个房间类型
+        /// </summary>
+        /// <returns></returns>
+        private RoomType RandomType()
+        {
+            return (RoomType)Probabilizer.Parse(0, probabilities_settings[0].TryValue(level, 0f), probabilities_settings[1].TryValue(level, 0f),
+                probabilities_settings[2].TryValue(level, 0f), probabilities_settings[3].TryValue(level, 0f));
+        }
+
+        /// <summary>
+        /// 记录通过信息
+        /// </summary>
+        private void Record()
+        {
+            counter[(int)roomType] += 1;
+            counterNowLayer[(int)roomType] += 1;
+            roomPassed += 1;
+            roomPassedNowLayer += 1;
         }
     }
 }

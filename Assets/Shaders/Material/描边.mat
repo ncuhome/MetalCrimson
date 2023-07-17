@@ -42,7 +42,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _Alpha: 1
-    - _Offset: 0.002
+    - _Display: 0
+    - _Offset: 0.011
     m_Colors:
     - _Color: {r: 0.9811321, g: 0.2351014, b: 0.2351014, a: 0}
   m_BuildTextureStacks: []
