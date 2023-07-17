@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Ignore Spelling: Virt
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -27,22 +29,31 @@ namespace Common
         /// </summary>
         public void Destroy();
     }
-
+    /// <summary>
+    /// 虚拟钩子
+    /// </summary>
     public class VirtAnchor : Anchor
     {
         private string tag;
         private Vector2 point;
+        public object owner { get; private set; }
 
         public string AnchorTag { get => tag; set => tag = value; }
         public Vector2 Point { get => point; set => point = value; }
-
+        /// <summary>
+        /// 设置钩子的所属者
+        /// </summary>
+        /// <param name="_owner"></param>
+        public void SetOwner(object _owner)=>owner= _owner;
         public VirtAnchor() { tag = "Unkown";point = Vector2.zero; }
         public VirtAnchor(float x, float y) { tag = "unkown";point = new Vector2(x, y); }
         public VirtAnchor(string tag) { this.tag = tag;  point = Vector2.zero; }
         public VirtAnchor(string tag,float x, float y) { this.tag = tag; point = new Vector2(x, y); }
         public void Destroy() { }
     }
-
+    /// <summary>
+    /// 组件钩子
+    /// </summary>
     public class MonoAnchor : MonoBehaviour, Anchor
     {
         public string Ptag;

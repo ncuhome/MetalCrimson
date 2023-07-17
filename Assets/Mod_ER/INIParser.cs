@@ -99,7 +99,7 @@ namespace ER.Parser
             // 更新节段信息为保留的节段信息
             this.sections = newSections;
         }
-        public string? GetValue(string section, string key)
+        public string  GetValue(string section, string key)
         {
             if (sections.TryGetValue(section, out var sectionData))
             {
@@ -111,7 +111,7 @@ namespace ER.Parser
 
             return null;
         }
-        public Dictionary<string,string>? GetSection(string sectionName)
+        public Dictionary<string,string>  GetSection(string sectionName)
         {
             if(sections.TryGetValue(sectionName, out var sectionData))
             {

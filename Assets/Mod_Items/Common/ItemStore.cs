@@ -1,4 +1,5 @@
 ﻿// Ignore Spelling: Json
+using Mod_Console;
 using Mod_Save;
 using System.Collections.Generic;
 
@@ -11,7 +12,7 @@ namespace ER.Items
     {
         #region 属性
 
-        private int size = 64;
+        private int size;
 
         /// <summary>
         /// 仓库名称
@@ -39,6 +40,10 @@ namespace ER.Items
                 }
             }
         }
+        /// <summary>
+        /// 仓库中物品的数量
+        /// </summary>
+        public int Count { get=>items.Count; }
 
         /// <summary>
         /// 仓库物品
@@ -47,7 +52,32 @@ namespace ER.Items
 
         #endregion 属性
 
+        #region 构造
+
+        public ItemStore()
+        { }
+
+        /// <summary>
+        /// 创建一个动态仓库
+        /// </summary>
+        /// <param name="name">仓库名称</param>
+        /// <param name="size">仓库大小</param>
+        public ItemStore(string name, int size = 64)
+        { storeName = name; this.size = size; }
+
+        #endregion 构造
+
         #region 方法
+
+        public void Print()
+        {
+            ConsolePanel.Print($"[{storeName}]");
+            foreach(var item in items)
+            {
+                item.Print();
+            }
+            ConsolePanel.Print($"[{storeName}]");
+        }
 
         /// <summary>
         /// 向仓库添加物品，如果仓库已满，则返回false

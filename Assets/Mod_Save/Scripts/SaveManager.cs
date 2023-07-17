@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -27,6 +28,24 @@ namespace Mod_Save
 
         #endregion 单例封装
 
+        #region 事件
+        /// <summary>
+        /// 读档完毕时触发的事件
+        /// </summary>
+        public event Action SaveLoadEvent;
+
+        /// <summary>
+        /// 准备存档时触发的事件
+        /// </summary>
+        public event Action SavePreEvent;
+
+        /// <summary>
+        /// 存档完毕时触发的事件
+        /// </summary>
+        public event Action SaveAftEvent;
+
+        #endregion 事件
+
         /// <summary>
         /// 存档目录
         /// </summary>
@@ -46,6 +65,11 @@ namespace Mod_Save
             if (File.Exists(path))
             {
                 SaveWrapper.Instance.Unpack(File.ReadAllText(path));
+
+            }
+            else
+            { 
+                
             }
         }
 
@@ -58,7 +82,7 @@ namespace Mod_Save
             {
                 DirectoryInfo directory = new DirectoryInfo(savePackPath);
                 saves = directory.GetFiles().ToList();
-                for(int i=0;i<saves.Count;i++)
+                for (int i = 0; i < saves.Count; i++)
                 {
                     if (Path.GetExtension(saves[i].Name) != ".sav")
                     {
@@ -86,7 +110,9 @@ namespace Mod_Save
                 path = Path.Combine(savePackPath, saveName + $"({index++}).sav");
             }
             File.Create(path).Close();
+            SavePreEvent.Invoke();
             File.WriteAllText(path, SaveWrapper.Instance.Serialize());
+            SaveAftEvent.Invoke();
         }
     }
 }

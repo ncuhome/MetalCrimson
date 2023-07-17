@@ -184,7 +184,7 @@ namespace Mod_Save
             }
             else
             {
-                ConsolePanel.Instance.Print("解析存档出错，存档已损坏或者不存在");
+                ConsolePanel.Print("解析存档出错，存档已损坏或者不存在");
                 return null;
             }
         }

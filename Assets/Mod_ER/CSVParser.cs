@@ -4,13 +4,15 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
+using UnityEditor;
 
 namespace ER.Parser
 {
     /// <summary>
     /// CSV解析器
     /// </summary>
-    public class CSVParser
+    public static class CSVParser
     {
         /// <summary>
         /// 解析CSV文件
@@ -49,7 +51,7 @@ namespace ER.Parser
             }
             return data;
         }
-        private static string[] ParseCSVLine(string line)
+        public static string[] ParseCSVLine(string line)
         {
             List<string> fields = new List<string>();
             StringBuilder fieldBuilder = new StringBuilder();
@@ -87,6 +89,41 @@ namespace ER.Parser
             fields.Add(fieldBuilder.ToString());
 
             return fields.ToArray();
+        }
+        /// <summary>
+        /// 尝试将一个字符串数组 解析为 一个整型数组；无法解析的数据将自动填入0
+        /// </summary>
+        /// <returns></returns>
+        public static int[] TryParseToIntArray(this string[] strings)
+        {
+            int[] values = new int[strings.Length];
+            for(int i=0;i<strings.Length;i++)
+            {
+                if (int.TryParse(strings[i],out int v))
+                {
+                    values[i] = v;
+                }
+                else { values[i] = 0; }
+            }
+            return values;
+        }
+        /// <summary>
+        /// 尝试将一个字符串数组 解析为 一个单精度浮点数组；无法解析的数据将自动填入0
+        /// </summary>
+        /// <param name="strings"></param>
+        /// <returns></returns>
+        public static float[] TryParseToFloatArray(this string[] strings)
+        {
+            float[] values = new float[strings.Length];
+            for (int i = 0; i < strings.Length; i++)
+            {
+                if (float.TryParse(strings[i], out float v))
+                {
+                    values[i] = v;
+                }
+                else { values[i] = 0; }
+            }
+            return values;
         }
     }
 

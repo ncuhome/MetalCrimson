@@ -53,7 +53,7 @@ namespace Mod_Save
 
         public void SaveSettings()
         {
-            ConsolePanel.Instance.Print("正在写入配置文件...");
+            ConsolePanel.Print("正在写入配置文件...");
             INIHD.Save(settingsPath);
         }
 

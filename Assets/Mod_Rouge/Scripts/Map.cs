@@ -1,4 +1,4 @@
-#define Debug
+ï»¿#define Debug
 using JetBrains.Annotations;
 using Mod_Console;
 using System;
@@ -6,52 +6,52 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace Mod_Rouge
+namespace Mod_Rouge_Test
 {
     /// <summary>
-    /// µØÍ¼²ã
+    /// åœ°å›¾å±‚
     /// </summary>
     public class MapLayer
     {
         /// <summary>
-        /// ËùÊôµØÍ¼¶ÔÏó
+        /// æ‰€å±åœ°å›¾å¯¹è±¡
         /// </summary>
         public Map owner;
         /// <summary>
-        /// ²ãID
+        /// å±‚ID
         /// </summary>
         public int deepID;
         /// <summary>
-        /// ËùÓĞ·¿¼ä¶ÔÏó
+        /// æ‰€æœ‰æˆ¿é—´å¯¹è±¡
         /// </summary>
-        public List<Room> rooms;
+        //public List<Room> rooms;
         /// <summary>
-        /// ·¿¼ä²ã·¿¼ä¸öÊı
+        /// æˆ¿é—´å±‚æˆ¿é—´ä¸ªæ•°
         /// </summary>
-        public int[] romlys;
+        public int[] roomCount;
         /// <summary>
-        /// ·¿¼äÅÅÁĞ
+        /// æˆ¿é—´æ’åˆ—
         /// </summary>
-        public int[][] roomArrage;
+        public int[][] roomArrange;
 
         /// <summary>
-        /// ³¤¶È
+        /// é•¿åº¦
         /// </summary>
         public int length;
         /// <summary>
-        /// ·¿¼äÊıÁ¿
+        /// æˆ¿é—´æ•°é‡
         /// </summary>
         public int count;
 
 
         /// <summary>
-        /// Ëæ»úÆ÷
+        /// éšæœºå™¨
         /// </summary>
         public System.Random random;
 
 
         /// <summary>
-        /// ÅäÖÃÒ»¸öµØÍ¼²ã
+        /// é…ç½®ä¸€ä¸ªåœ°å›¾å±‚
         /// </summary>
         /// <param name="_owner"></param>
         /// <param name="layerSeed"></param>
@@ -62,34 +62,34 @@ namespace Mod_Rouge
             random = new System.Random(owner.seed + layerSeed);
             length = owner.length  + random.Next(-owner.roundLength, owner.roundLength);
             count = owner.count + random.Next(-owner.roundCount, owner.roundCount);
-            //Éú³É¸ö·¿¼ä²ã°üº¬·¿¼äµÄÊıÁ¿
-            romlys = new int[length];
-            int width = count / length;//Æ½¾ù
-            int amore = count % length;//Ê£ÓàÊı
+            //ç”Ÿæˆä¸ªæˆ¿é—´å±‚åŒ…å«æˆ¿é—´çš„æ•°é‡
+            roomCount = new int[length];
+            int width = count / length;//å¹³å‡
+            int amore = count % length;//å‰©ä½™æ•°
             for(int i=0;i<owner.roundWidth*length/2; i++)
             {
                 int index = random.Next(0, length);
-                while (romlys[index] <= -owner.roundWidth)
+                while (roomCount[index] <= -owner.roundWidth)
                 {
                     index = random.Next(0, length);
                 }
-                romlys[index]--;
+                roomCount[index]--;
             }
             for(int i=0;i<owner.roundWidth*length/2+amore;i++)
             {
                 int index = random.Next(0, length);
-                while(romlys[index] >= owner.roundWidth)
+                while(roomCount[index] >= owner.roundWidth)
                 {
                     index = random.Next(0, length);
                 }
-                romlys[index]++;
+                roomCount[index]++;
             }
             for(int i=0;i<length;i++)
             {
-                romlys[i] += width;
+                roomCount[i] += width;
             }
 #if Debug
-            ConsolePanel.Instance.Print($"MapLayer Info:\n" +
+            ConsolePanel.Print($"MapLayer Info:\n" +
                 $"layerSeed:{layerSeed}\n" +
                 $"deepID:{deepID}\n" +
                 $"count:{count}\n" +
@@ -97,47 +97,46 @@ namespace Mod_Rouge
             string txt = "";
             for(int i=0;i<length;i++)
             {
-                txt += romlys[i] + " ";
+                txt += roomCount[i] + " ";
             }
-            ConsolePanel.Instance.Print(txt);
+            ConsolePanel.Print(txt);
 #endif
         }
 
         /// <summary>
-        /// ³õÊ¼»¯µØÍ¼²ã£¬Éú³É¾ßÌåµÄ·¿¼ä¶ÔÏó
+        /// åˆå§‹åŒ–åœ°å›¾å±‚ï¼Œç”Ÿæˆå…·ä½“çš„æˆ¿é—´å¯¹è±¡
         /// </summary>
         public void Init()
         {
-            roomArrage = new int[length][];
-            int index = 0;
+            roomArrange = new int[length][];
             for(int i=0;i<length;i++)
             {
-                roomArrage[i] = new int[romlys[i]];
-                for(int k = 0; k < romlys[i];k++)
+                roomArrange[i] = new int[roomCount[i]];
+                for(int k = 0; k < roomCount[i];k++)
                 {
-                    roomArrage[i][k] = 0;
+                    roomArrange[i][k] = 0;
                 }
             }
             
 
             for(int i=0;i<count;i++)
             {
-                rooms.Add(Room.CreatRandomRoom(random,owner,this,FindLayer(i)));
+                //rooms.Add(Room.CreateRandomRoom(random,owner,this,FindLayer(i)));
             }
             
 
 
         }
         /// <summary>
-        /// ²éÑ¯ÖÆ¶¨·¿¼äËùÔÚµÄ·¿¼ä²ãºÅ
+        /// æŸ¥è¯¢åˆ¶å®šæˆ¿é—´æ‰€åœ¨çš„æˆ¿é—´å±‚å·
         /// </summary>
         /// <param name="roomID"></param>
         /// <returns></returns>
         public int FindLayer(int roomID)
         {
-            for(int i=0;i<romlys.Length;i++)
+            for(int i=0;i<roomCount.Length;i++)
             {
-                if (roomID < roomArrage[i][0])
+                if (roomID < roomArrange[i][0])
                 {
                     return i - 1;
                 }
@@ -147,124 +146,124 @@ namespace Mod_Rouge
     }
 
     /// <summary>
-    /// Èâ¸ëµØÍ¼£¬´ÓÆğµãµ½ÖÕµã¾­¹ıµÄ·¿¼äÊıÁ¿ÊÇÒ»¶¨µÄ£¬ÇÒÆğµãºÍÖÕµãµÄÊıÁ¿Ö»ÓĞÒ»¸ö;
-    /// Ò»¸ö·¿¼äÔÊĞíÓĞ¶à¸ö³ö¿Ú£¬ÇÒ¿ÉÒÔÓµÓĞ¶à¸öÈë¿Ú;
-    /// ÇÒËùÓĞ·¿¼äÇé¿öÔÚµØÍ¼Éú³ÉÊ±È·¶¨
+    /// è‚‰é¸½åœ°å›¾ï¼Œä»èµ·ç‚¹åˆ°ç»ˆç‚¹ç»è¿‡çš„æˆ¿é—´æ•°é‡æ˜¯ä¸€å®šçš„ï¼Œä¸”èµ·ç‚¹å’Œç»ˆç‚¹çš„æ•°é‡åªæœ‰ä¸€ä¸ª;
+    /// ä¸€ä¸ªæˆ¿é—´å…è®¸æœ‰å¤šä¸ªå‡ºå£ï¼Œä¸”å¯ä»¥æ‹¥æœ‰å¤šä¸ªå…¥å£;
+    /// ä¸”æ‰€æœ‰æˆ¿é—´æƒ…å†µåœ¨åœ°å›¾ç”Ÿæˆæ—¶ç¡®å®š
     /// </summary>
     public class Map
     {
-        #region ¹Ì¶¨ÊôĞÔ£¨Éú³ÉÅäÖÃ£©
+        #region å›ºå®šå±æ€§ï¼ˆç”Ÿæˆé…ç½®ï¼‰
         /// <summary>
-        /// µØÍ¼²ãÊı
+        /// åœ°å›¾å±‚æ•°
         /// </summary>
-        public int deepth = 3;
+        public int depth = 3;
         /// <summary>
-        /// µ¥²ã·¿¼äÊıÁ¿
+        /// å•å±‚æˆ¿é—´æ•°é‡
         /// </summary>
         public int count = 40;
         /// <summary>
-        /// µØÍ¼³¤¶È
+        /// åœ°å›¾é•¿åº¦
         /// </summary>
         public int length = 10;
         /// <summary>
-        /// µØÍ¼¿í¶È
+        /// åœ°å›¾å®½åº¦
         /// </summary>
         public int width = 4;
         /// <summary>
-        /// ·¿¼ä³ö¿ÚÊıÁ¿×îĞ¡Öµ
+        /// æˆ¿é—´å‡ºå£æ•°é‡æœ€å°å€¼
         /// </summary>
         public int exit_min = 1;
         /// <summary>
-        /// ·¿¼ä³ö¿ÚÊıÁ¿×î´óÖµ
+        /// æˆ¿é—´å‡ºå£æ•°é‡æœ€å¤§å€¼
         /// </summary>
         public int exit_max = 3;
 
         /// <summary>
-        /// ÔâÓöÕ½·¿¼ä±ÈÂÊ
+        /// é­é‡æˆ˜æˆ¿é—´æ¯”ç‡
         /// </summary>
         public float encounterRate = 0.6f;
         /// <summary>
-        /// ÊÂ¼ş·¿¼ä±ÈÂÊ
+        /// äº‹ä»¶æˆ¿é—´æ¯”ç‡
         /// </summary>
         public float eventRoomRate = 0.2f;
         /// <summary>
-        /// ½±Àø·¿¼ä±ÈÂÊ
+        /// å¥–åŠ±æˆ¿é—´æ¯”ç‡
         /// </summary>
         public float rewardRate = 0.1f;
         /// <summary>
-        /// ĞİÏ¢ÊÒ±ÈÂÊ
+        /// ä¼‘æ¯å®¤æ¯”ç‡
         /// </summary>
         public float restRate = 0.1f;
         #endregion
 
-        #region Ëæ»úÁ¿ÏŞÖÆ
+        #region éšæœºé‡é™åˆ¶
         /// <summary>
-        /// ÔâÓöÕ½·¿¼ä±ÈÂÊ¸¡¶¯·¶Î§
+        /// é­é‡æˆ˜æˆ¿é—´æ¯”ç‡æµ®åŠ¨èŒƒå›´
         /// </summary>
         public float encounterRoundRate = 0.1f;
         /// <summary>
-        /// ÊÂ¼ş·¿¼ä±ÈÂÊ¸¡¶¯·¶Î§
+        /// äº‹ä»¶æˆ¿é—´æ¯”ç‡æµ®åŠ¨èŒƒå›´
         /// </summary>
         public float eventRoundRate = 0.05f;
         /// <summary>
-        /// ½±Àø·¿¼ä±ÈÂÊ¸¡¶¯·¶Î§
+        /// å¥–åŠ±æˆ¿é—´æ¯”ç‡æµ®åŠ¨èŒƒå›´
         /// </summary>
         public float rewardRoundRate = 0.05f;
         /// <summary>
-        /// ĞİÏ¢ÊÒ±ÈÂÊ¸¡¶¯·¶Î§
+        /// ä¼‘æ¯å®¤æ¯”ç‡æµ®åŠ¨èŒƒå›´
         /// </summary>
         public float restRoundRate = 0.05f;
         /// <summary>
-        /// µ¥²ã·¿¼äÊıÁ¿¸¡¶¯Öµ
+        /// å•å±‚æˆ¿é—´æ•°é‡æµ®åŠ¨å€¼
         /// </summary>
         public int roundCount = 16;
         /// <summary>
-        /// µØÍ¼³¤¶È¸¡¶¯·¶Î§
+        /// åœ°å›¾é•¿åº¦æµ®åŠ¨èŒƒå›´
         /// </summary>
         public int roundLength = 2;
         /// <summary>
-        /// µØÍ¼¿í¶È¸¡¶¯·¶Î§
+        /// åœ°å›¾å®½åº¦æµ®åŠ¨èŒƒå›´
         /// </summary>
         public int roundWidth = 2;
         #endregion
 
-        #region Êµ¼ÊÊôĞÔ
+        #region å®é™…å±æ€§
         /// <summary>
-        /// µØÍ¼ÖÖ×Ó
+        /// åœ°å›¾ç§å­
         /// </summary>
         public int seed = 0;
         /// <summary>
-        /// Êµ¼ÊµØÍ¼²ãÊı£¨Ò»°ãÀ´ËµºÍdeepthµÈ¼Û£©
+        /// å®é™…åœ°å›¾å±‚æ•°ï¼ˆä¸€èˆ¬æ¥è¯´å’Œdeepthç­‰ä»·ï¼‰
         /// </summary>
-        public int realDeepth = 3;
+        public int realDepth = 3;
         /// <summary>
-        /// Êµ¼ÊÔâÓöÕ½·¿¼ä±ÈÂÊ
+        /// å®é™…é­é‡æˆ˜æˆ¿é—´æ¯”ç‡
         /// </summary>
         public double realEncounterRate;
         /// <summary>
-        /// Êµ¼ÊÊÂ¼ş·¿¼ä±ÈÂÊ
+        /// å®é™…äº‹ä»¶æˆ¿é—´æ¯”ç‡
         /// </summary>
         public double realEventRate;
         /// <summary>
-        /// Êµ¼Ê½±Àø·¿¼ä±ÈÂÊ
+        /// å®é™…å¥–åŠ±æˆ¿é—´æ¯”ç‡
         /// </summary>
         public double realRewardRate = 0.1f;
         /// <summary>
-        /// Êµ¼ÊĞİÏ¢ÊÒ±ÈÂÊ
+        /// å®é™…ä¼‘æ¯å®¤æ¯”ç‡
         /// </summary>
         public double realRestRate = 0.1f;
         /// <summary>
-        /// µØÍ¼²ã¶ÔÏó
+        /// åœ°å›¾å±‚å¯¹è±¡
         /// </summary>
         public MapLayer[] layers;
         #endregion
 
-        #region ÊôĞÔ
+        #region å±æ€§
         System.Random random;
         #endregion
 
-        #region º¯Êı
-        public static Map Creat(int seed = 0)
+        #region å‡½æ•°
+        public static Map Create(int seed = 0)
         {
             Map map = new Map();
             map.Init(seed);
@@ -274,9 +273,9 @@ namespace Mod_Rouge
         {
             this.seed = seed;
             random = new System.Random(seed);
-            realDeepth = deepth;
+            realDepth = depth;
 
-            //Éú³É¸÷·¿¼äµÄÊµ¼ÊÕ¼±È
+            //ç”Ÿæˆå„æˆ¿é—´çš„å®é™…å æ¯”
             double encounterRateTmp = encounterRate + (random.NextDouble() - 0.5) * 2 * encounterRoundRate;
             double eventRateTmp = eventRoomRate + (random.NextDouble() - 0.5) * 2 * eventRoundRate;
             double rewardRateTmp = rewardRate + (random.NextDouble() - 0.5) * 2 * rewardRoundRate;
@@ -287,16 +286,16 @@ namespace Mod_Rouge
             realRestRate = restRateTmp / sum;
             realRewardRate = rewardRateTmp / sum;
 
-            //³õÊ¼»¯µØÍ¼²ã
-            layers = new MapLayer[realDeepth];
-            for(int i=0;i<realDeepth;i++)
+            //åˆå§‹åŒ–åœ°å›¾å±‚
+            layers = new MapLayer[realDepth];
+            for(int i=0;i<realDepth;i++)
             {
                 layers[i] = new MapLayer(this,random.Next() + seed,i+1);
             }
 #if Debug
-            ConsolePanel.Instance.Print($"map info:\n" +
+            ConsolePanel.Print($"map info:\n" +
                 $"seed:{seed}\n" +
-                $"deepth:{realDeepth}\n" +
+                $"depth:{realDepth}\n" +
                 $"encounterRate:{realEncounterRate}\n" +
                 $"eventRate:{realEventRate}\n" +
                 $"rewardRate:{realRewardRate}\n" +

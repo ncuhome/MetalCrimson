@@ -48,7 +48,7 @@ namespace ER.Parser
     public struct Data
     {
         #region 属性
-        public object? Value { get; private set; }
+        public object Value { get; private set; }
         public DataType Type { get; private set; }
         #endregion
 
@@ -77,9 +77,8 @@ namespace ER.Parser
         /// 获取一个表示错误的解析数据
         /// </summary>
         public static Data Error => new Data(null, DataType.Error);
-        public static DataType Parse(string dataString, out object? Value, DataType type = DataType.Unknown)
+        public static DataType Parse(string dataString, out object Value, DataType type = DataType.Unknown)
         {
-            DataType Type = DataType.Error;
             switch (type)
             {
                 case DataType.Unknown:
@@ -148,7 +147,7 @@ namespace ER.Parser
         }
         #endregion
 
-        public Data(object? value, DataType type)
+        public Data(object value, DataType type)
         {
             Value = value;
             Type = type;
@@ -179,7 +178,7 @@ namespace ER.Parser
         /// <returns>知否解析成功</returns>
         public bool Parse(string dataString, DataType type = DataType.Unknown)
         {
-            object? v;
+            object v;
             Type = Parse(dataString, out v, type);
             if (isError())
             {
