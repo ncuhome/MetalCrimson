@@ -1153,7 +1153,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -880, y: -300}
+  m_AnchoredPosition: {x: -880, y: -295}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &714889040
@@ -1926,6 +1926,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1570191162}
   - component: {fileID: 1570191163}
+  - component: {fileID: 1570191164}
   m_Layer: 5
   m_Name: ChooseMaterial
   m_TagString: Untagged
@@ -1970,6 +1971,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   materialsParentTrans: {fileID: 714889039}
   materialPrefab: {fileID: 5196310272112207560, guid: f1c00a944234a8542ba819211c93b01e, type: 3}
+--- !u!114 &1570191164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570191161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 539fa982cbf72d743844606bd3ce7a30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showMore: 0
+  showMoreButton: {fileID: 216292618}
+  slider: {fileID: 732195931}
+  MaterialsParentTransform: {fileID: 714889039}
+  targetValue: 0
+  sliderDrag: 0
 --- !u!1 &1694585698
 GameObject:
   m_ObjectHideFlags: 0

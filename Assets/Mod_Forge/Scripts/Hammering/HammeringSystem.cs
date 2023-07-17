@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class HammeringSystem : MonoBehaviour
 {
-    /// <summary>
-    /// 锻造系统单例
-    /// </summary>
-    static public HammeringSystem Instance = null;
+   #region 单例封装
+
+    private static HammeringSystem instance;
+
+    public static HammeringSystem Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
+
+    #endregion 单例封装
     /// <summary>
     /// 已经添加的材料数
     /// </summary>
@@ -23,9 +32,9 @@ public class HammeringSystem : MonoBehaviour
     void Awake()
     {
         //构筑单例，并初始化
-        if (Instance == null)
+        if (instance == null)
         {
-            Instance = this;
+            instance = this;
             materialScripts = new MaterialScript[3];
         }
     }

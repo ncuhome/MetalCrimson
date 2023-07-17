@@ -7,10 +7,6 @@ using UnityEngine.UI;
 public class ShowMoreButton : MonoBehaviour,IPointerClickHandler
 {
     /// <summary>
-    /// 是否扩展选择区
-    /// </summary>
-    private bool showMore = false;
-    /// <summary>
     /// 选择界面的Transform组件
     /// </summary>
     public Transform chooseMaterialTransform = null;
@@ -64,17 +60,17 @@ public class ShowMoreButton : MonoBehaviour,IPointerClickHandler
     {
         Debug.Log("ShowMoreButton Clicked");
         oldVec = chooseMaterialTransform.localPosition;
-        if (showMore)
+        if (MaterialChooseSystem.Instance.showMore)
         {
             targetVec = Vector3.zero;
             materialLayout.constraintCount = 1;
-            showMore = false;
+            MaterialChooseSystem.Instance.showMore = false;
         }
         else
         {
             targetVec = new Vector3(0,616,0);
             materialLayout.constraintCount = 3;
-            showMore = true;
+            MaterialChooseSystem.Instance.showMore = true;
         }
     }
 }

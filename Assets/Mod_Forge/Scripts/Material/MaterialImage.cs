@@ -35,7 +35,7 @@ public class MaterialImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     /// </summary>
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (!canBeDrag) { return; }
+        if (!canBeDrag || MaterialChooseSystem.Instance.showMore) { return; }
         lastPosition = rectTransform.position;
         Debug.Log("开始拖拽");
     }
@@ -44,7 +44,7 @@ public class MaterialImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     /// </summary>
     public void OnDrag(PointerEventData eventData)
     {
-        if (!canBeDrag) { return; }
+        if (!canBeDrag || MaterialChooseSystem.Instance.showMore) { return; }
         Vector3 pos;
         RectTransformUtility.ScreenPointToWorldPointInRectangle(rectTransform, eventData.position, eventData.enterEventCamera, out pos);
         rectTransform.position = pos;
@@ -54,7 +54,7 @@ public class MaterialImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     /// </summary>
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (!canBeDrag) { return; }
+        if (!canBeDrag || MaterialChooseSystem.Instance.showMore) { return; }
         Debug.Log("结束拖拽");
         rectTransform.position = lastPosition;
         if (inFurnace)
