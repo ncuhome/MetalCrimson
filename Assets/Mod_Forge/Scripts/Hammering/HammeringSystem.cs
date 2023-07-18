@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class HammeringSystem : MonoBehaviour
 {
-   #region 单例封装
+    #region 单例封装
 
     private static HammeringSystem instance;
 
@@ -31,6 +32,7 @@ public class HammeringSystem : MonoBehaviour
     public GameObject[] materialInFurnaces = null;
     public Material glowMaterial;
     public float temperature = 0f;
+    public bool startHammering;
     void Awake()
     {
         //构筑单例，并初始化
@@ -97,5 +99,16 @@ public class HammeringSystem : MonoBehaviour
         materialInFurnaces[id].SetActive(false);
         AddedMaterialNum--;
         FixMaterials();
+    }
+
+    public void StartHammering()
+    {
+        if (startHammering) { return; }
+        if (AddedMaterialNum == 0) { return; }
+        foreach (MaterialScript materialScript in materialScripts)
+        {
+            if ((materialScript != null) && (materialScript.MaterialItem.GetInt("ForgeTemp", true) > temperature)) { return; }
+        }
+        startHammering = true;
     }
 }

@@ -31,6 +31,7 @@ public class Chain : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     /// </summary>
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (HammeringSystem.Instance.startHammering) { return; }
         Debug.Log("开始拖拽");
         //屏幕坐标转世界坐标
         RectTransformUtility.ScreenPointToWorldPointInRectangle(rectTransform, eventData.position, eventData.enterEventCamera, out posDiff);
@@ -45,6 +46,7 @@ public class Chain : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     /// </summary>
     public void OnDrag(PointerEventData eventData)
     {
+        if (HammeringSystem.Instance.startHammering) { return; }
         Vector3 pos;
         RectTransformUtility.ScreenPointToWorldPointInRectangle(rectTransform, eventData.position, eventData.enterEventCamera, out pos);
 
@@ -59,6 +61,23 @@ public class Chain : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
             newPosY = lastPos.y - 20;
         }
 
+        rectTransform.position = new Vector3(rectTransform.position.x, newPosY, rectTransform.position.z);
+
+        IncreaseTemperature();
+    }
+    /// <summary>
+    /// 拖动结束，自动弹回原坐标
+    /// </summary>
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        if (HammeringSystem.Instance.startHammering) { return; }
+        Debug.Log("结束拖拽");
+        rectTransform.position = lastPos;
+    }
+
+    private void IncreaseTemperature()
+    {
+        if (HammeringSystem.Instance.AddedMaterialNum == 0) { return; }
         float chainTimes = (lastPosY - newPosY) / 20;
 
         if (newPosY < lastPosY)
@@ -81,16 +100,6 @@ public class Chain : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
             }
         }
         lastPosY = newPosY;
-
-        rectTransform.position = new Vector3(rectTransform.position.x, newPosY, rectTransform.position.z);
-    }
-    /// <summary>
-    /// 拖动结束，自动弹回原坐标
-    /// </summary>
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        Debug.Log("结束拖拽");
-        rectTransform.position = lastPos;
     }
 
 

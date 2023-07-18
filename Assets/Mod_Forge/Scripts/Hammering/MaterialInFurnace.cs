@@ -13,12 +13,14 @@ public class materialInFurnace : MonoBehaviour, IPointerClickHandler
     private Outline outline;
     private ShowOutLine showOutLine;
     private Image materialImage;
+    private Color HDRColor;
     private Color c;
 
     // Start is called before the first frame update
     void Start()
     {
-        c = HammeringSystem.Instance.glowMaterial.color;
+        HDRColor = HammeringSystem.Instance.glowMaterial.color;
+        c = materialImage.color;
     }
 
     // Update is called once per frame
@@ -28,12 +30,19 @@ public class materialInFurnace : MonoBehaviour, IPointerClickHandler
         {
             outline.enabled = false;
             showOutLine.enabled = false;
-            if (HammeringSystem.Instance.temperature > materialScript.MaterialItem.GetInt("ForgeTemp"))
+            materialImage.material = HammeringSystem.Instance.glowMaterial;
+            float materialForgeTemp =  materialScript.MaterialItem.GetInt("ForgeTemp", true);
+            if (HammeringSystem.Instance.temperature > materialForgeTemp)
             {
-                materialImage.material = HammeringSystem.Instance.glowMaterial;
-                float intensity = (HammeringSystem.Instance.temperature - 150f) / 35f;
+                float intensity = (HammeringSystem.Instance.temperature - materialForgeTemp) / (500f - materialForgeTemp) * 5;
                 float factor = Mathf.Pow(2, intensity);
-                materialImage.material.color = new Color(c.r * factor, c.g * factor, c.b * factor);
+                materialImage.material.color = new Color(HDRColor.r * factor, HDRColor.g * factor, HDRColor.b * factor);
+            }
+            else
+            {
+                float t = (float)HammeringSystem.Instance.temperature / materialForgeTemp;
+                Color color = Color.Lerp(c, HDRColor, t);
+                materialImage.material.color = color;
             }
         }
         else
@@ -59,7 +68,7 @@ public class materialInFurnace : MonoBehaviour, IPointerClickHandler
     /// </summary>
     void OnDisable()
     {
-        HammeringSystem.Instance.glowMaterial.color = c;
+        HammeringSystem.Instance.glowMaterial.color = HDRColor;
     }
     /// <summary>
     /// 点击时返还材料
