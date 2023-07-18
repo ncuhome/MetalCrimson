@@ -20,6 +20,7 @@ public class Chain : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     /// 拖动后的坐标y分量
     /// </summary>
     private float newPosY;
+    private float lastPosY;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,8 +34,11 @@ public class Chain : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
         Debug.Log("开始拖拽");
         //屏幕坐标转世界坐标
         RectTransformUtility.ScreenPointToWorldPointInRectangle(rectTransform, eventData.position, eventData.enterEventCamera, out posDiff);
+
         posDiff -= rectTransform.position;
+        Debug.Log(posDiff);
         lastPos = rectTransform.position;
+        lastPosY = newPosY;
     }
     /// <summary>
     /// 拖动，跟随拖动并且减去坐标差，且控制拖动范围，只允许改变y轴
@@ -43,15 +47,41 @@ public class Chain : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     {
         Vector3 pos;
         RectTransformUtility.ScreenPointToWorldPointInRectangle(rectTransform, eventData.position, eventData.enterEventCamera, out pos);
+
         newPosY = pos.y - posDiff.y;
+        Debug.Log(newPosY);
         if (newPosY - lastPos.y > 0)
         {
-            return;
+            newPosY = lastPos.y;
         }
-        if (newPosY - lastPos.y < -200)
+        if (newPosY - lastPos.y < -20)
         {
-            newPosY = lastPos.y - 200;
+            newPosY = lastPos.y - 20;
         }
+
+        float chainTimes = (lastPosY - newPosY) / 20;
+
+        if (newPosY < lastPosY)
+        {
+            if (HammeringSystem.Instance.temperature <= 150)
+            {
+                HammeringSystem.Instance.temperature += chainTimes * 25f;
+            }
+            else if (HammeringSystem.Instance.temperature <= 300f)
+            {
+                HammeringSystem.Instance.temperature += chainTimes * 12.5f;
+            }
+            else if (HammeringSystem.Instance.temperature <= 400f)
+            {
+                HammeringSystem.Instance.temperature += chainTimes * 10f;
+            }
+            else if (HammeringSystem.Instance.temperature <= 500f)
+            {
+                HammeringSystem.Instance.temperature += chainTimes * 5f;
+            }
+        }
+        lastPosY = newPosY;
+
         rectTransform.position = new Vector3(rectTransform.position.x, newPosY, rectTransform.position.z);
     }
     /// <summary>

@@ -104,6 +104,7 @@ public class MaterialSystem : MonoBehaviour
         GameObject newMaterialObject = materials[materialsItemStore.Count - 1];
         newMaterialObject = Instantiate(materialPrefab);
         newMaterialObject.transform.SetParent(materialsParentTrans);
+        newMaterialObject.transform.localScale = Vector3.one;
 
         MaterialScript newMaterialScript = newMaterialObject.GetComponent<MaterialScript>();
         newMaterialScript.MaterialItem = newMaterialItem;
@@ -144,6 +145,7 @@ public class MaterialSystem : MonoBehaviour
         GameObject newMaterialObject = materials[materialsItemStore.Count - 1];
         newMaterialObject = Instantiate(materialPrefab);
         newMaterialObject.transform.SetParent(materialsParentTrans);
+        newMaterialObject.transform.localScale = Vector3.one;
 
         MaterialScript newMaterialScript = newMaterialObject.GetComponent<MaterialScript>();
         newMaterialScript.MaterialItem = newMaterialItem;

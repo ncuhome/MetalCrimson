@@ -29,6 +29,8 @@ public class HammeringSystem : MonoBehaviour
     /// 炉子里的材料
     /// </summary>
     public GameObject[] materialInFurnaces = null;
+    public Material glowMaterial;
+    public float temperature = 0f;
     void Awake()
     {
         //构筑单例，并初始化
