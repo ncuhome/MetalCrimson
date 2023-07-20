@@ -1,18 +1,32 @@
+﻿using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ManController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    /// <summary>
+    /// 移动速度
+    /// </summary>
+    public float speed;
+
+    public Rigidbody2D body;
+    
     void Start()
     {
         
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        
+        float x = Input.GetAxis("Horizontal");
+        float y = Input.GetAxis("Vertical");
+
+
+        transform.position += new Vector3(x*speed,0,0) *Time.deltaTime;
+
+        Vector2 a = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Debug.DrawRay(transform.position, a - (Vector2)transform.position);
     }
 }

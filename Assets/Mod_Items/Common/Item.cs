@@ -875,5 +875,37 @@ namespace ER.Items
         }
 
         #endregion 创建|修改属性
+        /// <summary>
+        /// 创建深拷贝
+        /// </summary>
+        /// <returns></returns>
+        public ItemVariable Clone()
+        {
+            ItemInfo info = Info();
+            ItemVariable clone = new();
+            clone.ID = ID;
+            clone.Name = Name;
+            clone.attributeBool = info.attributeBool;
+            clone.attributeText = info.attributeText;
+            clone.attributeFloat = info.attributeFloat;
+            clone.attributeInt = info.attributeInt;
+            return clone;
+        }
+        /// <summary>
+        /// 创建深拷贝
+        /// </summary>
+        /// <returns></returns>
+        public ItemVariable Clone(string name)
+        {
+            ItemInfo info = Info();
+            ItemVariable clone = new();
+            clone.ID = ID;
+            clone.Name = name;
+            clone.attributeBool = info.attributeBool;
+            clone.attributeText = info.attributeText;
+            clone.attributeFloat = info.attributeFloat;
+            clone.attributeInt = info.attributeInt;
+            return clone;
+        }
     }
 }
