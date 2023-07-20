@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class HammeringSystem : MonoBehaviour
 {
@@ -33,6 +33,10 @@ public class HammeringSystem : MonoBehaviour
     public Material glowMaterial;
     public float temperature = 0f;
     public bool startHammering;
+    public GameObject ChooseMaterialPanel, Slider;
+    private ER.Items.ItemVariable newItem;
+    private int HitTimes;
+    private bool isNewMaterial;
     void Awake()
     {
         //构筑单例，并初始化
@@ -51,6 +55,21 @@ public class HammeringSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            StartHammering();
+        }
+
+        if (temperature > 0)
+        {
+            Slider.SetActive(false);
+            ChooseMaterialPanel.SetActive(false);
+        }
+        else
+        {
+            Slider.SetActive(true);
+            ChooseMaterialPanel.SetActive(true);
+        }
 
     }
     /// <summary>
@@ -94,21 +113,105 @@ public class HammeringSystem : MonoBehaviour
     /// </summary>
     public void MoveBackMaterial(int id)
     {
-        materialScripts[id].MaterialItem.CreateAttribute("Num", materialScripts[id].MaterialItem.GetInt("Num") + 1);
-        materialScripts[id] = null;
-        materialInFurnaces[id].SetActive(false);
-        AddedMaterialNum--;
+        if (isNewMaterial)
+        {
+            MaterialSystem.Instance.AddForgedMaterial(materialScripts[id].MaterialItem);
+            materialScripts[id] = null;
+            materialInFurnaces[id].SetActive(false);
+            isNewMaterial = false;
+        }
+        else
+        {
+            materialScripts[id].MaterialItem.CreateAttribute("Num", materialScripts[id].MaterialItem.GetInt("Num") + 1);
+            materialScripts[id] = null;
+            materialInFurnaces[id].SetActive(false);
+            AddedMaterialNum--;
+        }
         FixMaterials();
     }
 
+    /// <summary>
+    /// 开始锻造
+    /// </summary>
     public void StartHammering()
     {
         if (startHammering) { return; }
         if (AddedMaterialNum == 0) { return; }
         foreach (MaterialScript materialScript in materialScripts)
         {
-            if ((materialScript != null) && (materialScript.MaterialItem.GetInt("ForgeTemp", true) > temperature)) { return; }
+            if ((materialScript != null) && (materialScript.MaterialItem.GetInt("ForgeTemp", true) > materialScript.MaterialItem.GetFloat("Temperature", true))) { return; }
         }
+        newItem = materialScripts[0].MaterialItem;
         startHammering = true;
+        isNewMaterial = true;
+        HitTimes = 0;
+        QTE.Instance.StartQTE();
+    }
+
+    /// <summary>
+    /// 结束锻造
+    /// </summary>
+    public void FinishHammering()
+    {
+        startHammering = false;
+        temperature = 0;
+        AddedMaterialNum = 0;
+
+        if (AddedMaterialNum > 1)
+        {
+
+        }
+        else
+        {
+            materialScripts[0].MaterialItem = newItem;
+            materialInFurnaces[0].GetComponent<Image>().material = null;
+        }
+    }
+
+    /// <summary>
+    /// 进行材料的公式计算
+    /// </summary>
+    public void HammerMaterial()
+    {
+        if (AddedMaterialNum > 1)
+        {
+            newItem = SynthesisMaterial();
+        }
+        else
+        {
+            newItem = ForgedMaterial();
+        }
+    }
+
+    /// <summary>
+    /// 锻造数值变换
+    /// </summary>
+    private ER.Items.ItemVariable ForgedMaterial()
+    {
+        ER.Items.ItemVariable item = newItem;
+        float n = Mathf.Floor(HitTimes / 5);
+        float Pref = QTE.Instance.QTEJudgement();
+        float FbR = (1 + (2 * newItem.GetFloat("Temperature", true) - newItem.GetInt("ForgeTemp")) * (newItem.GetInt("MeltTemp") - newItem.GetFloat("Temperature", true))) * 25 / (Mathf.Pow((2 * newItem.GetInt("MeltTemp") - newItem.GetInt("ForgeTemp")), 2) * 32);
+        float deltaFb = (20 / (n + 2) - (1 * (1 - FbR))) * Pref;
+        float ThR = Mathf.Pow((newItem.GetFloat("Temperature", true) * newItem.GetFloat("Temperature", true) / newItem.GetInt("ForgeTemp") / newItem.GetInt("MeltTemp")), newItem.GetFloat("HeatPreference"));
+        float deltaTh = Mathf.Pow((newItem.GetFloat("Toughness") * (1 + newItem.GetFloat("Pressability")) / newItem.GetFloat("Toughness", true)), ((1 + n - newItem.GetFloat("Stubborn")) / 2)) * ThR * Pref;
+        float AtsR = FbR;
+        float deltaAts = newItem.GetFloat("AntiSolution") * (1 + newItem.GetFloat("AtsGrowth")) / (2 * newItem.GetFloat("AntiSolution", true)) * AtsR * Pref;
+        item.CreateAttribute("Flexability", item.GetFloat("Flexability", true) + FbR);
+        item.CreateAttribute("Toughness", item.GetFloat("Toughness", true) + ThR);
+        item.CreateAttribute("AntiSolution", item.GetFloat("AntiSolution", true) + AtsR);
+        HitTimes++;
+        item.CreateAttribute("IsForged", true);
+
+        Debug.Log("Flexability=" + item.GetFloat("Flexability", true) + " ,Toughness=" + item.GetFloat("Toughness", true) + " ,AntiSolution=" + item.GetFloat("AntiSolution", true) + " ,HitTimes=" + HitTimes + ", IsForged=" + item.GetBool("IsForged", true));
+
+        return item;
+    }
+    /// <summary>
+    /// 叠锻数值变换
+    /// </summary>
+    private ER.Items.ItemVariable SynthesisMaterial()
+    {
+        return null;
     }
 }

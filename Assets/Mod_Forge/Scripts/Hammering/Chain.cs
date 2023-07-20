@@ -32,12 +32,10 @@ public class Chain : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (HammeringSystem.Instance.startHammering) { return; }
-        Debug.Log("开始拖拽");
         //屏幕坐标转世界坐标
         RectTransformUtility.ScreenPointToWorldPointInRectangle(rectTransform, eventData.position, eventData.enterEventCamera, out posDiff);
 
         posDiff -= rectTransform.position;
-        Debug.Log(posDiff);
         lastPos = rectTransform.position;
         lastPosY = newPosY;
     }
@@ -51,7 +49,6 @@ public class Chain : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
         RectTransformUtility.ScreenPointToWorldPointInRectangle(rectTransform, eventData.position, eventData.enterEventCamera, out pos);
 
         newPosY = pos.y - posDiff.y;
-        Debug.Log(newPosY);
         if (newPosY - lastPos.y > 0)
         {
             newPosY = lastPos.y;
@@ -71,7 +68,6 @@ public class Chain : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     public void OnEndDrag(PointerEventData eventData)
     {
         if (HammeringSystem.Instance.startHammering) { return; }
-        Debug.Log("结束拖拽");
         rectTransform.position = lastPos;
     }
 

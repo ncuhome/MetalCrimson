@@ -100,6 +100,7 @@ public class MaterialSystem : MonoBehaviour
         newMaterialItem.CreateAttribute("Num", 1);
         newMaterialItem.CreateAttribute("IsForged", false);
         newMaterialItem.CreateAttribute("Name", newMaterialItem.GetText("Name", false));
+        newMaterialItem.CreateAttribute("Temperature", 0f);
 
         GameObject newMaterialObject = materials[materialsItemStore.Count - 1];
         newMaterialObject = Instantiate(materialPrefab);
@@ -141,6 +142,7 @@ public class MaterialSystem : MonoBehaviour
         newMaterialItem.CreateAttribute("Num", 1);
         newMaterialItem.CreateAttribute("IsForged", false);
         newMaterialItem.CreateAttribute("Name", newMaterialItem.GetText("Name", false));
+        newMaterialItem.CreateAttribute("Temperature", 0f);
 
         GameObject newMaterialObject = materials[materialsItemStore.Count - 1];
         newMaterialObject = Instantiate(materialPrefab);
@@ -149,6 +151,21 @@ public class MaterialSystem : MonoBehaviour
 
         MaterialScript newMaterialScript = newMaterialObject.GetComponent<MaterialScript>();
         newMaterialScript.MaterialItem = newMaterialItem;
+        return true;
+    }
+
+    public bool AddForgedMaterial(ER.Items.ItemVariable forgedItem)
+    {
+        forgedItem.CreateAttribute("Num", 1);
+        forgedItem.CreateAttribute("Temperature", 0f);
+        materialsItemStore.AddItem(forgedItem);
+        GameObject forgedMaterialObject = materials[materialsItemStore.Count - 1];
+        forgedMaterialObject = Instantiate(materialPrefab);
+        forgedMaterialObject.transform.SetParent(materialsParentTrans);
+        forgedMaterialObject.transform.localScale = Vector3.one;
+
+        MaterialScript forgedMaterialScript = forgedMaterialObject.GetComponent<MaterialScript>();
+        forgedMaterialScript.MaterialItem = forgedItem;
         return true;
     }
 }

@@ -15,6 +15,7 @@ public class materialInFurnace : MonoBehaviour, IPointerClickHandler
     private Image materialImage;
     private Color HDRColor;
     private Color c;
+    private float t;
 
     // Start is called before the first frame update
     void Start()
@@ -31,16 +32,28 @@ public class materialInFurnace : MonoBehaviour, IPointerClickHandler
             outline.enabled = false;
             showOutLine.enabled = false;
             materialImage.material = HammeringSystem.Instance.glowMaterial;
-            float materialForgeTemp =  materialScript.MaterialItem.GetInt("ForgeTemp", true);
-            if (HammeringSystem.Instance.temperature > materialForgeTemp)
+
+            if (!HammeringSystem.Instance.startHammering)
             {
-                float intensity = (HammeringSystem.Instance.temperature - materialForgeTemp) / (500f - materialForgeTemp) * 5;
+                t += Time.deltaTime;
+                if (t > 0.2f)
+                {
+                    UpdateTemperature();
+                    t = 0;
+                }
+            }
+
+            float materialForgeTemp = materialScript.MaterialItem.GetInt("ForgeTemp", true);
+            float materialTemperature = materialScript.MaterialItem.GetFloat("Temperature", true);
+            if (materialTemperature > materialForgeTemp)
+            {
+                float intensity = (materialTemperature - materialForgeTemp) / (500f - materialForgeTemp) * 5;
                 float factor = Mathf.Pow(2, intensity);
                 materialImage.material.color = new Color(HDRColor.r * factor, HDRColor.g * factor, HDRColor.b * factor);
             }
             else
             {
-                float t = (float)HammeringSystem.Instance.temperature / materialForgeTemp;
+                float t = materialTemperature / materialForgeTemp;
                 Color color = Color.Lerp(c, HDRColor, t);
                 materialImage.material.color = color;
             }
@@ -77,5 +90,15 @@ public class materialInFurnace : MonoBehaviour, IPointerClickHandler
     {
         if (HammeringSystem.Instance.temperature > 0) { return; }
         HammeringSystem.Instance.MoveBackMaterial(ID);
+    }
+
+    private void UpdateTemperature()
+    {
+        float materialTemperature = materialScript.MaterialItem.GetFloat("Temperature", true);
+        float materialHeatPassage = materialScript.MaterialItem.GetFloat("HeatPassage", true);
+        float materialHeatContain = materialScript.MaterialItem.GetFloat("HeatContain", true);
+        float dT = materialHeatPassage * (HammeringSystem.Instance.temperature - materialTemperature) * 0.2f / materialHeatContain;
+        materialScript.MaterialItem.CreateAttribute("Temperature", materialTemperature + dT);
+        Debug.Log("Temperature=" + materialScript.MaterialItem.GetFloat("Temperature"));
     }
 }
