@@ -25,7 +25,7 @@ namespace Mod_Console
         /// <summary>
         /// 使用的指令解释器
         /// </summary>
-        public DefaultInterpreter interpreter = new DefaultInterpreter();//指令器
+        public static DefaultInterpreter interpreter = new DefaultInterpreter();//指令器
 
         /// <summary>
         /// 最大消息数
