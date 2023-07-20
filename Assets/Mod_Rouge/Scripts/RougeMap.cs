@@ -50,8 +50,9 @@ namespace Mod_Rouge
     /// <summary>
     /// 肉鸽地图
     /// </summary>
-    public class RougeMap
+    public class RougeMap:Singleton<RougeMap>
     {
+
         #region 预设属性
 
         /// <summary>
