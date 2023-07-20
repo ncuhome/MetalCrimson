@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mod_Console;
+using System;
 using System.ComponentModel.Design;
 
 namespace Mod_Rouge
@@ -39,6 +40,12 @@ namespace Mod_Rouge
             this.level = level;
         }
         #endregion
+
+        public void Print()
+        {
+            ConsolePanel.Print($"层数：{level}\t类型：{type}\t模板：{useTemplate}");
+        }
+
         
     }
 }

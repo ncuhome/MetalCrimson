@@ -3,7 +3,6 @@ using ER.Parser;
 using Mod_Rouge;
 using Mod_Save;
 using System.IO;
-using System.Security.Cryptography;
 
 namespace Mod_Console
 {
@@ -191,9 +190,8 @@ namespace Mod_Console
 
                     if (int.TryParse(parameters[1].Value.ToString(), out int id))
                     {
-                        if(ItemTemplateStore.Instance.Exist(id))
+                        if (ItemTemplateStore.Instance.Exist(id))
                         {
-
                             if (store.AddItem(new ItemVariable(id)))
                             {
                                 Print($"添加物品[{ItemTemplateStore.Instance[id].NameTmp}]成功");
@@ -220,14 +218,14 @@ namespace Mod_Console
                     PrintError("指定动态仓库不存在");
                 }
             }
-            else if(parameters.IsMate(DataType.Text, DataType.Text))
+            else if (parameters.IsMate(DataType.Text, DataType.Text))
             {
                 string name = (string)parameters[0].Value;
                 if (ItemStoreManager.Instance.Exist(name))
                 {
                     ItemStore store = ItemStoreManager.Instance[name];
                     string tmpName = (string)parameters[1].Value;
-                    if(ItemTemplateStore.Instance.Exist(tmpName))
+                    if (ItemTemplateStore.Instance.Exist(tmpName))
                     {
                         ItemTemplate item = ItemTemplateStore.Instance[tmpName];
                         if (store.AddItem(new ItemVariable(item.ID)))
@@ -312,11 +310,11 @@ namespace Mod_Console
 
         private Data CMD_mapconfig_load(Data[] parameters)
         {
-            if(!parameters.IsEmpty())
+            if (!parameters.IsEmpty())
             {
                 Print("正在加载地图配置");
                 string path = (string)parameters[0].Value;
-                if(File.Exists(path))
+                if (File.Exists(path))
                 {
                     RougeMap.Instance.LoadConfig(path);
                     Print("加载地图配置完毕");
@@ -341,7 +339,6 @@ namespace Mod_Console
             if (settings == null) PrintError("配置未初始化");
             else
             {
-
                 for (int i = 0; i < settings.Length; i++)
                 {
                     Print($"{(RoomType)i}:[", false);
@@ -388,17 +385,41 @@ namespace Mod_Console
             return Data.Empty;
         }
 
-        private Data CMD_map_start()
+        private Data CMD_mapinfo()
         {
-            Room room = RougeMap.Instance.Start();
-            Print($"层数：{room.level}\t类型：{room.type}\t模板：{room.useTemplate}");
+            RougeMap.Instance.PrintInfo();
             return Data.Empty;
         }
 
-        private Data CMD_map_next()
+        private Data CMD_map_start()
         {
-            Room room = RougeMap.Instance.Next();
-            Print($"层数：{room.level}\t类型：{room.type}\t模板：{room.useTemplate}");
+            Print("------------------------------------------");
+            Room room = RougeMap.Instance.Start();
+            room.Print();
+            Print("Exit:");
+            RougeMap.Instance.PrintExits();
+            RougeMap.Instance.PrintInfo();
+            Print("------------------------------------------");
+
+            return Data.Empty;
+        }
+
+        private Data CMD_map_select(Data[] parameters)
+        {
+            if (parameters.IsMate(DataType.Integer))
+            {
+                Print("------------------------------------------");
+                int index = (int)parameters[0].Value;
+                Room room = RougeMap.Instance.SelectRoom(index);
+                if (room != null)
+                {
+                    room.Print();
+                    Print("Exit:");
+                    RougeMap.Instance.PrintExits();
+                    RougeMap.Instance.PrintInfo();
+                }
+                Print("------------------------------------------");
+            }
             return Data.Empty;
         }
 
@@ -452,14 +473,18 @@ namespace Mod_Console
 
                 case "mapconfig_load"://加载地图生成配置
                     return CMD_mapconfig_load(parameters);
+
                 case "mapconfig"://打印地图配置信息
                     return CMD_mapconfig();
+
+                case "mapinfo":
+                    return CMD_mapinfo();
 
                 case "map_start":
                     return CMD_map_start();
 
-                case "map_next":
-                    return CMD_map_next();
+                case "map_select":
+                    return CMD_map_select(parameters);
 
                 default:
                     return Data.Error;
