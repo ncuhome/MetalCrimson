@@ -115,7 +115,7 @@ public class HammeringSystem : MonoBehaviour
     {
         if (isNewMaterial)
         {
-            MaterialSystem.Instance.AddForgedMaterial(materialScripts[id].MaterialItem);
+            MaterialSystem.Instance.AddForgedMaterial(newItem);
             materialScripts[id] = null;
             materialInFurnaces[id].SetActive(false);
             isNewMaterial = false;
@@ -141,7 +141,7 @@ public class HammeringSystem : MonoBehaviour
         {
             if ((materialScript != null) && (materialScript.MaterialItem.GetInt("ForgeTemp", true) > materialScript.MaterialItem.GetFloat("Temperature", true))) { return; }
         }
-        newItem = materialScripts[0].MaterialItem;
+        newItem = materialScripts[0].MaterialItem.Clone();
         startHammering = true;
         isNewMaterial = true;
         HitTimes = 0;
@@ -163,9 +163,9 @@ public class HammeringSystem : MonoBehaviour
         }
         else
         {
-            materialScripts[0].MaterialItem = newItem;
             materialInFurnaces[0].GetComponent<Image>().material = null;
         }
+        MaterialSystem.Instance.FixedMaterialOjects();
     }
 
     /// <summary>
@@ -188,11 +188,11 @@ public class HammeringSystem : MonoBehaviour
     /// </summary>
     private ER.Items.ItemVariable ForgedMaterial()
     {
-        ER.Items.ItemVariable item = newItem;
+        ER.Items.ItemVariable item = newItem.Clone();
         float n = Mathf.Floor(HitTimes / 5);
         float Pref = QTE.Instance.QTEJudgement();
         float FbR = (1 + (2 * newItem.GetFloat("Temperature", true) - newItem.GetInt("ForgeTemp")) * (newItem.GetInt("MeltTemp") - newItem.GetFloat("Temperature", true))) * 25 / (Mathf.Pow((2 * newItem.GetInt("MeltTemp") - newItem.GetInt("ForgeTemp")), 2) * 32);
-        float deltaFb = (20 / (n + 2) - (1 * (1 - FbR))) * Pref;
+        float deltaFb = (4 / (n + 2) - (1 * (1 - FbR))) * Pref;
         float ThR = Mathf.Pow((newItem.GetFloat("Temperature", true) * newItem.GetFloat("Temperature", true) / newItem.GetInt("ForgeTemp") / newItem.GetInt("MeltTemp")), newItem.GetFloat("HeatPreference"));
         float deltaTh = Mathf.Pow((newItem.GetFloat("Toughness") * (1 + newItem.GetFloat("Pressability")) / newItem.GetFloat("Toughness", true)), ((1 + n - newItem.GetFloat("Stubborn")) / 2)) * ThR * Pref;
         float AtsR = FbR;
@@ -205,7 +205,7 @@ public class HammeringSystem : MonoBehaviour
 
         Debug.Log("Flexability=" + item.GetFloat("Flexability", true) + " ,Toughness=" + item.GetFloat("Toughness", true) + " ,AntiSolution=" + item.GetFloat("AntiSolution", true) + " ,HitTimes=" + HitTimes + ", IsForged=" + item.GetBool("IsForged", true));
 
-        return item;
+        return item.Clone();
     }
     /// <summary>
     /// 叠锻数值变换

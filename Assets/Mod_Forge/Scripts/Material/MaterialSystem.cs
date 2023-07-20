@@ -33,7 +33,7 @@ public class MaterialSystem : MonoBehaviour
     /// <summary>
     /// 材料物体组
     /// </summary>
-    private GameObject[] materials = null;
+    private List<GameObject> materials = null;
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
@@ -63,7 +63,7 @@ public class MaterialSystem : MonoBehaviour
         ER.Items.ItemTemplateStore.Instance.LoadItemsList(@"Assets/StreamingAssets/材料信息表.csv");
         ER.Items.ItemStoreManager.Instance.Creat("materialItemStore");
         materialsItemStore = ER.Items.ItemStoreManager.Instance.Stores["materialItemStore"];
-        materials = new GameObject[64];
+        materials = new List<GameObject>();
 
         for (int i = 0; i < 6; i++)
         {
@@ -102,8 +102,8 @@ public class MaterialSystem : MonoBehaviour
         newMaterialItem.CreateAttribute("Name", newMaterialItem.GetText("Name", false));
         newMaterialItem.CreateAttribute("Temperature", 0f);
 
-        GameObject newMaterialObject = materials[materialsItemStore.Count - 1];
-        newMaterialObject = Instantiate(materialPrefab);
+        GameObject newMaterialObject = Instantiate(materialPrefab);
+        materials.Add(newMaterialObject);
         newMaterialObject.transform.SetParent(materialsParentTrans);
         newMaterialObject.transform.localScale = Vector3.one;
 
@@ -144,8 +144,8 @@ public class MaterialSystem : MonoBehaviour
         newMaterialItem.CreateAttribute("Name", newMaterialItem.GetText("Name", false));
         newMaterialItem.CreateAttribute("Temperature", 0f);
 
-        GameObject newMaterialObject = materials[materialsItemStore.Count - 1];
-        newMaterialObject = Instantiate(materialPrefab);
+        GameObject newMaterialObject = Instantiate(materialPrefab);
+        materials.Add(newMaterialObject);
         newMaterialObject.transform.SetParent(materialsParentTrans);
         newMaterialObject.transform.localScale = Vector3.one;
 
@@ -159,13 +159,27 @@ public class MaterialSystem : MonoBehaviour
         forgedItem.CreateAttribute("Num", 1);
         forgedItem.CreateAttribute("Temperature", 0f);
         materialsItemStore.AddItem(forgedItem);
-        GameObject forgedMaterialObject = materials[materialsItemStore.Count - 1];
-        forgedMaterialObject = Instantiate(materialPrefab);
+        GameObject forgedMaterialObject = Instantiate(materialPrefab);
+        materials.Add(forgedMaterialObject);
         forgedMaterialObject.transform.SetParent(materialsParentTrans);
         forgedMaterialObject.transform.localScale = Vector3.one;
 
         MaterialScript forgedMaterialScript = forgedMaterialObject.GetComponent<MaterialScript>();
         forgedMaterialScript.MaterialItem = forgedItem;
         return true;
+    }
+
+    public void FixedMaterialOjects()
+    {
+        for (int index = 0; index < materials.Count; index++)
+        {
+            ER.Items.ItemVariable item = materials[index].GetComponent<MaterialScript>().MaterialItem;
+            if (item.GetInt("Num") == 0)
+            {
+                materialsItemStore.RemoveItem(index);
+                Destroy(materials[index]);
+                materials.RemoveAt(index);
+            }
+        }
     }
 }
