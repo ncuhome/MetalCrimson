@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,26 +9,8 @@ namespace Mod_Save
     /// <summary>
     /// 存档系统
     /// </summary>
-    public class SaveManager
+    public class SaveManager:Singleton<SaveManager>
     {
-        #region 单例封装
-
-        private static SaveManager instance;
-
-        public static SaveManager Instance
-        {
-            get
-            {
-                if (instance == null) { instance = new SaveManager(); }
-                return instance;
-            }
-        }
-
-        private SaveManager()
-        { }
-
-        #endregion 单例封装
-
         #region 事件
         /// <summary>
         /// 读档完毕时触发的事件

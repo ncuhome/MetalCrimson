@@ -1,5 +1,6 @@
 ﻿using ER.Items;
 using Mod_Console;
+using Mod_Rouge;
 using Mod_Save;
 using System;
 using UnityEngine;
@@ -13,8 +14,12 @@ namespace Mod_Common
     {
         [Tooltip("存档目录路径")]
         public string SavePath = @"Assets/StreamingAssets/Saves";
+
         [Tooltip("物品模板数据表路径")]
         public string DataPath = @"Assets/StreamingAssets/模具信息表.csv";
+
+        [Tooltip("地图配置文件路径")]
+        public string MapSettingsPath = @"Assets/StreamingAssets/mapsettings.ini";
 
         private void Settings()//设置预设
         {
@@ -37,10 +42,14 @@ namespace Mod_Common
         {
             //启用预设设置选项
             //Settings();
+
+            //更新地图配置
+            RougeMap.Instance.LoadConfig(MapSettingsPath);
             //设置使用的指令解释器
-            ConsolePanel.Instance.interpreter = new AInterpreter();
+            ConsolePanel.interpreter = new AInterpreter();
             //关闭控制台面板
-            ConsolePanel.Instance.CloseUsing();
+            if(ConsolePanel.Instance!=null)
+                ConsolePanel.Instance.CloseUsing();
             //设置存档目录
             SaveManager.Instance.savePackPath = SavePath;
             //设置存档解析器为Json解析器

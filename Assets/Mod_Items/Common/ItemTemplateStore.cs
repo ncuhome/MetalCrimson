@@ -25,7 +25,7 @@ namespace ER.Items
             }
         }
 
-        private ItemTemplateStore()
+        protected ItemTemplateStore()
         { }
 
         #endregion 单例封装

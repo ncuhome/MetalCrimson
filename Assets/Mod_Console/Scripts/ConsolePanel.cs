@@ -1,4 +1,5 @@
-﻿using ER.Parser;
+﻿using Common;
+using ER.Parser;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
@@ -6,20 +7,8 @@ using UnityEngine;
 
 namespace Mod_Console
 {
-    public class ConsolePanel : MonoBehaviour
+    public class ConsolePanel : MonoSingleton<ConsolePanel>
     {
-        #region 单例封装
-
-        public static ConsolePanel Instance { get; private set; } = null;
-
-        public void Awake()
-        {
-            if (Instance is null) { Instance = this; }
-            else { Destroy(gameObject); }
-            DontDestroyOnLoad(this);
-        }
-
-        #endregion 单例封装
 
         #region 组件 | 属性
 
@@ -36,7 +25,7 @@ namespace Mod_Console
         /// <summary>
         /// 使用的指令解释器
         /// </summary>
-        public DefaultInterpreter interpreter = new DefaultInterpreter();//指令器
+        public static DefaultInterpreter interpreter = new DefaultInterpreter();//指令器
 
         /// <summary>
         /// 最大消息数

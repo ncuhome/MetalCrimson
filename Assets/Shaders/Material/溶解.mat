@@ -54,7 +54,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _NoiseStrength: 0.75
+    - _NoiseStrength: 1
     - _NoiseWidth: 0.127
     - _Scale: 25
     m_Colors:

@@ -40,7 +40,7 @@ namespace ER.Parser
             foreach (string line in lines)
             {
                 string trimmedLine = line.Trim();
-                if (string.IsNullOrWhiteSpace(trimmedLine) || trimmedLine.StartsWith(";"))
+                if (string.IsNullOrWhiteSpace(trimmedLine) || trimmedLine.StartsWith(";") || trimmedLine.StartsWith("#"))
                 {
                     // Ignore empty lines and comments
                     continue;
