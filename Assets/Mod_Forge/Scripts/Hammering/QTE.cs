@@ -75,7 +75,7 @@ public class QTE : MonoBehaviour
             }
             if (Input.GetKeyUp(KeyCode.E))
             {
-                HammeringSystem.Instance.HammerMaterial();
+                HammeringSystem.Instance.HammerMaterial(QTEJudgement());
             }
         }
     }

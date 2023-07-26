@@ -23,6 +23,6 @@ public class StartQTE : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (HammeringSystem.Instance.startHammering) { HammeringSystem.Instance.HammerMaterial(); }
+        if (HammeringSystem.Instance.startHammering) { HammeringSystem.Instance.HammerMaterial(QTE.Instance.QTEJudgement()); }
     }
 }
