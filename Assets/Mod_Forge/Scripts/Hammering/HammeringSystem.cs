@@ -71,6 +71,11 @@ public class HammeringSystem : MonoBehaviour
             ChooseMaterialPanel.SetActive(true);
         }
 
+        if (temperature < 0)
+        {
+            temperature = 0;
+        }
+
     }
     /// <summary>
     /// 判断是否能添加材料
