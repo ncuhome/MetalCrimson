@@ -185,6 +185,10 @@ public class MaterialSystem : MonoBehaviour
 
     public MaterialScript GetMaterialScript(int index)
     {
+        if (index > (materialsParentTrans.childCount - 1))
+        {
+            return null;
+        }
         return materialsParentTrans.GetChild(index).GetComponent<MaterialScript>();
     }
 }

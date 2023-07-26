@@ -90,12 +90,14 @@ public class HammeringSystem : MonoBehaviour
     /// <summary>
     /// 添加材料
     /// </summary>
-    private void AddMaterial(MaterialScript materialScript)
+    private bool AddMaterial(MaterialScript materialScript)
     {
+        if (materialScript == null) { return false; }
         materialScripts[AddedMaterialNum] = materialScript;
         materialInFurnaces[AddedMaterialNum].SetActive(true);
         materialScript.MaterialItem.CreateAttribute("Num", materialScript.MaterialItem.GetInt("Num") - 1);
         AddedMaterialNum++;
+        return true;
     }
     /// <summary>
     /// 放回材料后修复顺序
