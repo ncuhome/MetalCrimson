@@ -80,12 +80,15 @@ public class HammeringSystem : MonoBehaviour
     /// <summary>
     /// 判断是否能添加材料
     /// </summary>
-    public void AddMaterialJudgement(MaterialScript materialScript)
+    public bool AddMaterialJudgement(MaterialScript materialScript, out bool canFindMaterial)
     {
         if (AddedMaterialNum < 3)
         {
-            AddMaterial(materialScript);
+            canFindMaterial = AddMaterial(materialScript);
+            return true;
         }
+        canFindMaterial = true;
+        return false;
     }
     /// <summary>
     /// 添加材料
