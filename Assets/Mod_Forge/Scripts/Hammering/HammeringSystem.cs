@@ -91,7 +91,7 @@ public class HammeringSystem : MonoBehaviour
             canFindMaterial = true;
         }
 
-        if (AddedMaterialNum < 3)
+        if ((AddedMaterialNum < 3) || (canFindMaterial))
         {
             AddMaterial(materialScript);
             return true;
@@ -103,7 +103,6 @@ public class HammeringSystem : MonoBehaviour
     /// </summary>
     private void AddMaterial(MaterialScript materialScript)
     {
-
         materialScripts[AddedMaterialNum] = materialScript;
         materialInFurnaces[AddedMaterialNum].SetActive(true);
         materialScript.MaterialItem.CreateAttribute("Num", materialScript.MaterialItem.GetInt("Num") - 1);
@@ -128,8 +127,9 @@ public class HammeringSystem : MonoBehaviour
     /// <summary>
     /// 放回材料
     /// </summary>
-    public void MoveBackMaterial(int id)
+    public bool MoveBackMaterial(int id)
     {
+        if (id > AddedMaterialNum) { return false; }
         if (isNewMaterial)
         {
             MaterialSystem.Instance.AddForgedMaterial(newItem);
@@ -145,6 +145,7 @@ public class HammeringSystem : MonoBehaviour
             AddedMaterialNum--;
         }
         FixMaterials();
+        return true;
     }
 
     /// <summary>
