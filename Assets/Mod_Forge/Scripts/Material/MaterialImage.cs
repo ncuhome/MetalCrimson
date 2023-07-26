@@ -59,7 +59,8 @@ public class MaterialImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         rectTransform.position = lastPosition;
         if (inFurnace)
         {
-            HammeringSystem.Instance.AddMaterialJudgement(materialScript);
+            bool canFindMaterial = false;
+            HammeringSystem.Instance.AddMaterialJudgement(materialScript, out canFindMaterial);
         }
     }
 
