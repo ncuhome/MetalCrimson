@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -129,7 +129,7 @@ public class HammeringSystem : MonoBehaviour
     /// </summary>
     public bool MoveBackMaterial(int id)
     {
-        if (id > AddedMaterialNum) { return false; }
+        if (id >= AddedMaterialNum) { return false; }
         if (isNewMaterial)
         {
             MaterialSystem.Instance.AddForgedMaterial(newItem);
