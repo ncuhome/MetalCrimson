@@ -91,7 +91,7 @@ public class HammeringSystem : MonoBehaviour
             canFindMaterial = true;
         }
 
-        if ((AddedMaterialNum < 3) || (canFindMaterial))
+        if ((AddedMaterialNum < 3) && (canFindMaterial))
         {
             AddMaterial(materialScript);
             return true;
@@ -189,7 +189,7 @@ public class HammeringSystem : MonoBehaviour
     /// <summary>
     /// 进行材料的公式计算
     /// </summary>
-    public void HammerMaterial()
+    public void HammerMaterial(float QTEPerf)
     {
         if (AddedMaterialNum > 1)
         {
@@ -197,18 +197,18 @@ public class HammeringSystem : MonoBehaviour
         }
         else
         {
-            newItem = ForgedMaterial();
+            newItem = ForgedMaterial(QTEPerf);
         }
     }
 
     /// <summary>
     /// 锻造数值变换
     /// </summary>
-    private ER.Items.ItemVariable ForgedMaterial()
+    private ER.Items.ItemVariable ForgedMaterial(float QTEPerf)
     {
         ER.Items.ItemVariable item = newItem.Clone();
         float n = Mathf.Floor(HitTimes / 5);
-        float Pref = QTE.Instance.QTEJudgement();
+        float Pref = QTEPerf;
         float FbR = (1 + (2 * newItem.GetFloat("Temperature", true) - newItem.GetInt("ForgeTemp")) * (newItem.GetInt("MeltTemp") - newItem.GetFloat("Temperature", true))) * 25 / (Mathf.Pow((2 * newItem.GetInt("MeltTemp") - newItem.GetInt("ForgeTemp")), 2) * 32);
         float deltaFb = (4 / (n + 2) - (1 * (1 - FbR))) * Pref;
         float ThR = Mathf.Pow((newItem.GetFloat("Temperature", true) * newItem.GetFloat("Temperature", true) / newItem.GetInt("ForgeTemp") / newItem.GetInt("MeltTemp")), newItem.GetFloat("HeatPreference"));
