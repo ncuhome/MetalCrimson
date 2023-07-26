@@ -68,8 +68,24 @@ public class Outline : BaseMeshEffect
  
         RefreshOutline();
     }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable(); 
+
+        if (graphic != null)
+        {
+            if (graphic.material == null
+                || graphic.material.shader.name != "UI/Outline")
+            {
+                LoadOutlineMat();
+            }
+        }
  
-    void LoadOutlineMat()
+        RefreshOutline();
+    }
+ 
+    public void LoadOutlineMat()
     {
 #if UNITY_EDITOR
         var mat = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>(MaterialPath);

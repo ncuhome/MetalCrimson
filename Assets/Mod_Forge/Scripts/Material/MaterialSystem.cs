@@ -182,4 +182,9 @@ public class MaterialSystem : MonoBehaviour
             }
         }
     }
+
+    public MaterialScript GetMaterialScript(int index)
+    {
+        return materialsParentTrans.GetChild(index).GetComponent<MaterialScript>();
+    }
 }
