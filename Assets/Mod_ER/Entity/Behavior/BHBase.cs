@@ -134,10 +134,6 @@ namespace ER.Entity
         #endregion
 
         #region 功能函数
-        public override object GetStatus()
-        {
-            return Info;
-        }
 
         /// <summary>
         /// 中断此行为

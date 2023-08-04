@@ -67,10 +67,6 @@
         {
             return nowSpace;
         }
-        public override object GetStatus()
-        {
-            return nowSpace;
-        }
 
         public override void Initialization()
         {

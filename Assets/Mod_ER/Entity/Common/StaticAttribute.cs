@@ -24,10 +24,6 @@
 
         #region 功能函数
         public virtual void Destroy() { }
-        public virtual object GetStatus()
-        {
-            return null;
-        }
 
         public abstract void Initialization();
         #endregion

@@ -24,10 +24,6 @@ namespace ER.Entity
         {
             Destroy(this);
         }
-        public virtual object GetStatus()
-        {
-            return null;
-        }
 
         public abstract void Initialization();
         #endregion

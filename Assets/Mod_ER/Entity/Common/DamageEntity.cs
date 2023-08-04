@@ -463,6 +463,7 @@ namespace ER.Entity
         }
         private void OnTriggerStay2D(Collider2D collision)//弃用此方案，因为长时间在范围内不移动则不会触发此事件
         {
+            Debug.Log("121231321");
         }
 
         #endregion
