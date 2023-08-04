@@ -1,5 +1,6 @@
 ﻿// Ignore Spelling: Probabilizer
 
+using Mod_Console;
 using UnityEngine;
 
 namespace Mod_Rouge
@@ -22,12 +23,12 @@ namespace Mod_Rouge
             {
                 for (int i = 1; i < probabilities.Length; i++)
                 {
-                    for (int k = 0; k < i; k++)
-                    {
-                        probabilities[i] += probabilities[k];
-                    }
+                    //ConsolePanel.Print($"概率a[{(RoomType)i}]：{probabilities[i]}");
+                    probabilities[i] += probabilities[i-1];
+                    //ConsolePanel.Print($"概率b[{(RoomType)i}]：{probabilities[i]}");
                 }
                 float value = Random.Range(0, probabilities[probabilities.Length - 1]);
+                //ConsolePanel.Print($"骰子值：{value}");
                 for (int i = 0; i < probabilities.Length; i++)
                 {
                     if (value < probabilities[i]) return i + indexStart;

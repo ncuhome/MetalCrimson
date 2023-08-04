@@ -9,7 +9,7 @@ namespace Mod_Console
     /// <summary>
     /// 指令解释器A
     /// </summary>
-    public class AInterpreter : DefaultInterpreter
+    public partial class AInterpreter : DefaultInterpreter
     {
         #region 指令函数
 
@@ -190,9 +190,8 @@ namespace Mod_Console
 
                     if (int.TryParse(parameters[1].Value.ToString(), out int id))
                     {
-                        if(ItemTemplateStore.Instance.Exist(id))
+                        if (ItemTemplateStore.Instance.Exist(id))
                         {
-
                             if (store.AddItem(new ItemVariable(id)))
                             {
                                 Print($"添加物品[{ItemTemplateStore.Instance[id].NameTmp}]成功");
@@ -219,14 +218,14 @@ namespace Mod_Console
                     PrintError("指定动态仓库不存在");
                 }
             }
-            else if(parameters.IsMate(DataType.Text, DataType.Text))
+            else if (parameters.IsMate(DataType.Text, DataType.Text))
             {
                 string name = (string)parameters[0].Value;
                 if (ItemStoreManager.Instance.Exist(name))
                 {
                     ItemStore store = ItemStoreManager.Instance[name];
                     string tmpName = (string)parameters[1].Value;
-                    if(ItemTemplateStore.Instance.Exist(tmpName))
+                    if (ItemTemplateStore.Instance.Exist(tmpName))
                     {
                         ItemTemplate item = ItemTemplateStore.Instance[tmpName];
                         if (store.AddItem(new ItemVariable(item.ID)))
@@ -309,6 +308,234 @@ namespace Mod_Console
             return Data.Empty;
         }
 
+        private Data CMD_mapconfig_load(Data[] parameters)
+        {
+            if (!parameters.IsEmpty())
+            {
+                Print("正在加载地图配置");
+                string path = (string)parameters[0].Value;
+                if (File.Exists(path))
+                {
+                    RougeMap.Instance.LoadConfig(path);
+                    Print("加载地图配置完毕");
+                }
+                else
+                {
+                    PrintError("指定路径不存在");
+                }
+            }
+            PrintError("路径参数不可为空");
+            return Data.Error;
+        }
+
+        private Data CMD_mapconfig()
+        {
+            Print($"地图最大层数: {RougeMap.Instance.level_settings}");
+            Print($"地图最大长度: {RougeMap.Instance.maxLength_settings}");
+            Print($"地图最小长度: {RougeMap.Instance.minLength_settings}");
+
+            float[][] settings = RougeMap.Instance.probabilities_settings;//房间概率值
+            Print("房间概率值:");
+            if (settings == null) PrintError("配置未初始化");
+            else
+            {
+                for (int i = 0; i < settings.Length; i++)
+                {
+                    Print($"{(RoomType)i}:[", false);
+                    for (int k = 0; k < settings[i].Length; k++)
+                    {
+                        Print($" {settings[i][k]} ", false);
+                    }
+                    Print("]");
+                }
+            }
+
+            int[][] settings2 = RougeMap.Instance.maxCount_settings;//房间最大值
+            Print("房间最大值:");
+            if (settings == null) PrintError("配置未初始化");
+            else
+            {
+                for (int i = 0; i < settings2.Length; i++)
+                {
+                    Print($"{(RoomType)i}:[", false);
+                    for (int k = 0; k < settings2[i].Length; k++)
+                    {
+                        Print($" {settings2[i][k]} ", false);
+                    }
+                    Print("]");
+                }
+            }
+
+            int[][] settings3 = RougeMap.Instance.minCount_settings;//房间最小值
+            Print("房间最小值:");
+            if (settings == null) PrintError("配置未初始化");
+            else
+            {
+                for (int i = 0; i < settings3.Length; i++)
+                {
+                    Print($"{(RoomType)i}:[", false);
+                    for (int k = 0; k < settings3[i].Length; k++)
+                    {
+                        Print($" {settings3[i][k]} ", false);
+                    }
+                    Print("]");
+                }
+            }
+
+            return Data.Empty;
+        }
+
+        private Data CMD_mapinfo()
+        {
+            RougeMap.Instance.PrintInfo();
+            return Data.Empty;
+        }
+
+        private Data CMD_map_start()
+        {
+            Print("------------------------------------------");
+            Room room = RougeMap.Instance.Start();
+            room.Print();
+            Print("Exit:");
+            RougeMap.Instance.PrintExits();
+            RougeMap.Instance.PrintInfo();
+            Print("------------------------------------------");
+
+            return Data.Empty;
+        }
+
+        private Data CMD_map_select(Data[] parameters)
+        {
+            if (parameters.IsMate(DataType.Integer))
+            {
+                Print("------------------------------------------");
+                int index = (int)parameters[0].Value;
+                Room room = RougeMap.Instance.SelectRoom(index);
+                if (room != null)
+                {
+                    room.Print();
+                    Print("Exit:");
+                    RougeMap.Instance.PrintExits();
+                    RougeMap.Instance.PrintInfo();
+                }
+                Print("------------------------------------------");
+            }
+            return Data.Empty;
+        }
+
+        private Data CMD_forge_addItem(Data[] parameters)
+        {
+            if (parameters.IsMate(DataType.Integer))
+            {
+                int index = (int)parameters[0].Value;//材料在仓库中的索引
+                bool state = false;
+                if (HammeringSystem.Instance.AddMaterialJudgement(MaterialSystem.Instance.GetMaterialScript(index), out state))
+                {
+                    Print("添加材料成功");
+                }
+                else
+                {
+                    PrintError("添加材料失败");
+                }
+                if (!state)
+                {
+                    PrintError("指定索引物品不存在");
+                }
+            }
+            return Data.Empty;
+        }
+
+        private Data CMD_forge_removeItem(Data[] parameters)
+        {
+            if (parameters.IsMate(DataType.Integer))
+            {
+                int index = (int)parameters[0].Value;//材料在炉子中的索引
+                if (index >= 0 && index <= 2)
+                {
+                    if (!HammeringSystem.Instance.MoveBackMaterial(index))
+                    {
+                        PrintError("指定索引物品不存在");
+                    }
+                }
+                else
+                {
+                    PrintError($"索引参数错误：{index}");
+                    PrintError("索引必须在0~2");
+                }
+            }
+            return Data.Empty;
+        }
+
+        private Data CMD_forge_temperature()
+        {
+            Print($"当前炉子的温度：{HammeringSystem.Instance.temperature}");
+            return Data.Empty;
+        }
+
+        private Data CMD_forge_temperature_set(Data[] parameters)
+        {
+            if (parameters.IsMate(DataType.Double))
+            {
+                //Print(parameters[0].Type.ToString());
+                //Print(parameters[0].Value.ToString());
+                float tmp = (float)(parameters[0].Value);
+                //Print($"temp:{tmp}");
+                if (tmp < 0) { tmp = 0; }
+                //Print($"temp:{tmp}");
+                HammeringSystem.Instance.temperature = tmp;
+            }
+            else if (parameters.IsMate(DataType.Integer))
+            {
+                int tmp = (int)(parameters[0].Value);
+                //Print($"temp:{tmp}");
+                if (tmp < 0) { tmp = 0; }
+                //Print($"temp:{tmp}");
+                HammeringSystem.Instance.temperature = tmp;
+            }
+            return Data.Empty;
+        }
+
+        private Data CMD_forge_end()
+        {
+            QTE.Instance.FinishQTE();
+            HammeringSystem.Instance.FinishHammering();
+            return Data.Empty;
+        }
+
+        private Data CMD_forge(Data[] parameters)
+        {
+            if (parameters.IsMate(DataType.Integer))
+            {
+                int index = (int)parameters[0].Value;
+                int times = 1;
+                if (parameters.IsMate(DataType.Integer,DataType.Integer))
+                {
+                    times = (int)parameters[1].Value;
+                    if (times <= 0) times = 1;
+                }
+
+                for (int i=0;i<times;i++)
+                {
+                    switch (index)
+                    {
+                        case 1:
+                            HammeringSystem.Instance.HammerMaterial(0.5f);
+                            break;
+
+                        case 2:
+                            HammeringSystem.Instance.HammerMaterial(0.9f);
+                            break;
+
+                        case 3:
+                            HammeringSystem.Instance.HammerMaterial(1.0f);
+                            break;
+                    }
+                }
+            }
+
+            return Data.Empty;
+        }
+
         #endregion 指令函数
 
         public override Data EffectuateSuper(string commandName, Data[] parameters)
@@ -356,6 +583,39 @@ namespace Mod_Console
 
                 case "itemstore_item_clear"://清空指定动态仓库
                     return CMD_itemstore_item_clear(parameters);
+
+                case "mapconfig_load"://加载地图生成配置
+                    return CMD_mapconfig_load(parameters);
+
+                case "mapconfig"://打印地图配置信息
+                    return CMD_mapconfig();
+
+                case "mapinfo"://打印当前肉鸽地图信息
+                    return CMD_mapinfo();
+
+                case "map_start"://开始肉鸽关卡；初始化地图
+                    return CMD_map_start();
+
+                case "map_select"://模拟肉鸽地图选择房间
+                    return CMD_map_select(parameters);
+
+                case "forge_addItem"://材料加工：往炉子里加物品
+                    return CMD_forge_addItem(parameters);
+
+                case "forge_removeItem"://材料加工：从炉子内移除物品
+                    return CMD_forge_removeItem(parameters);
+
+                case "forge_temperature"://材料加工：显示炉子温度
+                    return CMD_forge_temperature();
+
+                case "forge_temperature_set"://材料加工：控制炉子温度
+                    return CMD_forge_temperature_set(parameters);
+
+                case "forge_end":
+                    return CMD_forge_end();
+
+                case "forge":
+                    return CMD_forge(parameters);
 
                 default:
                     return Data.Error;

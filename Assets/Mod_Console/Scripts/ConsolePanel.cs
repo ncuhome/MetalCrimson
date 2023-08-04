@@ -1,4 +1,6 @@
-﻿using ER.Parser;
+﻿
+using ER.Common;
+using ER.Parser;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
@@ -6,22 +8,14 @@ using UnityEngine;
 
 namespace Mod_Console
 {
-    public class ConsolePanel : MonoBehaviour
+    public class ConsolePanel : MonoSingleton<ConsolePanel>
     {
-        #region 单例封装
-
-        public static ConsolePanel Instance { get; private set; } = null;
-
-        public void Awake()
-        {
-            if (Instance is null) { Instance = this; }
-            else { Destroy(gameObject); }
-            DontDestroyOnLoad(this);
-        }
-
-        #endregion 单例封装
 
         #region 组件 | 属性
+        /// <summary>
+        /// 控制台画布
+        /// </summary>
+        public GameObject canvas;
 
         /// <summary>
         /// 显示器对象
@@ -36,21 +30,15 @@ namespace Mod_Console
         /// <summary>
         /// 使用的指令解释器
         /// </summary>
-        public DefaultInterpreter interpreter = new DefaultInterpreter();//指令器
+        public static DefaultInterpreter interpreter = new DefaultInterpreter();//指令器
 
-        /// <summary>
-        /// 最大消息数
-        /// </summary>
+        [Tooltip("最大消息数")]
         public int maxLines = 50;//消息最大数量
 
-        /// <summary>
-        /// 历史输入记录的最大限制
-        /// </summary>
+        [Tooltip("历史输入记录的最大限制")]
         public int maxHistory = 20;//历史输入最大记录数量
 
-        /// <summary>
-        /// 历史输入信息
-        /// </summary>
+        [Tooltip("历史输入信息")]
         public List<string> history = new List<string>(20);//历史输入
 
         private int histortIndex = -1;//历史索引
@@ -79,7 +67,7 @@ namespace Mod_Console
         /// </summary>
         public void CloseUsing()
         {
-            gameObject.SetActive(false);
+            canvas.SetActive(false);
             input.DeactivateInputField();
         }
 
@@ -88,7 +76,7 @@ namespace Mod_Console
         /// </summary>
         public void OpenUsing()
         {
-            gameObject.SetActive(true);
+            canvas.SetActive(true);
             input.ActivateInputField();
         }
 
@@ -97,7 +85,7 @@ namespace Mod_Console
         /// </summary>
         public void SwitchUsing()
         {
-            if (gameObject.activeSelf)
+            if (canvas.activeSelf)
             {
                 CloseUsing();
             }
