@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Mod_Save
+namespace ER.Save
 {
     /// <summary>
     /// 可以写入存档的对象

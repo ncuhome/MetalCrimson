@@ -38,6 +38,10 @@ namespace ER.Entity2D
         #endregion 属性
 
         #region 动作管理
+        /// <summary>
+        /// 添加新的动作
+        /// </summary>
+        /// <param name="action"></param>
         public void Add(MDAction action)
         {
             if(actions.ContainsKey(action.actionName))

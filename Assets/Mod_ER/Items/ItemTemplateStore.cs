@@ -9,30 +9,19 @@ namespace ER.Items
     /// </summary>
     public class ItemTemplateStore
     {
-        #region 单例封装
-
-        private static ItemTemplateStore instance;
-
-        public static ItemTemplateStore Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new ItemTemplateStore();
-                }
-                return instance;
-            }
-        }
-
-        protected ItemTemplateStore()
-        { }
-
-        #endregion 单例封装
-
+        #region 属性
+        private string name;
+        public string Name { get => name; }
         private Dictionary<string, ItemTemplate> items = new();
         private Dictionary<int, ItemTemplate> items_ID = new();
+        #endregion
 
+        public ItemTemplateStore(string name) 
+        { 
+            this.name = name;
+        }
+
+        #region 管理
         /// <summary>
         /// 加载物品信息表
         /// </summary>
@@ -178,6 +167,14 @@ namespace ER.Items
             }
         }
 
+        public void LoadItemsList(string[] paths)
+        {
+            foreach(var p in paths)
+            {
+                LoadItemsList(p);
+            }
+        }
+
         /// <summary>
         /// 清空加载表
         /// </summary>
@@ -309,7 +306,9 @@ namespace ER.Items
                 return null;
             }
         }
+        #endregion
 
+        #region 辅助
         /// <summary>
         /// 判断指定物品模板是否存在
         /// </summary>
@@ -339,5 +338,6 @@ namespace ER.Items
             }
             return infos;
         }
+        #endregion
     }
 }

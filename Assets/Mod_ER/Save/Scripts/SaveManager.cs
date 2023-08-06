@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Mod_Save
+namespace ER.Save
 {
     /// <summary>
     /// 存档系统

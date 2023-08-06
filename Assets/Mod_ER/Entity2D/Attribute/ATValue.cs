@@ -1,7 +1,7 @@
 ﻿using ER.UI;
 using UnityEngine;
 
-namespace ER.Entity
+namespace ER.Entity2D
 {
     /// <summary>
     /// 数值响应事件
@@ -53,8 +53,16 @@ namespace ER.Entity
     /// <summary>
     /// 数值属性
     /// </summary>
-    public class ATValue : DynamicAttribute
+    public class ATValue : MonoAttribute
     {
+        #region 初始化
+        public ATValue() { AttributeName = nameof(ATValue); }
+        public override void Initialize()
+        {
+            
+        }
+        #endregion
+
         #region 字段
         [SerializeField]
         /// <summary>
@@ -135,7 +143,7 @@ namespace ER.Entity
         /// </summary>
         public event ValueActionEvent HealthChangeEvent;
         /// <summary>
-        /// 生命上限变化后触发的事件(事件信息)
+        /// 数值上限变化后触发的事件(事件信息)
         /// </summary>
         public event ValueActionEvent HealthMaxChangeEvent;
         /// <summary>
@@ -263,7 +271,6 @@ namespace ER.Entity
         public bool ModifyValue(float value, object pruner)
         {
             bool next = true;
-            Debug.Log("生命发生改变！");
             if (HealthChangeBefEvent != null)
             {
                 next = HealthChangeBefEvent(new ValueEventInfo
@@ -364,14 +371,6 @@ namespace ER.Entity
         #endregion
 
         #region 内部函数
-        private void Start()
-        {
-            attributeName = "Health";
-        }
-
-        public override void Initialization()
-        {
-        }
 
         private void Update()
         {

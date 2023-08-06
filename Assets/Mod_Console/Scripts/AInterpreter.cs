@@ -1,7 +1,7 @@
 ﻿using ER.Items;
 using ER.Parser;
+using ER.Save;
 using Mod_Rouge;
-using Mod_Save;
 using System.IO;
 
 namespace Mod_Console
@@ -46,7 +46,7 @@ namespace Mod_Console
                 string path = parameters[0].ToString();
                 if (File.Exists(path))
                 {
-                    ItemTemplateStore.Instance.LoadItemsList(path);
+                    TemplateStoreManager.Instance["Item"].LoadItemsList(path);
                     Print($"正在从{path}中读取数据...");
                 }
                 else
@@ -65,7 +65,7 @@ namespace Mod_Console
 
         private Data CMD_itemlist_display()
         {
-            BaseInfo[] infos = ItemTemplateStore.Instance.GetBaseInfoList();
+            BaseInfo[] infos = TemplateStoreManager.Instance["Item"].GetBaseInfoList();
             foreach (var bi in infos)
             {
                 Print($"[Name = {bi.Name}, ID = {bi.ID}]");
@@ -190,11 +190,11 @@ namespace Mod_Console
 
                     if (int.TryParse(parameters[1].Value.ToString(), out int id))
                     {
-                        if (ItemTemplateStore.Instance.Exist(id))
+                        if (TemplateStoreManager.Instance["Item"].Exist(id))
                         {
                             if (store.AddItem(new ItemVariable(id)))
                             {
-                                Print($"添加物品[{ItemTemplateStore.Instance[id].NameTmp}]成功");
+                                Print($"添加物品[{TemplateStoreManager.Instance["Item"][id].NameTmp}]成功");
                                 Print($"现在仓库中有{store.Count}");
                             }
                             else
@@ -225,9 +225,9 @@ namespace Mod_Console
                 {
                     ItemStore store = ItemStoreManager.Instance[name];
                     string tmpName = (string)parameters[1].Value;
-                    if (ItemTemplateStore.Instance.Exist(tmpName))
+                    if (TemplateStoreManager.Instance["Item"].Exist(tmpName))
                     {
-                        ItemTemplate item = ItemTemplateStore.Instance[tmpName];
+                        ItemTemplate item = TemplateStoreManager.Instance["Item"][tmpName];
                         if (store.AddItem(new ItemVariable(item.ID)))
                         {
                             Print($"添加物品[{tmpName}]成功");
