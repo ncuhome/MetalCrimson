@@ -1,32 +1,41 @@
+ï»¿using ER.Items;
 using System.Collections.Generic;
 
 namespace Mod_Rouge
 {
     /// <summary>
-    /// ·¿¼äÄ£°åÀà
+    /// æˆ¿é—´æ¨¡æ¿ç±»
     /// </summary>
     public class RoomTemplate
     {
         /// <summary>
-        /// Ä£°åID
+        /// æ¨¡æ¿ID
         /// </summary>
         public int ID;
+        /// <summary>
+        /// æˆ¿é—´ç±»å‹
+        /// </summary>
+        public RoomType Type;
+        /// <summary>
+        /// å…¶ä»–æ¨¡æ¿ä¿¡æ¯
+        /// </summary>
+        public ItemTemplate template;
+
     }
     /// <summary>
-    /// ·¿¼äÄ£°å²Ö¿â
+    /// æˆ¿é—´æ¨¡æ¿ä»“åº“
     /// </summary>
-    public class RoomTLStore
+    public class RoomTLStore:ItemTemplateStore
     {
-        #region µ¥Àı·â×°
+        #region å•ä¾‹å°è£…
         private static RoomTLStore instance;
-        public static RoomTLStore Instance
+        public new static RoomTLStore Instance
         {
             get
             {
                 if(instance == null)
                 {
                     instance = new RoomTLStore();
-                    instance.Init();
                 }
                 return instance;
             }
@@ -34,16 +43,6 @@ namespace Mod_Rouge
         private RoomTLStore() { }
         #endregion
 
-        #region ÊôĞÔ
         
-        #endregion
-
-        /// <summary>
-        /// ³õÊ¼»¯£¨´Ó±¾µØ¶ÁÈ¡Êı¾İ£©
-        /// </summary>
-        public void Init()
-        {
-
-        }
     }
 }
