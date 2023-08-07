@@ -22,27 +22,4 @@ namespace Mod_Rouge
         public ItemTemplate template;
 
     }
-    /// <summary>
-    /// 房间模板仓库
-    /// </summary>
-    public class RoomTLStore:ItemTemplateStore
-    {
-        #region 单例封装
-        private static RoomTLStore instance;
-        public new static RoomTLStore Instance
-        {
-            get
-            {
-                if(instance == null)
-                {
-                    instance = new RoomTLStore();
-                }
-                return instance;
-            }
-        }
-        private RoomTLStore() { }
-        #endregion
-
-        
-    }
 }

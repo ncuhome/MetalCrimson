@@ -24,6 +24,10 @@ namespace ER.Items
         /// 物品模板的名称
         /// </summary>
         public string NameTmp;
+        /// <summary>
+        /// 所在仓库名称
+        /// </summary>
+        public string StoreName;
 
         /// <summary>
         /// 文本属性（键名：文本所在的标识头）
@@ -45,7 +49,7 @@ namespace ER.Items
         /// </summary>
         public Dictionary<string, bool> attributeBool;
 
-        public ItemInfo(Dictionary<string, int> kvInt, Dictionary<string, float> kvFloat, Dictionary<string, bool> kvBool, Dictionary<string, string> kvTxt, int id = 0, string name = "")
+        public ItemInfo(Dictionary<string, int> kvInt, Dictionary<string, float> kvFloat, Dictionary<string, bool> kvBool, Dictionary<string, string> kvTxt, int id = 0, string name = "",string storeName="")
         {
             ID = id;
             NameTmp = name;
@@ -67,7 +71,9 @@ namespace ER.Items
                     NameTmp = value;
                 }
             }
+            StoreName = storeName;
         }
+
 
         /// <summary>
         /// 检查物品信息，并将其中的ID和名称提出出来
@@ -105,6 +111,10 @@ namespace ER.Items
         /// 指物品的母本ID（模板ID）
         /// </summary>
         public int ID { get; protected set; } = 0;
+        /// <summary>
+        /// 所在仓库的名称
+        /// </summary>
+        public string StoreName;
 
         #region 物品的拓展属性
 
@@ -346,7 +356,7 @@ namespace ER.Items
             {
                 info_text[key] = attributeText[key];
             }
-            return new ItemInfo(info_int, info_float, info_bool, info_text, ID);
+            return new ItemInfo(info_int, info_float, info_bool, info_text, ID, StoreName);
         }
 
         public virtual void Print()
@@ -552,6 +562,7 @@ namespace ER.Items
         public ItemVariable()
         {
             ID = 0;
+            StoreName = "Item";
         }
 
         /// <summary>
@@ -562,7 +573,8 @@ namespace ER.Items
         public ItemVariable(ItemTemplate itemTemplate,bool copyAll = false)
         {
             ID = itemTemplate.ID;
-            if(copyAll)//copy模板全部属性，作为可变属性
+            StoreName = itemTemplate.StoreName;
+            if (copyAll)//copy模板全部属性，作为可变属性
             {
                 attributeInt = itemTemplate.GetIntAll();
                 attributeFloat = itemTemplate.GetFloatAll();
@@ -581,7 +593,7 @@ namespace ER.Items
         {
             ID = templateID;
 
-            ItemTemplate tmp = ItemTemplateStore.Instance[ID];
+            ItemTemplate tmp = TemplateStoreManager.Instance[StoreName][ID];
             if (tmp != null)
             {
                 if (copyAll)//copy模板全部属性，作为可变属性
@@ -620,7 +632,7 @@ namespace ER.Items
         /// <returns></returns>
         public override int GetInt(string key)
         {
-            ItemTemplate tmp = ItemTemplateStore.Instance[ID];
+            ItemTemplate tmp = TemplateStoreManager.Instance[StoreName][ID];
             if (tmp != null && tmp.TryGetInt(key, out int value))
             {
                 return value;
@@ -635,7 +647,7 @@ namespace ER.Items
         /// <returns></returns>
         public override float GetFloat(string key)
         {
-            ItemTemplate tmp = ItemTemplateStore.Instance[ID];
+            ItemTemplate tmp = TemplateStoreManager.Instance[StoreName][ID];
             if (tmp != null && tmp.TryGetFloat(key, out float value))
             {
                 return value;
@@ -650,7 +662,7 @@ namespace ER.Items
         /// <returns></returns>
         public override bool GetBool(string key)
         {
-            ItemTemplate tmp = ItemTemplateStore.Instance[ID];
+            ItemTemplate tmp = TemplateStoreManager.Instance[StoreName][ID];
             if (tmp != null && tmp.TryGetBool(key, out bool value))
             {
                 return value;
@@ -665,7 +677,7 @@ namespace ER.Items
         /// <returns></returns>
         public override string GetText(string key)
         {
-            ItemTemplate tmp = ItemTemplateStore.Instance[ID];
+            ItemTemplate tmp = TemplateStoreManager.Instance[StoreName][ID];
             if (tmp != null && tmp.TryGetText(key, out string value))
             {
                 return value;
@@ -737,7 +749,7 @@ namespace ER.Items
         /// <returns></returns>
         public override bool TryGetInt(string key, out int value)
         {
-            ItemTemplate tmp = ItemTemplateStore.Instance[key];
+            ItemTemplate tmp = TemplateStoreManager.Instance[StoreName][key];
             if (tmp != null && tmp.TryGetInt(key, out value))
             {
                 return true;
@@ -752,7 +764,7 @@ namespace ER.Items
         /// <returns></returns>
         public override bool TryGetText(string key, out string value)
         {
-            ItemTemplate tmp = ItemTemplateStore.Instance[key];
+            ItemTemplate tmp = TemplateStoreManager.Instance[StoreName][key];
             if (tmp != null && tmp.TryGetText(key, out value))
             {
                 return true;
@@ -767,7 +779,7 @@ namespace ER.Items
         /// <returns></returns>
         public override bool TryGetFloat(string key, out float value)
         {
-            ItemTemplate tmp = ItemTemplateStore.Instance[key];
+            ItemTemplate tmp = TemplateStoreManager.Instance[StoreName][key];
             if (tmp != null && tmp.TryGetFloat(key, out value))
             {
                 return true;
@@ -784,7 +796,7 @@ namespace ER.Items
         /// </summary>
         public override bool TryGetBool(string key, out bool value)
         {
-            ItemTemplate tmp = ItemTemplateStore.Instance[key];
+            ItemTemplate tmp = TemplateStoreManager.Instance[StoreName][key];
             if (tmp != null && tmp.TryGetBool(key, out value))
             {
                 return true;
