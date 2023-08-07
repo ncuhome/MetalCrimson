@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using System;
 public class MotherType : MonoBehaviour, IPointerClickHandler
 {
     public Image typeImage;
@@ -36,15 +37,39 @@ public class MotherType : MonoBehaviour, IPointerClickHandler
                     transform.gameObject.SetActive(false);
                     return;
                 }
-                TypeSystem.Instance.ShowChildModels(id);
+                TypeSystem.Instance.moving = false;
+                if (TypeSystem.Instance.stateSystem.currentState.ID == 2)
+                {
+                    TypeSystem.Instance.ShowChildModels(id);
+                }
             }
         }
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (startMove) { return; }
-        TypeSystem.Instance.AllMoveTo(TypeSystem.Instance.GetPosition(0), id);
+        if (TypeSystem.Instance.moving) { return; }
+        switch (TypeSystem.Instance.stateSystem.currentState.ID)
+        {
+            case 1:
+                Action<int> action = MotherModelStateExit;
+                TypeSystem.Instance.stateSystem[1].ChangeExitAction(action);
+                TypeSystem.Instance.stateSystem[1].ChangeExitJudgement(2, true);
+                break;
+            case 2:
+                TypeSystem.Instance.stateSystem[2].ChangeExitJudgement(1, true);
+                break;
+        }
+    }
+
+    public void MotherModelStateExit(int targetID)
+    {
+        switch (targetID)
+        {
+            case 2:
+                TypeSystem.Instance.AllMoveTo(TypeSystem.Instance.GetPosition(0), id);
+                break;
+        }
     }
 
 }

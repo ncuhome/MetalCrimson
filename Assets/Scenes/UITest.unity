@@ -1086,7 +1086,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 333124823}
         m_TargetAssemblyTypeName: ReturnButton, Assembly-CSharp
-        m_MethodName: returnButton
+        m_MethodName: Return
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3717,6 +3717,7 @@ GameObject:
   - component: {fileID: 1843736939}
   - component: {fileID: 1843736941}
   - component: {fileID: 1843736942}
+  - component: {fileID: 1843736943}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3848,7 +3849,41 @@ MonoBehaviour:
   Spacing: {x: 100, y: 50}
   NextPageButton: {fileID: 134042829}
   LastPageButton: {fileID: 1319472037}
-  chooseType: 0
+  stateSystem:
+    systemName: 
+    currentState:
+      stateName: 
+      stateSystem:
+        systemName: 
+        currentState:
+          stateName: 
+          stateSystem:
+            systemName: 
+            currentState:
+              stateName: 
+              stateSystem:
+                systemName: 
+                currentState:
+                  stateName: 
+                  stateSystem:
+                    systemName: 
+                    currentState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+  moving: 0
+--- !u!114 &1843736943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843736938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5506226fa9e1924aaa37773d3e8c945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1968950697
 GameObject:
   m_ObjectHideFlags: 0

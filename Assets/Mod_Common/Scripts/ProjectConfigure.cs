@@ -48,14 +48,20 @@ namespace Mod_Common
             //设置使用的指令解释器
             ConsolePanel.interpreter = new AInterpreter();
             //关闭控制台面板
-            if(ConsolePanel.Instance!=null)
+            if (ConsolePanel.Instance != null)
                 ConsolePanel.Instance.CloseUsing();
             //设置存档目录
             SaveManager.Instance.savePackPath = SavePath;
             //设置存档解析器为Json解析器
             SaveWrapper.Instance.interpreter = new JsonInterpreter();
+            //初始化材料系统
+            ItemTemplateStore.Instance.LoadItemsList(@"Assets/StreamingAssets/材料信息表.csv");
+            ItemStoreManager.Instance.Creat("materialItemStore");
+            MaterialSystem.Instance.materialsItemStore = ItemStoreManager.Instance.Stores["materialItemStore"];
             //加载指定动态仓库
             ItemTemplateStore.Instance.LoadItemsList(DataPath);
+
+
         }
 
         private void Update()

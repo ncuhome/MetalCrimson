@@ -36,9 +36,10 @@ public class ChildModelType : MonoBehaviour, IPointerClickHandler
                 {
                     transform.gameObject.SetActive(false);
                 }
-                if (TypeSystem.Instance.chooseType == ChooseTypeEnum.FirstLevelMove)
+                TypeSystem.Instance.moving = false;
+                if (TypeSystem.Instance.stateSystem.currentState.ID == 1)
                 {
-                    TypeSystem.Instance.chooseType = ChooseTypeEnum.FirstLevelEnd;
+                    TypeSystem.Instance.MotherModelMoveBack();
                 }
             }
         }

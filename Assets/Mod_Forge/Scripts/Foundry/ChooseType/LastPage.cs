@@ -16,9 +16,22 @@ public class LastPage : MonoBehaviour, IPointerClickHandler
     {
 
     }
+    /// <summary>
+    /// 点击事件
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnPointerClick(PointerEventData eventData)
     {
-        TypeSystem.Instance.index--;
-        TypeSystem.Instance.RefreshTypes();
+        switch (TypeSystem.Instance.stateSystem.currentState.ID)
+        {
+            case 1:
+                TypeSystem.Instance.index--;
+                TypeSystem.Instance.RefreshTypes();
+                break;
+            case 2:
+                TypeSystem.Instance.childIndex--;
+                TypeSystem.Instance.RefreshTypes();
+                break;
+        }
     }
 }

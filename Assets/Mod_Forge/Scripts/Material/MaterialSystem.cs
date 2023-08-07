@@ -60,9 +60,7 @@ public class MaterialSystem : MonoBehaviour
     /// </summary>
     private void InitMaterialItemStore()
     {
-        ER.Items.ItemTemplateStore.Instance.LoadItemsList(@"Assets/StreamingAssets/材料信息表.csv");
-        ER.Items.ItemStoreManager.Instance.Creat("materialItemStore");
-        materialsItemStore = ER.Items.ItemStoreManager.Instance.Stores["materialItemStore"];
+
         materials = new List<GameObject>();
 
         for (int i = 0; i < 6; i++)

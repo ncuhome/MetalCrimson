@@ -16,7 +16,7 @@ public class ReturnButton : MonoBehaviour
 
     }
 
-    public void returnButton()
+    public void Return()
     {
         if (HammeringSystem.Instance && (HammeringSystem.Instance.AddedMaterialNum > 0) && (HammeringSystem.Instance.temperature == 0))
         {
@@ -24,10 +24,9 @@ public class ReturnButton : MonoBehaviour
             HammeringSystem.Instance.materialInFurnaces[HammeringSystem.Instance.AddedMaterialNum - 1].GetComponent<materialInFurnace>().OnPointerClick(eventData);
         }
 
-        if (TypeSystem.Instance && (TypeSystem.Instance.chooseType == ChooseTypeEnum.FirstLevelEnd))
+        if (States.StateSystemManager.Instance.Exist("TypeStateSystem") && (States.StateSystemManager.Instance["TypeStateSystem"].currentState.ID == 2) && (!TypeSystem.Instance.moving))
         {
-            TypeSystem.Instance.chooseType = ChooseTypeEnum.WaitForBegin;
-            TypeSystem.Instance.HideChildModels();
+            TypeSystem.Instance.stateSystem[2].ChangeExitJudgement(1, true);
         }
     }
 }

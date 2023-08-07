@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public enum ChooseTypeEnum { WaitForBegin, FirstLevelMove, FirstLevelEnd, SecondLevelMove, SecondLevelEnd }
 
@@ -42,7 +43,9 @@ public class TypeSystem : MonoBehaviour
     public Vector2 CellSize;
     public Vector2 Spacing;
     public GameObject NextPageButton, LastPageButton;
-    public ChooseTypeEnum chooseType = ChooseTypeEnum.WaitForBegin;
+    public States.StateSystem stateSystem;
+    public int currentMotherModelID;
+    public bool moving;
     private void Awake()
     {
         if (instance == null)
@@ -53,7 +56,30 @@ public class TypeSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        InitState();
         InitTypes();
+    }
+
+
+    void InitState()
+    {
+        States.StateSystemManager.Instance.CreateStateSystem("TypeStateSystem");
+        stateSystem = States.StateSystemManager.Instance["TypeStateSystem"];
+
+        States.State showMotherModel = new States.State(1, "showMotherModel");
+        showMotherModel.ChangeExitJudgement(2, false);
+        stateSystem.AddState(showMotherModel);
+
+        States.State showChildModel = new States.State(2, "showChildModel");
+        showChildModel.ChangeExitJudgement(3, false);
+        showChildModel.ChangeExitJudgement(1, false);
+        Action<int> action = ChildModelStateExit;
+        showChildModel.ChangeExitAction(action);
+        stateSystem.AddState(showChildModel);
+
+        States.State chooseMaterial = new States.State(3, "chooseMaterial");
+        showChildModel.ChangeExitJudgement(2, false);
+        stateSystem.AddState(chooseMaterial);
     }
 
     void InitTypes()
@@ -63,7 +89,7 @@ public class TypeSystem : MonoBehaviour
             InstantiateType(i);
         }
         index = 1;
-        chooseType = ChooseTypeEnum.WaitForBegin;
+        childIndex = 1;
     }
 
     void InstantiateType(int i)
@@ -111,18 +137,27 @@ public class TypeSystem : MonoBehaviour
 
     public void ShowChildModels(int id)
     {
+        currentMotherModelID = id;
         for (int i = 0; i < types[id].childTypes.Length; i++)
         {
             types[id].childTypes[i].typeObject.SetActive(true);
             int j = Mathf.CeilToInt((i + 1) * 8.0f / 7.0f - 1);
-            types[id].childTypes[i].typeScript.targetVec = GetPosition(j);
-            types[id].childTypes[i].typeScript.oldVec = types[id].childTypes[i].typeObject.transform.localPosition;
-            types[id].childTypes[i].typeScript.targetID = types[id].childTypes[i].typeScript.id;
-            types[id].childTypes[i].typeScript.time = 0;
-            types[id].childTypes[i].typeScript.startMove = true;
-
-            if (i > 7) { types[id].childTypes[i].typeObject.SetActive(false); }
+            if (i >= 7)
+            {
+                types[id].childTypes[i].typeObject.transform.localPosition = GetPosition(j % 8);
+                types[id].childTypes[i].typeObject.SetActive(false);
+            }
+            else
+            {
+                types[id].childTypes[i].typeScript.targetVec = GetPosition(j % 8);
+                types[id].childTypes[i].typeScript.oldVec = GetPosition(0);
+                types[id].childTypes[i].typeScript.targetID = types[id].childTypes[i].typeScript.id;
+                types[id].childTypes[i].typeScript.time = 0;
+                types[id].childTypes[i].typeScript.startMove = true;
+            }
         }
+        moving = true;
+        childIndex = 1;
     }
 
     public void HideChildModels()
@@ -131,52 +166,99 @@ public class TypeSystem : MonoBehaviour
         {
             for (int j = 0; j < types[i].childTypes.Length; j++)
             {
-                if (!types[i].childTypes[j].typeObject.activeSelf) { return; }
+                if (!types[i].childTypes[j].typeObject.activeSelf) { continue; }
                 types[i].childTypes[j].typeScript.targetVec = GetPosition(0);
-                types[i].childTypes[j].typeScript.oldVec = types[i].childTypes[i].typeObject.transform.localPosition;
-                types[i].childTypes[j].typeScript.targetID = types[i].childTypes[i].typeScript.id;
+                types[i].childTypes[j].typeScript.oldVec = types[i].childTypes[j].typeObject.transform.localPosition;
+                types[i].childTypes[j].typeScript.targetID = -1;
                 types[i].childTypes[j].typeScript.time = 0;
                 types[i].childTypes[j].typeScript.startMove = true;
             }
         }
+        moving = true;
     }
 
     public void RefreshTypes()
     {
-        for (int i = 0; i < typeNum; i++)
+        switch (stateSystem.currentState.ID)
         {
-            if ((i >= (index - 1) * 8) && (i < index * 8))
-            {
-                types[i].typeObject.SetActive(true);
-                types[i].typeObject.transform.localPosition = GetPosition(i - (index - 1) * 8);
-            }
-            else
-            {
-                types[i].typeObject.SetActive(false);
-            }
+            case 1:
+                for (int i = 0; i < typeNum; i++)
+                {
+                    if ((i >= (index - 1) * 8) && (i < index * 8))
+                    {
+                        types[i].typeObject.SetActive(true);
+                        types[i].typeObject.transform.localPosition = GetPosition(i - (index - 1) * 8);
+                    }
+                    else
+                    {
+                        types[i].typeObject.SetActive(false);
+                    }
+                }
+                break;
+            case 2:
+                for (int i = 0; i < types[currentMotherModelID].childTypes.Length; i++)
+                {
+                    int j = Mathf.CeilToInt((i + 1) * 8.0f / 7.0f - 1);
+                    if ((j >= (childIndex - 1) * 8) && (j < childIndex * 8))
+                    {
+                        types[currentMotherModelID].childTypes[i].typeObject.SetActive(true);
+                        types[currentMotherModelID].childTypes[i].typeObject.transform.localPosition = GetPosition(j - (childIndex - 1) * 8);
+                    }
+                    else
+                    {
+                        types[currentMotherModelID].childTypes[i].typeObject.SetActive(false);
+                    }
+                }
+                break;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (index == 1)
+        switch (stateSystem.currentState.ID)
         {
-            LastPageButton.SetActive(false);
-        }
-        else
-        {
-            LastPageButton.SetActive(true);
+            case 1:
+                if (index == 1)
+                {
+                    LastPageButton.SetActive(false);
+                }
+                else
+                {
+                    LastPageButton.SetActive(true);
+                }
+
+                if (index == (typeNum / 8 + 1))
+                {
+                    NextPageButton.SetActive(false);
+                }
+                else
+                {
+                    NextPageButton.SetActive(true);
+                }
+                break;
+            case 2:
+                if (childIndex == 1)
+                {
+                    LastPageButton.SetActive(false);
+                }
+                else
+                {
+                    LastPageButton.SetActive(true);
+                }
+                if (childIndex == (types[currentMotherModelID].childTypes.Length / 8 + 1))
+                {
+                    NextPageButton.SetActive(false);
+                }
+                else
+                {
+                    NextPageButton.SetActive(true);
+                }
+                break;
+            case 3:
+                break;
         }
 
-        if (index == (typeNum / 8 + 1))
-        {
-            NextPageButton.SetActive(false);
-        }
-        else
-        {
-            NextPageButton.SetActive(true);
-        }
     }
 
     public void AllMoveTo(Vector3 targetVec, int id)
@@ -194,11 +276,36 @@ public class TypeSystem : MonoBehaviour
             types[i].typeScript.targetID = id;
             types[i].typeScript.time = 0;
         }
+        moving = true;
+    }
 
-        if (chooseType == ChooseTypeEnum.WaitForBegin)
+    public void MotherModelMoveBack()
+    {
+        for (int i = (index - 1) * 8; i < index * 8; i++)
         {
-            chooseType = ChooseTypeEnum.FirstLevelMove;
+            if (i >= typeNum) { break; }
+            types[i].typeObject.SetActive(true);
+            types[i].typeScript.targetVec = GetPosition(i - 8 * (index - 1));
+            types[i].typeScript.oldVec = types[i].typeScript.transform.localPosition;
+            types[i].typeScript.startMove = true;
+            types[i].typeScript.targetID = i;
+            types[i].typeScript.time = 0;
+        }
+        moving = true;
+    }
+
+    public void ChildModelStateExit(int targetID)
+    {
+        switch (targetID)
+        {
+            case 1:
+                HideChildModels();
+                break;
+            case 3:
+                break;
         }
     }
+
+
 
 }
