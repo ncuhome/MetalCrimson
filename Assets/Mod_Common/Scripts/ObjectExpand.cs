@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ER.Common;
+using System.Collections.Generic;
 
 namespace Common
 {
@@ -8,14 +9,25 @@ namespace Common
     public static class ObjectExpand
     {
         /// <summary>
+        /// 判断指定索引是否在合法区间
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="index"></param>
+        public static bool InRange<T>(this List<T> list,int index)
+        {
+            return index >= 0 && index < list.Count;
+        }
+
+        /// <summary>
         /// 为此对象创建一个虚拟访问锚点
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="anchorName">锚点名称</param>
         public static void RegisterAnchor(this object obj, string anchorName)
         {
-            VirtAnchor anchor = new VirtAnchor(anchorName);
-            anchor.SetOwner(obj);
+            VirtualAnchor anchor = new VirtualAnchor(anchorName);
+            anchor.Owner = obj;
             AnchorManager.Instance.AddAnchor(anchor);
         }
 
@@ -153,6 +165,34 @@ namespace Common
         /// <param name=""></param>
         /// <returns></returns>
         public static bool OrAll(this bool[] array)
+        {
+            foreach (bool item in array)
+            {
+                if (item) return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 对数组与运算
+        /// </summary>
+        /// <param name="array"></param>
+        /// <returns></returns>
+        public static bool AndAll(this List<bool> array)
+        {
+            foreach (bool item in array)
+            {
+                if (!item) return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 对数组或运算
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        public static bool OrAll(this List<bool> array)
         {
             foreach (bool item in array)
             {

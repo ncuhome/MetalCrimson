@@ -1,7 +1,9 @@
-﻿using ER.Items;
+﻿
+using ER.Common;
+using ER.Items;
+using ER.Save;
 using Mod_Console;
 using Mod_Rouge;
-using Mod_Save;
 using System;
 using UnityEngine;
 
@@ -10,7 +12,7 @@ namespace Mod_Common
     /// <summary>
     /// 项目配置器，用于对整个项目进行有序的初始化
     /// </summary>
-    public class ProjectConfigure : MonoBehaviour
+    public class ProjectConfigure : MonoSingleton<ProjectConfigure>
     {
         [Tooltip("存档目录路径")]
         public string SavePath = @"Assets/StreamingAssets/Saves";
@@ -36,8 +38,6 @@ namespace Mod_Common
             ConsolePanel.Print($"音量大小：{SettingsManager.Instance["Volume"]}");
         }
 
-        private void Awake() => DontDestroyOnLoad(gameObject);
-
         private void Start()
         {
             //启用预设设置选项
@@ -54,12 +54,8 @@ namespace Mod_Common
             SaveManager.Instance.savePackPath = SavePath;
             //设置存档解析器为Json解析器
             SaveWrapper.Instance.interpreter = new JsonInterpreter();
-            //初始化材料系统
-            ItemTemplateStore.Instance.LoadItemsList(@"Assets/StreamingAssets/材料信息表.csv");
-            ItemStoreManager.Instance.Creat("materialItemStore");
-            MaterialSystem.Instance.materialsItemStore = ItemStoreManager.Instance.Stores["materialItemStore"];
-            //加载指定动态仓库
-            ItemTemplateStore.Instance.LoadItemsList(DataPath);
+            //初始化所有静态仓库
+            TemplateStoreManager.Instance.Load();
 
 
         }

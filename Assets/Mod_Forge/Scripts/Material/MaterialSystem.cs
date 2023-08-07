@@ -1,3 +1,4 @@
+﻿using ER.Items;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -60,7 +61,8 @@ public class MaterialSystem : MonoBehaviour
     /// </summary>
     private void InitMaterialItemStore()
     {
-
+        ItemStoreManager.Instance.Creat("materialItemStore");
+        materialsItemStore = ER.Items.ItemStoreManager.Instance.Stores["materialItemStore"];
         materials = new List<GameObject>();
 
         for (int i = 0; i < 6; i++)
@@ -73,9 +75,8 @@ public class MaterialSystem : MonoBehaviour
     /// </summary>
     public bool AddNormalMaterial(string NameTmp)
     {
-        ER.Items.ItemTemplateStore.Instance.LoadItemsList(@"Assets/StreamingAssets/材料信息表.csv");
 
-        if (ER.Items.ItemTemplateStore.Instance[NameTmp] == null) { return false; } // 如果没找到返回false
+        if (ER.Items.TemplateStoreManager.Instance["Item"][NameTmp] == null) { return false; } // 如果没找到返回false
 
         // 如果已经在库中，则数量+1
         for (int i = 0; i < materialsItemStore.Count; i++)
@@ -92,7 +93,7 @@ public class MaterialSystem : MonoBehaviour
         }
 
         //创建新的物品，并初始化
-        materialsItemStore.AddItem(new ER.Items.ItemVariable(ER.Items.ItemTemplateStore.Instance[NameTmp], true));
+        materialsItemStore.AddItem(new ER.Items.ItemVariable(ER.Items.TemplateStoreManager.Instance["Item"][NameTmp], true));
         ER.Items.ItemVariable newMaterialItem = materialsItemStore[materialsItemStore.Count - 1];
 
         newMaterialItem.CreateAttribute("Num", 1);
@@ -115,9 +116,9 @@ public class MaterialSystem : MonoBehaviour
     /// </summary>
     public bool AddNormalMaterial(int id)
     {
-        ER.Items.ItemTemplateStore.Instance.LoadItemsList(@"Assets/StreamingAssets/材料信息表.csv");
+        ER.Items.TemplateStoreManager.Instance["Item"].LoadItemsList(@"Assets/StreamingAssets/材料信息表.csv");
 
-        if (ER.Items.ItemTemplateStore.Instance[id] == null) { return false; }// 如果没找到返回false
+        if (ER.Items.TemplateStoreManager.Instance["Item"][id] == null) { return false; }// 如果没找到返回false
 
         // 如果已经在库中，则数量+1
         for (int i = 0; i < materialsItemStore.Count; i++)
@@ -134,7 +135,7 @@ public class MaterialSystem : MonoBehaviour
         }
 
         //创建新的物品，并初始化
-        materialsItemStore.AddItem(new ER.Items.ItemVariable(ER.Items.ItemTemplateStore.Instance[id], true));
+        materialsItemStore.AddItem(new ER.Items.ItemVariable(ER.Items.TemplateStoreManager.Instance["Item"][id], true));
         ER.Items.ItemVariable newMaterialItem = materialsItemStore[materialsItemStore.Count - 1];
 
         newMaterialItem.CreateAttribute("Num", 1);
