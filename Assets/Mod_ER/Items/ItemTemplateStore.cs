@@ -235,9 +235,7 @@ namespace ER.Items
         /// <returns></returns>
         public List<ItemTemplate> Find(string key, Data value)
         {
-            Debug.Log(key + " " + value.Type + " " + value.Value);
             if (value.Type != DataType.Integer && value.Type != DataType.Double && value.Type != DataType.Text && value.Type != DataType.Boolean) return null;
-            Debug.Log("1");
             List<ItemTemplate> tmps = new List<ItemTemplate>();
             foreach (int tmp in items_ID.Keys)
             {

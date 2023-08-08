@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using ER.Items;
+using ER.Parser;
+using States;
 
 public enum ChooseTypeEnum { WaitForBegin, FirstLevelMove, FirstLevelEnd, SecondLevelMove, SecondLevelEnd }
 
@@ -10,6 +13,9 @@ public enum ChooseTypeEnum { WaitForBegin, FirstLevelMove, FirstLevelEnd, Second
 public struct Type
 {
     public string name;
+    public int ID;
+    public string Description;
+    public string[] Tags;
     public Sprite typeSprite;
     public GameObject typeObject;
     public MotherType typeScript;
@@ -19,6 +25,10 @@ public struct Type
 public struct ChildType
 {
     public string name;
+    public int ID;
+    public int M_ID;
+    public string Description;
+    public string[] Tags;
     public Sprite typeSprite;
     public GameObject typeObject;
     public ChildModelType typeScript;
@@ -43,7 +53,7 @@ public class TypeSystem : MonoBehaviour
     public Vector2 CellSize;
     public Vector2 Spacing;
     public GameObject NextPageButton, LastPageButton;
-    public States.StateSystem stateSystem;
+    public StateSystem stateSystem;
     public int currentMotherModelID;
     public bool moving;
     private void Awake()
@@ -57,29 +67,57 @@ public class TypeSystem : MonoBehaviour
     void Start()
     {
         InitState();
+        InitTypeData();
         InitTypes();
     }
 
 
     void InitState()
     {
-        States.StateSystemManager.Instance.CreateStateSystem("TypeStateSystem");
-        stateSystem = States.StateSystemManager.Instance["TypeStateSystem"];
+        StateSystemManager.Instance.CreateStateSystem("TypeStateSystem");
+        stateSystem = StateSystemManager.Instance["TypeStateSystem"];
 
-        States.State showMotherModel = new States.State(1, "showMotherModel");
+        State showMotherModel = new State(1, "showMotherModel");
         showMotherModel.ChangeExitJudgement(2, false);
         stateSystem.AddState(showMotherModel);
 
-        States.State showChildModel = new States.State(2, "showChildModel");
+        State showChildModel = new State(2, "showChildModel");
         showChildModel.ChangeExitJudgement(3, false);
         showChildModel.ChangeExitJudgement(1, false);
         Action<int> action = ChildModelStateExit;
         showChildModel.ChangeExitAction(action);
         stateSystem.AddState(showChildModel);
 
-        States.State chooseMaterial = new States.State(3, "chooseMaterial");
+        State chooseMaterial = new State(3, "chooseMaterial");
         showChildModel.ChangeExitJudgement(2, false);
         stateSystem.AddState(chooseMaterial);
+    }
+
+    void InitTypeData()
+    {
+        ItemTemplateStore modelStore = TemplateStoreManager.Instance["Item"];
+        List<ItemTemplate> models = modelStore.FindContainsPart("Tags", "MainModel", ';');
+        types = new Type[models.Count];
+        for (int i = 0; i < models.Count; i++)
+        {
+            types[i].name = models[i].GetText("Name");
+            types[i].ID = models[i].GetInt("ID");
+            types[i].Description = models[i].GetText("Description");
+            types[i].Tags = models[i].SplitText("Tags", ';');
+
+            Data data = new Data(types[i].ID, DataType.Integer);
+            List<ItemTemplate> childModels = modelStore.Find("M_ID", data);
+
+            types[i].childTypes = new ChildType[childModels.Count];
+            for (int j = 0; j < childModels.Count; j++)
+            {
+                types[i].childTypes[j].name = childModels[j].GetText("Name");
+                types[i].childTypes[j].ID = childModels[j].GetInt("ID");
+                types[i].childTypes[j].M_ID = childModels[j].GetInt("M_ID");
+                types[i].childTypes[j].Description = childModels[j].GetText("Description");
+                types[i].childTypes[j].Tags = childModels[j].SplitText("Tags", ';');
+            }
+        }
     }
 
     void InitTypes()

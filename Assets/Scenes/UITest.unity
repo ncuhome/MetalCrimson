@@ -3800,6 +3800,34 @@ MonoBehaviour:
       typeSprite: {fileID: 21300000, guid: 66780199c9e37a74c9c87276d2013bfd, type: 3}
       typeObject: {fileID: 0}
       typeScript: {fileID: 0}
+    - name: "\u53CC\u624B\u5251"
+      typeSprite: {fileID: 21300000, guid: 66780199c9e37a74c9c87276d2013bfd, type: 3}
+      typeObject: {fileID: 0}
+      typeScript: {fileID: 0}
+    - name: "\u53CC\u624B\u5251"
+      typeSprite: {fileID: 21300000, guid: 66780199c9e37a74c9c87276d2013bfd, type: 3}
+      typeObject: {fileID: 0}
+      typeScript: {fileID: 0}
+    - name: "\u53CC\u624B\u5251"
+      typeSprite: {fileID: 21300000, guid: 66780199c9e37a74c9c87276d2013bfd, type: 3}
+      typeObject: {fileID: 0}
+      typeScript: {fileID: 0}
+    - name: "\u53CC\u624B\u5251"
+      typeSprite: {fileID: 21300000, guid: 66780199c9e37a74c9c87276d2013bfd, type: 3}
+      typeObject: {fileID: 0}
+      typeScript: {fileID: 0}
+    - name: "\u53CC\u624B\u5251"
+      typeSprite: {fileID: 21300000, guid: 66780199c9e37a74c9c87276d2013bfd, type: 3}
+      typeObject: {fileID: 0}
+      typeScript: {fileID: 0}
+    - name: "\u53CC\u624B\u5251"
+      typeSprite: {fileID: 21300000, guid: 66780199c9e37a74c9c87276d2013bfd, type: 3}
+      typeObject: {fileID: 0}
+      typeScript: {fileID: 0}
+    - name: "\u53CC\u624B\u5251"
+      typeSprite: {fileID: 21300000, guid: 66780199c9e37a74c9c87276d2013bfd, type: 3}
+      typeObject: {fileID: 0}
+      typeScript: {fileID: 0}
   - name: "\u65A7\u5203"
     typeSprite: {fileID: 21300000, guid: f184b1499dcea2841b7c548cbb89b0db, type: 3}
     typeObject: {fileID: 0}
@@ -3871,6 +3899,7 @@ MonoBehaviour:
                       stateName: 
                       stateSystem:
                         systemName: 
+  currentMotherModelID: 0
   moving: 0
 --- !u!114 &1843736943
 MonoBehaviour:
