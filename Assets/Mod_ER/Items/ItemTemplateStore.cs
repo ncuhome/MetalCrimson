@@ -1,6 +1,7 @@
 ﻿using ER.Parser;
 using System.Collections.Generic;
 using DataType = ER.Parser.DataType;
+using UnityEngine;
 
 namespace ER.Items
 {
@@ -16,8 +17,8 @@ namespace ER.Items
         private Dictionary<int, ItemTemplate> items_ID = new();
         #endregion
 
-        public ItemTemplateStore(string name) 
-        { 
+        public ItemTemplateStore(string name)
+        {
             this.name = name;
         }
 
@@ -169,7 +170,7 @@ namespace ER.Items
 
         public void LoadItemsList(string[] paths)
         {
-            foreach(var p in paths)
+            foreach (var p in paths)
             {
                 LoadItemsList(p);
             }
@@ -213,7 +214,7 @@ namespace ER.Items
         /// <returns></returns>
         public List<ItemTemplate> Find(string key, DataType dataType)
         {
-            if (dataType != DataType.Integer || dataType != DataType.Double || dataType != DataType.Text || dataType != DataType.Boolean) return null;
+            if (dataType != DataType.Integer && dataType != DataType.Double && dataType != DataType.Text && dataType != DataType.Boolean) return null;
             List<ItemTemplate> tmps = new List<ItemTemplate>();
             foreach (int tmp in items_ID.Keys)
             {
@@ -234,7 +235,9 @@ namespace ER.Items
         /// <returns></returns>
         public List<ItemTemplate> Find(string key, Data value)
         {
-            if (value.Type != DataType.Integer || value.Type != DataType.Double || value.Type != DataType.Text || value.Type != DataType.Boolean) return null;
+            Debug.Log(key + " " + value.Type + " " + value.Value);
+            if (value.Type != DataType.Integer && value.Type != DataType.Double && value.Type != DataType.Text && value.Type != DataType.Boolean) return null;
+            Debug.Log("1");
             List<ItemTemplate> tmps = new List<ItemTemplate>();
             foreach (int tmp in items_ID.Keys)
             {
