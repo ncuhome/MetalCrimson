@@ -5,7 +5,7 @@ using Mod_Console;
 using System.IO;
 using UnityEngine;
 
-namespace Mod_Save
+namespace ER.Save
 {
     /// <summary>
     /// 设置管理类

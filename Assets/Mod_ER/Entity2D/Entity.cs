@@ -7,7 +7,7 @@ namespace ER.Entity2D
 {
     /// <summary>
     /// 带有区域判定的对象，简称为 实体(Entity)；
-    /// Entity 类表示的是一个对象整体；
+    /// Entity 类表示的是一个对象整体，可以保证各 特征组件 有顺序的初始化
     /// 通常来说 一个2D对象可能由很多 GameObject 和 Component 组成，需要有一个 代表对象 来表示这个游戏对象；
     /// 也就是说 Entity 必须是一个 通用的 描述广泛的 对象代表类；
     /// 需要保证可以 以 Entity 为媒介 便捷地传递消息；
@@ -141,6 +141,19 @@ namespace ER.Entity2D
                 if (Exist(attributeName)) return attributes[attributeName];
                 return null;
             }
+        }
+        /// <summary>
+        /// 获取指定特征，返回找到的第一个特征对象
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetAttribute<T>() where T : IAttribute
+        {
+            foreach(IAttribute attribute in attributes.Values)
+            {
+                if(attribute is T) return (T)attribute;
+            }
+            return default(T);
         }
 
         #endregion 特征管理

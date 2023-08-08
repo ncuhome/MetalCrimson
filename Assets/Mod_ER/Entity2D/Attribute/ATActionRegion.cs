@@ -6,53 +6,64 @@ namespace ER.Entity2D
 {
     public class ActionInfo
     {
-        public enum JudgeType { Single, Multiple}
+        public enum JudgeType
+        { Single, Multiple }
 
-        /// <summary>
-        /// 动作所属者
-        /// </summary>
-        public Entity actor=null;
-        /// <summary>
-        /// 动作类型
-        /// </summary>
-        public string type = "Unkown";
-        /// <summary>
-        /// 动作名称
-        /// </summary>
-        public string name = "Unkown";
-        /// <summary>
-        /// 动作持续时间
-        /// </summary>
-        public float time=1;
-
-        /// <summary>
-        /// 剩余时间
-        /// </summary>
-        public float remainTime=1;
         /// <summary>
         /// 判定次数类型
         /// </summary>
         public JudgeType judgeType = JudgeType.Single;
+
         /// <summary>
-        /// 判定次数
+        /// 动作所属者
+        /// </summary>
+        public Entity actor = null;
+
+        /// <summary>
+        /// 动作类型
+        /// </summary>
+        public string type = "Unkown";
+
+        /// <summary>
+        /// 动作名称
+        /// </summary>
+        public string name = "Unkown";
+
+        /// <summary>
+        /// 动作持续时间，小于0表示无限
+        /// </summary>
+        public float time = 1;
+
+        /// <summary>
+        /// 剩余时间
+        /// </summary>
+        public float remainTime = 1;
+
+        /// <summary>
+        /// 判定次数，小于0表示无限
         /// </summary>
         public int hits = 1;
+
         /// <summary>
         /// 剩余判定次数
         /// </summary>
         public int remainHits = 1;
+
         /// <summary>
         /// 判定间隔
         /// </summary>
         public float hitCD = 1;
+
         /// <summary>
         /// 失效时是否销毁，如果不销毁自动隐藏
         /// </summary>
         public bool destroy = false;
+
         /// <summary>
         /// 动作的其他信息
         /// </summary>
-        public Dictionary<string, object> infos=new();
+        public Dictionary<string, object> infos = new();
+
         /// <summary>
         /// 自身的深拷贝
         /// </summary>
@@ -63,8 +74,8 @@ namespace ER.Entity2D
             info.actor = actor;
             info.time = time;
             info.remainTime = remainTime;
-            Dictionary<string, object> _infos= new();
-            foreach(KeyValuePair<string, object> pair in infos)
+            Dictionary<string, object> _infos = new();
+            foreach (KeyValuePair<string, object> pair in infos)
             {
                 _infos[pair.Key] = pair.Value;
             }
@@ -76,7 +87,7 @@ namespace ER.Entity2D
     /// <summary>
     /// 动作区域特征，对区域检测特征的进一步封装，需要结合 ATActionResponse 使用
     /// </summary>
-    public class ATActionRegion:MonoAttribute
+    public class ATActionRegion : MonoAttribute
     {
         /// <summary>
         /// 单元计时器
@@ -88,16 +99,17 @@ namespace ER.Entity2D
         }
 
         #region 初始化
-        public ATActionRegion() 
-        { 
+
+        public ATActionRegion()
+        {
             AttributeName = nameof(ATActionRegion);
         }
 
         public override void Initialize()
         {
-            if(regionType == RegionType.Single)
+            if (regionType == RegionType.Single)
             {
-                if(region == null) { Debug.LogError("动作区域体 缺少绑定 单体区域体"); }
+                if (region == null) { Debug.LogError("动作区域体 缺少绑定 单体区域体"); }
                 regions = null;
             }
             else
@@ -106,38 +118,47 @@ namespace ER.Entity2D
                 region = null;
             }
         }
-        #endregion
+
+        #endregion 初始化
 
         #region 属性
+
         [SerializeField]
         [Tooltip("复合判定区域")]
         private ATMultiRegion regions;
+
         [SerializeField]
         [Tooltip("判定区域")]
         private ATRegion region;
+
         [SerializeField]
         [Tooltip("判定区域类型")]
         private RegionType regionType = RegionType.Single;
+
         /// <summary>
         /// 计时器
         /// </summary>
         private Dictionary<ATActionResponse, Timer> timers = new();
 
         #region 动作属性
+
         /// <summary>
         /// 动作所属者
         /// </summary>
         public Entity actor = null;
+
         /// <summary>
         /// 动作类型
         /// </summary>
         public string actionType = "Unkown";
+
         /// <summary>
         /// 动作名称
         /// </summary>
         public string actionName = "Unkown";
+
         /// <summary>
-        /// 动作持续时间
+        /// 动作持续时间，小于0表示无限
         /// </summary>
         public float time = 1;
 
@@ -145,45 +166,54 @@ namespace ER.Entity2D
         /// 剩余时间
         /// </summary>
         public float remainTime = 1;
+
         /// <summary>
         /// 判定次数类型
         /// </summary>
         public JudgeType judgeType = JudgeType.Single;
+
         /// <summary>
-        /// 判定次数
+        /// 判定次数，小于0表示无限
         /// </summary>
         public int hits = 1;
+
         /// <summary>
         /// 剩余判定次数
         /// </summary>
         public int remainHits = 1;
+
         /// <summary>
         /// 判定间隔
         /// </summary>
         public float hitCD = 1;
+
         /// <summary>
         /// 失效时是否销毁，如果不销毁自动隐藏
         /// </summary>
         public bool destroy = false;
+
         /// <summary>
         /// 动作的其他信息
         /// </summary>
         public Dictionary<string, object> infos = new();
-        #endregion
 
+        #endregion 动作属性
 
         /// <summary>
         /// 判定区域类型
         /// </summary>
-        public enum RegionType { Single,Multiple}
+        public enum RegionType
+        { Single, Multiple }
+
         /// <summary>
         /// 判定区域类型
         /// </summary>
-        public RegionType _RegionType { get => regionType; }     
+        public RegionType _RegionType { get => regionType; }
+
         /// <summary>
-                                                                 /// 动作信息
-                                                                 /// </summary>
-        public ActionInfo Info 
+        /// 动作信息
+        /// </summary>
+        public ActionInfo Info
         {
             get
             {
@@ -208,7 +238,7 @@ namespace ER.Entity2D
                 };
                 return info;
             }
-            set 
+            set
             {
                 ActionInfo info = value;
                 actor = info.actor;
@@ -224,9 +254,11 @@ namespace ER.Entity2D
                 infos = info.infos;
             }
         }
-        #endregion
+
+        #endregion 属性
 
         #region 区域检测
+
         /// <summary>
         /// 设置为单体区域判定
         /// </summary>
@@ -234,7 +266,7 @@ namespace ER.Entity2D
         public void SetSingleRegion(ATRegion region)
         {
             this.region = region;
-            if(regions!=null)
+            if (regions != null)
             {
                 regions.OrAllEvent -= Enter;
                 regions.AndAllEvent -= Enter;
@@ -245,6 +277,7 @@ namespace ER.Entity2D
             region.EnterEvent += Enter;
             region.ExitEvent += Exit;
         }
+
         /// <summary>
         /// 设置为复合区域判定
         /// </summary>
@@ -252,7 +285,7 @@ namespace ER.Entity2D
         public void SetMultipleRegion(ATMultiRegion regions)
         {
             this.regions = regions;
-            if(region !=null)
+            if (region != null)
             {
                 region.EnterEvent -= Enter;
                 region.ExitEvent -= Exit;
@@ -263,6 +296,27 @@ namespace ER.Entity2D
             regions.AndAllEvent += Enter;
             regions.NotAllEvent += Exit;
         }
+
+        private void Action(ATActionResponse response)
+        {
+            response.ActionResponse(Info);//响应此动作
+            if (hits > 0)
+            {
+                remainHits--;
+                if (remainHits <= 0)
+                {
+                    if(destroy)
+                    {
+                        Destroy();
+                    }
+                    else
+                    {
+                        gameObject.SetActive(false);
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// 进入判定区域
         /// </summary>
@@ -278,11 +332,12 @@ namespace ER.Entity2D
                 }
                 else//初次接触对象
                 {
-                    response.ActionResponse(Info);//响应此动作
+                    Action(response);
                     timers[response] = new Timer() { time = 0, enter = true };//添加计时器
                 }
             }
         }
+
         /// <summary>
         /// 离开判定区域
         /// </summary>
@@ -303,35 +358,40 @@ namespace ER.Entity2D
                 }
             }
         }
-        #endregion
+
+        #endregion 区域检测
 
         #region Unity
+
         private void Update()
         {
-            remainTime -= Time.deltaTime;
-            if (remainTime <= 0) 
+            if (time > 0)
             {
-                if (destroy) 
+                remainTime -= Time.deltaTime;
+                if (remainTime <= 0)
                 {
-                    Destroy(); 
-                }
-                else
-                {
-                    gameObject.SetActive(false);
-                }
-
-            }//超时销毁自身
-            foreach(var timer in timers)
+                    if (destroy)
+                    {
+                        Destroy();
+                    }
+                    else
+                    {
+                        gameObject.SetActive(false);
+                    }
+                }//超时销毁自身
+            }
+            foreach (var timer in timers)
             {
                 timer.Value.time += Time.deltaTime;
                 if (timer.Value.enter && timer.Value.time >= hitCD)//目标处于判断区域内且超过冷却CD
                 {
                     //响应动作，并重置计时器
-                    timer.Key.ActionResponse(Info);
+                    Action(timer.Key);
                     timer.Value.time = 0;
                 }
             }
         }
-        #endregion
+
+        #endregion Unity
     }
 }

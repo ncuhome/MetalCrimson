@@ -42,7 +42,7 @@ namespace ER.Common
             }
         }
         /// <summary>
-        /// 替换单例对象为自身
+        /// 替换单例对象为自身，如果已存在则销毁自身
         /// </summary>
         protected void PasteInstance()
         {

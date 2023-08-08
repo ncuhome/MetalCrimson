@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+
 namespace ER.Entity2D
 {
     /// <summary>
@@ -7,7 +8,10 @@ namespace ER.Entity2D
     public class ATEnvironmentDetector : MonoAttribute
     {
         #region 初始化
-        public ATEnvironmentDetector() { AttributeName = nameof(ATEnvironmentDetector); }
+
+        public ATEnvironmentDetector()
+        { AttributeName = nameof(ATEnvironmentDetector); }
+
         public override void Initialize()
         {
             animator = owner.GetComponent<Animator>();//获取实体的动画器
@@ -20,34 +24,46 @@ namespace ER.Entity2D
                 region.ExitEvent += Air;
             }
         }
-        #endregion
+
+        #endregion 初始化
+
         #region 属性
+
         [SerializeField]
         [Tooltip("检测区域")]
         private ATRegion region;
-        public enum EnvironmentType { Land,Air};
+
+        public enum EnvironmentType
+        { Land, Air };
+
         private EnvironmentType type = EnvironmentType.Land;
+
         /// <summary>
         /// 当前环境状态
         /// </summary>
         public EnvironmentType Type { get => type; }
+
         /// <summary>
         /// 实体自身的动画器
         /// </summary>
         private Animator animator;
-        #endregion
+
+        #endregion 属性
 
         #region 功能
+
         private void Land(Collision2D collision)
         {
             type = EnvironmentType.Land;
             animator.SetInteger("env", (int)type);
         }
+
         private void Air(Collision2D collision)
         {
-            type = EnvironmentType .Air;
+            type = EnvironmentType.Air;
             animator.SetInteger("env", (int)type);
         }
-        #endregion
+
+        #endregion 功能
     }
 }

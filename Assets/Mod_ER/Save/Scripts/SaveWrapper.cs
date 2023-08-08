@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Mod_Save
+namespace ER.Save
 {
     /// <summary>
     /// 一个存档的全部内容
