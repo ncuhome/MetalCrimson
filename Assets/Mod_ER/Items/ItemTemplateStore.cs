@@ -159,7 +159,7 @@ namespace ER.Items
 
                 #endregion 填入物品信息
 
-                ItemInfo infos = new(ints, floats, bools, strings);
+                ItemInfo infos = new(ints, floats, bools, strings) { StoreName = name };
                 infos.Check();
                 ItemTemplate item = new(infos);
 
