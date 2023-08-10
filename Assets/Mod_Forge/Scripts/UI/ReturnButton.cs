@@ -16,12 +16,17 @@ public class ReturnButton : MonoBehaviour
 
     }
 
-    public void returnButton()
+    public void Return()
     {
-        if ((HammeringSystem.Instance.AddedMaterialNum > 0) && (HammeringSystem.Instance.temperature == 0))
+        if (HammeringSystem.Instance && (HammeringSystem.Instance.AddedMaterialNum > 0) && (HammeringSystem.Instance.temperature == 0))
         {
             PointerEventData eventData = new PointerEventData(EventSystem.current);
             HammeringSystem.Instance.materialInFurnaces[HammeringSystem.Instance.AddedMaterialNum - 1].GetComponent<materialInFurnace>().OnPointerClick(eventData);
+        }
+
+        if (States.StateSystemManager.Instance.Exist("TypeStateSystem") && (States.StateSystemManager.Instance["TypeStateSystem"].currentState.ID == 2) && (!TypeSystem.Instance.moving))
+        {
+            TypeSystem.Instance.stateSystem[2].ChangeExitJudgement(1, true);
         }
     }
 }

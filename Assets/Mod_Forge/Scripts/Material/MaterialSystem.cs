@@ -30,7 +30,7 @@ public class MaterialSystem : MonoBehaviour
     /// <summary>
     /// 材料物品库
     /// </summary>
-    public ER.Items.ItemStore materialsItemStore = null;
+    public ItemStore materialsItemStore = null;
     /// <summary>
     /// 材料物体组
     /// </summary>
@@ -62,13 +62,9 @@ public class MaterialSystem : MonoBehaviour
     private void InitMaterialItemStore()
     {
         ItemStoreManager.Instance.Creat("materialItemStore");
-        materialsItemStore = ER.Items.ItemStoreManager.Instance.Stores["materialItemStore"];
+        materialsItemStore = ItemStoreManager.Instance.Stores["materialItemStore"];
         materials = new List<GameObject>();
 
-        for (int i = 0; i < 6; i++)
-        {
-            AddNormalMaterial("RawIron");
-        }
     }
     /// <summary>
     /// 通过NameTmp添加原料,添加成功返回true，否则返回false
@@ -76,7 +72,7 @@ public class MaterialSystem : MonoBehaviour
     public bool AddNormalMaterial(string NameTmp)
     {
 
-        if (ER.Items.TemplateStoreManager.Instance["Item"][NameTmp] == null) { return false; } // 如果没找到返回false
+        if (TemplateStoreManager.Instance["Item"][NameTmp] == null) { return false; } // 如果没找到返回false
 
         // 如果已经在库中，则数量+1
         for (int i = 0; i < materialsItemStore.Count; i++)
@@ -93,8 +89,8 @@ public class MaterialSystem : MonoBehaviour
         }
 
         //创建新的物品，并初始化
-        materialsItemStore.AddItem(new ER.Items.ItemVariable(ER.Items.TemplateStoreManager.Instance["Item"][NameTmp], true));
-        ER.Items.ItemVariable newMaterialItem = materialsItemStore[materialsItemStore.Count - 1];
+        materialsItemStore.AddItem(new ItemVariable(TemplateStoreManager.Instance["Item"][NameTmp], true));
+        ItemVariable newMaterialItem = materialsItemStore[materialsItemStore.Count - 1];
 
         newMaterialItem.CreateAttribute("Num", 1);
         newMaterialItem.CreateAttribute("IsForged", false);
@@ -116,9 +112,8 @@ public class MaterialSystem : MonoBehaviour
     /// </summary>
     public bool AddNormalMaterial(int id)
     {
-        ER.Items.TemplateStoreManager.Instance["Item"].LoadItemsList(@"Assets/StreamingAssets/材料信息表.csv");
 
-        if (ER.Items.TemplateStoreManager.Instance["Item"][id] == null) { return false; }// 如果没找到返回false
+        if (TemplateStoreManager.Instance["Item"][id] == null) { return false; }// 如果没找到返回false
 
         // 如果已经在库中，则数量+1
         for (int i = 0; i < materialsItemStore.Count; i++)
@@ -135,8 +130,8 @@ public class MaterialSystem : MonoBehaviour
         }
 
         //创建新的物品，并初始化
-        materialsItemStore.AddItem(new ER.Items.ItemVariable(ER.Items.TemplateStoreManager.Instance["Item"][id], true));
-        ER.Items.ItemVariable newMaterialItem = materialsItemStore[materialsItemStore.Count - 1];
+        materialsItemStore.AddItem(new ItemVariable(TemplateStoreManager.Instance["Item"][id], true));
+        ItemVariable newMaterialItem = materialsItemStore[materialsItemStore.Count - 1];
 
         newMaterialItem.CreateAttribute("Num", 1);
         newMaterialItem.CreateAttribute("IsForged", false);
@@ -153,7 +148,7 @@ public class MaterialSystem : MonoBehaviour
         return true;
     }
 
-    public bool AddForgedMaterial(ER.Items.ItemVariable forgedItem)
+    public bool AddForgedMaterial(ItemVariable forgedItem)
     {
         forgedItem.CreateAttribute("Num", 1);
         forgedItem.CreateAttribute("Temperature", 0f);
@@ -172,7 +167,7 @@ public class MaterialSystem : MonoBehaviour
     {
         for (int index = 0; index < materials.Count; index++)
         {
-            ER.Items.ItemVariable item = materials[index].GetComponent<MaterialScript>().MaterialItem;
+            ItemVariable item = materials[index].GetComponent<MaterialScript>().MaterialItem;
             if (item.GetInt("Num") == 0)
             {
                 materialsItemStore.RemoveItem(index);

@@ -1,6 +1,7 @@
 ﻿using ER.Parser;
 using System.Collections.Generic;
 using DataType = ER.Parser.DataType;
+using UnityEngine;
 
 namespace ER.Items
 {
@@ -16,8 +17,8 @@ namespace ER.Items
         private Dictionary<int, ItemTemplate> items_ID = new();
         #endregion
 
-        public ItemTemplateStore(string name) 
-        { 
+        public ItemTemplateStore(string name)
+        {
             this.name = name;
         }
 
@@ -158,7 +159,7 @@ namespace ER.Items
 
                 #endregion 填入物品信息
 
-                ItemInfo infos = new(ints, floats, bools, strings);
+                ItemInfo infos = new(ints, floats, bools, strings) { StoreName = name };
                 infos.Check();
                 ItemTemplate item = new(infos);
 
@@ -169,7 +170,7 @@ namespace ER.Items
 
         public void LoadItemsList(string[] paths)
         {
-            foreach(var p in paths)
+            foreach (var p in paths)
             {
                 LoadItemsList(p);
             }

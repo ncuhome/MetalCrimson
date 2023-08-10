@@ -130,12 +130,15 @@ public class HammeringSystem : MonoBehaviour
     public bool MoveBackMaterial(int id)
     {
         if (id >= AddedMaterialNum) { return false; }
+        Debug.Log("MoveBack");
         if (isNewMaterial)
         {
             MaterialSystem.Instance.AddForgedMaterial(newItem);
             materialScripts[id] = null;
             materialInFurnaces[id].SetActive(false);
             isNewMaterial = false;
+            AddedMaterialNum = 0;
+            startHammering = false;
         }
         else
         {
@@ -171,9 +174,7 @@ public class HammeringSystem : MonoBehaviour
     /// </summary>
     public void FinishHammering()
     {
-        startHammering = false;
         temperature = 0;
-        AddedMaterialNum = 0;
 
         if (AddedMaterialNum > 1)
         {

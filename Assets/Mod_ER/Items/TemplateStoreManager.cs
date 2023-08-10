@@ -47,6 +47,7 @@ namespace ER.Items
         {
             get
             {
+                Debug.Log(stores + " " + name);
                 if (stores.TryGetValue(name, out ItemTemplateStore store))
                 {
                     return store;

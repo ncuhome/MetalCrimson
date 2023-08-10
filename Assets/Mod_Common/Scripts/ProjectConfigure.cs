@@ -53,6 +53,8 @@ namespace Mod_Common
             SaveWrapper.Instance.interpreter = new JsonInterpreter();
             //初始化所有静态仓库
             TemplateStoreManager.Instance.Load();
+
+
         }
 
         private void Update()
