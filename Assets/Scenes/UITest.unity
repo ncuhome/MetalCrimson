@@ -614,9 +614,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c466deeefe909ce46895388342c0048c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chooseMaterialTransform: {fileID: 1570191162}
-  materialLayout: {fileID: 714889040}
-  move: 0
 --- !u!1 &230959996
 GameObject:
   m_ObjectHideFlags: 0
@@ -1168,7 +1165,7 @@ RectTransform:
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1901,6 +1898,7 @@ RectTransform:
   m_Children:
   - {fileID: 937975834}
   - {fileID: 1204267403}
+  - {fileID: 705804941}
   - {fileID: 1319472038}
   - {fileID: 134042830}
   m_Father: {fileID: 661830283}
@@ -1989,6 +1987,106 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &705804940
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 705804941}
+  - component: {fileID: 705804943}
+  - component: {fileID: 705804942}
+  - component: {fileID: 705804944}
+  m_Layer: 5
+  m_Name: ModelBack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &705804941
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705804940}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 659274653}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 400, y: 100}
+  m_SizeDelta: {x: 305, y: 362}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &705804942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705804940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: b9f6e5e57daad2c40beb57516455c7a1, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &705804943
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705804940}
+  m_CullTransparentMesh: 1
+--- !u!114 &705804944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705804940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc0f0701354408e498c149434e50898c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 705804942}
+  startMove: 0
+  targetVec: {x: 0, y: 0, z: 0}
+  oldVec: {x: 0, y: 0, z: 0}
+  time: 0
+  oldAlpha: 0
+  targetAlpha: 0
+  oldColor: {r: 1, g: 1, b: 1, a: 0}
+  targetColor: {r: 1, g: 1, b: 1, a: 1}
+  colorTime: 0
+  startColor: 0
 --- !u!1 &714889038
 GameObject:
   m_ObjectHideFlags: 0
@@ -3255,7 +3353,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -400}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1570191164
@@ -3437,7 +3535,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1633463086
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3494,7 +3592,7 @@ RectTransform:
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 30, y: 0}
   m_SizeDelta: {x: 100, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3769,6 +3867,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   materialsParentTrans: {fileID: 714889039}
   materialPrefab: {fileID: 5196310272112207560, guid: f1c00a944234a8542ba819211c93b01e, type: 3}
+  materials: []
+  chooseMaterialTransform: {fileID: 1570191162}
+  materialLayout: {fileID: 714889040}
+  move: 0
+  needMaterialNum: 0
 --- !u!114 &1843736942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3784,86 +3887,163 @@ MonoBehaviour:
   typeNum: 9
   types:
   - name: "\u5251\u5203"
+    ID: 0
+    Description: 
+    Tags: []
     typeSprite: {fileID: 21300000, guid: 66780199c9e37a74c9c87276d2013bfd, type: 3}
     typeObject: {fileID: 0}
     typeScript: {fileID: 0}
     childTypes:
     - name: "\u76F4\u5251"
+      ID: 0
+      M_ID: 0
+      Description: 
+      Tags: []
       typeSprite: {fileID: 21300000, guid: 66780199c9e37a74c9c87276d2013bfd, type: 3}
       typeObject: {fileID: 0}
       typeScript: {fileID: 0}
+      costMaterialNum: 0
     - name: "\u5DE8\u5251"
+      ID: 0
+      M_ID: 0
+      Description: 
+      Tags: []
       typeSprite: {fileID: 21300000, guid: 66780199c9e37a74c9c87276d2013bfd, type: 3}
       typeObject: {fileID: 0}
       typeScript: {fileID: 0}
+      costMaterialNum: 0
     - name: "\u53CC\u624B\u5251"
+      ID: 0
+      M_ID: 0
+      Description: 
+      Tags: []
       typeSprite: {fileID: 21300000, guid: 66780199c9e37a74c9c87276d2013bfd, type: 3}
       typeObject: {fileID: 0}
       typeScript: {fileID: 0}
+      costMaterialNum: 0
     - name: "\u53CC\u624B\u5251"
+      ID: 0
+      M_ID: 0
+      Description: 
+      Tags: []
       typeSprite: {fileID: 21300000, guid: 66780199c9e37a74c9c87276d2013bfd, type: 3}
       typeObject: {fileID: 0}
       typeScript: {fileID: 0}
+      costMaterialNum: 0
     - name: "\u53CC\u624B\u5251"
+      ID: 0
+      M_ID: 0
+      Description: 
+      Tags: []
       typeSprite: {fileID: 21300000, guid: 66780199c9e37a74c9c87276d2013bfd, type: 3}
       typeObject: {fileID: 0}
       typeScript: {fileID: 0}
+      costMaterialNum: 0
     - name: "\u53CC\u624B\u5251"
+      ID: 0
+      M_ID: 0
+      Description: 
+      Tags: []
       typeSprite: {fileID: 21300000, guid: 66780199c9e37a74c9c87276d2013bfd, type: 3}
       typeObject: {fileID: 0}
       typeScript: {fileID: 0}
+      costMaterialNum: 0
     - name: "\u53CC\u624B\u5251"
+      ID: 0
+      M_ID: 0
+      Description: 
+      Tags: []
       typeSprite: {fileID: 21300000, guid: 66780199c9e37a74c9c87276d2013bfd, type: 3}
       typeObject: {fileID: 0}
       typeScript: {fileID: 0}
+      costMaterialNum: 0
     - name: "\u53CC\u624B\u5251"
+      ID: 0
+      M_ID: 0
+      Description: 
+      Tags: []
       typeSprite: {fileID: 21300000, guid: 66780199c9e37a74c9c87276d2013bfd, type: 3}
       typeObject: {fileID: 0}
       typeScript: {fileID: 0}
+      costMaterialNum: 0
     - name: "\u53CC\u624B\u5251"
+      ID: 0
+      M_ID: 0
+      Description: 
+      Tags: []
       typeSprite: {fileID: 21300000, guid: 66780199c9e37a74c9c87276d2013bfd, type: 3}
       typeObject: {fileID: 0}
       typeScript: {fileID: 0}
+      costMaterialNum: 0
     - name: "\u53CC\u624B\u5251"
+      ID: 0
+      M_ID: 0
+      Description: 
+      Tags: []
       typeSprite: {fileID: 21300000, guid: 66780199c9e37a74c9c87276d2013bfd, type: 3}
       typeObject: {fileID: 0}
       typeScript: {fileID: 0}
+      costMaterialNum: 0
   - name: "\u65A7\u5203"
+    ID: 0
+    Description: 
+    Tags: []
     typeSprite: {fileID: 21300000, guid: f184b1499dcea2841b7c548cbb89b0db, type: 3}
     typeObject: {fileID: 0}
     typeScript: {fileID: 0}
     childTypes: []
   - name: "\u77DB\u5934"
+    ID: 0
+    Description: 
+    Tags: []
     typeSprite: {fileID: 21300000, guid: fb63e8d2cf53af849afa11b164a03302, type: 3}
     typeObject: {fileID: 0}
     typeScript: {fileID: 0}
     childTypes: []
   - name: "\u67AA\u5934"
+    ID: 0
+    Description: 
+    Tags: []
     typeSprite: {fileID: 21300000, guid: fb63e8d2cf53af849afa11b164a03302, type: 3}
     typeObject: {fileID: 0}
     typeScript: {fileID: 0}
     childTypes: []
   - name: "\u7ED1\u5B9A\u8282"
+    ID: 0
+    Description: 
+    Tags: []
     typeSprite: {fileID: 21300000, guid: fb63e8d2cf53af849afa11b164a03302, type: 3}
     typeObject: {fileID: 0}
     typeScript: {fileID: 0}
     childTypes: []
   - name: "\u63E1\u70B9"
+    ID: 0
+    Description: 
+    Tags: []
     typeSprite: {fileID: 21300000, guid: fb63e8d2cf53af849afa11b164a03302, type: 3}
     typeObject: {fileID: 0}
     typeScript: {fileID: 0}
     childTypes: []
   - name: "\u62A4\u5177"
+    ID: 0
+    Description: 
+    Tags: []
     typeSprite: {fileID: 21300000, guid: fb63e8d2cf53af849afa11b164a03302, type: 3}
     typeObject: {fileID: 0}
     typeScript: {fileID: 0}
     childTypes: []
   - name: "\u957F\u6746"
+    ID: 0
+    Description: 
+    Tags: []
     typeSprite: {fileID: 21300000, guid: fb63e8d2cf53af849afa11b164a03302, type: 3}
     typeObject: {fileID: 0}
     typeScript: {fileID: 0}
     childTypes: []
   - name: "\u9ED8\u8BA4"
+    ID: 0
+    Description: 
+    Tags: []
     typeSprite: {fileID: 21300000, guid: fb63e8d2cf53af849afa11b164a03302, type: 3}
     typeObject: {fileID: 0}
     typeScript: {fileID: 0}
@@ -3899,7 +4079,256 @@ MonoBehaviour:
                       stateName: 
                       stateSystem:
                         systemName: 
+                    lastState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                lastState:
+                  stateName: 
+                  stateSystem:
+                    systemName: 
+                    currentState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                    lastState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+            lastState:
+              stateName: 
+              stateSystem:
+                systemName: 
+                currentState:
+                  stateName: 
+                  stateSystem:
+                    systemName: 
+                    currentState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                    lastState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                lastState:
+                  stateName: 
+                  stateSystem:
+                    systemName: 
+                    currentState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                    lastState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+        lastState:
+          stateName: 
+          stateSystem:
+            systemName: 
+            currentState:
+              stateName: 
+              stateSystem:
+                systemName: 
+                currentState:
+                  stateName: 
+                  stateSystem:
+                    systemName: 
+                    currentState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                    lastState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                lastState:
+                  stateName: 
+                  stateSystem:
+                    systemName: 
+                    currentState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                    lastState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+            lastState:
+              stateName: 
+              stateSystem:
+                systemName: 
+                currentState:
+                  stateName: 
+                  stateSystem:
+                    systemName: 
+                    currentState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                    lastState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                lastState:
+                  stateName: 
+                  stateSystem:
+                    systemName: 
+                    currentState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                    lastState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+    lastState:
+      stateName: 
+      stateSystem:
+        systemName: 
+        currentState:
+          stateName: 
+          stateSystem:
+            systemName: 
+            currentState:
+              stateName: 
+              stateSystem:
+                systemName: 
+                currentState:
+                  stateName: 
+                  stateSystem:
+                    systemName: 
+                    currentState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                    lastState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                lastState:
+                  stateName: 
+                  stateSystem:
+                    systemName: 
+                    currentState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                    lastState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+            lastState:
+              stateName: 
+              stateSystem:
+                systemName: 
+                currentState:
+                  stateName: 
+                  stateSystem:
+                    systemName: 
+                    currentState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                    lastState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                lastState:
+                  stateName: 
+                  stateSystem:
+                    systemName: 
+                    currentState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                    lastState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+        lastState:
+          stateName: 
+          stateSystem:
+            systemName: 
+            currentState:
+              stateName: 
+              stateSystem:
+                systemName: 
+                currentState:
+                  stateName: 
+                  stateSystem:
+                    systemName: 
+                    currentState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                    lastState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                lastState:
+                  stateName: 
+                  stateSystem:
+                    systemName: 
+                    currentState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                    lastState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+            lastState:
+              stateName: 
+              stateSystem:
+                systemName: 
+                currentState:
+                  stateName: 
+                  stateSystem:
+                    systemName: 
+                    currentState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                    lastState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                lastState:
+                  stateName: 
+                  stateSystem:
+                    systemName: 
+                    currentState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
+                    lastState:
+                      stateName: 
+                      stateSystem:
+                        systemName: 
   currentMotherModelID: 0
+  chosenChildModelID: 0
+  currentMotherModel:
+    name: 
+    ID: 0
+    Description: 
+    Tags: []
+    typeSprite: {fileID: 0}
+    typeObject: {fileID: 0}
+    typeScript: {fileID: 0}
+    childTypes: []
+  chosenChildModel:
+    name: 
+    ID: 0
+    M_ID: 0
+    Description: 
+    Tags: []
+    typeSprite: {fileID: 0}
+    typeObject: {fileID: 0}
+    typeScript: {fileID: 0}
+    costMaterialNum: 0
+  modelBack: {fileID: 705804944}
   moving: 0
 --- !u!114 &1843736943
 MonoBehaviour:

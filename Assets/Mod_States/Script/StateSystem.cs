@@ -32,7 +32,7 @@ namespace States
         /// <summary>
         /// 当前状态
         /// </summary>
-        public State currentState;
+        public State currentState, lastState;
 
         #endregion 属性
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using System;
 public class MaterialImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     /// <summary>
@@ -12,7 +12,7 @@ public class MaterialImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     /// <summary>
     /// 是否进入高炉判定区
     /// </summary>
-    private bool inFurnace = false;
+    private bool inFurnace = false, inModel = false;
     /// <summary>
     /// 回归坐标
     /// </summary>
@@ -62,23 +62,44 @@ public class MaterialImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             bool canFindMaterial = false;
             HammeringSystem.Instance.AddMaterialJudgement(materialScript, out canFindMaterial);
         }
+        if (inModel)
+        {
+            if (TypeSystem.Instance.stateSystem.currentState.ID == 3)
+            {
+                Action<int> action2 = TypeSystem.Instance.ChosenModelExit;
+                TypeSystem.Instance.stateSystem[3].ChangeExitAction(action2);
+                TypeSystem.Instance.stateSystem.states[3].ChangeExitJudgement(4, true);
+            }
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "BlastFurnace")
+        if (other.CompareTag("BlastFurnace"))
         {
             Debug.Log("进入");
             inFurnace = true;
+        }
+
+        if (other.CompareTag("Model"))
+        {
+            Debug.Log("进入模具");
+            inModel = true;
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "BlastFurnace")
+        if (other.CompareTag("BlastFurnace"))
         {
             Debug.Log("退出");
             inFurnace = false;
+        }
+
+        if (other.CompareTag("Model"))
+        {
+            Debug.Log("退出模具");
+            inModel = false;
         }
     }
 }
