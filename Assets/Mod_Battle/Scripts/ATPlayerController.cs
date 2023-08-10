@@ -18,7 +18,7 @@ namespace Mod_Battle
         {
             actionManager = owner.GetAttribute<ATActionManager>();
             if (actionManager == null) Debug.LogError("未找到角色的动作管理器:<ATActionManager>");
-            state = owner.GetAttribute<ATPlayerState>();
+            state = owner.GetAttribute<ATCharacterState>();
             if (state == null) Debug.LogError("未找到角色的状态管理器:<ATPlayerState>");
         }
 
@@ -41,7 +41,7 @@ namespace Mod_Battle
         /// <summary>
         /// 玩家状态
         /// </summary>
-        private ATPlayerState state;
+        private ATCharacterState state;
 
         /// <summary>
         /// 辅助线绘制
@@ -56,27 +56,50 @@ namespace Mod_Battle
 
         public void MoveLeft(InputAction.CallbackContext ctx)
         {
-            actionManager.Action("MoveLeft");
+            if (ctx.phase == InputActionPhase.Performed)
+            {
+                actionManager.Action("MoveLeft");
+            }
+            else
+            {
+                actionManager.Stop("MoveLeft");
+            }
         }
 
         public void MoveRight(InputAction.CallbackContext ctx)
         {
-            actionManager.Action("MoveRight");
+            if(ctx.phase == InputActionPhase.Performed)
+            {
+                actionManager.Action("MoveRight");
+            }
+            else
+            {
+                actionManager.Stop("MoveRight");
+            }
         }
 
         public void Attack(InputAction.CallbackContext ctx)
         {
-            actionManager.Action("Attack");
+            if (ctx.phase == InputActionPhase.Performed)
+            {
+                actionManager.Action("Attack");
+            }
         }
 
         public void Defense(InputAction.CallbackContext ctx)
         {
-            actionManager.Action("Defense");
+            if (ctx.phase == InputActionPhase.Performed)
+            {
+                actionManager.Action("Defense");
+            }
         }
 
         public void Jump(InputAction.CallbackContext ctx)
         {
-            actionManager.Action("Jump");
+            if (ctx.phase == InputActionPhase.Performed)
+            {
+                actionManager.Action("Jump");
+            }
         }
 
         #endregion 角色控制

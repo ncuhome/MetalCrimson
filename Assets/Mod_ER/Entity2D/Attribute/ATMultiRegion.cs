@@ -1,4 +1,6 @@
-﻿using Common;
+﻿// Ignore Spelling: collider
+
+using Common;
 using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -20,15 +22,15 @@ namespace ER.Entity2D
         /// <summary>
         /// 全部激活时触发的事件
         /// </summary>
-        public event Action<Collision2D> AndAllEvent;
+        public event Action<Collider2D> AndAllEvent;
         /// <summary>
         /// 存在激活时触发的事件
         /// </summary>
-        public event Action<Collision2D> OrAllEvent;
+        public event Action<Collider2D> OrAllEvent;
         /// <summary>
         /// 全部非激活时触发的事件
         /// </summary>
-        public event Action<Collision2D> NotAllEvent;
+        public event Action<Collider2D> NotAllEvent;
         #endregion
 
         #region 函数
@@ -37,30 +39,30 @@ namespace ER.Entity2D
         /// </summary>
         /// <param name="state">区域状态</param>
         /// <param name="index">区域索引</param>
-        public override void SetState(bool state,int index,Collision2D collision)
+        public override void SetState(bool state,int index,Collider2D collider)
         {
             if(states.InRange(index))
             {
                 states[index] = state;
-                RegionAction(collision);
+                RegionAction(collider);
             }
         }
         /// <summary>
         /// 区域状态行为
         /// </summary>
-        private void RegionAction(Collision2D collision)
+        private void RegionAction(Collider2D collider)
         {
             if(states.AndAll())
             {
-                if (AndAllEvent != null) AndAllEvent(collision);
+                if (AndAllEvent != null) AndAllEvent(collider);
             }
             else if(states.OrAll())
             {
-                if (OrAllEvent != null) OrAllEvent(collision);
+                if (OrAllEvent != null) OrAllEvent(collider);
             }
             else
             {
-                if (NotAllEvent != null) NotAllEvent(collision);
+                if (NotAllEvent != null) NotAllEvent(collider);
             }
         }
         #endregion

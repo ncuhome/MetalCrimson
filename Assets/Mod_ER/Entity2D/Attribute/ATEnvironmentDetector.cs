@@ -36,6 +36,7 @@ namespace ER.Entity2D
         public enum EnvironmentType
         { Land, Air };
 
+        [SerializeField]
         private EnvironmentType type = EnvironmentType.Land;
 
         /// <summary>
@@ -52,13 +53,13 @@ namespace ER.Entity2D
 
         #region 功能
 
-        private void Land(Collision2D collision)
+        private void Land(Collider2D collider)
         {
             type = EnvironmentType.Land;
             animator.SetInteger("env", (int)type);
         }
 
-        private void Air(Collision2D collision)
+        private void Air(Collider2D collider)
         {
             type = EnvironmentType.Air;
             animator.SetInteger("env", (int)type);

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using static ER.Entity2D.ActionInfo;
 
@@ -111,17 +112,34 @@ namespace ER.Entity2D
             {
                 if (region == null) { Debug.LogError("动作区域体 缺少绑定 单体区域体"); }
                 regions = null;
+                region.EnterEvent += Enter;
+                region.ExitEvent += Exit;
+                print("单区域动作初始化完毕");
             }
             else
             {
                 if (regions == null) { Debug.LogError("动作区域体 缺少绑定 复合区域体"); }
                 region = null;
+                regions.OrAllEvent += Enter;
+                regions.AndAllEvent += Enter;
+                regions.NotAllEvent += Exit;
             }
         }
 
         #endregion 初始化
 
+        #region 事件
+        /// <summary>
+        /// 区域消失时触发的事件
+        /// </summary>
+        public event Action EndEvent;
+        #endregion
+
         #region 属性
+        /// <summary>
+        /// 缓存区，判定生效需要在下一帧执行
+        /// </summary>
+        private List<ATActionResponse> temp = new();
 
         [SerializeField]
         [Tooltip("复合判定区域")]
@@ -258,6 +276,13 @@ namespace ER.Entity2D
         #endregion 属性
 
         #region 区域检测
+        public void Reset()
+        {
+            remainHits = hits;
+            remainTime = time;
+            timers = new();
+            gameObject.SetActive(true);
+        }
 
         /// <summary>
         /// 设置为单体区域判定
@@ -305,14 +330,7 @@ namespace ER.Entity2D
                 remainHits--;
                 if (remainHits <= 0)
                 {
-                    if(destroy)
-                    {
-                        Destroy();
-                    }
-                    else
-                    {
-                        gameObject.SetActive(false);
-                    }
+                    End();
                 }
             }
         }
@@ -321,7 +339,7 @@ namespace ER.Entity2D
         /// 进入判定区域
         /// </summary>
         /// <param name="collision"></param>
-        private void Enter(Collision2D collision)
+        private void Enter(Collider2D collision)
         {
             ATActionResponse response = collision.gameObject.GetComponent<ATActionResponse>();
             if (response != null)//必须是 response 封装的Collider才算有效判定
@@ -332,7 +350,7 @@ namespace ER.Entity2D
                 }
                 else//初次接触对象
                 {
-                    Action(response);
+                    temp.Add(response);//添加至缓存区
                     timers[response] = new Timer() { time = 0, enter = true };//添加计时器
                 }
             }
@@ -342,7 +360,7 @@ namespace ER.Entity2D
         /// 离开判定区域
         /// </summary>
         /// <param name="collision"></param>
-        private void Exit(Collision2D collision)
+        private void Exit(Collider2D collision)
         {
             ATActionResponse response = collision.gameObject.GetComponent<ATActionResponse>();
             if (response != null)
@@ -358,6 +376,40 @@ namespace ER.Entity2D
                 }
             }
         }
+        /// <summary>
+        /// 区域生命周期结束
+        /// </summary>
+        private void End()
+        {
+            if (EndEvent != null) EndEvent();
+            if (destroy)
+            {
+                Destroy();
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
+        }
+        /// <summary>
+        /// 执行缓存区
+        /// </summary>
+        private void UpdateTemp()
+        {
+            for(int i=0;i<temp.Count;i++)
+            {
+                if (temp[i].PreResponse(Info))
+                {
+                    End();
+                    break;
+                }
+            }
+            for(int i = 0; i < temp.Count; i++)
+            {
+                Action(temp[i]);
+            }
+            temp.Clear();
+        }
 
         #endregion 区域检测
 
@@ -370,14 +422,7 @@ namespace ER.Entity2D
                 remainTime -= Time.deltaTime;
                 if (remainTime <= 0)
                 {
-                    if (destroy)
-                    {
-                        Destroy();
-                    }
-                    else
-                    {
-                        gameObject.SetActive(false);
-                    }
+                    End();
                 }//超时销毁自身
             }
             foreach (var timer in timers)
@@ -386,10 +431,11 @@ namespace ER.Entity2D
                 if (timer.Value.enter && timer.Value.time >= hitCD)//目标处于判断区域内且超过冷却CD
                 {
                     //响应动作，并重置计时器
-                    Action(timer.Key);
+                    temp.Add(timer.Key);
                     timer.Value.time = 0;
                 }
             }
+            UpdateTemp();
         }
 
         #endregion Unity

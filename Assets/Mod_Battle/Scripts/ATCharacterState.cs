@@ -5,7 +5,7 @@ using ER.Entity2D;
 
 namespace Mod_Battle
 {
-    public class ATCharacterState : NormalAttribute
+    public class ATCharacterState : MonoAttribute
     {
         #region 初始化
         public ATCharacterState() { AttributeName = nameof(ATCharacterState); }
@@ -36,6 +36,14 @@ namespace Mod_Battle
         /// 角色魔力值
         /// </summary>
         public ATValue mana;
+        /// <summary>
+        /// 移动速度
+        /// </summary>
+        public float speed;
+        /// <summary>
+        /// 跳跃力度
+        /// </summary>
+        public float jump;
 
         #endregion
 

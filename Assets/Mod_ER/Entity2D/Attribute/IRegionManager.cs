@@ -1,4 +1,6 @@
-﻿using Common;
+﻿// Ignore Spelling: collider
+
+using Common;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +9,7 @@ namespace ER.Entity2D
 
     public interface IRegionManager
     {
-        public void SetState(bool state,int index,Collision2D collision);
+        public void SetState(bool state,int index,Collider2D collider);
     }
 
     public class ATBaseRegionManager : MonoAttribute, IRegionManager
@@ -89,7 +91,7 @@ namespace ER.Entity2D
         /// </summary>
         /// <param name="state">区域状态</param>
         /// <param name="index">区域索引</param>
-        public virtual void SetState(bool state, int index, Collision2D collision)
+        public virtual void SetState(bool state, int index, Collider2D collider)
         {
             if (states.InRange(index))
             {
