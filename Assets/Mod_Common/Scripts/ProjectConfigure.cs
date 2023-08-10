@@ -47,9 +47,6 @@ namespace Mod_Common
             RougeMap.Instance.LoadConfig(MapSettingsPath);
             //设置使用的指令解释器
             ConsolePanel.interpreter = new AInterpreter();
-            //关闭控制台面板
-            if (ConsolePanel.Instance != null)
-                ConsolePanel.Instance.CloseUsing();
             //设置存档目录
             SaveManager.Instance.savePackPath = SavePath;
             //设置存档解析器为Json解析器
