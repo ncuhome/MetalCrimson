@@ -4,7 +4,7 @@ namespace Mod_Battle
 {
     public class MDAttack : MDAction
     {
-        public MDAttack() { actionName = "攻击"; }
+        public MDAttack() { actionName = "Attack"; }
         public override void Initialize()
         {
 

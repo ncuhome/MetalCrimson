@@ -15,15 +15,17 @@ namespace ER.Entity2D
 
         public override void Initialize()
         {
+            MDAction[] ms= GetComponentsInChildren<MDAction>();
+            animator = owner.GetComponent<Animator>();
+            foreach (MDAction action in ms)
+            {
+                Add(action);
+            }
         }
 
         #endregion 初始化
 
         #region 属性
-        /// <summary>
-        /// 动作预加载栏
-        /// </summary>
-        public List<MDAction> _actions = new List<MDAction>();
 
         /// <summary>
         /// 角色拥有的动作集合
@@ -34,6 +36,8 @@ namespace ER.Entity2D
         /// 角色自身的动画机
         /// </summary>
         private Animator animator;
+
+        public List<MDAction> _actions;
 
         #endregion 属性
 
@@ -46,7 +50,7 @@ namespace ER.Entity2D
         {
             if(actions.ContainsKey(action.actionName))
             {
-                Debug.LogError("该动作槽位已经被占用");
+                Debug.LogError($"该动作槽位已经被占用:{action.actionName}");
             }
             action.manager = this;
             action.index = actions.Count;

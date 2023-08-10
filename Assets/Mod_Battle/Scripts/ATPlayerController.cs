@@ -25,51 +25,58 @@ namespace Mod_Battle
         #endregion 初始化
 
         #region 属性
+
         public float limitAngle = 60f;
+
         /// <summary>
         /// 辅助线的高度
         /// </summary>
         public float lineHeight = 2;
+
         /// <summary>
         /// 动作管理器
         /// </summary>
         private ATActionManager actionManager;
+
         /// <summary>
         /// 玩家状态
         /// </summary>
         private ATPlayerState state;
+
         /// <summary>
         /// 辅助线绘制
         /// </summary>
         public LineRenderer line;
 
-        #endregion 
+        #endregion 属性
+
+
 
         #region 角色控制
 
         public void MoveLeft(InputAction.CallbackContext ctx)
         {
-            actionManager.Action("左移动");
+            actionManager.Action("MoveLeft");
         }
 
         public void MoveRight(InputAction.CallbackContext ctx)
         {
-            actionManager.Action("右移动");
+            actionManager.Action("MoveRight");
         }
 
         public void Attack(InputAction.CallbackContext ctx)
         {
-            actionManager.Action("攻击");
+            actionManager.Action("Attack");
         }
 
         public void Defense(InputAction.CallbackContext ctx)
         {
-            actionManager.Action("防御");
+            actionManager.Action("Defense");
         }
 
         public void Jump(InputAction.CallbackContext ctx)
         {
-            actionManager.Action("跳跃");
+            actionManager.Action("Jump");
         }
 
         #endregion 角色控制
@@ -84,14 +91,15 @@ namespace Mod_Battle
         {
             Vector3 start = owner.transform.position;
             Vector3 end = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            start -= new Vector3(0,0,lineHeight);
-            end = new Vector3(end.x,end.y,start.z);
-            line.SetPosition(1,end);
+            start -= new Vector3(0, 0, lineHeight);
+            end = new Vector3(end.x, end.y, start.z);
+            line.SetPosition(0, start);
+            line.SetPosition(1, end);
             Vector3 delta = end - start;
-            float angle =  Vector2.Angle(delta, Vector2.right);
-            if(angle > limitAngle/2)
+            float angle = Vector2.Angle(delta, Vector2.right);
+            if (angle > limitAngle / 2)
             {
-                if(delta.y > 0)//上
+                if (delta.y > 0)//上
                 {
                     actionManager.Action("PostureUp");
                 }

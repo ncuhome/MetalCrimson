@@ -4,7 +4,7 @@ namespace Mod_Battle
 {
     public class MDMoveRight : MDAction
     {
-        public MDMoveRight() { actionName = "右移动"; }
+        public MDMoveRight() { actionName = "MoveRight"; }
         public override void Initialize()
         {
 
