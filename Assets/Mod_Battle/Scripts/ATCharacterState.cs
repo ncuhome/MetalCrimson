@@ -45,6 +45,11 @@ namespace Mod_Battle
         /// </summary>
         public float jump;
 
+        public enum Direction { Left, Right}
+        /// <summary>
+        /// 面朝方向
+        /// </summary>
+        public Direction direction;
         #endregion
 
     }

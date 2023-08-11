@@ -119,7 +119,15 @@ namespace Mod_Battle
             line.SetPosition(0, start);
             line.SetPosition(1, end);
             Vector3 delta = end - start;
-            float angle = Vector2.Angle(delta, Vector2.right);
+            float angle = 0;
+            if(state.direction == ATCharacterState.Direction.Right)
+            {
+                angle=Vector2.Angle(delta, Vector2.right);
+            }
+            else
+            {
+                angle=Vector2.Angle(delta, Vector2.left);
+            }
             if (angle > limitAngle / 2)
             {
                 if (delta.y > 0)//上

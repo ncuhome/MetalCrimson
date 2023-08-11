@@ -16,7 +16,7 @@ namespace ER.Entity2D
         public override void Initialize()
         {
             MDAction[] ms= GetComponentsInChildren<MDAction>();
-            animator = owner.GetComponent<Animator>();
+            animator = owner.GetAttribute<ATAnimator>().Animator;
             foreach (MDAction action in ms)
             {
                 Add(action);

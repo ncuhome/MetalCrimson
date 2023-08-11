@@ -114,7 +114,6 @@ namespace ER.Entity2D
                 regions = null;
                 region.EnterEvent += Enter;
                 region.ExitEvent += Exit;
-                print("单区域动作初始化完毕");
             }
             else
             {

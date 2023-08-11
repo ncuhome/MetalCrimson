@@ -7,17 +7,19 @@ namespace Mod_Battle
     {
         private ATCharacterState state;
         private ATEnvironmentDetector detector;
+        private Rigidbody2D body;
         public MDJump() { actionName = "Jump"; }
         public override void Initialize()
         {
             state = manager.Owner.GetAttribute<ATCharacterState>();
             detector =manager.Owner.GetAttribute<ATEnvironmentDetector>();
             if(detector == null) { Debug.LogError("未找到角色的环境检测器"); }
+            body = manager.Owner.GetComponent<Rigidbody2D>();
         }
         public override void StartAction()
         {
             if(detector.Type == ATEnvironmentDetector.EnvironmentType.Land)
-                manager.Owner.GetComponent<Rigidbody2D>().velocity = Vector2.up * state.jump;
+                body.velocity = new Vector2(body.velocity.x, state.jump);
         }
         public override void StopAction()
         {
