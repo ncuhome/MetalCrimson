@@ -1,5 +1,5 @@
-﻿using Common;
-using ER.Common;
+﻿
+using ER;
 using ER.Parser;
 using Mod_Console;
 using System.IO;
@@ -46,7 +46,6 @@ namespace ER.Save
 
         public void SaveSettings()
         {
-            ConsolePanel.Print("正在写入配置文件...");
             INIHD.Save(settingsPath);
         }
 
@@ -81,6 +80,11 @@ namespace ER.Save
         public string GetSettingsTxt()
         {
             return INIHD.GetSaveString();
+        }
+
+        private void OnDestroy()
+        {
+            SaveSettings();
         }
     }
 }

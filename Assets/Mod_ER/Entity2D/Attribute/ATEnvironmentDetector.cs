@@ -20,7 +20,8 @@ namespace ER.Entity2D
         /// 当前环境状态
         /// </summary>
         public EnvironmentType Type { get => type; }
-        #endregion
+
+        #endregion 相关
 
         #region 初始化
 
@@ -29,15 +30,13 @@ namespace ER.Entity2D
 
         public override void Initialize()
         {
-
             animator = owner.GetAttribute<ATAnimator>().Animator;//获取实体的动画器
             animator.GetInteger("env");//尝试获取动画控制变量
             if (region == null) { Debug.LogError("环境检测器缺少区域体"); }
             else
             {
-                region.EnterEvent += (Collider2D cld)=>{ ChangesTo(true); };
-                region.StayEvent += (Collider2D cld) => { ChangesTo(true); };
-                region.ExitEvent += (Collider2D cld) => { ChangesTo(false); };
+                region.touchEvent += () => { Land(); };
+                region.notTouchEvent += () => { Air(); };
             }
         }
 
@@ -47,14 +46,10 @@ namespace ER.Entity2D
 
         [SerializeField]
         [Tooltip("检测区域")]
-        private ATRegion region;
+        private ATButtonRegion region;
 
         [SerializeField]
         private EnvironmentType type = EnvironmentType.Land;
-        /// <summary>
-        /// 环境检测状态
-        /// </summary>
-        private bool state = false;
 
         /// <summary>
         /// 实体自身的动画器
@@ -72,22 +67,6 @@ namespace ER.Entity2D
         #endregion 事件
 
         #region 功能
-        private void ChangesTo(bool newstate)
-        {
-            if(state != newstate)
-            {
-                if(newstate)
-                {
-                    Land();
-                }
-                else
-                {
-                    Air();
-                }
-            }
-            state = newstate;
-        }
-
 
         private void Land()
         {

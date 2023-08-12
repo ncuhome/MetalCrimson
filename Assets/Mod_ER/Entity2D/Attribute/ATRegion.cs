@@ -1,6 +1,7 @@
 ﻿// Ignore Spelling: collider
 
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace ER.Entity2D
@@ -84,6 +85,20 @@ namespace ER.Entity2D
         protected void EnterAction(Collider2D collider) { if (EnterEvent != null) EnterEvent(collider); }
         protected void StayAction(Collider2D collider) { if (StayEvent != null) StayEvent( collider); }
         protected void ExitAction(Collider2D collider) { if (ExitEvent != null) ExitEvent( collider); }
+
+        /// <summary>
+        /// 子类额外过程接口（进入）
+        /// </summary>
+        protected virtual void VirtualEnter(Collider2D collider) { }
+        /// <summary>
+        /// 子类额外过程接口（保持）
+        /// </summary>
+        protected virtual void VirtualStay(Collider2D collider) { }
+        /// <summary>
+        /// 子类额外过程接口（离开）
+        /// </summary>
+        protected virtual void VirtualExit(Collider2D collider) { }
+
         /// <summary>
         /// 标签检测
         /// </summary>
@@ -112,10 +127,11 @@ namespace ER.Entity2D
         }
         protected virtual void OnCollisionEnter2D(Collision2D collision)
         {
-            Debug.Log("进入检测");
+            Debug.Log("collision接触:"+ collision.gameObject.tag);
             if (TagJudge(collision.gameObject.tag))
             {
                 EnterAction(collision.collider);
+                VirtualEnter(collision.collider);
                 if (manager != null) manager.SetState(true, index,collision.collider);
             }
         }
@@ -125,6 +141,7 @@ namespace ER.Entity2D
             if (TagJudge(collision.gameObject.tag))
             {
                 StayAction(collision.collider);
+                VirtualStay(collision.collider);
                 if (manager != null) manager.SetState(true, index, collision.collider);
             }
         }
@@ -134,6 +151,7 @@ namespace ER.Entity2D
             if (TagJudge(collision.gameObject.tag))
             {
                 ExitAction(collision.collider);
+                VirtualExit(collision.collider);
                 if (manager != null) manager.SetState(false, index, collision.collider);
             }
         }
@@ -143,6 +161,7 @@ namespace ER.Entity2D
             if (TagJudge(collider.gameObject.tag))
             {
                 EnterAction(collider);
+                VirtualEnter(collider);
                 if (manager != null) manager.SetState(true, index, collider);
             }
         }
@@ -151,6 +170,7 @@ namespace ER.Entity2D
             if (TagJudge(collider.gameObject.tag))
             {
                 StayAction(collider);
+                VirtualStay(collider);
                 if (manager != null) manager.SetState(true, index, collider);
             }
         }
@@ -160,6 +180,7 @@ namespace ER.Entity2D
             if (TagJudge(collider.gameObject.tag))
             {
                 ExitAction(collider);
+                VirtualExit(collider);
                 if (manager != null) manager.SetState(false, index, collider);
             }
         }

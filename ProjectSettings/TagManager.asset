@@ -6,17 +6,18 @@ TagManager:
   tags:
   - Barrier
   - Enemy
+  - CollectibleItem
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Test
   - Water
   - UI
-  - Body
-  - Legs
-  - Arms
-  - 
+  - Item
+  - Entity
+  - Barried
+  - Tool
   - 
   - 
   - 

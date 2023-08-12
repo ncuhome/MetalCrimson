@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ER.Common
+namespace ER
 {
     public class PrefabManager : MonoSingleton<PrefabManager>
     {

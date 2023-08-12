@@ -1,7 +1,7 @@
-﻿using ER.Common;
+﻿
 using System.Collections.Generic;
 
-namespace Common
+namespace ER
 {
     /// <summary>
     /// 通用拓展方法类
@@ -14,7 +14,7 @@ namespace Common
         /// <typeparam name="T"></typeparam>
         /// <param name="list"></param>
         /// <param name="index"></param>
-        public static bool InRange<T>(this List<T> list,int index)
+        public static bool InRange<T>(this List<T> list, int index)
         {
             return index >= 0 && index < list.Count;
         }
