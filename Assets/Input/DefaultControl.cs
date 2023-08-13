@@ -91,7 +91,25 @@ public partial class @DefaultControl: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Action2"",
+                    ""name"": ""Skill1"",
+                    ""type"": ""Button"",
+                    ""id"": ""b729231e-a7af-40d6-89d2-529691085ea8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skill2"",
+                    ""type"": ""Button"",
+                    ""id"": ""0a340760-5f1b-45d4-9597-aa5f460facb7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""a7075592-560b-4203-b0fe-eb395bfc1caf"",
                     ""expectedControlType"": ""Button"",
@@ -180,12 +198,34 @@ public partial class @DefaultControl: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f7c8710f-9a28-4af7-b2ef-79ef8b01384b"",
+                    ""id"": ""4445c871-fcea-4896-8b2d-8234cd15046a"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Action2"",
+                    ""action"": ""Skill1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c9ffbcd7-bcec-48dc-b522-7a35c7e84186"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f7c8710f-9a28-4af7-b2ef-79ef8b01384b"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -248,7 +288,9 @@ public partial class @DefaultControl: IInputActionCollection2, IDisposable
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Defense = m_Player.FindAction("Defense", throwIfNotFound: true);
-        m_Player_Action2 = m_Player.FindAction("Action2", throwIfNotFound: true);
+        m_Player_Skill1 = m_Player.FindAction("Skill1", throwIfNotFound: true);
+        m_Player_Skill2 = m_Player.FindAction("Skill2", throwIfNotFound: true);
+        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Newaction = m_UI.FindAction("New action", throwIfNotFound: true);
@@ -320,7 +362,9 @@ public partial class @DefaultControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Defense;
-    private readonly InputAction m_Player_Action2;
+    private readonly InputAction m_Player_Skill1;
+    private readonly InputAction m_Player_Skill2;
+    private readonly InputAction m_Player_Interact;
     public struct PlayerActions
     {
         private @DefaultControl m_Wrapper;
@@ -332,7 +376,9 @@ public partial class @DefaultControl: IInputActionCollection2, IDisposable
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Defense => m_Wrapper.m_Player_Defense;
-        public InputAction @Action2 => m_Wrapper.m_Player_Action2;
+        public InputAction @Skill1 => m_Wrapper.m_Player_Skill1;
+        public InputAction @Skill2 => m_Wrapper.m_Player_Skill2;
+        public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -363,9 +409,15 @@ public partial class @DefaultControl: IInputActionCollection2, IDisposable
             @Defense.started += instance.OnDefense;
             @Defense.performed += instance.OnDefense;
             @Defense.canceled += instance.OnDefense;
-            @Action2.started += instance.OnAction2;
-            @Action2.performed += instance.OnAction2;
-            @Action2.canceled += instance.OnAction2;
+            @Skill1.started += instance.OnSkill1;
+            @Skill1.performed += instance.OnSkill1;
+            @Skill1.canceled += instance.OnSkill1;
+            @Skill2.started += instance.OnSkill2;
+            @Skill2.performed += instance.OnSkill2;
+            @Skill2.canceled += instance.OnSkill2;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -391,9 +443,15 @@ public partial class @DefaultControl: IInputActionCollection2, IDisposable
             @Defense.started -= instance.OnDefense;
             @Defense.performed -= instance.OnDefense;
             @Defense.canceled -= instance.OnDefense;
-            @Action2.started -= instance.OnAction2;
-            @Action2.performed -= instance.OnAction2;
-            @Action2.canceled -= instance.OnAction2;
+            @Skill1.started -= instance.OnSkill1;
+            @Skill1.performed -= instance.OnSkill1;
+            @Skill1.canceled -= instance.OnSkill1;
+            @Skill2.started -= instance.OnSkill2;
+            @Skill2.performed -= instance.OnSkill2;
+            @Skill2.canceled -= instance.OnSkill2;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -475,7 +533,9 @@ public partial class @DefaultControl: IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnDefense(InputAction.CallbackContext context);
-        void OnAction2(InputAction.CallbackContext context);
+        void OnSkill1(InputAction.CallbackContext context);
+        void OnSkill2(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

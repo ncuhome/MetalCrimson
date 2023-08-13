@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ER.Common
+namespace ER
 {
     /// <summary>
     /// 单例模式基类

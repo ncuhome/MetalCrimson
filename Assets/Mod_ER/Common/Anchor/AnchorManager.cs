@@ -4,7 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace ER.Common
+namespace ER
 {
     /// <summary>
     /// 锚点管理类（非组件单例模式）

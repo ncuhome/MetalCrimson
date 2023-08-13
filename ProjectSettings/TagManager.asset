@@ -4,19 +4,22 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Barrier
+  - Enemy
+  - CollectibleItem
   - BlastFurnace
   - Model
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Test
   - Water
   - UI
-  - Body
-  - Legs
-  - Arms
-  - 
+  - Item
+  - Entity
+  - Barried
+  - Tool
   - 
   - 
   - 
