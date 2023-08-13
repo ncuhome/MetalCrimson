@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class MaterialChooseSystem : MonoBehaviour
+public class ChoosePoleSystem : MonoBehaviour
 {
     #region 单例封装
 
-    private static MaterialChooseSystem instance;
+    private static ChoosePoleSystem instance;
 
-    public static MaterialChooseSystem Instance
+    public static ChoosePoleSystem Instance
     {
         get
         {
@@ -34,7 +33,7 @@ public class MaterialChooseSystem : MonoBehaviour
     /// <summary>
     /// 材料父物体Transform组件
     /// </summary>
-    public RectTransform MaterialsParentTransform = null;
+    public RectTransform PolesParentTrans = null;
     /// <summary>
     /// 父物体基准位置
     /// </summary>
@@ -70,15 +69,15 @@ public class MaterialChooseSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        oldVec = MaterialsParentTransform.localPosition;
+        oldVec = PolesParentTrans.localPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
-        MoveMaterials();
+        MovePoles();
         MoveSlider();
-        ShowSlider();
+        ShowMoreSlider();
     }
     /// <summary>
     /// 进行滑动条的拖动或者自动移动
@@ -110,11 +109,11 @@ public class MaterialChooseSystem : MonoBehaviour
     /// <summary>
     /// 移动材料位置
     /// </summary>
-    private void MoveMaterials()
+    private void MovePoles()
     {
         if (showMore)
         {
-            if (MaterialSystem.Instance.materialsItemStore.Count <= 18)
+            if (PoleSystem.Instance.poles.Length <= 12)
             {
                 slider.gameObject.SetActive(false);
             }
@@ -122,11 +121,11 @@ public class MaterialChooseSystem : MonoBehaviour
             {
                 slider.gameObject.SetActive(true);
             }
-            MaterialsParentTransform.localPosition = new Vector3(oldVec.x - slider.value * 315 * Mathf.Ceil(MaterialsParentTransform.childCount / 3 - 6), oldVec.y);
+            PolesParentTrans.localPosition = new Vector3(oldVec.x, oldVec.y + slider.value * 250 * Mathf.Ceil(PolesParentTrans.childCount / 3 - 4));
         }
         else
         {
-            if (MaterialSystem.Instance.materialsItemStore.Count <= 6)
+            if (PoleSystem.Instance.poles.Length <= 4)
             {
                 slider.gameObject.SetActive(false);
             }
@@ -134,19 +133,13 @@ public class MaterialChooseSystem : MonoBehaviour
             {
                 slider.gameObject.SetActive(true);
             }
-            MaterialsParentTransform.localPosition = new Vector3(oldVec.x - slider.value * 315 * (MaterialsParentTransform.childCount - 6), oldVec.y);
+            PolesParentTrans.localPosition = new Vector3(oldVec.x, oldVec.y + slider.value * 250 * (PolesParentTrans.childCount - 4));
         }
     }
 
-    private void ShowSlider()
+    private void ShowMoreSlider()
     {
-        if (showPanel)
-        {
-            slider.transform.localPosition = new Vector3(0, -MaterialSystem.Instance.chooseMaterialTransform.localPosition.y - 130, 0);
-        }
-        else
-        {
-            slider.transform.localPosition = new Vector3(0, -530, 0);
-        }
+        if (!slider.gameObject.activeSelf) { return; }
+        slider.transform.localPosition = new Vector3(-PoleSystem.Instance.choosePoleTransform.localPosition.x - 940, 0, 0);
     }
 }

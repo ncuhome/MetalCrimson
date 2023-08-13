@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class MaterialChooseSystem : MonoBehaviour
+public class ChooseLineSystem : MonoBehaviour
 {
     #region 单例封装
 
-    private static MaterialChooseSystem instance;
+    private static ChooseLineSystem instance;
 
-    public static MaterialChooseSystem Instance
+    public static ChooseLineSystem Instance
     {
         get
         {
@@ -34,7 +33,7 @@ public class MaterialChooseSystem : MonoBehaviour
     /// <summary>
     /// 材料父物体Transform组件
     /// </summary>
-    public RectTransform MaterialsParentTransform = null;
+    public RectTransform LinesParentTrans = null;
     /// <summary>
     /// 父物体基准位置
     /// </summary>
@@ -70,15 +69,15 @@ public class MaterialChooseSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        oldVec = MaterialsParentTransform.localPosition;
+        oldVec = LinesParentTrans.localPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
-        MoveMaterials();
+        MoveLines();
         MoveSlider();
-        ShowSlider();
+        ShowMoreSlider();
     }
     /// <summary>
     /// 进行滑动条的拖动或者自动移动
@@ -110,11 +109,11 @@ public class MaterialChooseSystem : MonoBehaviour
     /// <summary>
     /// 移动材料位置
     /// </summary>
-    private void MoveMaterials()
+    private void MoveLines()
     {
         if (showMore)
         {
-            if (MaterialSystem.Instance.materialsItemStore.Count <= 18)
+            if (LineSystem.Instance.Lines.Length <= 12)
             {
                 slider.gameObject.SetActive(false);
             }
@@ -122,11 +121,11 @@ public class MaterialChooseSystem : MonoBehaviour
             {
                 slider.gameObject.SetActive(true);
             }
-            MaterialsParentTransform.localPosition = new Vector3(oldVec.x - slider.value * 315 * Mathf.Ceil(MaterialsParentTransform.childCount / 3 - 6), oldVec.y);
+            LinesParentTrans.localPosition = new Vector3(oldVec.x, oldVec.y + slider.value * 250 * Mathf.Ceil(LinesParentTrans.childCount / 3 - 4));
         }
         else
         {
-            if (MaterialSystem.Instance.materialsItemStore.Count <= 6)
+            if (LineSystem.Instance.Lines.Length <= 4)
             {
                 slider.gameObject.SetActive(false);
             }
@@ -134,19 +133,13 @@ public class MaterialChooseSystem : MonoBehaviour
             {
                 slider.gameObject.SetActive(true);
             }
-            MaterialsParentTransform.localPosition = new Vector3(oldVec.x - slider.value * 315 * (MaterialsParentTransform.childCount - 6), oldVec.y);
+            LinesParentTrans.localPosition = new Vector3(oldVec.x, oldVec.y + slider.value * 250 * (LinesParentTrans.childCount - 4));
         }
     }
 
-    private void ShowSlider()
+    private void ShowMoreSlider()
     {
-        if (showPanel)
-        {
-            slider.transform.localPosition = new Vector3(0, -MaterialSystem.Instance.chooseMaterialTransform.localPosition.y - 130, 0);
-        }
-        else
-        {
-            slider.transform.localPosition = new Vector3(0, -530, 0);
-        }
+        if (!slider.gameObject.activeSelf) { return; }
+        slider.transform.localPosition = new Vector3(-LineSystem.Instance.chooseLineTransform.localPosition.x - 940, 0, 0);
     }
 }
