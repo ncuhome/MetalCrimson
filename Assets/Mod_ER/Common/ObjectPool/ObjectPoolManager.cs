@@ -12,7 +12,7 @@ namespace ER
         /// <summary>
         /// 池字典
         /// </summary>
-        private Dictionary<string, ObjectPool> poolDictionary;
+        private Dictionary<string, ObjectPool> poolDictionary = new Dictionary<string, ObjectPool>();
         #endregion
 
         #region 功能函数

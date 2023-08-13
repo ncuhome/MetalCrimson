@@ -98,7 +98,6 @@ namespace ER
         {
             pool = new Queue<Water>();
             SetSize(PoolSize);
-            gameObject.SetActive(false);
             if(Prefab == null || Prefab.GetComponent<Water>() == null)
             {
                 Debug.LogError($"对象池输入预制体出错:{PoolName}");
