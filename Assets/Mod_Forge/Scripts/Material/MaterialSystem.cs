@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class MaterialSystem : MonoBehaviour
 {
     #region 单例封装
@@ -34,7 +34,32 @@ public class MaterialSystem : MonoBehaviour
     /// <summary>
     /// 材料物体组
     /// </summary>
-    private List<GameObject> materials = null;
+    public List<GameObject> materials = null;
+    /// <summary>
+    /// 选择界面的Transform组件
+    /// </summary>
+    public Transform chooseMaterialTransform = null;
+    /// <summary>
+    /// 材料组对应的Layout组件
+    /// </summary>
+    public GridLayoutGroup materialLayout = null;
+    /// <summary>
+    /// 目标坐标
+    /// </summary>
+    private Vector3 targetVec;
+    /// <summary>
+    /// 原坐标
+    /// </summary>
+    private Vector3 oldVec;
+    /// <summary>
+    /// 是否正在移动
+    /// </summary>
+    public bool move = false;
+    /// <summary>
+    /// 移动时间
+    /// </summary>
+    private float moveTime;
+    public int needMaterialNum;
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
@@ -49,12 +74,25 @@ public class MaterialSystem : MonoBehaviour
     void Start()
     {
         InitMaterialItemStore();
+        targetVec = chooseMaterialTransform.localPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (Vector3.Magnitude(chooseMaterialTransform.localPosition - targetVec) < 0.5f)
+        {
+            chooseMaterialTransform.localPosition = targetVec;
+            moveTime = 0f;
+            move = false;
+        }
+        else
+        {
+            move = true;
+            moveTime += Time.deltaTime * 5;
+            Vector3 newVec = Vector3.Lerp(oldVec, targetVec, moveTime);
+            chooseMaterialTransform.localPosition = newVec;
+        }
     }
     /// <summary>
     /// 初始化材料物品库设置
@@ -65,29 +103,29 @@ public class MaterialSystem : MonoBehaviour
         materialsItemStore = ItemStoreManager.Instance.Stores["materialItemStore"];
         materials = new List<GameObject>();
 
+        for (int i = 0; i < 6; i++)
+        {
+            Debug.Log("1");
+            Debug.Log(AddNormalMaterial("RawIron"));
+        }
     }
     /// <summary>
     /// 通过NameTmp添加原料,添加成功返回true，否则返回false
     /// </summary>
     public bool AddNormalMaterial(string NameTmp)
     {
-
         if (TemplateStoreManager.Instance["Item"][NameTmp] == null) { return false; } // 如果没找到返回false
-
+        Debug.Log("FindTemplate");
         // 如果已经在库中，则数量+1
         for (int i = 0; i < materialsItemStore.Count; i++)
         {
-            if (materialsItemStore[i].GetBool("IsForged"))
-            {
-                continue;
-            }
-            if (materialsItemStore[i].GetText("NameTmp") == NameTmp)
+            if ((materialsItemStore[i].GetText("NameTmp") == NameTmp) && (!materialsItemStore[i].GetBool("IsForged")))
             {
                 materialsItemStore[i].CreateAttribute("Num", materialsItemStore[i].GetInt("Num") + 1);
+                GetMaterialScript(i).RefreshInfo();
                 return true;
             }
         }
-
         //创建新的物品，并初始化
         materialsItemStore.AddItem(new ItemVariable(TemplateStoreManager.Instance["Item"][NameTmp], true));
         ItemVariable newMaterialItem = materialsItemStore[materialsItemStore.Count - 1];
@@ -104,6 +142,7 @@ public class MaterialSystem : MonoBehaviour
 
         MaterialScript newMaterialScript = newMaterialObject.GetComponent<MaterialScript>();
         newMaterialScript.MaterialItem = newMaterialItem;
+        newMaterialScript.RefreshInfo();
 
         return true;
     }
@@ -125,6 +164,7 @@ public class MaterialSystem : MonoBehaviour
             if (materialsItemStore[i].GetInt("ID") == id)
             {
                 materialsItemStore[i].CreateAttribute("Num", materialsItemStore[i].GetInt("Num") + 1);
+                GetMaterialScript(i).RefreshInfo();
                 return true;
             }
         }
@@ -145,6 +185,7 @@ public class MaterialSystem : MonoBehaviour
 
         MaterialScript newMaterialScript = newMaterialObject.GetComponent<MaterialScript>();
         newMaterialScript.MaterialItem = newMaterialItem;
+        newMaterialScript.RefreshInfo();
         return true;
     }
 
@@ -160,6 +201,7 @@ public class MaterialSystem : MonoBehaviour
 
         MaterialScript forgedMaterialScript = forgedMaterialObject.GetComponent<MaterialScript>();
         forgedMaterialScript.MaterialItem = forgedItem;
+        forgedMaterialScript.RefreshInfo();
         return true;
     }
 
@@ -176,7 +218,11 @@ public class MaterialSystem : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// 通过索引获取材料脚本
+    /// </summary>
+    /// <param name="index">索引</param>
+    /// <returns>索引对应脚本</returns>
     public MaterialScript GetMaterialScript(int index)
     {
         if (index > (materialsParentTrans.childCount - 1))
@@ -184,5 +230,40 @@ public class MaterialSystem : MonoBehaviour
             return null;
         }
         return materialsParentTrans.GetChild(index).GetComponent<MaterialScript>();
+    }
+    /// <summary>
+    /// 隐藏材料面板
+    /// </summary>
+    public void HideMaterialPanel()
+    {
+        oldVec = chooseMaterialTransform.localPosition;
+        targetVec = new Vector3(0, -400, 0);
+    }
+    /// <summary>
+    /// 显示材料面板
+    /// </summary>
+    public void ShowMaterialPanel()
+    {
+        oldVec = chooseMaterialTransform.localPosition;
+        targetVec = Vector3.zero;
+    }
+    /// <summary>
+    /// 点击显示更多按钮事件
+    /// </summary>
+    public void ShowMoreButtonClick()
+    {
+        oldVec = chooseMaterialTransform.localPosition;
+        if (MaterialChooseSystem.Instance.showMore)
+        {
+            targetVec = Vector3.zero;
+            materialLayout.constraintCount = 1;
+            MaterialChooseSystem.Instance.showMore = false;
+        }
+        else
+        {
+            targetVec = new Vector3(0, 616, 0);
+            materialLayout.constraintCount = 3;
+            MaterialChooseSystem.Instance.showMore = true;
+        }
     }
 }

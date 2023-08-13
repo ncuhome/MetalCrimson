@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
 namespace States
 {
     [Serializable]
@@ -96,6 +95,7 @@ namespace States
 
             stateSystem.states[id].OnEnterState();
             stateSystem.currentState = stateSystem.states[id];
+            stateSystem.lastState = this;
 
             ChangeExitJudgement(id, false);
         }

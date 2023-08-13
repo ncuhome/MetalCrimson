@@ -136,4 +136,14 @@ public class MaterialChooseSystem : MonoBehaviour
             MaterialsParentTransform.localPosition = new Vector3(oldVec.x - slider.value * 315 * (MaterialsParentTransform.childCount - 6), oldVec.y);
         }
     }
+
+    public void HideMaterialPanel()
+    {
+
+    }
+
+    public void ShowMaterialPanel()
+    {
+
+    }
 }
