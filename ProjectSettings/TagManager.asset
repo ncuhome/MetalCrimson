@@ -6,9 +6,11 @@ TagManager:
   tags:
   - BlastFurnace
   - Model
+  - Model
+=========
   - Barrier
-  - Enemy
   - CollectibleItem
+>>>>>>>>> Temporary merge branch 2
   layers:
   - Default
   - TransparentFX

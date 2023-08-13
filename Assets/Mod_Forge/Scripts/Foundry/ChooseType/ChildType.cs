@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 using System;
-public class ChildModelType : MonoBehaviour, IPointerClickHandler
+public class ChildModelType : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler
 {
     public Image typeImage;
     public TextMeshProUGUI typeText;
@@ -88,5 +88,23 @@ public class ChildModelType : MonoBehaviour, IPointerClickHandler
     {
         typeImage.color = new Color(typeImage.color.r, typeImage.color.g, typeImage.color.b, a);
         typeText.color = new Color(typeText.color.r, typeText.color.g, typeText.color.b, a);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        TypeSystem.Instance.ShowCard(TypeSystem.Instance.GetChildType(motherId, id));
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        TypeSystem.Instance.HideCard();
+    }
+
+    public void OnPointerMove(PointerEventData eventData)
+    {
+        Vector2 pos;
+        RectTransform rectTransform = UIManager.Instance.canvas.GetComponent<RectTransform>();
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, eventData.position, eventData.enterEventCamera, out pos);
+        TypeSystem.Instance.MoveCard(pos + new Vector2(155, -190));
     }
 }

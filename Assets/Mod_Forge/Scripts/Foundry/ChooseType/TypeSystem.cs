@@ -89,6 +89,18 @@ public struct ChildType
     /// 消耗费用
     /// </summary>
     public int costMaterialNum;
+    /// <summary>
+    /// 锋利度
+    /// </summary>
+    public float sharpness;
+    /// <summary>
+    /// 耐用度
+    /// </summary>
+    public float durability;
+    /// <summary>
+    /// 重量
+    /// </summary>
+    public float weight;
 }
 #endregion
 /// <summary>
@@ -176,6 +188,8 @@ public class TypeSystem : MonoBehaviour
     /// 是否正在移动
     /// </summary>
     public bool moving;
+
+    public ChildModelCard childModelCard;
     #endregion
 
     #region 方法
@@ -259,6 +273,10 @@ public class TypeSystem : MonoBehaviour
                 types[i].childTypes[j].Description = childModels[j].GetText("Description");
                 types[i].childTypes[j].Tags = childModels[j].SplitText("Tags", ';');
                 types[i].childTypes[j].typeSprite = Resources.Load<Sprite>(childModels[j].GetText("Address"));
+                types[i].childTypes[j].costMaterialNum = childModels[j].GetInt("CostNum");
+                types[i].childTypes[j].sharpness = childModels[j].GetFloat("Sharpness");
+                types[i].childTypes[j].durability = childModels[j].GetFloat("Durability");
+                types[i].childTypes[j].weight = childModels[j].GetFloat("Weight");
             }
         }
     }
@@ -619,6 +637,23 @@ public class TypeSystem : MonoBehaviour
         modelBack.oldVec = chosenChildModel.typeObject.transform.localPosition;
         modelBack.startMove = true;
         moving = true;
+    }
+
+    public void ShowCard(ChildType childType)
+    {
+        childModelCard.gameObject.SetActive(true);
+        childModelCard.childType = childType;
+        childModelCard.RefreshCard();
+    }
+
+    public void HideCard()
+    {
+        childModelCard.gameObject.SetActive(false);
+    }
+
+    public void MoveCard(Vector2 targetVec)
+    {
+        childModelCard.transform.localPosition = targetVec;
     }
 
     /// <summary>
