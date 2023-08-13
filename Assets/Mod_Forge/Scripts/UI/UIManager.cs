@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
         }
     }
     public Button ReturnButton, CancelButton, FinishButton;
+    public Canvas canvas;
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>

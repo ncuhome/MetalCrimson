@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
-public class ChildModelType : MonoBehaviour, IPointerClickHandler
+using System;
+public class ChildModelType : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler
 {
     public Image typeImage;
     public TextMeshProUGUI typeText;
@@ -15,6 +16,14 @@ public class ChildModelType : MonoBehaviour, IPointerClickHandler
     public int id;
     public int motherId;
     public int targetID;
+
+    public float oldAlpha;
+    public float targetAlpha;
+    public Color oldColor;
+    public Color targetColor;
+    public float colorTime;
+    public bool startColor;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +41,7 @@ public class ChildModelType : MonoBehaviour, IPointerClickHandler
             {
                 transform.localPosition = targetVec;
                 startMove = false;
+                time = 0;
                 if (targetID != id)
                 {
                     transform.gameObject.SetActive(false);
@@ -43,10 +53,58 @@ public class ChildModelType : MonoBehaviour, IPointerClickHandler
                 }
             }
         }
+
+        if (startColor)
+        {
+            colorTime += Time.deltaTime;
+            oldColor = new Color(typeImage.color.r, typeImage.color.g, typeImage.color.b, oldAlpha);
+            targetColor = new Color(typeImage.color.r, typeImage.color.g, typeImage.color.b, targetAlpha);
+            typeImage.color = Color.Lerp(oldColor, targetColor, colorTime * 2.5f);
+            typeText.color = Color.Lerp(oldColor, targetColor, colorTime * 2.5f);
+            if (colorTime > 0.4f)
+            {
+                typeImage.color = targetColor;
+                typeText.color = targetColor;
+                startColor = false;
+                colorTime = 0;
+            }
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (TypeSystem.Instance.moving) { return; }
+        if (TypeSystem.Instance.stateSystem.currentState.ID == 2)
+        {
+            TypeSystem.Instance.chosenChildModelID = id;
+            TypeSystem.Instance.chosenChildModel = TypeSystem.Instance.GetChildType(TypeSystem.Instance.currentMotherModelID, id);
+            Action<int> action = TypeSystem.Instance.ChildModelStateExit;
+            TypeSystem.Instance.stateSystem[2].ChangeExitAction(action);
+            TypeSystem.Instance.stateSystem.states[2].ChangeExitJudgement(3, true);
+        }
+    }
 
+    public void SetAlpha(float a)
+    {
+        typeImage.color = new Color(typeImage.color.r, typeImage.color.g, typeImage.color.b, a);
+        typeText.color = new Color(typeText.color.r, typeText.color.g, typeText.color.b, a);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        TypeSystem.Instance.ShowCard(TypeSystem.Instance.GetChildType(motherId, id));
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        TypeSystem.Instance.HideCard();
+    }
+
+    public void OnPointerMove(PointerEventData eventData)
+    {
+        Vector2 pos;
+        RectTransform rectTransform = UIManager.Instance.canvas.GetComponent<RectTransform>();
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, eventData.position, eventData.enterEventCamera, out pos);
+        TypeSystem.Instance.MoveCard(pos + new Vector2(155, -190));
     }
 }

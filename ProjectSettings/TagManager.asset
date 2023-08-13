@@ -7,6 +7,8 @@ TagManager:
   - Barrier
   - Enemy
   - CollectibleItem
+  - BlastFurnace
+  - Model
   layers:
   - Default
   - TransparentFX

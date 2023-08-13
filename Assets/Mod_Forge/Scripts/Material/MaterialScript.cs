@@ -22,8 +22,14 @@ public class MaterialScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    }
+    /// <summary>
+    /// 刷新信息
+    /// </summary>
+    public void RefreshInfo()
+    {
         if (MaterialItem == null) { return; }
-        if (MaterialItem.GetInt("Num") == 0)
+        if (MaterialItem.GetInt("Num") < MaterialSystem.Instance.needMaterialNum)
         {
             materialImage.color = Color.gray;
             imageScript.canBeDrag = false;
