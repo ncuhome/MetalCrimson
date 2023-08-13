@@ -64,6 +64,10 @@ namespace ER.Entity2D
         #endregion
 
         #region 字段
+        /// <summary>
+        /// 可视化UI条
+        /// </summary>
+        public ValueSliderBar bar;
         [SerializeField]
         /// <summary>
         /// 数值
@@ -99,10 +103,6 @@ namespace ER.Entity2D
         /// 是否开启自然增量
         /// </summary>
         protected bool SelfIncrease = false;
-        /// <summary>
-        /// 可视化值UI条
-        /// </summary>
-        protected ValueBar bar;
         /// <summary>
         /// 治疗时钟
         /// </summary>
@@ -210,6 +210,10 @@ namespace ER.Entity2D
                     });
                 }
             }
+            if (bar != null)
+            {
+                bar.Value = this.value/this.max;
+            }
             return next;
         }
         /// <summary>
@@ -259,6 +263,10 @@ namespace ER.Entity2D
                     });
                 }
 
+            }
+            if (bar != null)
+            {
+                bar.Value = this.value / this.max;
             }
             return next;
         }
@@ -318,6 +326,10 @@ namespace ER.Entity2D
                     });
                 }
             }
+            if (bar != null)
+            {
+                bar.Value = this.value / this.max;
+            }
             return next;
         }
         /// <summary>
@@ -365,6 +377,10 @@ namespace ER.Entity2D
                         pruner = pruner
                     });
                 }
+            }
+            if (bar != null)
+            {
+                bar.Value = this.value / this.max;
             }
             return next;
         }

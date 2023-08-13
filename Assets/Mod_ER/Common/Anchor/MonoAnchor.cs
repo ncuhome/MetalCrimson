@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-namespace ER.Common
+namespace ER
 {
     /// <summary>
     /// 虚拟锚点

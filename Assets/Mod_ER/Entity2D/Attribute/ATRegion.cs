@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// Ignore Spelling: collider
+
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace ER.Entity2D
@@ -7,7 +10,7 @@ namespace ER.Entity2D
     /// 区域检测事件
     /// </summary>
     /// <param name="collision"></param>
-    public delegate void DelRegion(Collision2D collision);
+    public delegate void DelRegion(Collider2D collider);
 
     /// <summary>
     /// 区域判定，对 collider 组件的封装
@@ -15,10 +18,8 @@ namespace ER.Entity2D
     public class ATRegion : MonoAttribute
     {
         #region 初始化
-
         public ATRegion()
         { AttributeName = nameof(ATRegion);}
-
         public override void Initialize()
         {
         }
@@ -81,9 +82,23 @@ namespace ER.Entity2D
         #endregion 函数
 
         #region 区域检测
-        protected void EnterAction(Collision2D collision) { if (EnterEvent != null) EnterEvent(collision); }
-        protected void StayAction(Collision2D collision) { if (StayEvent != null) StayEvent(collision); }
-        protected void ExitAction(Collision2D collision) { if (ExitEvent != null) ExitEvent(collision); }
+        protected void EnterAction(Collider2D collider) { if (EnterEvent != null) EnterEvent(collider); }
+        protected void StayAction(Collider2D collider) { if (StayEvent != null) StayEvent( collider); }
+        protected void ExitAction(Collider2D collider) { if (ExitEvent != null) ExitEvent( collider); }
+
+        /// <summary>
+        /// 子类额外过程接口（进入）
+        /// </summary>
+        protected virtual void VirtualEnter(Collider2D collider) { }
+        /// <summary>
+        /// 子类额外过程接口（保持）
+        /// </summary>
+        protected virtual void VirtualStay(Collider2D collider) { }
+        /// <summary>
+        /// 子类额外过程接口（离开）
+        /// </summary>
+        protected virtual void VirtualExit(Collider2D collider) { }
+
         /// <summary>
         /// 标签检测
         /// </summary>
@@ -112,10 +127,12 @@ namespace ER.Entity2D
         }
         protected virtual void OnCollisionEnter2D(Collision2D collision)
         {
-            if(TagJudge(collision.gameObject.tag))
+            Debug.Log("collision接触:"+ collision.gameObject.tag);
+            if (TagJudge(collision.gameObject.tag))
             {
-                EnterAction(collision);
-                if (manager != null) manager.SetState(true, index,collision);
+                EnterAction(collision.collider);
+                VirtualEnter(collision.collider);
+                if (manager != null) manager.SetState(true, index,collision.collider);
             }
         }
 
@@ -123,8 +140,9 @@ namespace ER.Entity2D
         {
             if (TagJudge(collision.gameObject.tag))
             {
-                StayAction(collision);
-                if (manager != null) manager.SetState(true, index,collision);
+                StayAction(collision.collider);
+                VirtualStay(collision.collider);
+                if (manager != null) manager.SetState(true, index, collision.collider);
             }
         }
 
@@ -132,8 +150,38 @@ namespace ER.Entity2D
         {
             if (TagJudge(collision.gameObject.tag))
             {
-                ExitAction(collision);
-                if (manager != null) manager.SetState(false, index,collision);
+                ExitAction(collision.collider);
+                VirtualExit(collision.collider);
+                if (manager != null) manager.SetState(false, index, collision.collider);
+            }
+        }
+
+        protected virtual void OnTriggerEnter2D(Collider2D collider)
+        {
+            if (TagJudge(collider.gameObject.tag))
+            {
+                EnterAction(collider);
+                VirtualEnter(collider);
+                if (manager != null) manager.SetState(true, index, collider);
+            }
+        }
+        protected virtual void OnTriggerStay2D(Collider2D collider)
+        {
+            if (TagJudge(collider.gameObject.tag))
+            {
+                StayAction(collider);
+                VirtualStay(collider);
+                if (manager != null) manager.SetState(true, index, collider);
+            }
+        }
+
+        protected virtual void OnTriggerExit2D(Collider2D collider)
+        {
+            if (TagJudge(collider.gameObject.tag))
+            {
+                ExitAction(collider);
+                VirtualExit(collider);
+                if (manager != null) manager.SetState(false, index, collider);
             }
         }
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace ER.Common
+namespace ER
 {
     /// <summary>
     /// 对象池管理类（非组件单例模式）
@@ -21,7 +21,7 @@ namespace ER.Common
         /// </summary>
         /// <param name="poolName">对象池名称</param>
         /// <returns>获取到的对象</returns>
-        public GameObject GetObject(string poolName)
+        public Water GetObject(string poolName)
         {
             if (poolDictionary.TryGetValue(poolName, out ObjectPool pool))
             {
@@ -33,13 +33,22 @@ namespace ER.Common
                 return null;
             }
         }
+        /// <summary>
+        /// 从对应对象池中取对象
+        /// </summary>
+        /// <param name="poolName">对象池名称</param>
+        /// <returns>获取到的对象</returns>
+        public Water this[string poolName]
+        {
+            get=>GetObject(poolName);
+        }
 
         /// <summary>
         /// 将对象还回对象池
         /// </summary>
         /// <param name="obj">游戏物体对象</param>
         /// <param name="poolName">对象池名称</param>
-        public void ReturnObject(GameObject obj, string poolName)
+        public void ReturnObject(Water obj, string poolName)
         {
             if (poolDictionary.TryGetValue(poolName, out ObjectPool pool))
             {
@@ -50,7 +59,6 @@ namespace ER.Common
                 Debug.LogWarning("对象池不存在：" + poolName);
             }
         }
-
         /// <summary>
         /// 注册对象池
         /// </summary>

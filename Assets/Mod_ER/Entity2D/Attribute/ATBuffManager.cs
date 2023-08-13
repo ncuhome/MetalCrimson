@@ -9,39 +9,47 @@ namespace ER.Entity2D
     public class ATBuffManager : MonoAttribute
     {
         #region 初始化
-        public ATBuffManager() { AttributeName = nameof(ATBuffManager); }
+
+        public ATBuffManager()
+        { AttributeName = nameof(ATBuffManager); }
+
         public override void Initialize()
         {
-            
         }
-        #endregion
+
+        #endregion 初始化
 
         #region 属性
-        private List<MDBuff> buffs=new List<MDBuff>();
-        private Dictionary<string,MDBuff> buffsDic = new Dictionary<string, MDBuff> ();
-        #endregion
+
+        private List<MDBuff> buffs = new List<MDBuff>();
+        private Dictionary<string, MDBuff> buffsDic = new Dictionary<string, MDBuff>();
+
+        #endregion 属性
 
         #region 管理
+
         /// <summary>
         /// 添加效果
         /// </summary>
         /// <param name="buff"></param>
         public void Add(MDBuff buff)
         {
-            if (buffsDic.TryGetValue(buff.buffName,out MDBuff bf))//出现同一个buff重复添加
+            if (buffsDic.TryGetValue(buff.buffName, out MDBuff bf))//出现同一个buff重复添加
             {
-                switch(bf.repeatType)
+                switch (bf.repeatType)
                 {
                     case MDBuff.RepeatType.None: break;
                     case MDBuff.RepeatType.NoneAndEnter:
                         bf.Enter();
                         break;
+
                     case MDBuff.RepeatType.MoreLevel:
-                        if(bf.level<bf.levelMax)
-                        { 
-                            bf.level += 1; 
+                        if (bf.level < bf.levelMax)
+                        {
+                            bf.level += 1;
                         }
                         break;
+
                     case MDBuff.RepeatType.MoreLevelAndEnter:
                         if (bf.level < bf.levelMax)
                         {
@@ -49,20 +57,25 @@ namespace ER.Entity2D
                         }
                         bf.Enter();
                         break;
+
                     case MDBuff.RepeatType.MoreTime:
                         bf.time += buff.time;
                         break;
+
                     case MDBuff.RepeatType.MoreTimeAndEnter:
                         bf.time += buff.time;
                         bf.Enter();
                         break;
+
                     case MDBuff.RepeatType.RepeatTime:
                         bf.time = bf.defTime;
                         break;
+
                     case MDBuff.RepeatType.RepeatTimeAndEnter:
                         bf.time = bf.defTime;
                         bf.Enter();
                         break;
+
                     case MDBuff.RepeatType.Custom:
                         bf.Repeat();
                         break;
@@ -76,6 +89,7 @@ namespace ER.Entity2D
                 ArrangeBuffs();
             }
         }
+
         /// <summary>
         /// 移除效果
         /// </summary>
@@ -85,23 +99,24 @@ namespace ER.Entity2D
         {
             bool exist = false;
             MDBuff buff = null;
-            for(int i=0;i<buffs.Count;i++)
+            for (int i = 0; i < buffs.Count; i++)
             {
-                if (buffs[i].buffName == name) 
-                { 
+                if (buffs[i].buffName == name)
+                {
                     buff = buffs[i];
                     buffs.RemoveAt(i);
                     exist = true;
-                    break; 
+                    break;
                 }
             }
-            if(exist)
+            if (exist)
             {
                 buffsDic.Remove(name);
                 buff.Exit();
             }
             return exist;
         }
+
         /// <summary>
         /// 判断指定效果是否存在
         /// </summary>
@@ -111,14 +126,15 @@ namespace ER.Entity2D
         {
             return buffsDic.ContainsKey(name);
         }
+
         /// <summary>
         /// 按优先级排列效果
         /// </summary>
         private void ArrangeBuffs()
         {
-            for(int i=0;i<buffs.Count-1;i++)
+            for (int i = 0; i < buffs.Count - 1; i++)
             {
-                for(int k=i+1;k<buffs.Count;k++)
+                for (int k = i + 1; k < buffs.Count; k++)
                 {
                     if (buffs[k].priority > buffs[i].priority)
                     {
@@ -129,22 +145,25 @@ namespace ER.Entity2D
                 }
             }
         }
-        #endregion
+
+        #endregion 管理
+
         #region Unity
+
         private void Update()
         {
-            foreach(var buff in buffs)
+            foreach (var buff in buffs)
             {
-                if(buff.defTime > 0)
+                if (buff.defTime > 0)
                 {
                     buff.time -= Time.deltaTime;
-                    if(buff.time <= 0)
+                    if (buff.time <= 0)
                     {
-                        
                     }
                 }
             }
         }
-        #endregion
+
+        #endregion Unity
     }
 }

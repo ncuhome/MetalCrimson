@@ -34,6 +34,14 @@ namespace ER.Entity2D
         #endregion
 
         #region 功能
+        /// <summary>
+        /// 开启活动
+        /// </summary>
+        public abstract void StartAction();
+        /// <summary>
+        /// 停止活动
+        /// </summary>
+        public abstract void StopAction();
         #endregion
     }
 }

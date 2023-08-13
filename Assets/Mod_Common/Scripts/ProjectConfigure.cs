@@ -1,5 +1,5 @@
 ﻿
-using ER.Common;
+using ER;
 using ER.Items;
 using ER.Save;
 using Mod_Console;
@@ -54,7 +54,11 @@ namespace Mod_Common
             //初始化所有静态仓库
             TemplateStoreManager.Instance.Load();
 
-
+            ObjectPool pool = GetComponent<ObjectPool>();
+            if (pool != null)
+            {
+                ObjectPoolManager.Instance.RegisterPool(pool);
+            }
         }
 
         private void Update()
