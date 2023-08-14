@@ -77,7 +77,7 @@ namespace Mod_Console
 
         protected Data CMD_print(Data[] parameters)
         {
-            if(!parameters.IsEmpty())
+            if (!parameters.IsEmpty())
             {
                 Data txt = parameters[0];
                 if (txt.isError())
@@ -114,6 +114,39 @@ namespace Mod_Console
             return Data.Error;
         }
 
+        protected Data CMD_path(Data[] parameters)
+        {
+            if(parameters.Length == 0)
+            {
+                Print($"dataPath:{Application.dataPath}");
+            }
+            else if(parameters.IsMate(DataType.Integer))
+            {
+                switch ((int)parameters[0].Value)
+                {
+                    case 0:
+                        Print($"dataPath:{Application.dataPath}");
+                        break;
+                    case 1:
+                        Print($"consoleLogPath:{Application.consoleLogPath}");
+                        break;
+                    case 2:
+                        Print($"persistentDataPath:{Application.persistentDataPath}");
+                        break;
+                    case 3:
+                        Print($"streamingAssetsPath:{Application.streamingAssetsPath}");
+                        break;
+                    case 4:
+                        Print($"temporaryCachePath:{Application.temporaryCachePath}");
+                        break;
+                    default:
+                        Print($"this is not a path index:{parameters[0].Value}");
+                        break;
+                }
+            }
+            return Data.Empty;
+        }
+
         #endregion 指令函数
 
         /// <summary>
@@ -147,6 +180,8 @@ namespace Mod_Console
                     case "openfile":
                         return CMD_openfile(parameters);
 
+                    case "path":
+                        return CMD_path(parameters);
                     default:
                         return Data.Error;
                 }

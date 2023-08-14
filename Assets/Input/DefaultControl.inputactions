@@ -214,9 +214,18 @@
             "id": "2f398e79-7cac-4768-808c-6f666343d7fd",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "Menu",
                     "type": "Button",
                     "id": "91d9d3a1-6fad-4579-8aa0-e0649d8d39e4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Back",
+                    "type": "Button",
+                    "id": "cbac3555-348c-4d24-b74f-1a4e25793480",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -227,11 +236,22 @@
                 {
                     "name": "",
                     "id": "619db61b-99e4-4f34-96d0-eece63f7beeb",
-                    "path": "",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "New action",
+                    "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7d096aaa-3fe2-4cc2-b704-1988619e9003",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Back",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

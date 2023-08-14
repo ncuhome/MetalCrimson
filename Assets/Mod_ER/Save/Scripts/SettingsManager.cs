@@ -15,9 +15,7 @@ namespace ER.Save
         protected override void Awake()
         {
             base.Awake();
-            settingsPath = Path.Combine(Application.streamingAssetsPath, "settings.ini");
-            INIHD = new();
-            UpdateSettings();
+            Initialized();
         }
 
         /// <summary>
@@ -26,6 +24,15 @@ namespace ER.Save
         private string settingsPath;
 
         private INIHandler INIHD;
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        public void Initialized()
+        {
+            settingsPath = Path.Combine(Application.streamingAssetsPath, "settings.ini");
+            INIHD = new();
+            UpdateSettings();
+        }
 
         /// <summary>
         /// 更新设置，从本地文件读取
@@ -43,7 +50,9 @@ namespace ER.Save
                 INIHD.AddSection("settings");
             }
         }
-
+        /// <summary>
+        /// 保存设置
+        /// </summary>
         public void SaveSettings()
         {
             INIHD.Save(settingsPath);

@@ -1,9 +1,8 @@
 ﻿using ER.Parser;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using UnityEngine;
 
 namespace ER
 {
@@ -18,12 +17,13 @@ namespace ER
         {
             return Data.ParseTo(text);
         }
+
         /// <summary>
         /// 尝试将此字符串解析为整型
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        public static bool TryParseInt(this string text,out int Value)
+        public static bool TryParseInt(this string text, out int Value)
         {
             int num = 0;
             try
@@ -43,6 +43,7 @@ namespace ER
             Value = num;
             return true;
         }
+
         /// <summary>
         /// 尝试将此字符串解析为整型
         /// </summary>
@@ -68,13 +69,14 @@ namespace ER
             Value = num;
             return true;
         }
+
         /// <summary>
         /// 尝试将此字符串解析为布尔值
         /// </summary>
         /// <param name="text"></param>
         /// <param name="Vaule"></param>
         /// <returns></returns>
-        public static bool TryParseBoolean(this string text,out bool Value)
+        public static bool TryParseBoolean(this string text, out bool Value)
         {
             if (text.ToUpper() == "TRUE")
             {
@@ -96,6 +98,52 @@ namespace ER
             string txt = $"<{pair.Key?.ToString()}>:{pair.Value?.ToString()}";
             printDelegate?.Invoke(txt);
             Console.WriteLine(txt);
+        }
+
+        /// <summary>
+        /// 从外部指定文件中加载图片
+        /// </summary>
+        /// <param name="height">图片高度</param>
+        /// <param name="path">图片的文件路径</param>
+        /// <param name="width">图片宽度</param>
+        /// <returns></returns>
+        public static Texture2D LoadTextureByIO(string path, int width = 2048, int height = 2048)
+        {
+            FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+            fs.Seek(0, SeekOrigin.Begin);//游标的操作，可有可无
+            byte[] bytes = new byte[fs.Length];//生命字节，用来存储读取到的图片字节
+            try
+            {
+                fs.Read(bytes, 0, bytes.Length);//开始读取，这里最好用trycatch语句，防止读取失败报错
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e);
+            }
+            fs.Close();//切记关闭
+
+            Texture2D texture = new Texture2D(width, height);
+            if (texture.LoadImage(bytes))
+            {
+                Debug.Log("图片加载完毕 ");
+                return texture;//将生成的texture2d返回，到这里就得到了外部的图片，可以使用了
+            }
+            else
+            {
+                Debug.Log("图片尚未加载");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 将Texture2d转换为Sprite
+        /// </summary>
+        /// <param name="tex">参数是texture2d纹理</param>
+        /// <returns></returns>
+        public static Sprite TextureToSprite(this Texture2D tex)
+        {
+            Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+            return sprite;
         }
     }
 }

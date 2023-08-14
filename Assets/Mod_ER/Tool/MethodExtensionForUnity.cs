@@ -1,51 +1,54 @@
 ﻿using UnityEngine;
 
-//Unity的一些扩展方法
-static public class MethodExtensionForUnity
+namespace ER
 {
-    /// <summary>
-    /// Gets or add a component. Usage example:
-    /// BoxCollider boxCollider = transform.GetOrAddComponent<BoxCollider>();
-    /// </summary>
-    static public T GetOrAddComponent<T>(this Component child, bool set_enable = false) where T : Component
+    //Unity的一些扩展方法
+    public static class MethodExtensionForUnity
     {
-        T result = child.GetComponent<T>();
-        if (result == null)
+        /// <summary>
+        /// Gets or add a component. Usage example:
+        /// BoxCollider boxCollider = transform.GetOrAddComponent<BoxCollider>();
+        /// </summary>
+        static public T GetOrAddComponent<T>(this Component child, bool set_enable = false) where T : Component
         {
-            result = child.gameObject.AddComponent<T>();
+            T result = child.GetComponent<T>();
+            if (result == null)
+            {
+                result = child.gameObject.AddComponent<T>();
+            }
+            var bcomp = result as Behaviour;
+            if (set_enable)
+            {
+                if (bcomp != null) bcomp.enabled = true;
+            }
+            return result;
         }
-        var bcomp = result as Behaviour;
-        if (set_enable)
+
+        static public T GetOrAddComponent<T>(this GameObject go) where T : Component
         {
+            T result = go.transform.GetComponent<T>();
+            if (result == null)
+            {
+                result = go.AddComponent<T>();
+            }
+            var bcomp = result as Behaviour;
             if (bcomp != null) bcomp.enabled = true;
+            return result;
         }
-        return result;
-    }
 
-    static public T GetOrAddComponent<T>(this GameObject go) where T : Component
-    {
-        T result = go.transform.GetComponent<T>();
-        if (result == null)
+
+        public static void walk(this GameObject o, System.Action<GameObject> f)
         {
-            result = go.AddComponent<T>();
+            f(o);
+
+            int numChildren = o.transform.childCount;
+
+            for (int i = 0; i < numChildren; ++i)
+            {
+                walk(o.transform.GetChild(i).gameObject, f);
+            }
         }
-        var bcomp = result as Behaviour;
-        if (bcomp != null) bcomp.enabled = true;
-        return result;
+
+
     }
-
-
-    public static void walk(this GameObject o, System.Action<GameObject> f)
-    {
-        f(o);
-
-        int numChildren = o.transform.childCount;
-
-        for (int i = 0; i < numChildren; ++i)
-        {
-            walk(o.transform.GetChild(i).gameObject, f);
-        }
-    }
-
-
 }
