@@ -21,6 +21,8 @@ namespace Mod_Level
             state = owner.GetAttribute<ATCharacterState>();
             if (state == null) Debug.LogError("未找到角色的状态管理器:<ATPlayerState>");
             Debug.Log($"is null {InputManager.inputActions == null}");
+
+
             InputManager.inputActions.Player.MoveLeft.performed += MoveLeft;
             InputManager.inputActions.Player.MoveLeft.canceled += _MoveLeft;
             InputManager.inputActions.Player.MoveRight.performed += MoveRight;
