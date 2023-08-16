@@ -69,7 +69,25 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Action2",
+                    "name": "Skill1",
+                    "type": "Button",
+                    "id": "b729231e-a7af-40d6-89d2-529691085ea8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Skill2",
+                    "type": "Button",
+                    "id": "0a340760-5f1b-45d4-9597-aa5f460facb7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Interact",
                     "type": "Button",
                     "id": "a7075592-560b-4203-b0fe-eb395bfc1caf",
                     "expectedControlType": "Button",
@@ -158,12 +176,34 @@
                 },
                 {
                     "name": "",
-                    "id": "f7c8710f-9a28-4af7-b2ef-79ef8b01384b",
+                    "id": "4445c871-fcea-4896-8b2d-8234cd15046a",
                     "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Action2",
+                    "action": "Skill1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c9ffbcd7-bcec-48dc-b522-7a35c7e84186",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skill2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f7c8710f-9a28-4af7-b2ef-79ef8b01384b",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -174,9 +214,18 @@
             "id": "2f398e79-7cac-4768-808c-6f666343d7fd",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "Menu",
                     "type": "Button",
                     "id": "91d9d3a1-6fad-4579-8aa0-e0649d8d39e4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Back",
+                    "type": "Button",
+                    "id": "cbac3555-348c-4d24-b74f-1a4e25793480",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -187,11 +236,22 @@
                 {
                     "name": "",
                     "id": "619db61b-99e4-4f34-96d0-eece63f7beeb",
-                    "path": "",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "New action",
+                    "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7d096aaa-3fe2-4cc2-b704-1988619e9003",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Back",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

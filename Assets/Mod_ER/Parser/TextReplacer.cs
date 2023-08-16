@@ -310,11 +310,34 @@ namespace ER.Parser
 
             }
         }
+        /// <summary>
+        /// 根据路径获取文本内容，默认最后一部分名称是键名，前面的是路径名，路径使用"."分隔部分名
+        /// </summary>
+        /// <param name="path">路径名</param>
+        /// <returns></returns>
+        public string this[string path]
+        {
+            get
+            {
+                //获取截断点索引
+                int index = path.Length - 1;
+                for (;index>=0; index--)
+                {
+                    if (path[index] == '.')
+                    {
+                        break;
+                    }
+                }
+                string sectionName = path.Substring(0, index);
+                string keyName = path.Substring(index+1);
+                return this[sectionName, keyName];
+            }
+        }
         #endregion
     }
 
     /// <summary>
-    /// 文本替换器
+    /// 文本包替换器
     /// </summary>
     public class TextReplacer
     {

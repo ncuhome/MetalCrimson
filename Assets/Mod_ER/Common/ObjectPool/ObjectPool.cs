@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace ER.Common
+namespace ER
 {
     /// <summary>
     /// 对象池事件
     /// </summary>
     /// <param name="obj">参与事件的对象</param>
-    public delegate void DelObjectPool(GameObject obj);
+    public delegate void DelObjectPool(Water obj);
     /// <summary>
     /// 对象池
     /// </summary>
@@ -47,7 +47,7 @@ namespace ER.Common
         /// <summary>
         /// 对象池
         /// </summary>
-        private Queue<GameObject> pool;
+        private Queue<Water> pool;
         #endregion
 
         #region 功能函数
@@ -55,12 +55,12 @@ namespace ER.Common
         /// 从对象池中获取一个新的对象
         /// </summary>
         /// <returns></returns>
-        public GameObject GetObject()
+        public Water GetObject()
         {
             if(pool.Count > 0)
             {
-                GameObject obj = pool.Dequeue();
-                GetObjectEvent.Invoke(obj);
+                Water obj = pool.Dequeue();
+                GetObjectEvent?.Invoke(obj);
                 obj.transform.SetParent(null);
                 return obj;
             }
@@ -75,9 +75,9 @@ namespace ER.Common
         /// 将对象返回对象池
         /// </summary>
         /// <param name="obj"></param>
-        public void ReturnObject(GameObject obj)
+        public void ReturnObject(Water obj)
         {
-            ReturnObjectEvent.Invoke(obj);
+            ReturnObjectEvent?.Invoke(obj);
             pool.Enqueue(obj);
             obj.transform.SetParent(transform);
         }
@@ -89,16 +89,19 @@ namespace ER.Common
         {
             for (int i = 0; i < count; i++)
             {
-                ReturnObject(Instantiate(Prefab, transform));
+                ReturnObject(Instantiate(Prefab, transform).GetComponent<Water>());
             }
         }
         #endregion
 
-        public ObjectPool()
+        private void Awake()
         {
-            pool = new Queue<GameObject>();
+            pool = new Queue<Water>();
             SetSize(PoolSize);
-            gameObject.SetActive(false);
+            if(Prefab == null || Prefab.GetComponent<Water>() == null)
+            {
+                Debug.LogError($"对象池输入预制体出错:{PoolName}");
+            }
         }
     }
 }

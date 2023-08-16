@@ -1,6 +1,6 @@
 ﻿
 
-using Common;
+
 using ER.Parser;
 using Mod_Console;
 using System;
@@ -49,7 +49,7 @@ namespace ER.Items
         /// </summary>
         public Dictionary<string, bool> attributeBool;
 
-        public ItemInfo(Dictionary<string, int> kvInt, Dictionary<string, float> kvFloat, Dictionary<string, bool> kvBool, Dictionary<string, string> kvTxt, int id = 0, string name = "",string storeName="")
+        public ItemInfo(Dictionary<string, int> kvInt, Dictionary<string, float> kvFloat, Dictionary<string, bool> kvBool, Dictionary<string, string> kvTxt, int id = 0, string name = "", string storeName = "")
         {
             ID = id;
             NameTmp = name;
@@ -278,7 +278,7 @@ namespace ER.Items
         /// <returns></returns>
         public abstract bool TryGetBool(string key, out bool value);
 
-        public Dictionary<string,int> GetIntAll()
+        public Dictionary<string, int> GetIntAll()
         {
             return attributeInt.Copy();
         }
@@ -394,6 +394,7 @@ namespace ER.Items
 
         public ItemTemplate(Item item)
         {
+            StoreName = item.StoreName;
             attributeBool = ((ItemTemplate)item).attributeBool;
             attributeFloat = ((ItemTemplate)item).attributeFloat;
             attributeInt = ((ItemTemplate)item).attributeInt;
@@ -424,6 +425,7 @@ namespace ER.Items
             }
             NameTmp = info.NameTmp;
             ID = info.ID;
+            StoreName = info.StoreName;
         }
         #endregion
 
@@ -570,9 +572,10 @@ namespace ER.Items
         /// </summary>
         /// <param name="itemTemplate"></param>
         /// <param name="copyAll">是否拷贝模板的全部属性（除NameTmp 和 ID）</param>
-        public ItemVariable(ItemTemplate itemTemplate,bool copyAll = false)
+        public ItemVariable(ItemTemplate itemTemplate, bool copyAll = false)
         {
             ID = itemTemplate.ID;
+            Debug.Log(itemTemplate.StoreName);
             StoreName = itemTemplate.StoreName;
             if (copyAll)//copy模板全部属性，作为可变属性
             {
@@ -589,11 +592,12 @@ namespace ER.Items
         /// </summary>
         /// <param name="itemTemplate"></param>
         /// <param name="copyAll">是否拷贝模板的全部属性（除NameTmp 和 ID）</param>
-        public ItemVariable(int templateID,bool copyAll = false)
+        public ItemVariable(string storeName, int templateID, bool copyAll = false)
         {
             ID = templateID;
 
-            ItemTemplate tmp = TemplateStoreManager.Instance[StoreName][ID];
+            ItemTemplate tmp = TemplateStoreManager.Instance[storeName][ID];
+            tmp.StoreName = storeName;
             if (tmp != null)
             {
                 if (copyAll)//copy模板全部属性，作为可变属性
@@ -690,9 +694,9 @@ namespace ER.Items
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public int GetInt(string key,bool self)
+        public int GetInt(string key, bool self)
         {
-            if(self)
+            if (self)
             {
                 return attributeInt[key];
             }
@@ -704,7 +708,7 @@ namespace ER.Items
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public float GetFloat(string key,bool self)
+        public float GetFloat(string key, bool self)
         {
             if (self)
             {
@@ -718,7 +722,7 @@ namespace ER.Items
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public bool GetBool(string key,bool self)
+        public bool GetBool(string key, bool self)
         {
             if (self)
             {
@@ -732,7 +736,7 @@ namespace ER.Items
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public string GetText(string key,bool self)
+        public string GetText(string key, bool self)
         {
             if (self)
             {
@@ -809,9 +813,9 @@ namespace ER.Items
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public bool TryGetInt(string key, out int value,bool self)
+        public bool TryGetInt(string key, out int value, bool self)
         {
-            if(self)
+            if (self)
             {
                 return attributeInt.TryGetValue(key, out value);
             }
@@ -868,7 +872,7 @@ namespace ER.Items
 
         public override void CreateAttribute(string key, int value)
         {
-            attributeInt[key]= value;
+            attributeInt[key] = value;
         }
 
         public override void CreateAttribute(string key, float value)

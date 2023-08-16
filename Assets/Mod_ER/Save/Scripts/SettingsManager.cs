@@ -1,5 +1,5 @@
-﻿using Common;
-using ER.Common;
+﻿
+using ER;
 using ER.Parser;
 using Mod_Console;
 using System.IO;
@@ -15,9 +15,7 @@ namespace ER.Save
         protected override void Awake()
         {
             base.Awake();
-            settingsPath = Path.Combine(Application.streamingAssetsPath, "settings.ini");
-            INIHD = new();
-            UpdateSettings();
+            Initialized();
         }
 
         /// <summary>
@@ -26,6 +24,15 @@ namespace ER.Save
         private string settingsPath;
 
         private INIHandler INIHD;
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        public void Initialized()
+        {
+            settingsPath = Path.Combine(Application.streamingAssetsPath, "settings.ini");
+            INIHD = new();
+            UpdateSettings();
+        }
 
         /// <summary>
         /// 更新设置，从本地文件读取
@@ -43,10 +50,11 @@ namespace ER.Save
                 INIHD.AddSection("settings");
             }
         }
-
+        /// <summary>
+        /// 保存设置
+        /// </summary>
         public void SaveSettings()
         {
-            ConsolePanel.Print("正在写入配置文件...");
             INIHD.Save(settingsPath);
         }
 
@@ -81,6 +89,11 @@ namespace ER.Save
         public string GetSettingsTxt()
         {
             return INIHD.GetSaveString();
+        }
+
+        private void OnDestroy()
+        {
+            SaveSettings();
         }
     }
 }

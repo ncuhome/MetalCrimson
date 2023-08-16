@@ -36,7 +36,6 @@ namespace ER.Parser
         /// <param name="sectionName">所在节段名称</param>
         /// <param name="key">键名</param>
         /// <param name="value">值名</param>
-        /// <returns>如果指定节段不存在则返回false并且添加失败</returns>
         public void AddPair(string sectionName, string key, string value)
         {
             //ConsolePanel.Instance.Print($"正在写入键值对：[{sectionName}]<{key} = {value}>");
@@ -196,6 +195,12 @@ namespace ER.Parser
             // 更新节段信息为保留的节段信息
             this.sections = newSections;
         }
+        /// <summary>
+        /// 获取指定键值对
+        /// </summary>
+        /// <param name="section">节段名</param>
+        /// <param name="key">键名</param>
+        /// <returns>如果没有找到该键值对则返回null</returns>
         public string GetValue(string section, string key)
         {
             if (sections.TryGetValue(section, out var sectionData))
