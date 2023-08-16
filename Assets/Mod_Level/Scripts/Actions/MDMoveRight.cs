@@ -39,6 +39,10 @@ namespace Mod_Level
             region.notTouchEvent += () => { movable = false; };
             region.notTouchEvent += () => { movable = true; };
         }
+        public override bool ActionJudge()
+        {
+            return true;
+        }
         public override void StartAction()
         {
             state.direction = ATCharacterState.Direction.Right;

@@ -30,6 +30,7 @@ namespace Mod_Level
 
             InputManager.inputActions.Player.Attack.performed += Attack;
             InputManager.inputActions.Player.Defense.performed += Defense;
+            InputManager.inputActions.Player.Defense.canceled += _Defense;
             InputManager.inputActions.Player.Jump.performed += Jump;
 
             InputManager.inputActions.Player.Skill1.performed += Skill1;
@@ -97,6 +98,11 @@ namespace Mod_Level
             actionManager.Action("Defense");
         }
 
+        private void _Defense(InputAction.CallbackContext ctx)
+        {
+            actionManager.Stop("Defense");
+        }
+
         private void Jump(InputAction.CallbackContext ctx)
         {
             actionManager.Action("Jump");
@@ -151,16 +157,43 @@ namespace Mod_Level
             {
                 if (delta.y > 0)//上
                 {
-                    actionManager.Action("PostureUp");
+                    if(state.posture == ATCharacterState.Posture.Front)
+                    {
+                        actionManager.Stop("PostureFront");
+                        actionManager.Action("PostureUp");
+                    }
+                    else if(state.posture == ATCharacterState.Posture.Down)
+                    {
+                        actionManager.Stop("PostureDown");
+                        actionManager.Action("PostureUp");
+                    }
                 }
                 else//下
                 {
-                    actionManager.Action("PostureDown");
+                    if (state.posture == ATCharacterState.Posture.Front)
+                    {
+                        actionManager.Stop("PostureFront");
+                        actionManager.Action("PostureDown");
+                    }
+                    else if (state.posture == ATCharacterState.Posture.Up)
+                    {
+                        actionManager.Stop("PostureUp");
+                        actionManager.Action("PostureDown");
+                    }
                 }
             }
             else//前
             {
-                actionManager.Action("PostureFront");
+                if (state.posture == ATCharacterState.Posture.Up)
+                {
+                    actionManager.Stop("PostureUp");
+                    actionManager.Action("PostureFront");
+                }
+                else if (state.posture == ATCharacterState.Posture.Down)
+                {
+                    actionManager.Stop("PostureDown");
+                    actionManager.Action("PostureFront");
+                }
             }
         }
 

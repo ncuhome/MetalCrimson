@@ -133,19 +133,19 @@ namespace ER.Entity2D
         /// <summary>
         /// 在触发 数值改变 事件，值改变前触发的事件（事件信息，当前操作是否生效）
         /// </summary>
-        public event ValueJudgeEvent HealthChangeBefEvent;
+        public event ValueJudgeEvent ValueChangeBefEvent;
         /// <summary>
         /// 在触发 数值上限改变 事件，值改变前触发的事件（事件信息，当前操作是否生效）
         /// </summary>
-        public event ValueJudgeEvent HealthMaxChangeBefEvent;
+        public event ValueJudgeEvent ValueMaxChangeBefEvent;
         /// <summary>
         /// 数值变化后触发的事件(事件信息)
         /// </summary>
-        public event ValueActionEvent HealthChangeEvent;
+        public event ValueActionEvent ValueChangeEvent;
         /// <summary>
         /// 数值上限变化后触发的事件(事件信息)
         /// </summary>
-        public event ValueActionEvent HealthMaxChangeEvent;
+        public event ValueActionEvent ValueMaxChangeEvent;
         /// <summary>
         /// 数值归零后触发的事件
         /// </summary>
@@ -163,9 +163,9 @@ namespace ER.Entity2D
         {
             bool next = true;
             float change = value - this.value;
-            if (HealthChangeBefEvent != null)
+            if (ValueChangeBefEvent != null)
             {
-                next = HealthChangeBefEvent(new ValueEventInfo
+                next = ValueChangeBefEvent(new ValueEventInfo
                 {
                     value = this.value,
                     max = max,
@@ -188,9 +188,9 @@ namespace ER.Entity2D
                 }
                 #endregion
 
-                if (HealthChangeEvent != null)
+                if (ValueChangeEvent != null)
                 {
-                    HealthChangeEvent(new ValueEventInfo
+                    ValueChangeEvent(new ValueEventInfo
                     {
                         value = this.value,
                         max = max,
@@ -226,9 +226,9 @@ namespace ER.Entity2D
         {
             bool next = true;
             float change = value - max;
-            if (HealthMaxChangeBefEvent != null)
+            if (ValueMaxChangeBefEvent != null)
             {
-                next = HealthMaxChangeBefEvent(new ValueEventInfo
+                next = ValueMaxChangeBefEvent(new ValueEventInfo
                 {
                     value = this.value,
                     max = max,
@@ -252,9 +252,9 @@ namespace ER.Entity2D
                 }
                 #endregion
 
-                if (HealthMaxChangeEvent != null)
+                if (ValueMaxChangeEvent != null)
                 {
-                    HealthMaxChangeEvent(new ValueEventInfo
+                    ValueMaxChangeEvent(new ValueEventInfo
                     {
                         value = this.value,
                         max = max,
@@ -279,9 +279,9 @@ namespace ER.Entity2D
         public bool ModifyValue(float value, object pruner)
         {
             bool next = true;
-            if (HealthChangeBefEvent != null)
+            if (ValueChangeBefEvent != null)
             {
-                next = HealthChangeBefEvent(new ValueEventInfo
+                next = ValueChangeBefEvent(new ValueEventInfo
                 {
                     value = this.value,
                     max = max,
@@ -305,9 +305,9 @@ namespace ER.Entity2D
                 }
                 #endregion
 
-                if (HealthChangeEvent != null)
+                if (ValueChangeEvent != null)
                 {
-                    HealthChangeEvent(new ValueEventInfo
+                    ValueChangeEvent(new ValueEventInfo
                     {
                         value = this.value,
                         max = max,
@@ -341,9 +341,9 @@ namespace ER.Entity2D
         public bool ModifyMax(float value, object pruner)
         {
             bool next = true;
-            if (HealthMaxChangeBefEvent != null)
+            if (ValueMaxChangeBefEvent != null)
             {
-                next = HealthMaxChangeBefEvent(new ValueEventInfo
+                next = ValueMaxChangeBefEvent(new ValueEventInfo
                 {
                     value = this.value,
                     max = max,
@@ -367,9 +367,9 @@ namespace ER.Entity2D
                 }
                 #endregion
 
-                if (HealthMaxChangeEvent != null)
+                if (ValueMaxChangeEvent != null)
                 {
-                    HealthMaxChangeEvent(new ValueEventInfo
+                    ValueMaxChangeEvent(new ValueEventInfo
                     {
                         value = this.value,
                         max = max,

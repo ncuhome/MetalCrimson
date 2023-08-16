@@ -16,6 +16,10 @@ namespace Mod_Level
             if(detector == null) { Debug.LogError("未找到角色的环境检测器"); }
             body = manager.Owner.GetComponent<Rigidbody2D>();
         }
+        public override bool ActionJudge()
+        {
+            return true;
+        }
         public override void StartAction()
         {
             if(detector.Type == ATEnvironmentDetector.EnvironmentType.Land)

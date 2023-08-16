@@ -6,9 +6,14 @@ namespace ER.TextPacker
     /// <summary>
     /// 设置语言包的面板
     /// </summary>
-    public class PackagePanel:MonoSingleton<PackagePanel>
+    public class PackagePanel : MonoSingleton<PackagePanel>
     {
         #region 组件
+
+        /// <summary>
+        /// 语言包路径
+        /// </summary>
+        public string packsPath = Application.streamingAssetsPath + "/Language";
         /// <summary>
         /// 替换器
         /// </summary>
@@ -17,16 +22,28 @@ namespace ER.TextPacker
         [SerializeField]
         [Tooltip("资源列表")]
         private GameObject AssetPanel;
+
         [SerializeField]
         [Tooltip("加载列表")]
         private GameObject LoadPanel;
+
         [SerializeField]
         [Tooltip("物品预制体")]
         private GameObject ItemPrefab;
+
         [SerializeField]
         [Tooltip("加载区的物品预制体")]
         private GameObject LoadItemPrefab;
-        #endregion
+
+        #endregion 组件
+
+        /// <summary>
+        /// 显示设置面板
+        /// </summary>
+        public void DisplayPanel()
+        {
+            gameObject.SetActive(true);
+        }
 
         /// <summary>
         /// 更新资源列表
@@ -35,8 +52,10 @@ namespace ER.TextPacker
         private void UpdateAssets()
         {
             //更新新的信息
+            replacer.LanguagePackPath = packsPath;
+            replacer.CheckPath();
             LanguagePackInfo[] infos = replacer.GetPackInfos();
-
+            Debug.Log($"更新语言资源列表:{infos.Length}");
             //先销毁旧的资源选项卡
             if (AssetPanel == null)
             {
@@ -55,15 +74,22 @@ namespace ER.TextPacker
             for (int i = 0; i < AssetPanel.transform.childCount; i++)
             {
                 PackItem pitem = AssetPanel.transform.GetChild(i).GetComponent<PackItem>();
-
+                pitem.UpdateInfo(infos[i]);
             }
-
         }
 
+        /// <summary>
+        /// 打开资源文件夹
+        /// </summary>
+        public void OpenAssetFolder()
+        {
+            ERTool.ExplorePath(packsPath);
+        }
         private void OnEnable()
         {
             UpdateAssets();
-            replacer.LanguagePackPath = TextManager.Instance.packsPath;
         }
+
+        
     }
 }

@@ -12,6 +12,12 @@ namespace Mod_Level
         /// </summary>
         private bool attacking = false;
         public MDAttack() { actionName = "Attack"; }
+
+        public override bool ActionJudge()
+        {
+            return true;
+        }
+
         public override void Initialize()
         {
             state = manager.Owner.GetAttribute<ATCharacterState>();

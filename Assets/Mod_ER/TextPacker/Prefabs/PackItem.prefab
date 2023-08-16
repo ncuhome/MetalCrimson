@@ -56,7 +56,7 @@ MonoBehaviour:
   auhtorText: {fileID: 3828340650000810351}
   defSprite: {fileID: 0}
   defTitle: "\u672A\u77E5\u8BED\u8A00\u5305"
-  maxLength: 16
+  maxLength: 21
   color_ok: {r: 0, g: 1, b: 0, a: 1}
   color_warming: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &704944496697324113
@@ -585,8 +585,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 42
-  m_fontSizeBase: 42
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

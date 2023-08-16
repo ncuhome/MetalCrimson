@@ -173,6 +173,11 @@ namespace ER.Entity2D
             }
             Attributes = null;
         }
+
+        protected virtual void Initialized()
+        {
+            
+        }
         #endregion
     }
 }

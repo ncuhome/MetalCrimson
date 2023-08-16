@@ -35,6 +35,11 @@ namespace ER.Entity2D
 
         #region 功能
         /// <summary>
+        /// 判断当前条件是否满足动作执行
+        /// </summary>
+        /// <returns></returns>
+        public abstract bool ActionJudge();
+        /// <summary>
         /// 开启活动
         /// </summary>
         public abstract void StartAction();

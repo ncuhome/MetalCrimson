@@ -1,6 +1,7 @@
 ﻿using ER.Parser;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using UnityEngine;
 
@@ -118,21 +119,30 @@ namespace ER
             }
             catch (Exception e)
             {
-                Debug.Log(e);
+                UnityEngine.Debug.Log(e);
             }
             fs.Close();//切记关闭
 
             Texture2D texture = new Texture2D(width, height);
             if (texture.LoadImage(bytes))
             {
-                Debug.Log("图片加载完毕 ");
+                UnityEngine.Debug.Log("图片加载完毕 ");
                 return texture;//将生成的texture2d返回，到这里就得到了外部的图片，可以使用了
             }
             else
             {
-                Debug.Log("图片尚未加载");
+                UnityEngine.Debug.Log("图片尚未加载");
                 return null;
             }
+        }
+
+        /// <summary>
+        /// 浏览文件夹
+        /// </summary>
+        /// <param name="path"></param>
+        public static void ExplorePath(string path)
+        {
+            System.Diagnostics.Process.Start("explorer.exe", path.Replace('/', '\\'));
         }
 
         /// <summary>

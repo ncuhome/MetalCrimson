@@ -66,8 +66,13 @@ namespace ER.Entity2D
         {
             if (actions.TryGetValue(actionName, out MDAction action))
             {
-                animator.SetInteger("act", action.index);
-                action.StartAction();
+                if(action.ActionJudge())
+                {
+                    animator.SetInteger("act", action.index);
+                    action.StartAction();
+                    return;
+                }
+                Debug.Log($"动作未能执行:{actionName}");
                 return;
             }
             Debug.LogError($"未找到指定动作：{actionName}");

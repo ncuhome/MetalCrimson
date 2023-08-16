@@ -56,10 +56,15 @@ namespace ER.TextPacker
         #region 功能
         private string LimitLength(StringBuilder sb)
         {
-            if (sb.Length > maxLength)
+            byte[] byteArray = System.Text.Encoding.Default.GetBytes(sb.ToString());
+            if (byteArray.Length > maxLength)
             {
-                sb.Remove(maxLength, sb.Length - maxLength);
-                sb.Append("...");
+                byte[] subs = new byte[maxLength];
+                for(int i=0;i<maxLength;i++)
+                {
+                    subs[i] = byteArray[i];
+                }
+                return System.Text.Encoding.Default.GetString(subs) + "...";
             }
             return sb.ToString();
         }

@@ -366,14 +366,19 @@ namespace ER.Parser
         /// </summary>
         public void CheckPath()
         {
+            Debug.Log($"路径:{LanguagePackPath}");
             if (PathExist(LanguagePackPath))
             {
                 if (IsDirectory(LanguagePackPath))//判断语言包路径是否为一个文件夹
                 {
+                    Debug.Log($"是文件夹:{LanguagePackPath}");
+
                     string[] subdirectories = Directory.GetDirectories(LanguagePackPath);
                     foreach (string subdirectory in subdirectories)
                     {
                         string path = Path.Combine(subdirectory, LanguagePack.IllustrationFileName);
+
+                        Output($"配置路径：{path}");
                         if (File.Exists(path))
                         {
                             Output($"路径存在：{path}");
