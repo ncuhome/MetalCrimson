@@ -24,6 +24,7 @@ public class Pole : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-
+        PoleSystem.Instance.currentPole.diameter = diameter;
+        PoleSystem.Instance.currentPole.MoveOut();
     }
 }

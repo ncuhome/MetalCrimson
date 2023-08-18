@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
-public class Line : MonoBehaviour, IPointerClickHandler
+public class LineScript : MonoBehaviour, IPointerClickHandler
 {
-    public int diameter;
-    public TMP_Text diameterText;
+    public float Length;
+    public TMP_Text LengthText;
     public RectTransform LineImageTrans;
+    public ER.Items.ItemVariable LineItem = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,12 +19,17 @@ public class Line : MonoBehaviour, IPointerClickHandler
     // Update is called once per frame
     void Update()
     {
-        diameterText.text = diameter.ToString() + "M";
-        LineImageTrans.sizeDelta = new Vector2(diameter * 1.5f, diameter * 1.5f);
+
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
 
+    }
+
+    public void RefreshInfo()
+    {
+        Length = LineItem.GetFloat("Length");
+        LengthText.text = Length.ToString() + "M";
     }
 }

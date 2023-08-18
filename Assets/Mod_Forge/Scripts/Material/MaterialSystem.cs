@@ -73,8 +73,6 @@ public class MaterialSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InitMaterialItemStore();
-        targetVec = chooseMaterialTransform.localPosition;
     }
 
     // Update is called once per frame
@@ -94,6 +92,13 @@ public class MaterialSystem : MonoBehaviour
             chooseMaterialTransform.localPosition = newVec;
         }
     }
+
+    public void InitMaterialSystem()
+    {
+        InitMaterialItemStore();
+        targetVec = chooseMaterialTransform.localPosition;
+        ShowMaterialPanel();
+    }
     /// <summary>
     /// 初始化材料物品库设置
     /// </summary>
@@ -105,7 +110,6 @@ public class MaterialSystem : MonoBehaviour
 
         for (int i = 0; i < 6; i++)
         {
-            Debug.Log("1");
             Debug.Log(AddNormalMaterial("RawIron"));
         }
     }

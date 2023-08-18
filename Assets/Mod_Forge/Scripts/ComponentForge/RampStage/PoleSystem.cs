@@ -52,6 +52,7 @@ public class PoleSystem : MonoBehaviour
     private float moveTime;
     public GameObject[] poles;
     public int[] poleDiameters;
+    public CurrentPole currentPole;
     void Awake()
     {
         if (instance == null)
@@ -113,5 +114,22 @@ public class PoleSystem : MonoBehaviour
             polesLayout.constraintCount = 3;
             ChoosePoleSystem.Instance.showMore = true;
         }
+    }
+
+    /// <summary>
+    /// 隐藏材料面板
+    /// </summary>
+    public void HidePolePanel()
+    {
+        oldVec = choosePoleTransform.localPosition;
+        targetVec = new Vector3(-400, 0, 0);
+    }
+    /// <summary>
+    /// 显示材料面板
+    /// </summary>
+    public void ShowPolePanel()
+    {
+        oldVec = choosePoleTransform.localPosition;
+        targetVec = Vector3.zero;
     }
 }

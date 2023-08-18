@@ -206,14 +206,19 @@ public class TypeSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InitState();
-        InitTypeData();
-        InitTypes();
+
     }
     // Update is called once per frame
     void Update()
     {
         RefreshButton();
+    }
+
+    public void InitTypeSystem()
+    {
+        InitState();
+        InitTypeData();
+        InitTypes();
     }
 
     /// <summary>
