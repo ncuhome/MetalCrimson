@@ -59,6 +59,8 @@ namespace Mod_Common
             {
                 ObjectPoolManager.Instance.RegisterPool(pool);
             }
+
+            ForgeConfigure.Instance.InitForgeManager();
         }
 
         private void Update()
