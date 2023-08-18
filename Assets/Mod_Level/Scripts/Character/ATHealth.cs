@@ -1,4 +1,5 @@
 ﻿using ER.Entity2D;
+using System;
 
 namespace Mod_Level
 {
@@ -11,15 +12,19 @@ namespace Mod_Level
 
         public override void Initialize()
         {
+            Action<IAttribute> action = (IAttribute response) =>
+            {
+                ((ATActionResponse)response).ActionEvent += GetDamage;
+                print("添加委托成功");
+            };
             ATActionResponse response = owner.GetAttribute<ATActionResponse>();
             if(response != null)
             {
-                response.ActionEvent += GetDamage;
-                print("添加委托成功");
+                action(response);
             }
             else
             {
-                owner.CreateDelegation("ATActionResponse", () => { response.ActionEvent += GetDamage; print("添加委托成功"); });
+                owner.CreateDelegation("ATActionResponse", action);
             }
         }
 
@@ -31,7 +36,7 @@ namespace Mod_Level
                 print("接受攻击");
                 if (actionInfo.infos.TryGetValue("damage",out var damage))
                 {
-                    float dg = (int)damage;
+                    float dg = (float)damage;
                     ModifyValue(-dg, actionInfo.actor);
                 }
             }

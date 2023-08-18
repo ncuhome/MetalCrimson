@@ -1,9 +1,12 @@
 ﻿using ER.Parser;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 
 namespace ER
 {
@@ -108,32 +111,17 @@ namespace ER
         /// <param name="path">图片的文件路径</param>
         /// <param name="width">图片宽度</param>
         /// <returns></returns>
-        public static Texture2D LoadTextureByIO(string path, int width = 2048, int height = 2048)
+        public static Texture2D LoadTextureByIO(string path, int width = 2, int height = 2)
         {
-            FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
-            fs.Seek(0, SeekOrigin.Begin);//游标的操作，可有可无
-            byte[] bytes = new byte[fs.Length];//生命字节，用来存储读取到的图片字节
-            try
-            {
-                fs.Read(bytes, 0, bytes.Length);//开始读取，这里最好用trycatch语句，防止读取失败报错
-            }
-            catch (Exception e)
-            {
-                UnityEngine.Debug.Log(e);
-            }
-            fs.Close();//切记关闭
 
+            // 从本地文件系统读取图片数据
+            byte[] imageData = System.IO.File.ReadAllBytes(path);
+
+            // 创建纹理对象
             Texture2D texture = new Texture2D(width, height);
-            if (texture.LoadImage(bytes))
-            {
-                UnityEngine.Debug.Log("图片加载完毕 ");
-                return texture;//将生成的texture2d返回，到这里就得到了外部的图片，可以使用了
-            }
-            else
-            {
-                UnityEngine.Debug.Log("图片尚未加载");
-                return null;
-            }
+            texture.LoadImage(imageData);
+
+            return texture;
         }
 
         /// <summary>
@@ -150,10 +138,36 @@ namespace ER
         /// </summary>
         /// <param name="tex">参数是texture2d纹理</param>
         /// <returns></returns>
-        public static Sprite TextureToSprite(this Texture2D tex)
+        public static Sprite TextureToSprite(this Texture2D texture)
         {
-            Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f);
             return sprite;
+        }
+
+        /// <summary>
+        /// 获取一个颜色仅改变透明度的颜色
+        /// </summary>
+        /// <param name="color"></param>
+        /// <param name="alpha"></param>
+        /// <returns></returns>
+        public static Color ModifyAlpha(this Color color,float alpha)
+        {
+            return new Color(color.r,color.g,color.b,alpha);
+        }
+        public static void PassEvent<T>(this PointerEventData data, ExecuteEvents.EventFunction<T> function) where T : IEventSystemHandler
+        {
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(data, results);
+            GameObject current = data.pointerCurrentRaycast.gameObject;
+            for (int i = 0; i < results.Count; i++)
+            {
+                if (current != results[i].gameObject)
+                {
+                    ExecuteEvents.Execute(results[i].gameObject, data, function);
+                    break;
+                    //RaycastAll后ugui会自己排序，如果你只想响应透下去的最近的一个响应，这里ExecuteEvents.Execute后直接break就行。
+                }
+            }
         }
     }
 }

@@ -64,6 +64,10 @@ namespace ER.Entity2D
         /// 动作的其他信息
         /// </summary>
         public Dictionary<string, object> infos = new();
+        /// <summary>
+        /// 动作发生位置
+        /// </summary>
+        public Vector2 position;
 
         /// <summary>
         /// 自身的深拷贝
@@ -250,6 +254,7 @@ namespace ER.Entity2D
                     hits = hits,
                     remainHits = remainHits,
                     hitCD = hitCD,
+                    position = region.transform.position,
                     destroy = destroy,
                     infos = _infos
                 };
@@ -341,6 +346,7 @@ namespace ER.Entity2D
         private void Enter(Collider2D collision)
         {
             ATActionResponse response = collision.gameObject.GetComponent<ATActionResponse>();
+            Debug.Log($"动作接触:{actionName}  对象:{response != null}, {collision.gameObject.name}");
             if (response != null)//必须是 response 封装的Collider才算有效判定
             {
                 if (timers.ContainsKey(response))//非初次接触对象

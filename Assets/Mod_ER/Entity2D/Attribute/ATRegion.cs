@@ -158,6 +158,7 @@ namespace ER.Entity2D
 
         protected virtual void OnTriggerEnter2D(Collider2D collider)
         {
+            Debug.Log("collider接触" + collider.gameObject.tag);
             if (TagJudge(collider.gameObject.tag))
             {
                 EnterAction(collider);

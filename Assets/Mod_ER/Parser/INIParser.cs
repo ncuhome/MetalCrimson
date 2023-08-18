@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Text;
 
 namespace ER.Parser
@@ -79,7 +80,7 @@ namespace ER.Parser
         /// 清空文本缓存，只保留指定节段的文本
         /// </summary>
         /// <param name="sections">需要保留的节段名称</param>
-        public void Clear(params string[] sections)
+        public void Reserve(params string[] sections)
         {
             // 创建一个新的字典用于存储保留的节段信息
             Dictionary<string, Dictionary<string, string>> newSections = new Dictionary<string, Dictionary<string, string>>();
@@ -98,6 +99,20 @@ namespace ER.Parser
 
             // 更新节段信息为保留的节段信息
             this.sections = newSections;
+        }
+        /// <summary>
+        /// 只清除指定文本缓存
+        /// </summary>
+        /// <param name="sections"></param>
+        public void Clear(params string[] sections)
+        {
+            for(int i=0;i<sections.Length;i++)
+            {
+                if (this.sections.ContainsKey(sections[i]))
+                {
+                    this.sections.Remove(sections[i]);
+                }
+            }
         }
         public string  GetValue(string section, string key)
         {

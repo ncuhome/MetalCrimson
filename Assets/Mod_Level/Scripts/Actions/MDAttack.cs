@@ -28,7 +28,7 @@ namespace Mod_Level
             regions[0].actionName = "PostureUpAttack";
             regions[0].actionType = "Attack";
             regions[0].EndEvent += ()=>attacking = false;
-            regions[0].infos["damage"] = 15;
+            regions[0].infos["damage"] = 15f;
             regions[0].Initialize();
             #endregion
 
@@ -38,7 +38,7 @@ namespace Mod_Level
             regions[1].actionName = "PostureFrontAttack";
             regions[1].actionType = "Attack";
             regions[1].EndEvent += () => attacking = false;
-            regions[1].infos["damage"] = 10;
+            regions[1].infos["damage"] = 10f;
             regions[1].Initialize();
             #endregion
 
@@ -48,7 +48,7 @@ namespace Mod_Level
             regions[2].actionName = "PostureDownAttack";
             regions[2].actionType = "Attack";
             regions[2].EndEvent += () => attacking = false;
-            regions[2].infos["damage"] = 10;
+            regions[2].infos["damage"] = 10f;
             regions[2].Initialize();
             #endregion
         }

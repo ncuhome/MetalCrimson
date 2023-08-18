@@ -49,7 +49,7 @@ namespace ER.Entity2D
         /// <param name="info">动作事件的信息</param>
         public void ActionResponse(ActionInfo info)
         {
-            print("接受动作，响应动作");
+            print($"接受动作，响应动作:{info.actor},{info.name}");
             if (ActionEvent != null) { ActionEvent(info); }
         }
         #endregion

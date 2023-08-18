@@ -28,9 +28,9 @@ namespace ER.Entity2D
             /// <summary>
             /// 触发行为
             /// </summary>
-            public Action action;
+            public Action<IAttribute> action;
 
-            public ConditionalDelegation(string name,Action action)
+            public ConditionalDelegation(string name,Action<IAttribute> action)
             {
                 this.name = name;
                 this.action = action;
@@ -57,18 +57,18 @@ namespace ER.Entity2D
         /// <summary>
         /// 创建一个条件委托
         /// </summary>
-        public void CreateDelegation(string attributeName,Action action)
+        public void CreateDelegation(string attributeName,Action<IAttribute> action)
         {
             delegations.Add(new ConditionalDelegation(attributeName,action));
         }
         /// <summary>
         /// 尝试触发条件委托
         /// </summary>
-        private void JudgeDelegation(string attributeName)
+        private void JudgeDelegation(IAttribute attribute)
         {
             foreach(var del in delegations)
             {
-                if(del.name == attributeName) del.action();
+                if(del.name == attribute.Name) del.action(attribute);
             }
         }
         #endregion
@@ -92,14 +92,14 @@ namespace ER.Entity2D
                 if (cover) attributes[attribute.Name] = attribute;
                 attribute.Owner = this;
                 attribute.Initialize();
-                JudgeDelegation(attribute.Name);
+                JudgeDelegation(attribute);
                 return true;
             }
 
             attributes[attribute.Name] = attribute;
             attribute.Owner = this;
             attribute.Initialize();
-            JudgeDelegation(attribute.Name);
+            JudgeDelegation(attribute);
             return false;
         }
 
@@ -172,6 +172,7 @@ namespace ER.Entity2D
                 }
             }
             Attributes = null;
+            Initialized();
         }
 
         protected virtual void Initialized()

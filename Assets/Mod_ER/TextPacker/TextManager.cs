@@ -7,26 +7,32 @@ namespace ER.TextPacker
     /// <summary>
     /// 文本管理器
     /// </summary>
-    public class TextManager:Singleton<TextManager>
+    public static class TextManager
     {
         #region 属性
         /// <summary>
         /// 当前语言包对象
         /// </summary>
-        private LanguagePack pack;
+        private static LanguagePack pack;
         /// <summary>
         /// 当前语言包对象
         /// </summary>
-        public LanguagePack Pack { get { return pack; } }
-        #endregion
-
-        /// <summary>
-        /// 更新当前使用的语言包
-        /// </summary>
-        /// <param name="pack"></param>
-        public void SetPack(LanguagePack pack)
+        public static LanguagePack Pack
         {
-            this.pack = pack;
+            get
+            {
+                if(pack == null)
+                {
+                    pack = new LanguagePack(PackagePanel.Instance.DefaultPackPath);
+                }
+                return pack;
+            }
+            set
+            {
+                Debug.Log("更新语言包!");
+                pack = value;
+            }
         }
+        #endregion
     }
 }

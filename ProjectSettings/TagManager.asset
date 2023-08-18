@@ -9,6 +9,8 @@ TagManager:
   - Barrier
   - Enemy
   - CollectibleItem
+  - UI_1
+  - UI_2
   layers:
   - Default
   - TransparentFX

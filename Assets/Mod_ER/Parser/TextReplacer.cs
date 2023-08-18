@@ -28,7 +28,9 @@ namespace ER.Parser
         }
     }
 
+#pragma warning disable CS0661 // 类型定义运算符 == 或运算符 !=，但不重写 Object.GetHashCode()
     public struct LanguagePackInfo
+#pragma warning restore CS0661 // 类型定义运算符 == 或运算符 !=，但不重写 Object.GetHashCode()
     {
         /// <summary>
         /// 消息输出接口
@@ -65,6 +67,38 @@ namespace ER.Parser
             Output($"image:{ImagePath}");
             Output($"description:{LanguagePackDescription}");
 
+        }
+
+        public static LanguagePackInfo Empty
+        {
+            get
+            {
+                return new LanguagePackInfo
+                {
+                    LanguagePackPath = string.Empty,
+                    LanguagePackName = string.Empty,
+                    LanguagePackVersion = string.Empty,
+                    LanguagePackAuthor = string.Empty,
+                    ImagePath = string.Empty,
+                    LanguagePackDescription = string.Empty
+                };
+            }
+        }
+
+        public static bool operator ==(LanguagePackInfo obj, LanguagePackInfo obj2)
+        {
+            if (obj.LanguagePackPath != obj2.LanguagePackPath) return false;
+            if (obj.LanguagePackName != obj2.LanguagePackName) return false;
+            if (obj.LanguagePackVersion != obj2.LanguagePackVersion) return false;
+            if (obj.LanguagePackAuthor != obj2.LanguagePackAuthor) return false;
+            if (obj.ImagePath != obj2.ImagePath) return false;
+            if (obj.LanguagePackDescription != obj2.LanguagePackDescription) return false;
+
+            return true;
+        }
+        public static bool operator !=(LanguagePackInfo obj, LanguagePackInfo obj2)
+        {
+            return !(obj == obj2);
         }
     }
 
@@ -200,6 +234,7 @@ namespace ER.Parser
             parser.ParseINIFile(Path.Combine(packPath, IllustrationFileName));
             return new LanguagePackInfo()
             {
+                LanguagePackPath = packPath,
                 LanguagePackName = parser.GetValue("description", "name") + string.Empty,
                 LanguagePackVersion = parser.GetValue("description", "version") + string.Empty,
                 LanguagePackAuthor = parser.GetValue("description", "author") + string.Empty,
@@ -246,6 +281,11 @@ namespace ER.Parser
         /// <returns>是否加载成功</returns>
         public bool Load(string name)
         {
+            Debug.Log($"加载片段:{name}");
+            foreach(var pair in PathAdapter)
+            {
+                Debug.Log($"<{pair.Key},{pair.Value}>");
+            }
             if (PathAdapter.TryGetValue(name, out string path))
             {
                 if (File.Exists(path))
@@ -277,7 +317,15 @@ namespace ER.Parser
         /// 清空文本缓存，只保留指定节段的文本
         /// </summary>
         /// <param name="sections">需要保留的节段名称</param>
-        public void Clear(params string[] sections)
+        public void Reserve(params string[] sections)
+        {
+            TextCache.Reserve(sections);
+        }
+        /// <summary>
+        /// 清除指定文本片段
+        /// </summary>
+        /// <param name="sections"></param>
+        public void UnLoad(params string[] sections)
         {
             TextCache.Clear(sections);
         }
@@ -330,6 +378,7 @@ namespace ER.Parser
                 }
                 string sectionName = path.Substring(0, index);
                 string keyName = path.Substring(index+1);
+                //Debug.Log($"sectionName:{sectionName},keyName:{keyName}");
                 return this[sectionName, keyName];
             }
         }
@@ -366,22 +415,22 @@ namespace ER.Parser
         /// </summary>
         public void CheckPath()
         {
-            Debug.Log($"路径:{LanguagePackPath}");
+            packs.Clear();
+            //Debug.Log($"路径:{LanguagePackPath}");
             if (PathExist(LanguagePackPath))
             {
                 if (IsDirectory(LanguagePackPath))//判断语言包路径是否为一个文件夹
                 {
-                    Debug.Log($"是文件夹:{LanguagePackPath}");
-
+                    //Debug.Log($"是文件夹:{LanguagePackPath}");
                     string[] subdirectories = Directory.GetDirectories(LanguagePackPath);
                     foreach (string subdirectory in subdirectories)
                     {
                         string path = Path.Combine(subdirectory, LanguagePack.IllustrationFileName);
 
-                        Output($"配置路径：{path}");
+                        //Output($"配置路径：{path}");
                         if (File.Exists(path))
                         {
-                            Output($"路径存在：{path}");
+                            //Output($"路径存在：{path}");
                             packs.Add(LanguagePack.GetInfo(subdirectory));
                         }
                     }
