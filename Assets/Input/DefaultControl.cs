@@ -236,9 +236,36 @@ public partial class @DefaultControl: IInputActionCollection2, IDisposable
             ""id"": ""2f398e79-7cac-4768-808c-6f666343d7fd"",
             ""actions"": [
                 {
-                    ""name"": ""New action"",
+                    ""name"": ""QTE"",
                     ""type"": ""Button"",
                     ""id"": ""91d9d3a1-6fad-4579-8aa0-e0649d8d39e4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Hammering"",
+                    ""type"": ""Button"",
+                    ""id"": ""3798e8af-d6b0-458d-bb51-bd055a8b7e9a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UpLine"",
+                    ""type"": ""Button"",
+                    ""id"": ""63ce8bbe-9a31-478b-9cfd-b4cfce1bdb21"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DownLine"",
+                    ""type"": ""Button"",
+                    ""id"": ""7fe52e5d-71e7-4390-8315-5703e9637fd8"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -249,11 +276,44 @@ public partial class @DefaultControl: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""619db61b-99e4-4f34-96d0-eece63f7beeb"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""New action"",
+                    ""action"": ""QTE"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3927777d-d410-432e-8d6a-bf7b1dced403"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Hammering"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e1881bbe-2493-4971-8a4c-786ec3a809c9"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UpLine"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a70ff56-d3d2-44be-bc01-3f59f9f700dd"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DownLine"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -293,7 +353,10 @@ public partial class @DefaultControl: IInputActionCollection2, IDisposable
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
-        m_UI_Newaction = m_UI.FindAction("New action", throwIfNotFound: true);
+        m_UI_QTE = m_UI.FindAction("QTE", throwIfNotFound: true);
+        m_UI_Hammering = m_UI.FindAction("Hammering", throwIfNotFound: true);
+        m_UI_UpLine = m_UI.FindAction("UpLine", throwIfNotFound: true);
+        m_UI_DownLine = m_UI.FindAction("DownLine", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -473,12 +536,18 @@ public partial class @DefaultControl: IInputActionCollection2, IDisposable
     // UI
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
-    private readonly InputAction m_UI_Newaction;
+    private readonly InputAction m_UI_QTE;
+    private readonly InputAction m_UI_Hammering;
+    private readonly InputAction m_UI_UpLine;
+    private readonly InputAction m_UI_DownLine;
     public struct UIActions
     {
         private @DefaultControl m_Wrapper;
         public UIActions(@DefaultControl wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_UI_Newaction;
+        public InputAction @QTE => m_Wrapper.m_UI_QTE;
+        public InputAction @Hammering => m_Wrapper.m_UI_Hammering;
+        public InputAction @UpLine => m_Wrapper.m_UI_UpLine;
+        public InputAction @DownLine => m_Wrapper.m_UI_DownLine;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -488,16 +557,34 @@ public partial class @DefaultControl: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
+            @QTE.started += instance.OnQTE;
+            @QTE.performed += instance.OnQTE;
+            @QTE.canceled += instance.OnQTE;
+            @Hammering.started += instance.OnHammering;
+            @Hammering.performed += instance.OnHammering;
+            @Hammering.canceled += instance.OnHammering;
+            @UpLine.started += instance.OnUpLine;
+            @UpLine.performed += instance.OnUpLine;
+            @UpLine.canceled += instance.OnUpLine;
+            @DownLine.started += instance.OnDownLine;
+            @DownLine.performed += instance.OnDownLine;
+            @DownLine.canceled += instance.OnDownLine;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
         {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
+            @QTE.started -= instance.OnQTE;
+            @QTE.performed -= instance.OnQTE;
+            @QTE.canceled -= instance.OnQTE;
+            @Hammering.started -= instance.OnHammering;
+            @Hammering.performed -= instance.OnHammering;
+            @Hammering.canceled -= instance.OnHammering;
+            @UpLine.started -= instance.OnUpLine;
+            @UpLine.performed -= instance.OnUpLine;
+            @UpLine.canceled -= instance.OnUpLine;
+            @DownLine.started -= instance.OnDownLine;
+            @DownLine.performed -= instance.OnDownLine;
+            @DownLine.canceled -= instance.OnDownLine;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -539,6 +626,9 @@ public partial class @DefaultControl: IInputActionCollection2, IDisposable
     }
     public interface IUIActions
     {
-        void OnNewaction(InputAction.CallbackContext context);
+        void OnQTE(InputAction.CallbackContext context);
+        void OnHammering(InputAction.CallbackContext context);
+        void OnUpLine(InputAction.CallbackContext context);
+        void OnDownLine(InputAction.CallbackContext context);
     }
 }
