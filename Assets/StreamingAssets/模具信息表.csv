@@ -1,11 +1,11 @@
-﻿string,string,int,string,string,string
-NameTmp,Name,ID,Description,Tags,Address
-ClassSword,剑类,121, 迅捷的武器部位,MainModel;Sword,Images/Types/blade
-ClassAxe,斧类,122,伤害可观的武器部位,MainModel;Axe,Images/Types/axe
-ClassSpear,矛头,123,短小精悍,MainModel;Spear,Images/Types/default
-ClassPike,枪头,124,一点寒芒先至,MainModel;Pike,Images/Types/default
-ClassHilt,握柄,125,武器抓点,MainModel;Handler,Images/Types/default
-ClassHeld,柄头,126,固定整件武器,MainModel;Held,Images/Types/default
-ClassBind,绑定节,127,用于绑定刃部与主体,MainModel;Bind,Images/Types/default
-ClassPole,长柄,128,一寸长，一寸强,MainModel;Pole,Images/Types/default
-ClassQuillion,护手,129,保护双手,MainModel;Quillion,Images/Types/default
+﻿string,string,int,string,string,string,string
+NameTmp,Name,ID,Description,Tags,Address,ComponentAddress
+ClassSword,剑类,121, 迅捷的武器部位,MainModel;Sword,Images/Types/blade,Images/Component/Type/BladeType
+ClassAxe,斧类,122,伤害可观的武器部位,MainModel;Axe,Images/Types/axe,Images/Component/Type/AxeType
+ClassSpear,矛头,123,短小精悍,MainModel;Spear,Images/Types/default,Images/Component/Type/DefaultType
+ClassPike,枪头,124,一点寒芒先至,MainModel;Pike,Images/Types/default,Images/Component/Type/DefaultType
+ClassHilt,握柄,125,武器抓点,MainModel;Handler,Images/Types/default,Images/Component/Type/DefaultType
+ClassHeld,柄头,126,固定整件武器,MainModel;Held,Images/Types/default,Images/Component/Type/DefaultType
+ClassBind,绑定节,127,用于绑定刃部与主体,MainModel;Bind,Images/Types/default,Images/Component/Type/DefaultType
+ClassPole,长柄,128,一寸长，一寸强,MainModel;Pole,Images/Types/default,Images/Component/Type/DefaultType
+ClassQuillion,护手,129,保护双手,MainModel;Quillion,Images/Types/default,Images/Component/Type/DefaultType

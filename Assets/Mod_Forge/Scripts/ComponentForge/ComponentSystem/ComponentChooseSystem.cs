@@ -25,7 +25,7 @@ public class ComponentChooseSystem : MonoBehaviour
     /// <summary>
     /// 扩展按钮组件
     /// </summary>
-    public ShowMoreButton showMoreButton = null;
+    public ShowMoreComponent showMoreButton = null;
     /// <summary>
     /// 滑动条组件
     /// </summary>
@@ -70,6 +70,7 @@ public class ComponentChooseSystem : MonoBehaviour
     void Start()
     {
         oldVec = ComponentsParentTransform.localPosition;
+        showPanel = true;
     }
 
     // Update is called once per frame
@@ -113,7 +114,7 @@ public class ComponentChooseSystem : MonoBehaviour
     {
         if (showMore)
         {
-            if (ComponentSystem.Instance.componentsItemStore.Count <= 18)
+            if (ComponentSystem.Instance.currentComponentNum <= 15)
             {
                 slider.gameObject.SetActive(false);
             }
@@ -121,11 +122,11 @@ public class ComponentChooseSystem : MonoBehaviour
             {
                 slider.gameObject.SetActive(true);
             }
-            ComponentsParentTransform.localPosition = new Vector3(oldVec.x - slider.value * 315 * Mathf.Ceil(ComponentsParentTransform.childCount / 3 - 6), oldVec.y);
+            ComponentsParentTransform.localPosition = new Vector3(oldVec.x - slider.value * 305 * Mathf.Ceil(ComponentSystem.Instance.currentComponentNum / 3.0f - 5), oldVec.y);
         }
         else
         {
-            if (ComponentSystem.Instance.componentsItemStore.Count <= 6)
+            if (ComponentSystem.Instance.currentComponentNum <= 5)
             {
                 slider.gameObject.SetActive(false);
             }
@@ -133,7 +134,7 @@ public class ComponentChooseSystem : MonoBehaviour
             {
                 slider.gameObject.SetActive(true);
             }
-            ComponentsParentTransform.localPosition = new Vector3(oldVec.x - slider.value * 315 * (ComponentsParentTransform.childCount - 6), oldVec.y);
+            ComponentsParentTransform.localPosition = new Vector3(oldVec.x - slider.value * 305 * (ComponentSystem.Instance.currentComponentNum - 5), oldVec.y);
         }
     }
 
@@ -141,11 +142,18 @@ public class ComponentChooseSystem : MonoBehaviour
     {
         if (showPanel)
         {
-            slider.transform.localPosition = new Vector3(0, -ComponentSystem.Instance.chooseComponentTransform.localPosition.y - 130, 0);
+            slider.transform.localPosition = new Vector3(0, -ComponentSystem.Instance.chooseComponentTransform.localPosition.y - 530, 0);
         }
         else
         {
-            slider.transform.localPosition = new Vector3(0, -530, 0);
+            slider.transform.localPosition = new Vector3(0, -520, 0);
         }
+    }
+
+
+
+    public void RefreshTypes()
+    {
+        slider.value = 0f;
     }
 }

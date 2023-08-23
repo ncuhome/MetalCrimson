@@ -9,6 +9,7 @@ TagManager:
   - CollectibleItem
   - BlastFurnace
   - Model
+  - Anvil
   layers:
   - Default
   - TransparentFX

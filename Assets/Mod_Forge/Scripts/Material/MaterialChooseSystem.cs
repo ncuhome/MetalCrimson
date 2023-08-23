@@ -122,7 +122,7 @@ public class MaterialChooseSystem : MonoBehaviour
             {
                 slider.gameObject.SetActive(true);
             }
-            MaterialsParentTransform.localPosition = new Vector3(oldVec.x - slider.value * 315 * Mathf.Ceil(MaterialsParentTransform.childCount / 3 - 6), oldVec.y);
+            MaterialsParentTransform.localPosition = new Vector3(oldVec.x - slider.value * 315 * Mathf.Ceil(MaterialsParentTransform.childCount / 3.0f - 6), oldVec.y);
         }
         else
         {

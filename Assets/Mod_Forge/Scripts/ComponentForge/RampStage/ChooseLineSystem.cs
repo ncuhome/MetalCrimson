@@ -121,7 +121,7 @@ public class ChooseLineSystem : MonoBehaviour
             {
                 slider.gameObject.SetActive(true);
             }
-            LinesParentTrans.localPosition = new Vector3(oldVec.x, oldVec.y + slider.value * 250 * Mathf.Ceil(LinesParentTrans.childCount / 3 - 4));
+            LinesParentTrans.localPosition = new Vector3(oldVec.x, oldVec.y + slider.value * 250 * Mathf.Ceil(LinesParentTrans.childCount / 3.0f - 4));
         }
         else
         {

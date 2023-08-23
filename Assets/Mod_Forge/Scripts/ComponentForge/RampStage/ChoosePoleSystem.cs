@@ -121,7 +121,7 @@ public class ChoosePoleSystem : MonoBehaviour
             {
                 slider.gameObject.SetActive(true);
             }
-            PolesParentTrans.localPosition = new Vector3(oldVec.x, oldVec.y + slider.value * 250 * Mathf.Ceil(PolesParentTrans.childCount / 3 - 4));
+            PolesParentTrans.localPosition = new Vector3(oldVec.x, oldVec.y + slider.value * 250 * Mathf.Ceil(PolesParentTrans.childCount / 3.0f - 4));
         }
         else
         {

@@ -4,6 +4,35 @@ using UnityEngine;
 using ER.Items;
 using UnityEngine.UI;
 
+[System.Serializable]
+public class ComponentType
+{
+    public GameObject typeObject;
+    public string typeNameTmp;
+    public string typeName;
+    public int typeID;
+    public List<GameObject> components;
+    public GameObject typeChooseObject;
+    public ComponentType(int i = 0)
+    {
+        typeID = i;
+        typeNameTmp = TemplateStoreManager.Instance["Item"][typeID].NameTmp;
+        typeName = TemplateStoreManager.Instance["Item"][typeID].GetText("Name");
+        components = new List<GameObject>();
+    }
+    public ComponentType(string nameTmp)
+    {
+        typeNameTmp = nameTmp;
+        typeID = TemplateStoreManager.Instance["Item"][typeNameTmp].ID;
+        typeName = TemplateStoreManager.Instance["Item"][typeNameTmp].GetText("Name");
+        components = new List<GameObject>();
+    }
+    public void Add(GameObject gameObject)
+    {
+        components.Add(gameObject);
+    }
+}
+
 public class ComponentSystem : MonoBehaviour
 {
     #region 单例封装
@@ -24,10 +53,15 @@ public class ComponentSystem : MonoBehaviour
     /// 部件父物体Transform组件
     /// </summary>
     public Transform componentsParentTrans = null;
+    public Transform chooseTypeParentTrans = null;
+    public Transform AnvilTrans = null;
     /// <summary>
     /// 部件预制件
     /// </summary>
     public GameObject componentPrefab = null;
+    public GameObject componentTypePrefab = null;
+    public GameObject typeChoosePrefab = null;
+    public GameObject linkPromptPrefab = null;
     /// <summary>
     /// 部件物品库
     /// </summary>
@@ -35,11 +69,12 @@ public class ComponentSystem : MonoBehaviour
     /// <summary>
     /// 部件物体组
     /// </summary>
-    public List<GameObject> components = null;
+    public List<ComponentType> componentTypes = null;
     /// <summary>
     /// 选择界面的Transform组件
     /// </summary>
     public Transform chooseComponentTransform = null;
+    public Transform chooseTypeTransform = null;
     /// <summary>
     /// 部件组对应的Layout组件
     /// </summary>
@@ -60,6 +95,16 @@ public class ComponentSystem : MonoBehaviour
     /// 移动时间
     /// </summary>
     private float moveTime;
+    public int currentTypeID;
+    public int currentComponentNum;
+
+    public List<ComponentScript> componentInAnvil = null;
+
+    public LinkPrompt outPort = null;
+    public LinkPrompt inPort = null;
+
+    public LinkPrompt outLink = null;
+    public LinkPrompt inLink = null;
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
@@ -98,7 +143,7 @@ public class ComponentSystem : MonoBehaviour
     {
         InitComponentItemStore();
         targetVec = chooseComponentTransform.localPosition;
-        ShowComponentPanel();
+        RefreshTypes();
     }
     /// <summary>
     /// 初始化部件物品库设置
@@ -107,15 +152,30 @@ public class ComponentSystem : MonoBehaviour
     {
         ItemStoreManager.Instance.Creat("componentItemStore");
         componentsItemStore = ItemStoreManager.Instance.Stores["componentItemStore"];
-        components = new List<GameObject>();
+        componentTypes = new List<ComponentType>();
+        componentInAnvil = new List<ComponentScript>();
 
+        for (int i = 0; i < 2; i++)
+        {
+            Debug.Log(AddComponent(183771));
+            Debug.Log(AddComponent(183772));
+            Debug.Log(AddComponent(183773));
+        }
+        for (int i = 0; i < 4; i++)
+        {
+            Debug.Log(AddComponent(165881));
+            Debug.Log(AddComponent(180731));
+            Debug.Log(AddComponent(183801));
+            Debug.Log(AddComponent(172731));
+            Debug.Log(AddComponent(172731));
+            Debug.Log(AddComponent(172691));
+        }
 
-        Debug.Log(AddNormalComponent("StraightSwordModelComponent"));
     }
     /// <summary>
     /// 通过NameTmp添加部件,添加成功返回true，否则返回false
     /// </summary>
-    public bool AddNormalComponent(string NameTmp)
+    public bool AddComponent(string NameTmp)
     {
         if (TemplateStoreManager.Instance["Item"][NameTmp] == null) { return false; } // 如果没找到返回false
 
@@ -125,21 +185,27 @@ public class ComponentSystem : MonoBehaviour
 
         newComponentItem.CreateAttribute("Name", newComponentItem.GetText("Name", false));
 
-        GameObject newComponentObject = Instantiate(componentPrefab);
-        components.Add(newComponentObject);
-        newComponentObject.transform.SetParent(componentsParentTrans);
+        componentPrefab = Resources.Load<GameObject>("Prefabs/Components/" + NameTmp);
+        ComponentType componentType = GetComponentType(TemplateStoreManager.Instance["Item"][NameTmp].GetInt("M_ID"));
+        GameObject newComponentObject = Instantiate(componentPrefab, componentType.typeObject.transform);
+        componentType.Add(newComponentObject);
         newComponentObject.transform.localScale = Vector3.one;
+
 
         ComponentScript newComponentScript = newComponentObject.GetComponent<ComponentScript>();
         newComponentScript.ComponentItem = newComponentItem;
+        // newComponentScript.componentImage.sprite = Resources.Load<Sprite>(TemplateStoreManager.Instance["Item"][NameTmp].GetText("StaticAddress"));
+        // newComponentScript.componentImage.SetNativeSize();
         newComponentScript.RefreshInfo();
 
+
+        if (currentTypeID == 0) { currentTypeID = componentType.typeID; }
         return true;
     }
     /// <summary>
     /// 通过ID添加部件,添加成功返回true，否则返回false
     /// </summary>
-    public bool AddNormalComponent(int id)
+    public bool AddComponent(int id)
     {
 
         if (TemplateStoreManager.Instance["Item"][id] == null) { return false; }// 如果没找到返回false
@@ -150,14 +216,21 @@ public class ComponentSystem : MonoBehaviour
 
         newComponentItem.CreateAttribute("Name", newComponentItem.GetText("Name", false));
 
-        GameObject newComponentObject = Instantiate(componentPrefab);
-        components.Add(newComponentObject);
-        newComponentObject.transform.SetParent(componentsParentTrans);
+        componentPrefab = Resources.Load<GameObject>("Prefabs/Components/" + newComponentItem.GetText("NameTmp"));
+        ComponentType componentType = GetComponentType(TemplateStoreManager.Instance["Item"][id].GetInt("M_ID"));
+        GameObject newComponentObject = Instantiate(componentPrefab, componentType.typeObject.transform);
+        componentType.Add(newComponentObject);
         newComponentObject.transform.localScale = Vector3.one;
+
 
         ComponentScript newComponentScript = newComponentObject.GetComponent<ComponentScript>();
         newComponentScript.ComponentItem = newComponentItem;
+        // newComponentScript.componentImage.sprite = Resources.Load<Sprite>(TemplateStoreManager.Instance["Item"][id].GetText("StaticAddress"));
+        // newComponentScript.componentImage.SetNativeSize();
         newComponentScript.RefreshInfo();
+
+
+        if (currentTypeID == 0) { currentTypeID = componentType.typeID; }
         return true;
     }
 
@@ -174,22 +247,7 @@ public class ComponentSystem : MonoBehaviour
         }
         return componentsParentTrans.GetChild(index).GetComponent<ComponentScript>();
     }
-    /// <summary>
-    /// 隐藏部件面板
-    /// </summary>
-    public void HideComponentPanel()
-    {
-        oldVec = chooseComponentTransform.localPosition;
-        targetVec = new Vector3(0, -400, 0);
-    }
-    /// <summary>
-    /// 显示部件面板
-    /// </summary>
-    public void ShowComponentPanel()
-    {
-        oldVec = chooseComponentTransform.localPosition;
-        targetVec = Vector3.zero;
-    }
+
     /// <summary>
     /// 点击显示更多按钮事件
     /// </summary>
@@ -198,15 +256,153 @@ public class ComponentSystem : MonoBehaviour
         oldVec = chooseComponentTransform.localPosition;
         if (ComponentChooseSystem.Instance.showMore)
         {
-            targetVec = Vector3.zero;
+            targetVec = new Vector3(-126, 0, 0);
             componentLayout.constraintCount = 1;
             ComponentChooseSystem.Instance.showMore = false;
         }
         else
         {
-            targetVec = new Vector3(0, 616, 0);
+            targetVec = new Vector3(-126, 457, 0);
             componentLayout.constraintCount = 3;
             ComponentChooseSystem.Instance.showMore = true;
         }
+    }
+
+    public ComponentType GetComponentType(int id)
+    {
+        for (int i = 0; i < componentTypes.Count; i++)
+        {
+            if (componentTypes[i].typeID == id) { return componentTypes[i]; }
+        }
+        ComponentType componentType = new ComponentType(id);
+        componentType.typeObject = Instantiate(componentTypePrefab);
+        componentType.typeObject.transform.SetParent(componentsParentTrans);
+        componentType.typeObject.transform.localScale = Vector3.one;
+        componentType.typeObject.name = componentType.typeName;
+
+        componentType.typeChooseObject = Instantiate(typeChoosePrefab, chooseTypeParentTrans);
+        componentType.typeChooseObject.transform.localScale = Vector3.one;
+        componentType.typeChooseObject.name = componentType.typeName;
+        componentType.typeChooseObject.GetComponent<ComponentTypeScript>().typeID = id;
+        componentType.typeChooseObject.GetComponent<ComponentTypeScript>().typeText.text = componentType.typeName;
+        componentType.typeChooseObject.GetComponent<ComponentTypeScript>().typeImage.sprite = Resources.Load<Sprite>(TemplateStoreManager.Instance["Item"][id].GetText("ComponentAddress"));
+        componentType.typeChooseObject.GetComponent<ComponentTypeScript>().typeImage.SetNativeSize();
+
+        componentTypes.Add(componentType);
+
+        return componentType;
+    }
+
+    public ComponentType GetComponentType(string nameTmp)
+    {
+        for (int i = 0; i < componentTypes.Count; i++)
+        {
+            if (componentTypes[i].typeNameTmp.Equals(nameTmp)) { return componentTypes[i]; }
+        }
+
+        ComponentType componentType = new ComponentType(nameTmp);
+        componentType.typeObject = Instantiate(componentTypePrefab, componentsParentTrans);
+        componentType.typeObject.transform.localScale = Vector3.one;
+        componentType.typeObject.name = componentType.typeName;
+
+        componentType.typeChooseObject = Instantiate(typeChoosePrefab);
+        componentType.typeChooseObject.transform.SetParent(chooseTypeParentTrans);
+        componentType.typeChooseObject.transform.localScale = Vector3.one;
+        componentType.typeChooseObject.name = componentType.typeName;
+        componentType.typeChooseObject.GetComponent<ComponentTypeScript>().typeID = componentType.typeID;
+        componentType.typeChooseObject.GetComponent<ComponentTypeScript>().typeText.text = componentType.typeName;
+        componentType.typeChooseObject.GetComponent<ComponentTypeScript>().typeImage.sprite = Resources.Load<Sprite>(TemplateStoreManager.Instance["Item"][nameTmp].GetText("ComponentAddress"));
+        componentType.typeChooseObject.GetComponent<ComponentTypeScript>().typeImage.SetNativeSize();
+
+        componentTypes.Add(componentType);
+
+        return componentType;
+    }
+
+    public void RefreshTypes()
+    {
+        for (int i = 0; i < componentTypes.Count; i++)
+        {
+            if (componentTypes[i].typeID == currentTypeID)
+            {
+                componentTypes[i].typeObject.SetActive(true);
+            }
+            else
+            {
+                componentTypes[i].typeObject.SetActive(false);
+            }
+        }
+        componentLayout = GetComponentType(currentTypeID).typeObject.GetComponent<GridLayoutGroup>();
+        currentComponentNum = GetComponentType(currentTypeID).typeObject.transform.childCount;
+    }
+
+    // public void AddLinkPrompt(ItemVariable newComponentItem, GameObject componentObject, ComponentScript componentScript)
+    // {
+    //     if (newComponentItem.GetBool("In"))
+    //     {
+    //         GameObject linkPrompt = Instantiate(linkPromptPrefab, componentObject.transform);
+    //         RectTransform rectTransform = componentObject.GetComponent<RectTransform>();
+    //         linkPrompt.transform.localPosition = new Vector3(0, rectTransform.sizeDelta.y / 2f, 0);
+    //         componentScript.inPrompt = linkPrompt;
+    //         linkPrompt.GetComponent<Image>().enabled = false;
+    //     }
+    //     if (newComponentItem.GetBool("Out"))
+    //     {
+    //         GameObject linkPrompt = Instantiate(linkPromptPrefab, componentObject.transform);
+    //         RectTransform rectTransform = componentObject.GetComponent<RectTransform>();
+    //         linkPrompt.transform.localPosition = new Vector3(0, -rectTransform.sizeDelta.y / 2f, 0);
+    //         componentScript.outPrompt = linkPrompt;
+    //         linkPrompt.GetComponent<Image>().enabled = false;
+    //     }
+    // }
+
+    public void AddComponentToAnvil(ComponentScript componentScript)
+    {
+        if (componentInAnvil.Exists(componentInAnvil => componentInAnvil == componentScript))
+        {
+            return;
+        }
+        if (inLink && outLink)
+        {
+            inLink.Match(outLink);
+        }
+        componentInAnvil.Add(componentScript);
+        FindNextInPrompt();
+        FindNextOutPrompt();
+    }
+
+    public void RemoveComponentFromAnvil(ComponentScript componentScript)
+    {
+        componentInAnvil.Remove(componentScript);
+        if (componentScript.inPrompt && componentScript.inPrompt.linkedPrompt) { componentScript.inPrompt.RemoveLink(); }
+        if (componentScript.outPrompt && componentScript.outPrompt.linkedPrompt) { componentScript.outPrompt.RemoveLink(); }
+        FindNextInPrompt();
+        FindNextOutPrompt();
+    }
+
+    public void FindNextOutPrompt()
+    {
+        for (int i = 0; i < componentInAnvil.Count; i++)
+        {
+            if (componentInAnvil[i].outPrompt && !componentInAnvil[i].outPrompt.linkedPrompt)
+            {
+                outPort = componentInAnvil[i].outPrompt;
+                return;
+            }
+        }
+        outPort = null;
+    }
+
+    public void FindNextInPrompt()
+    {
+        for (int i = 0; i < componentInAnvil.Count; i++)
+        {
+            if (componentInAnvil[i].inPrompt && !componentInAnvil[i].inPrompt.linkedPrompt)
+            {
+                inPort = componentInAnvil[i].inPrompt;
+                return;
+            }
+        }
+        inPort = null;
     }
 }
