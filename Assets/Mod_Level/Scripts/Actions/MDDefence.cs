@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Mod_Level
 {
-    public class MDDefense : MDAction
+    public class MDDefence : MDAction
     {
         public List<ATActionRegion> regions;
         private ATCharacterState state;
@@ -14,8 +14,8 @@ namespace Mod_Level
         /// </summary>
         private bool defensing = false;
 
-        public MDDefense()
-        { actionName = "Defense"; }
+        public MDDefence()
+        { actionName = "Defence"; layer = "Normal"; }
 
         public override void Initialize()
         {
@@ -69,7 +69,7 @@ namespace Mod_Level
             return true;
         }
 
-        public override void StartAction()
+        protected override void StartAction(params string[] keys)
         {
             if (defensing) return;//处于防御状态不执行新的防御
             switch (state.posture)
@@ -94,7 +94,7 @@ namespace Mod_Level
             }
         }
 
-        public override void StopAction()
+        protected override void StopAction(params string[] keys)
         {
             regions[0].gameObject.SetActive(false);
             regions[1].gameObject.SetActive(false);

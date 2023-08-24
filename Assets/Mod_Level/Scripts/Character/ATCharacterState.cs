@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: mana
+﻿// Ignore Spelling: mana Armor
 
 using ER.Entity2D;
 using UnityEngine;
@@ -7,6 +7,13 @@ namespace Mod_Level
 {
     public class ATCharacterState : MonoAttribute
     {
+        #region 组件
+
+        private Animator animator;
+        private ATActionManager actionManager;
+
+        #endregion 组件
+
         #region 初始化
 
         public ATCharacterState()
@@ -20,6 +27,15 @@ namespace Mod_Level
             stamina.Initialize();
             mana.Owner = owner;
             mana.Initialize();
+
+            owner.CreateDelegation("ATAnimator", (IAttribute at) =>
+            {
+                animator = (at as ATAnimator).Animator;
+            });
+            owner.CreateDelegation("ATActionManager", (IAttribute at) =>
+            {
+                actionManager = at as ATActionManager;
+            });
         }
 
         #endregion 初始化
@@ -104,7 +120,7 @@ namespace Mod_Level
         /// <summary>
         /// 基础防御值
         /// </summary>
-        public float defDefense;
+        public float defDefence;
 
         #endregion 基础属性
 
@@ -161,12 +177,103 @@ namespace Mod_Level
         /// <summary>
         /// 防御值
         /// </summary>
-        public float defense;
+        public float defence;
 
         /// <summary>
         /// 交互状态
         /// </summary>
         public InteractState interact = InteractState.None;
+
+        /// <summary>
+        /// 是否可控制动作
+        /// </summary>
+        private bool control_act = true;
+
+        /// <summary>
+        /// 是否可控制朝向
+        /// </summary>
+        private bool control_dir = true;
+
+        /// <summary>
+        /// 是否死亡
+        /// </summary>
+        private bool dead = false;
+
+        /// <summary>
+        /// 是否霸体
+        /// </summary>
+        private bool superArmor = false;
+
+        /// <summary>
+        /// 是否处于战斗状态
+        /// </summary>
+        public bool fighting = false;
+
+        /// <summary>
+        /// 是否眩晕
+        /// </summary>
+        private bool vertigo = false;
+
+        /// <summary>
+        /// 是否霸体
+        /// </summary>
+        public bool SuperArmor
+        {
+            get => superArmor;
+            set
+            {
+                superArmor = value;
+                animator.SetBool("superArmor", value);
+            }
+        }
+
+        /// <summary>
+        /// 是否眩晕
+        /// </summary>
+        public bool Vertigo
+        {
+            get => vertigo;
+            set
+            {
+                vertigo = value;
+                animator.SetBool("vertigo", value);
+                actionManager.ForceBackDefault();
+            }
+        }
+
+        /// <summary>
+        /// 是否可控制动作
+        /// </summary>
+        public bool ControlAct
+        {
+            get => control_act;
+            set
+            {
+                control_act = value;
+                animator.SetBool("control", value);
+                actionManager.ForceBackDefault();
+            }
+        }
+
+        /// <summary>
+        /// 是否可控制朝向
+        /// </summary>
+        public bool ControlDir
+        {
+            get => control_dir;
+            set => control_dir = value;
+        }
+
+        public bool Dead
+        {
+            get => dead;
+            set
+            {
+                dead = value;
+                animator.SetBool("dead", value);
+                actionManager.ForceBackDefault();
+            }
+        }
 
         #endregion 属性
     }

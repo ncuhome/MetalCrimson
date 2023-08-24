@@ -13,11 +13,17 @@ namespace ER.Entity2D
     {
         #region 属性
         [SerializeField]
-        private List<GameObject> record = new List<GameObject>();
+        protected List<GameObject> record = new List<GameObject>();
         #endregion
 
         #region 事件
+        /// <summary>
+        /// 当接触区域存在白名单物体时触发(仅在检测物体数量发生改变时触发)
+        /// </summary>
         public event Action touchEvent;
+        /// <summary>
+        /// 当接触区域不存在白名单物体时触发(仅在检测物体数量发生改变时触发)
+        /// </summary>
         public event Action notTouchEvent;
         #endregion
 

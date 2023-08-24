@@ -9,7 +9,7 @@ namespace ER.Entity2D
     {
 
         #region 初始化
-        public MDAction() { actionName = "Unkown"; }
+        public MDAction() { actionName = "Unknown"; }
         /// <summary>
         /// 动作被加载进 ATActionManager 后的初始化
         /// </summary>
@@ -18,7 +18,7 @@ namespace ER.Entity2D
 
 
         #region 属性
-
+        public bool acting;
         /// <summary>
         /// 动作名称
         /// </summary>
@@ -31,6 +31,10 @@ namespace ER.Entity2D
         /// 动作索引
         /// </summary>
         public int index;
+        /// <summary>
+        /// 所在动画层名称(动作管理器将根据此名称修改 相应的动画参数, 动画参数名称 = "act_"+"动画层名称")
+        /// </summary>
+        public string layer;
         #endregion
 
         #region 功能
@@ -40,13 +44,32 @@ namespace ER.Entity2D
         /// <returns></returns>
         public abstract bool ActionJudge();
         /// <summary>
+        /// 启用这个动作
+        /// </summary>
+        /// <param name="keys"></param>
+        public void StartACT(params string[] keys)
+        {
+            acting = true;
+            StartAction(keys);
+        }
+        /// <summary>
+        /// 停止这个动作
+        /// </summary>
+        /// <param name="keys"></param>
+        public void StopACT(params string[] keys)
+        {
+            acting = false;
+            StopAction(keys);
+        }
+
+        /// <summary>
         /// 开启活动
         /// </summary>
-        public abstract void StartAction();
+        protected abstract void StartAction(params string[] keys);
         /// <summary>
         /// 停止活动
         /// </summary>
-        public abstract void StopAction();
+        protected abstract void StopAction(params string[] keys);
         #endregion
     }
 }

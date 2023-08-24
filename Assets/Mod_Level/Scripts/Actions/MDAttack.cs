@@ -11,7 +11,7 @@ namespace Mod_Level
         /// 是否处于攻击状态
         /// </summary>
         private bool attacking = false;
-        public MDAttack() { actionName = "Attack"; }
+        public MDAttack() { actionName = "Attack"; layer = "Normal"; }
 
         public override bool ActionJudge()
         {
@@ -52,7 +52,7 @@ namespace Mod_Level
             regions[2].Initialize();
             #endregion
         }
-        public override void StartAction()
+        protected override void StartAction(params string[] keys)
         {
             if (attacking) return;//处于攻击状态不执行新的攻击
             switch (state.posture)
@@ -73,7 +73,7 @@ namespace Mod_Level
                     break;
             }
         }
-        public override void StopAction()
+        protected override void StopAction(params string[] keys)
         {
 
         }

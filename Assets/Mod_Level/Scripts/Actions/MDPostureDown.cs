@@ -6,7 +6,7 @@ namespace Mod_Level
     public class MDPostureDown : MDAction
     {
         public ATActionRegion region;
-        public MDPostureDown() { actionName = "PostureDown"; }
+        public MDPostureDown() { actionName = "PostureDown"; layer = "Normal"; }
         public override void Initialize()
         {
             region.time = -1f;
@@ -25,7 +25,7 @@ namespace Mod_Level
         {
             return true;
         }
-        public override void StartAction()
+        protected override void StartAction(params string[] keys)
         {
             ATCharacterState state = manager.Owner.GetAttribute<ATCharacterState>();
             if (state != null)
@@ -38,7 +38,7 @@ namespace Mod_Level
             }
             region.Reset();
         }
-        public override void StopAction()
+        protected override void StopAction(params string[] keys)
         {
             region.gameObject.SetActive(false);
         }

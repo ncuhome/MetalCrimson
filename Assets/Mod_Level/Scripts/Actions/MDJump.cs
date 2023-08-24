@@ -8,7 +8,7 @@ namespace Mod_Level
         private ATCharacterState state;
         private ATEnvironmentDetector detector;
         private Rigidbody2D body;
-        public MDJump() { actionName = "Jump"; }
+        public MDJump() { actionName = "Jump"; layer = "Normal"; }
         public override void Initialize()
         {
             state = manager.Owner.GetAttribute<ATCharacterState>();
@@ -20,12 +20,12 @@ namespace Mod_Level
         {
             return true;
         }
-        public override void StartAction()
+        protected override void StartAction(params string[] keys)
         {
             if(detector.Type == ATEnvironmentDetector.EnvironmentType.Land)
                 body.velocity = new Vector2(body.velocity.x, state.jump);
         }
-        public override void StopAction()
+        protected override void StopAction(params string[] keys)
         {
 
         }

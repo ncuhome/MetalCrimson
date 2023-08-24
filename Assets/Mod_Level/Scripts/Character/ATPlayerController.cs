@@ -17,11 +17,12 @@ namespace Mod_Level
         public override void Initialize()
         {
             actionManager = owner.GetAttribute<ATActionManager>();
+
             if (actionManager == null) Debug.LogError("未找到角色的动作管理器:<ATActionManager>");
+
             state = owner.GetAttribute<ATCharacterState>();
             if (state == null) Debug.LogError("未找到角色的状态管理器:<ATPlayerState>");
             Debug.Log($"is null {InputManager.inputActions == null}");
-
 
             InputManager.inputActions.Player.MoveLeft.performed += MoveLeft;
             InputManager.inputActions.Player.MoveLeft.canceled += _MoveLeft;
@@ -70,57 +71,82 @@ namespace Mod_Level
 
         private void MoveLeft(InputAction.CallbackContext ctx)
         {
-            actionManager.Action("MoveLeft");
+            if (state.ControlAct && !state.Vertigo)
+                actionManager.Action("Move", "left");
         }
 
         private void _MoveLeft(InputAction.CallbackContext ctx)
         {
-            actionManager.Stop("MoveLeft");
+            if (InputManager.inputActions.Player.MoveRight.phase == InputActionPhase.Performed)
+            {
+                MoveRight(ctx);
+            }
+            else
+            {
+                actionManager.Stop("Move", "left");
+            }
         }
 
         private void MoveRight(InputAction.CallbackContext ctx)
         {
-            actionManager.Action("MoveRight");
+            if (state.ControlAct && !state.Vertigo)
+                actionManager.Action("Move", "right");
         }
 
         private void _MoveRight(InputAction.CallbackContext ctx)
         {
-            actionManager.Stop("MoveRight");
+            if (InputManager.inputActions.Player.MoveLeft.phase == InputActionPhase.Performed)
+            {
+                MoveLeft(ctx);
+            }
+            else
+            {
+                actionManager.Stop("Move", "right");
+            }
         }
 
         private void Attack(InputAction.CallbackContext ctx)
         {
-            actionManager.Action("Attack");
+            if (state.ControlAct && !state.Vertigo)
+                actionManager.Action("Attack");
         }
 
         private void Defense(InputAction.CallbackContext ctx)
         {
-            actionManager.Action("Defense");
+            if (state.ControlAct && !state.Vertigo)
+                actionManager.Action("Defence");
         }
 
         private void _Defense(InputAction.CallbackContext ctx)
         {
-            actionManager.Stop("Defense");
+            actionManager.Stop("Defence");
         }
 
         private void Jump(InputAction.CallbackContext ctx)
         {
-            actionManager.Action("Jump");
+            if (state.ControlAct && !state.Vertigo)
+                actionManager.Action("Jump");
         }
 
-        private void Skill1(InputAction.CallbackContext ctx) { }
+        private void Skill1(InputAction.CallbackContext ctx)
+        { }
 
-        private void Skill2(InputAction.CallbackContext ctx) { }
+        private void Skill2(InputAction.CallbackContext ctx)
+        { }
 
-        private void Interact(InputAction.CallbackContext ctx) 
+        private void Interact(InputAction.CallbackContext ctx)
         {
-            state.interact = ATCharacterState.InteractState.Wait;
-            Debug.Log("玩家开启交互");
-            Invoke("_Interact", 0.5f);
+            if (state.ControlAct && !state.Vertigo)
+            {
+                state.interact = ATCharacterState.InteractState.Wait;
+                Debug.Log("玩家开启交互");
+                Invoke("_Interact", 0.5f);
+            }
         }
+
         public void _Interact()
         {
-            if(state.interact != ATCharacterState.InteractState.Interacting)
+            if (state.interact != ATCharacterState.InteractState.Interacting)
             {
                 state.interact = ATCharacterState.InteractState.None;
                 Debug.Log("玩家关闭交互");
@@ -157,12 +183,12 @@ namespace Mod_Level
             {
                 if (delta.y > 0)//上
                 {
-                    if(state.posture == ATCharacterState.Posture.Front)
+                    if (state.posture == ATCharacterState.Posture.Front)
                     {
                         actionManager.Stop("PostureFront");
                         actionManager.Action("PostureUp");
                     }
-                    else if(state.posture == ATCharacterState.Posture.Down)
+                    else if (state.posture == ATCharacterState.Posture.Down)
                     {
                         actionManager.Stop("PostureDown");
                         actionManager.Action("PostureUp");

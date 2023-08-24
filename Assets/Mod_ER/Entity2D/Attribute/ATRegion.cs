@@ -100,23 +100,23 @@ namespace ER.Entity2D
         protected virtual void VirtualExit(Collider2D collider) { }
 
         /// <summary>
-        /// 标签检测
+        /// 条件检测(检测标签是否在白名单/黑名单内)
         /// </summary>
         /// <returns></returns>
-        protected virtual bool TagJudge(string tag)
+        protected virtual bool Judge(Collider2D collider)
         {
             switch (listType)
             {
                 case ListType.Off: return true;
                 case ListType.BlackList:
-                    if(TagList.Contains(tag))
+                    if(TagList.Contains(collider.tag))
                     {
                         return false;
                     }
                     return true;
 
                 case ListType.WhiteList:
-                    if (TagList.Contains(tag))
+                    if (TagList.Contains(collider.tag))
                     {
                         return true;
                     }
@@ -128,7 +128,7 @@ namespace ER.Entity2D
         protected virtual void OnCollisionEnter2D(Collision2D collision)
         {
             Debug.Log("collision接触:"+ collision.gameObject.tag);
-            if (TagJudge(collision.gameObject.tag))
+            if (Judge(collision.collider))
             {
                 EnterAction(collision.collider);
                 VirtualEnter(collision.collider);
@@ -138,7 +138,7 @@ namespace ER.Entity2D
 
         protected virtual void OnCollisionStay2D(Collision2D collision)
         {
-            if (TagJudge(collision.gameObject.tag))
+            if (Judge(collision.collider))
             {
                 StayAction(collision.collider);
                 VirtualStay(collision.collider);
@@ -148,7 +148,7 @@ namespace ER.Entity2D
 
         protected virtual void OnCollisionExit2D(Collision2D collision)
         {
-            if (TagJudge(collision.gameObject.tag))
+            if (Judge(collision.collider))
             {
                 ExitAction(collision.collider);
                 VirtualExit(collision.collider);
@@ -159,7 +159,7 @@ namespace ER.Entity2D
         protected virtual void OnTriggerEnter2D(Collider2D collider)
         {
             Debug.Log("collider接触" + collider.gameObject.tag);
-            if (TagJudge(collider.gameObject.tag))
+            if (Judge(collider))
             {
                 EnterAction(collider);
                 VirtualEnter(collider);
@@ -168,7 +168,7 @@ namespace ER.Entity2D
         }
         protected virtual void OnTriggerStay2D(Collider2D collider)
         {
-            if (TagJudge(collider.gameObject.tag))
+            if (Judge(collider))
             {
                 StayAction(collider);
                 VirtualStay(collider);
@@ -178,7 +178,7 @@ namespace ER.Entity2D
 
         protected virtual void OnTriggerExit2D(Collider2D collider)
         {
-            if (TagJudge(collider.gameObject.tag))
+            if (Judge(collider))
             {
                 ExitAction(collider);
                 VirtualExit(collider);

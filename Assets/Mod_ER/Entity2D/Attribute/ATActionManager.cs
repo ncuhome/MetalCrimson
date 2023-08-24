@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace ER.Entity2D
@@ -42,6 +43,41 @@ namespace ER.Entity2D
         #endregion 属性
 
         #region 动作管理
+
+        /// <summary>
+        /// 强制将所有动作停止
+        /// </summary>
+        public void ForceBackDefault()
+        {
+            foreach(var pairs in actions)
+            {
+                MDAction action = pairs.Value;
+                if (action.acting)
+                {
+                    action.acting = false;
+                }
+                animator.SetInteger(GetActionLayer(action), 0);
+            }
+        }
+        /// <summary>
+        /// 获取动作对应层的控制参数 字符串
+        /// </summary>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        private string GetActionLayer(MDAction action)
+        {
+            StringBuilder sb = new StringBuilder("act");
+            if (action.layer == string.Empty)
+            {
+                sb.Append("_Base Layer");
+            }
+            else
+            {
+                sb.Append('_');
+                sb.Append(action.layer);
+            }
+            return sb.ToString();
+        }
         /// <summary>
         /// 添加新的动作
         /// </summary>
@@ -62,14 +98,15 @@ namespace ER.Entity2D
         /// 触发角色动作
         /// </summary>
         /// <param name="actionName">动作名称</param>
-        public void Action(string actionName)
+        public void Action(string actionName, params string[] keys)
         {
             if (actions.TryGetValue(actionName, out MDAction action))
             {
                 if(action.ActionJudge())
                 {
-                    animator.SetInteger("act", action.index);
-                    action.StartAction();
+                    Debug.Log($"动作参数:{GetActionLayer(action)}, 值:{action.index}");
+                    animator.SetInteger(GetActionLayer(action), action.index);
+                    action.StartACT(keys);
                     return;
                 }
                 Debug.Log($"动作未能执行:{actionName}");
@@ -81,12 +118,12 @@ namespace ER.Entity2D
         /// 终止指定动作
         /// </summary>
         /// <param name="actionName"></param>
-        public void Stop(string actionName)
+        public void Stop(string actionName, params string[] keys)
         {
             if (actions.TryGetValue(actionName, out MDAction action))
             {
-                animator.SetInteger("act", 0);
-                action.StopAction();
+                animator.SetInteger(GetActionLayer(action), 0);
+                action.StopACT(keys);
                 return;
             }
             Debug.LogError($"未找到指定动作：{actionName}");
