@@ -121,7 +121,10 @@ public class ChoosePoleSystem : MonoBehaviour
             {
                 slider.gameObject.SetActive(true);
             }
-            PolesParentTrans.localPosition = new Vector3(oldVec.x, oldVec.y + slider.value * 250 * Mathf.Ceil(PolesParentTrans.childCount / 3.0f - 4));
+
+            float num = Mathf.Ceil(PolesParentTrans.childCount / 3.0f - 4);
+            float n = (num > 0) ? num : 0;
+            PolesParentTrans.localPosition = new Vector3(oldVec.x, oldVec.y + slider.value * 250 * n);
         }
         else
         {
@@ -133,7 +136,9 @@ public class ChoosePoleSystem : MonoBehaviour
             {
                 slider.gameObject.SetActive(true);
             }
-            PolesParentTrans.localPosition = new Vector3(oldVec.x, oldVec.y + slider.value * 250 * (PolesParentTrans.childCount - 4));
+            float num = PolesParentTrans.childCount - 4;
+            float n = (num > 0) ? num : 0;
+            PolesParentTrans.localPosition = new Vector3(oldVec.x, oldVec.y + slider.value * 250 * n);
         }
     }
 

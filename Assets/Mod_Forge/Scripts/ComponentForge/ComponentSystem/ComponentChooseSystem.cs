@@ -122,7 +122,9 @@ public class ComponentChooseSystem : MonoBehaviour
             {
                 slider.gameObject.SetActive(true);
             }
-            ComponentsParentTransform.localPosition = new Vector3(oldVec.x - slider.value * 305 * Mathf.Ceil(ComponentSystem.Instance.currentComponentNum / 3.0f - 5), oldVec.y);
+            float num = Mathf.Ceil(ComponentSystem.Instance.currentComponentNum / 3.0f - 5);
+            float n = (num > 0) ? num : 0;
+            ComponentsParentTransform.localPosition = new Vector3(oldVec.x - slider.value * 305 * n, oldVec.y);
         }
         else
         {
@@ -134,7 +136,9 @@ public class ComponentChooseSystem : MonoBehaviour
             {
                 slider.gameObject.SetActive(true);
             }
-            ComponentsParentTransform.localPosition = new Vector3(oldVec.x - slider.value * 305 * (ComponentSystem.Instance.currentComponentNum - 5), oldVec.y);
+            float num = ComponentSystem.Instance.currentComponentNum - 5;
+            float n = (num > 0) ? num : 0;
+            ComponentsParentTransform.localPosition = new Vector3(oldVec.x - slider.value * 305 * n, oldVec.y);
         }
     }
 

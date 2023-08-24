@@ -122,7 +122,9 @@ public class MaterialChooseSystem : MonoBehaviour
             {
                 slider.gameObject.SetActive(true);
             }
-            MaterialsParentTransform.localPosition = new Vector3(oldVec.x - slider.value * 315 * Mathf.Ceil(MaterialsParentTransform.childCount / 3.0f - 6), oldVec.y);
+            float num = Mathf.Ceil(MaterialsParentTransform.childCount / 3.0f - 6);
+            float n = (num > 0) ? num : 0;
+            MaterialsParentTransform.localPosition = new Vector3(oldVec.x - slider.value * 315 * n, oldVec.y);
         }
         else
         {
@@ -134,7 +136,9 @@ public class MaterialChooseSystem : MonoBehaviour
             {
                 slider.gameObject.SetActive(true);
             }
-            MaterialsParentTransform.localPosition = new Vector3(oldVec.x - slider.value * 315 * (MaterialsParentTransform.childCount - 6), oldVec.y);
+            float num = MaterialsParentTransform.childCount - 6;
+            float n = (num > 0) ? num : 0;
+            MaterialsParentTransform.localPosition = new Vector3(oldVec.x - slider.value * 315 * num, oldVec.y);
         }
     }
 

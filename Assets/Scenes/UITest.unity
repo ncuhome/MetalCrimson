@@ -824,6 +824,7 @@ GameObject:
   - component: {fileID: 118104776}
   - component: {fileID: 118104778}
   - component: {fileID: 118104777}
+  - component: {fileID: 118104779}
   m_Layer: 5
   m_Name: ShowMoreType
   m_TagString: Untagged
@@ -889,6 +890,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 118104775}
   m_CullTransparentMesh: 1
+--- !u!114 &118104779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118104775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a93e10f5708dae849a980fc20f75004e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &134042829
 GameObject:
   m_ObjectHideFlags: 0
@@ -1205,6 +1218,9 @@ MonoBehaviour:
   targetValue: 0
   sliderDrag: 0
   showPanel: 0
+  move: 0
+  chooseTypeTransform: {fileID: 179051082}
+  typeLayout: {fileID: 973420013}
 --- !u!1 &183673679
 GameObject:
   m_ObjectHideFlags: 0
@@ -8408,7 +8424,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 822, y: 401}
+  m_AnchoredPosition: {x: 791, y: 428}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &973420013
@@ -8428,13 +8444,13 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 4
+  m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 180, y: 180}
-  m_Spacing: {x: 40, y: 20}
-  m_Constraint: 0
-  m_ConstraintCount: 2
+  m_Spacing: {x: 20, y: 20}
+  m_Constraint: 1
+  m_ConstraintCount: 1
 --- !u!1 &982236166
 GameObject:
   m_ObjectHideFlags: 0

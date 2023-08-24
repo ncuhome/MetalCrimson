@@ -57,6 +57,26 @@ public class ComponentTypeChooseSystem : MonoBehaviour
 
     public bool showPanel;
     /// <summary>
+    /// 目标坐标
+    /// </summary>
+    private Vector3 targetPanelVec;
+    /// <summary>
+    /// 原坐标
+    /// </summary>
+    private Vector3 oldPanelVec;
+    /// <summary>
+    /// 是否正在移动
+    /// </summary>
+    public bool move = false;
+    /// <summary>
+    /// 移动时间
+    /// </summary>
+    private float moveTime;
+
+    public Transform chooseTypeTransform;
+
+    public GridLayoutGroup typeLayout;
+    /// <summary>
     /// 初始化单例
     /// </summary>
     void Awake()
@@ -79,6 +99,7 @@ public class ComponentTypeChooseSystem : MonoBehaviour
         MoveComponentType();
         MoveSlider();
         ShowSlider();
+        MovePanel();
     }
     /// <summary>
     /// 进行滑动条的拖动或者自动移动
@@ -122,7 +143,9 @@ public class ComponentTypeChooseSystem : MonoBehaviour
             {
                 slider.gameObject.SetActive(true);
             }
-            ComponentTypeParentTransform.localPosition = new Vector3(oldVec.x, oldVec.y + slider.value * 200 * Mathf.Ceil(ComponentTypeParentTransform.childCount / 3.0f - 5));
+            float num = Mathf.Ceil(ComponentTypeParentTransform.childCount / 3.0f - 5);
+            float n = (num > 0) ? num : 0;
+            ComponentTypeParentTransform.localPosition = new Vector3(oldVec.x, oldVec.y + slider.value * 200 * n);
         }
         else
         {
@@ -134,7 +157,9 @@ public class ComponentTypeChooseSystem : MonoBehaviour
             {
                 slider.gameObject.SetActive(true);
             }
-            ComponentTypeParentTransform.localPosition = new Vector3(oldVec.x, oldVec.y + slider.value * 200 * (ComponentTypeParentTransform.childCount - 5));
+            float num = ComponentTypeParentTransform.childCount - 5;
+            float n = (num > 0) ? num : 0;
+            ComponentTypeParentTransform.localPosition = new Vector3(oldVec.x, oldVec.y + slider.value * 200 * n);
         }
     }
 
@@ -142,11 +167,46 @@ public class ComponentTypeChooseSystem : MonoBehaviour
     {
         if (showPanel)
         {
-            slider.transform.localPosition = new Vector3(ComponentSystem.Instance.chooseTypeTransform.localPosition.x + 930, 0, 0);
+            slider.transform.localPosition = new Vector3(-ComponentSystem.Instance.chooseTypeTransform.localPosition.x + 930, 0, 0);
         }
         else
         {
             slider.transform.localPosition = new Vector3(950, 0, 0);
+        }
+    }
+
+    public void MovePanel()
+    {
+
+        if (Vector3.Magnitude(chooseTypeTransform.localPosition - targetPanelVec) < 0.5f)
+        {
+            chooseTypeTransform.localPosition = targetPanelVec;
+            moveTime = 0f;
+            move = false;
+        }
+        else
+        {
+            move = true;
+            moveTime += Time.deltaTime * 5;
+            Vector3 newVec = Vector3.Lerp(oldPanelVec, targetPanelVec, moveTime);
+            chooseTypeTransform.localPosition = newVec;
+        }
+    }
+
+    public void ShowMoreButtonClick()
+    {
+        oldPanelVec = chooseTypeTransform.localPosition;
+        if (showMore)
+        {
+            targetPanelVec = new Vector3(0, 0, 0);
+            typeLayout.constraintCount = 1;
+            showMore = false;
+        }
+        else
+        {
+            targetPanelVec = new Vector3(-395, 0, 0);
+            typeLayout.constraintCount = 3;
+            showMore = true;
         }
     }
 }

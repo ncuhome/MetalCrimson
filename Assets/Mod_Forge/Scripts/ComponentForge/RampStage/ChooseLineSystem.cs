@@ -121,7 +121,9 @@ public class ChooseLineSystem : MonoBehaviour
             {
                 slider.gameObject.SetActive(true);
             }
-            LinesParentTrans.localPosition = new Vector3(oldVec.x, oldVec.y + slider.value * 250 * Mathf.Ceil(LinesParentTrans.childCount / 3.0f - 4));
+            float num = Mathf.Ceil(LinesParentTrans.childCount / 3.0f - 4);
+            float n = (num > 0) ? num : 0;
+            LinesParentTrans.localPosition = new Vector3(oldVec.x, oldVec.y + slider.value * 250 * n);
         }
         else
         {
@@ -133,7 +135,9 @@ public class ChooseLineSystem : MonoBehaviour
             {
                 slider.gameObject.SetActive(true);
             }
-            LinesParentTrans.localPosition = new Vector3(oldVec.x, oldVec.y + slider.value * 250 * (LinesParentTrans.childCount - 4));
+            float num = LinesParentTrans.childCount - 4;
+            float n = (num > 0) ? num : 0;
+            LinesParentTrans.localPosition = new Vector3(oldVec.x, oldVec.y + slider.value * 250 * n);
         }
     }
 
