@@ -95,6 +95,7 @@ MonoBehaviour:
   startDrag: 0
   inAnvil: 0
   canSplicing: 0
+  offset: {x: 0, y: 0, z: 0}
 --- !u!61 &2826292896403031205
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -191,11 +192,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fc9bea7d1f498f49b41e8ce6d75eed4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  componentImage: {fileID: 2750687289908215905}
+  componentImage: {fileID: 4206549572895690135}
   inPrompt: {fileID: 0}
   outPrompt: {fileID: 0}
   inNum: 0
   outNum: 0
+  index: 0
 --- !u!1 &7779203481189236128
 GameObject:
   m_ObjectHideFlags: 0

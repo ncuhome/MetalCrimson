@@ -277,6 +277,7 @@ public class TypeSystem : MonoBehaviour
                 types[i].childTypes[j].M_ID = childModels[j].GetInt("M_ID");
                 types[i].childTypes[j].Description = childModels[j].GetText("Description");
                 types[i].childTypes[j].Tags = childModels[j].SplitText("Tags", ';');
+                Debug.Log(childModels[j].GetText("NameTmp") + " " + childModels[j].ID);
                 types[i].childTypes[j].typeSprite = Resources.Load<Sprite>(childModels[j].GetText("Address"));
                 types[i].childTypes[j].costMaterialNum = childModels[j].GetInt("CostNum");
                 types[i].childTypes[j].sharpness = childModels[j].GetFloat("Sharpness");

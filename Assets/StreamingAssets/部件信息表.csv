@@ -1,5 +1,5 @@
 ﻿string,string,int,string,string,int,int,int,float,float,float,float,float,float,float,int,string,bool,bool,int,int
-NameTmp,Name,ID,Description,Tags,M_ID,Model_ID,Material_ID,Sharpness,Weight,Duability,Density,Flexability,Toughness,AntiSolution,Pretty,StaticAddress,In,Out,InNum,OutNum
+NameTmp,Name,ID,Description,Tags,MotherModel_ID,Model_ID,Material_ID,Sharpness,Weight,Duability,Density,Flexability,Toughness,AntiSolution,Pretty,StaticAddress,In,Out,InNum,OutNum
 StraightSwordPart,直剑,183771,,Part;StraightSwordc,121,83771,,0,0,0,0,0,0,0,0,Images/Component/ComponentStatic/Blade,FALSE,TRUE,0,180
 GaintSwordPart,巨剑,183772,,Part;GaintSword;Sword,121,83772,,0,0,0,0,0,0,0,0,Images/Component/ComponentStatic/Blade,FALSE,TRUE,0,200
 LongSwordPart,双手剑,183773,,Part;LongSword;Sword,121,83773,,0,0,0,0,0,0,0,0,Images/Component/ComponentStatic/Blade,FALSE,TRUE,0,200

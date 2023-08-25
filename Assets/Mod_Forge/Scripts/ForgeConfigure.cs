@@ -34,5 +34,6 @@ public class ForgeConfigure : MonoBehaviour
         ComponentSystem.Instance.InitComponentSystem();
         TypeSystem.Instance.InitTypeSystem();
         UIInputManager.Instance.InitInputManager();
+        WeaponSystem.Instance.InitWeaponSystem();
     }
 }

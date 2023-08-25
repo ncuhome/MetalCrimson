@@ -296,7 +296,7 @@ public class ComponentImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         {
             if (ComponentSystem.Instance.componentInAnvil[i] != componentScript)
             {
-                ComponentImage componentImage = ComponentSystem.Instance.componentInAnvil[i].componentImage.GetComponent<ComponentImage>();
+                ComponentImage componentImage = ComponentSystem.Instance.componentInAnvil[i].componentImage;
                 componentImage.offset = componentImage.transform.position - transform.position;
             }
         }
@@ -308,7 +308,7 @@ public class ComponentImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         {
             if (ComponentSystem.Instance.componentInAnvil[i] != componentScript)
             {
-                ComponentImage componentImage = ComponentSystem.Instance.componentInAnvil[i].componentImage.GetComponent<ComponentImage>();
+                ComponentImage componentImage = ComponentSystem.Instance.componentInAnvil[i].componentImage;
                 componentImage.transform.position = transform.position + componentImage.offset;
             }
         }

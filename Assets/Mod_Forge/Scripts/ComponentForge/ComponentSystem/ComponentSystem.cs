@@ -186,7 +186,7 @@ public class ComponentSystem : MonoBehaviour
         newComponentItem.CreateAttribute("Name", newComponentItem.GetText("Name", false));
 
         componentPrefab = Resources.Load<GameObject>("Prefabs/Components/" + NameTmp);
-        ComponentType componentType = GetComponentType(TemplateStoreManager.Instance["Item"][NameTmp].GetInt("M_ID"));
+        ComponentType componentType = GetComponentType(TemplateStoreManager.Instance["Item"][NameTmp].GetInt("MotherModel_ID"));
         GameObject newComponentObject = Instantiate(componentPrefab, componentType.typeObject.transform);
         componentType.Add(newComponentObject);
         newComponentObject.transform.localScale = Vector3.one;
@@ -217,7 +217,7 @@ public class ComponentSystem : MonoBehaviour
         newComponentItem.CreateAttribute("Name", newComponentItem.GetText("Name", false));
 
         componentPrefab = Resources.Load<GameObject>("Prefabs/Components/" + newComponentItem.GetText("NameTmp"));
-        ComponentType componentType = GetComponentType(TemplateStoreManager.Instance["Item"][id].GetInt("M_ID"));
+        ComponentType componentType = GetComponentType(TemplateStoreManager.Instance["Item"][id].GetInt("MotherModel_ID"));
         GameObject newComponentObject = Instantiate(componentPrefab, componentType.typeObject.transform);
         componentType.Add(newComponentObject);
         newComponentObject.transform.localScale = Vector3.one;
@@ -232,6 +232,20 @@ public class ComponentSystem : MonoBehaviour
 
         if (currentTypeID == 0) { currentTypeID = componentType.typeID; }
         return true;
+    }
+
+    public void RemoveComponent(ComponentScript componentScript)
+    {
+        int typeId = componentScript.ComponentItem.GetInt("MotherModel_ID");
+        GetComponentType(typeId).components.Remove(componentScript.gameObject);
+        for (int i = 0; i < componentsItemStore.Count; i++)
+        {
+            if (componentsItemStore[i] == componentScript.ComponentItem)
+            {
+                componentsItemStore.RemoveItem(i);
+            }
+        }
+        Destroy(componentScript.gameObject);
     }
 
     /// <summary>
@@ -404,5 +418,30 @@ public class ComponentSystem : MonoBehaviour
             }
         }
         inPort = null;
+    }
+
+    public void FinishBuild()
+    {
+        for (int i = 0; i < componentInAnvil.Count; i++)
+        {
+            RemoveComponent(componentInAnvil[i]);
+        }
+        componentInAnvil = new List<ComponentScript>();
+    }
+
+    public void Undo()
+    {
+        if (componentInAnvil.Count != 0)
+        {
+            componentInAnvil[componentInAnvil.Count - 1].componentImage.MoveBack();
+        }
+    }
+
+    public void Reset()
+    {
+        for (int i = componentInAnvil.Count - 1; i >= 0; i--)
+        {
+            componentInAnvil[i].componentImage.MoveBack();
+        }
     }
 }

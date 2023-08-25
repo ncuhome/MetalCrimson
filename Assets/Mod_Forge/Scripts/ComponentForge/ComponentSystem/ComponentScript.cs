@@ -6,17 +6,18 @@ using UnityEngine.UI;
 
 public class ComponentScript : MonoBehaviour
 {
-    public Image componentImage = null;
+    public ComponentImage componentImage = null;
     public ER.Items.ItemVariable ComponentItem = null;
     public LinkPrompt inPrompt = null;
     public LinkPrompt outPrompt = null;
     public int inNum;
     public int outNum;
+    public int index;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        componentImage = GetComponentInChildren<ComponentImage>();
     }
 
     // Update is called once per frame
