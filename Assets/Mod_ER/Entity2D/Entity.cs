@@ -156,6 +156,24 @@ namespace ER.Entity2D
             return default(T);
         }
 
+        /// <summary>
+        /// 尝试获取特征并赋值, 如果获取特征失败, 则将回调函数加入委托
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="callBack"></param>
+        /// <returns></returns>
+        public bool TryGetAttribute<T>(string attributeName,ref T aim,Action<IAttribute> callBack) where T: IAttribute
+        {
+            IAttribute t = this[attributeName];
+            if (t != null)
+            {
+                aim = (T)t;
+                return true;
+            }
+            CreateDelegation(attributeName, callBack);
+            return false;
+        }
+
         #endregion 特征管理
 
         #region Unity

@@ -41,12 +41,15 @@ namespace Mod_Level
         private void Awake()
         {
             region.EnterEvent += EnterRegion;
+            region.ExitEvent += ExitRegion;
         }
 
         private void EnterRegion(Collider2D collider)
         {
+            Debug.Log("有物体进入传送门");
             if (collider.tag == "Player")
             {
+                Debug.Log("是玩家");
                 Entity entity = collider.GetComponent<Entity>();
                 if (entity == null) return;
                 state = entity.GetAttribute<ATCharacterState>();
@@ -72,31 +75,16 @@ namespace Mod_Level
         {
             if(waitting)
             {
-                
-            }
-
-            Debug.DrawRay(transform.position, Vector2.up*length);
-            //注意，使用射线遮罩时，目标图层的索引需要转化成二进制数才能有效
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, length,1<<aimLayerIndex);
-            if(hit.collider != null)
-            {
-                Debug.Log("射线检测：" + hit.collider.name);
-                if (hit.collider.tag == "Player")
+                if (state.interact == ATCharacterState.InteractState.Wait)
                 {
-                    Debug.Log("检测到玩家在门旁");
-                    ATCharacterState state = hit.collider.GetComponent<Entity>().GetAttribute<ATCharacterState>();
-                    Debug.Log("state is null:");
-                    if(state!=null)
-                    {
-                        Debug.Log($"交互状态：{state.interact}");
-                        if(state.interact == ATCharacterState.InteractState.Wait)
-                        {
-                            Debug.Log("传送！");
-                            hit.collider.transform.position = aimPosition.position;
-                        }
-                    }
+                    Debug.Log("传送！");
+                    state.Owner.transform.position = aimPosition.position;
                 }
             }
+
+            //Debug.DrawRay(transform.position, Vector2.up*length);
+            //注意，使用射线遮罩时，目标图层的索引需要转化成二进制数才能有效
+            //RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, length,1<<aimLayerIndex);
         }
     }
 }

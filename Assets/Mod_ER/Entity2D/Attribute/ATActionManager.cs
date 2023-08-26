@@ -44,6 +44,19 @@ namespace ER.Entity2D
 
         #region 动作管理
 
+        public void OpenMixedLayer(string layerName)
+        {
+            animator.SetLayerWeight(animator.GetLayerIndex(layerName), 1f);
+        }
+
+        /// <summary>
+        /// 关闭混合动画层
+        /// </summary>
+        public void CloseMixedLayer(string layerName)
+        {
+            animator.SetLayerWeight(animator.GetLayerIndex(layerName), 0f);
+        }
+
         /// <summary>
         /// 强制将所有动作停止
         /// </summary>

@@ -21,7 +21,9 @@ namespace ER.Entity2D
 
         #region 属性
 
+        [SerializeField]
         private List<MDBuff> buffs = new List<MDBuff>();
+
         private Dictionary<string, MDBuff> buffsDic = new Dictionary<string, MDBuff>();
 
         #endregion 属性
@@ -83,8 +85,11 @@ namespace ER.Entity2D
             }
             else
             {
+                Debug.Log($"添加新的Buff:{buff.buffName}");
+                buff.owner = this;
                 buffsDic[buff.buffName] = buff;
                 buffs.Add(buff);
+                buff.ResetTime();
                 buff.Enter();
                 ArrangeBuffs();
             }
@@ -152,15 +157,25 @@ namespace ER.Entity2D
 
         private void Update()
         {
+            List<MDBuff> removeBuffs = new();
             foreach (var buff in buffs)
             {
+                Debug.Log($"buff:{buff.buffName} : time:{buff.time}");
                 if (buff.defTime > 0)
                 {
                     buff.time -= Time.deltaTime;
                     if (buff.time <= 0)
                     {
+                        buff.EffectOnExit();
+                        removeBuffs.Add(buff);
                     }
                 }
+            }
+            foreach (var buff in removeBuffs)
+            {
+                Debug.Log($"remove buff:{buff.buffName}");
+                buffs.Remove(buff);
+                buffsDic.Remove(buff.buffName);
             }
         }
 

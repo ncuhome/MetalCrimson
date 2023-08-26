@@ -8,7 +8,7 @@ namespace Mod_Level
         private ATCharacterState state;
         private ATEnvironmentDetector detector;
         private Rigidbody2D body;
-        public MDJump() { actionName = "Jump"; layer = "Normal"; }
+        public MDJump() { actionName = "Jump"; layer = "Move"; }
         public override void Initialize()
         {
             state = manager.Owner.GetAttribute<ATCharacterState>();

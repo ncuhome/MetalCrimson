@@ -158,6 +158,12 @@ AnimatorStateTransition:
   - m_ConditionMode: 7
     m_ConditionEvent: act_Normal
     m_EventTreshold: 6
+  - m_ConditionMode: 7
+    m_ConditionEvent: act_Normal
+    m_EventTreshold: 2
+  - m_ConditionMode: 7
+    m_ConditionEvent: act_Normal
+    m_EventTreshold: 3
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -8137382933078953401}
   m_Solo: 0
@@ -276,7 +282,7 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: d30779cb3a035e64b9af85ea8f65611c, type: 2}
-  m_Tag: 
+  m_Tag: Posture
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
@@ -316,7 +322,7 @@ BlendTree:
   m_PrefabAsset: {fileID: 0}
   m_Name: Blend Tree
   m_Childs: []
-  m_BlendParameter: attack
+  m_BlendParameter: defence_type
   m_BlendParameterY: Blend
   m_MinThreshold: 0
   m_MaxThreshold: 1
@@ -622,7 +628,7 @@ BlendTree:
   m_PrefabAsset: {fileID: 0}
   m_Name: Blend Tree
   m_Childs: []
-  m_BlendParameter: attack
+  m_BlendParameter: attack_type
   m_BlendParameterY: Blend
   m_MinThreshold: 0
   m_MaxThreshold: 1
@@ -683,6 +689,18 @@ AnimatorController:
   - m_Name: move_speed
     m_Type: 1
     m_DefaultFloat: 3
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: attack_type
+    m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: defence_type
+    m_Type: 1
+    m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
@@ -777,7 +795,7 @@ BlendTree:
   m_PrefabAsset: {fileID: 0}
   m_Name: Blend Tree
   m_Childs: []
-  m_BlendParameter: attack
+  m_BlendParameter: attack_type
   m_BlendParameterY: Blend
   m_MinThreshold: 0
   m_MaxThreshold: 1
@@ -792,7 +810,7 @@ BlendTree:
   m_PrefabAsset: {fileID: 0}
   m_Name: Blend Tree
   m_Childs: []
-  m_BlendParameter: attack
+  m_BlendParameter: defence_type
   m_BlendParameterY: Blend
   m_MinThreshold: 0
   m_MaxThreshold: 1
@@ -929,16 +947,16 @@ AnimatorStateMachine:
     m_Position: {x: 220, y: -30, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5763248254969324284}
-    m_Position: {x: 240, y: 150, z: 0}
+    m_Position: {x: 220, y: 150, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7414465401898257196}
     m_Position: {x: 220, y: -80, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5857348620639375417}
-    m_Position: {x: 230, y: 70, z: 0}
+    m_Position: {x: 220, y: 70, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4665238655672384313}
-    m_Position: {x: 240, y: 260, z: 0}
+    m_Position: {x: 220, y: 260, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5719920230517313643}
     m_Position: {x: -60, y: 320, z: 0}
@@ -1315,7 +1333,7 @@ BlendTree:
   m_PrefabAsset: {fileID: 0}
   m_Name: Blend Tree
   m_Childs: []
-  m_BlendParameter: attack
+  m_BlendParameter: attack_type
   m_BlendParameterY: Blend
   m_MinThreshold: 0
   m_MaxThreshold: 1
@@ -1330,7 +1348,7 @@ BlendTree:
   m_PrefabAsset: {fileID: 0}
   m_Name: Blend Tree
   m_Childs: []
-  m_BlendParameter: attack
+  m_BlendParameter: defence_type
   m_BlendParameterY: Blend
   m_MinThreshold: 0
   m_MaxThreshold: 1
@@ -1379,6 +1397,12 @@ AnimatorStateTransition:
   - m_ConditionMode: 7
     m_ConditionEvent: act_Normal
     m_EventTreshold: 7
+  - m_ConditionMode: 7
+    m_ConditionEvent: act_Normal
+    m_EventTreshold: 2
+  - m_ConditionMode: 7
+    m_ConditionEvent: act_Normal
+    m_EventTreshold: 3
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -8137382933078953401}
   m_Solo: 0
@@ -1471,7 +1495,7 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 2c668522ba3444d46bdfec7340235919, type: 2}
-  m_Tag: 
+  m_Tag: Posture
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
@@ -1572,6 +1596,12 @@ AnimatorStateTransition:
   - m_ConditionMode: 7
     m_ConditionEvent: act_Normal
     m_EventTreshold: 5
+  - m_ConditionMode: 7
+    m_ConditionEvent: act_Normal
+    m_EventTreshold: 2
+  - m_ConditionMode: 7
+    m_ConditionEvent: act_Normal
+    m_EventTreshold: 3
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -8137382933078953401}
   m_Solo: 0
@@ -1610,7 +1640,7 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 925350b707180da4b911cccf2d6afdb5, type: 2}
-  m_Tag: 
+  m_Tag: Posture
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 

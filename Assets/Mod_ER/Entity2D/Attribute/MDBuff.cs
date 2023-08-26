@@ -6,6 +6,7 @@ namespace ER.Entity2D
     /// <summary>
     /// 效果
     /// </summary>
+    [Serializable]
     public abstract class MDBuff
     {
         #region 属性
@@ -138,6 +139,13 @@ namespace ER.Entity2D
         #endregion 事件
 
         #region 效果
+        /// <summary>
+        /// 重置时间
+        /// </summary>
+        public void ResetTime()
+        {
+            time = defTime;
+        }
 
         /// <summary>
         /// 自定义叠加策略
