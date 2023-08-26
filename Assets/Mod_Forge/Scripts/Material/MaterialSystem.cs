@@ -99,7 +99,7 @@ public class MaterialSystem : MonoBehaviour
     /// </summary>
     private void InitMaterialItemStore()
     {
-        ItemStoreManager.Instance.Creat("materialItemStore");
+        ItemStoreManager.Instance.Create("materialItemStore");
         materialsItemStore = ItemStoreManager.Instance.Stores["materialItemStore"];
         materials = new List<GameObject>();
 

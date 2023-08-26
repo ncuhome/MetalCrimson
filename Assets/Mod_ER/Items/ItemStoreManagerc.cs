@@ -48,7 +48,7 @@ namespace ER.Items
         /// </summary>
         /// <param name="storeName">仓库名称</param>
         /// <param name="size">仓库大小</param>
-        public ItemStore Creat(string storeName, int size = 64)
+        public ItemStore Create(string storeName, int size = 64)
         {
             ItemStore store = new ItemStore(storeName, size);
             stores[storeName] = store;

@@ -1,6 +1,7 @@
 ﻿// Ignore Spelling: mana Armor
 
 using ER.Entity2D;
+using System;
 using UnityEngine;
 
 namespace Mod_Level
@@ -28,14 +29,34 @@ namespace Mod_Level
             mana.Owner = owner;
             mana.Initialize();
 
-            owner.CreateDelegation("ATAnimator", (IAttribute at) =>
+            ATAnimator ator = owner.GetAttribute<ATAnimator>();
+            if (animator != null)
             {
-                animator = (at as ATAnimator).Animator;
-            });
-            owner.CreateDelegation("ATActionManager", (IAttribute at) =>
+                animator = ator.Animator;
+            }
+            else
             {
-                actionManager = at as ATActionManager;
-            });
+                Debug.Log("一般获取属性动画机失败");
+                owner.CreateDelegation("ATAnimator", (IAttribute at) =>
+                {
+                    Debug.Log("成功获取动画机");
+                    animator = (at as ATAnimator).Animator;
+                });
+            }
+
+            actionManager = owner.GetAttribute<ATActionManager>();
+            if (actionManager == null)
+            {
+                owner.CreateDelegation("ATActionManager", (IAttribute at) =>
+                {
+                    actionManager = at as ATActionManager;
+                });
+            }
+
+            health.DeadEvent += (ValueEventInfo info) =>
+            {
+                Dead = true;
+            };
         }
 
         #endregion 初始化
@@ -82,45 +103,44 @@ namespace Mod_Level
 
         #endregion 相关
 
-        #region 基础属性
 
-        [Header("基础属性")]
+        #region 属性
+
+        [Header("属性 - 基础")]
+        [Tooltip("生命值")]
         public float defHealth;
 
-        /// <summary>
-        /// 基础耐力上限
-        /// </summary>
+        [Tooltip("精力值")]
         public float defStamina;
 
-        /// <summary>
-        /// 基础魔力上限
-        /// </summary>
+        [Tooltip("魔力值")]
         public float defMana;
 
-        /// <summary>
-        /// 基础角色重量
-        /// </summary>
-        public float defWeight;
 
-        /// <summary>
-        /// 基础移动速度
-        /// </summary>
+        [Tooltip("移动速度")]
         public float defSpeed;
 
-        /// <summary>
-        /// 基础力量（用于做伤害参考值）
-        /// </summary>
-        public float defPower;
+        [Tooltip("冷却系数")]
+        public float defCDMultiply;
 
-        /// <summary>
-        /// 基础技能CD减免
-        /// </summary>
-        public float defCDReduction;
-
-        /// <summary>
-        /// 基础防御值
-        /// </summary>
+        [Tooltip("防御")]
         public float defDefence;
+
+        [Tooltip("防御系数")]
+        public float defDefenceMultiply;
+
+        [Tooltip("重量")]
+        public float defWeight;
+
+        [Tooltip("韧性抗性")]
+        public float defTenacity;
+
+
+        [Tooltip("护甲")]
+        public float defArmor;
+
+        [Tooltip("护甲等级")]
+        public float defArmorLevel;
 
         #endregion 基础属性
 
@@ -273,6 +293,14 @@ namespace Mod_Level
                 animator.SetBool("dead", value);
                 actionManager.ForceBackDefault();
             }
+        }
+
+        /// <summary>
+        /// 实体死亡, 销毁对象
+        /// </summary>
+        public void EntityDestroy()
+        {
+            Destroy(owner.gameObject);
         }
 
         #endregion 属性

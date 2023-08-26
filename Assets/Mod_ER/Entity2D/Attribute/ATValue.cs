@@ -199,7 +199,7 @@ namespace ER.Entity2D
                     });
                 }
 
-                if(this.value < 0 && DeadEvent !=null)
+                if(this.value <= 0 && DeadEvent !=null)
                 {
                     DeadEvent(new ValueEventInfo
                     {
@@ -315,7 +315,7 @@ namespace ER.Entity2D
                         pruner = pruner
                     });
                 }
-                if (this.value < 0 && DeadEvent != null)
+                if (this.value <= 0 && DeadEvent != null)
                 {
                     DeadEvent(new ValueEventInfo
                     {
