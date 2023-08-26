@@ -19,6 +19,29 @@ namespace Mod_Level
         public void StopAction(string actionName)
         {
             manager.Stop(actionName);
+            Debug.Log($"尝试停止动作:{actionName}");
+        }
+        /// <summary>
+        /// 停止攻击, 并回到指定姿势
+        /// </summary>
+        /// <param name="posture"></param>
+        public void StopAttack(string posture)
+        {
+            switch (posture.ToLower())
+            {
+                case "up":
+                    manager.Stop("Attack");
+                    manager.Action("PostureUp");
+                    break;
+                case "down":
+                    manager.Stop("Attack");
+                    manager.Action("PostureDown");
+                    break;
+                default:
+                    manager.Stop("Attack");
+                    manager.Action("PostureFront");
+                    break;
+            }
         }
     }
 }

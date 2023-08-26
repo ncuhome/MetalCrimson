@@ -1,7 +1,6 @@
 ﻿using ER.Entity2D;
-using System.Buffers;
 using System.Collections.Generic;
-using System.Net.Mail;
+using UnityEngine;
 
 namespace Mod_Level
 {
@@ -78,6 +77,7 @@ namespace Mod_Level
         }
         protected override void StopAction(params string[] keys)
         {
+            Debug.Log("退出攻击");
             manager.OpenMixedLayer("Move");
         }
     }
