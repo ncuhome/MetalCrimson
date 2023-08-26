@@ -1,4 +1,6 @@
-﻿using Mod_Console;
+﻿// Ignore Spelling: Unregister
+
+using Mod_Console;
 using System;
 using System.Collections.Generic;
 
@@ -71,7 +73,7 @@ namespace ER.Save
 
         public SaveEntry()
         {
-            identifier = "Unkown";
+            identifier = "Unknown";
             data = new Dictionary<string, object>();
         }
 
@@ -85,29 +87,8 @@ namespace ER.Save
     /// <summary>
     /// 存档封装器
     /// </summary>
-    public class SaveWrapper
+    public class SaveWrapper:Singleton<SaveWrapper>
     {
-        #region 单例封装
-
-        private static SaveWrapper instance;
-
-        public static SaveWrapper Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new SaveWrapper();
-                }
-                return instance;
-            }
-        }
-
-        private SaveWrapper()
-        { }
-
-        #endregion 单例封装
-
         #region 属性
 
         /// <summary>

@@ -48,3 +48,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Charactershadowtest
+    uniqueID: 220781663
+    locked: 0

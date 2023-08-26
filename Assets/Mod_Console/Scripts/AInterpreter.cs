@@ -127,7 +127,7 @@ namespace Mod_Console
             {
                 if (parameters.IsMate(DataType.Text, DataType.Integer))
                 {
-                    ItemStoreManager.Instance.Creat(parameters[0].ToString(), (int)parameters[1].Value);
+                    ItemStoreManager.Instance.Create(parameters[0].ToString(), (int)parameters[1].Value);
                     Print($"仓库创建成功:{parameters[0].ToString()}");
                 }
                 else
@@ -137,7 +137,7 @@ namespace Mod_Console
             }
             else if (parameters.Length == 1)
             {
-                ItemStoreManager.Instance.Creat(parameters[0].ToString());
+                ItemStoreManager.Instance.Create(parameters[0].ToString());
                 Print($"仓库创建成功:{parameters[0].ToString()}");
             }
             else
