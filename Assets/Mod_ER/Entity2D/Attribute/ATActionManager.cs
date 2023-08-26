@@ -1,9 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ER.Entity2D
 {
+    [Serializable]
+    public class ActionList
+    {
+        [SerializeField]
+        public List<MDAction> actions = new();
+    }
+
     /// <summary>
     /// 对角色动作的管理
     /// </summary>
@@ -16,12 +25,29 @@ namespace ER.Entity2D
 
         public override void Initialize()
         {
+            /*
             MDAction[] ms= GetComponentsInChildren<MDAction>();
             animator = owner.GetAttribute<ATAnimator>().Animator;
             foreach (MDAction action in ms)
             {
                 Add(action);
+            }*/
+            ATAnimator at = null; 
+            if(owner.TryGetAttribute("ATAnimator",ref at, (IAttribute _at)=>
+                {
+                    animator = ((ATAnimator)_at).Animator;
+            }))
+            {
+                animator = at.Animator;
             }
+            for(int i=0;i<_actions.Count;i++)
+            {
+                for(int k = 0; k < _actions[i].actions.Count;k++)
+                {
+                    Add(_actions[i].actions[k],i);
+                }
+            }
+            _actions=null;
         }
 
         #endregion 初始化
@@ -38,12 +64,35 @@ namespace ER.Entity2D
         /// </summary>
         private Animator animator;
 
-        public List<MDAction> _actions;
+        /// <summary>
+        /// 动画机
+        /// </summary>
+        public Animator Animator { get { return animator; } }
+
+        [SerializeField]
+        [Tooltip("预加载动作列表 - 不要在运行后修改")]
+        private List<ActionList> _actions;
+
+        [Tooltip("动作列表")]
+        [SerializeField]
+        private List<ActionList> actionLists = new();
 
         #endregion 属性
 
         #region 动作管理
-
+        /// <summary>
+        /// 设置动作的动画参数
+        /// </summary>
+        /// <param name="layer"></param>
+        /// <param name="aim_index"></param>
+        public void SetActAnimationParam(MDAction action,int aim_index)
+        {
+            animator.SetInteger(GetActionLayer(action), aim_index);
+        }
+        /// <summary>
+        /// 打开混合动画层
+        /// </summary>
+        /// <param name="layerName"></param>
         public void OpenMixedLayer(string layerName)
         {
             animator.SetLayerWeight(animator.GetLayerIndex(layerName), 1f);
@@ -77,33 +126,33 @@ namespace ER.Entity2D
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        private string GetActionLayer(MDAction action)
+        public string GetActionLayer(MDAction action)
         {
-            StringBuilder sb = new StringBuilder("act");
-            if (action.layer == string.Empty)
-            {
-                sb.Append("_Base Layer");
-            }
-            else
-            {
-                sb.Append('_');
-                sb.Append(action.layer);
-            }
+            StringBuilder sb = new StringBuilder("act_");
+            sb.Append(action.layer);
             return sb.ToString();
         }
         /// <summary>
         /// 添加新的动作
         /// </summary>
         /// <param name="action"></param>
-        public void Add(MDAction action)
+        public void Add(MDAction action,int layer)
         {
             if(actions.ContainsKey(action.actionName))
             {
-                Debug.LogError($"该动作槽位已经被占用:{action.actionName}");
+                Debug.LogWarning($"该动作槽位已经被占用:{action.actionName}");
             }
+            if (layer < 0) { Debug.LogError($"动作层级索引无效!:{action.actionName}"); return; }
+            while(layer >= actionLists.Count)
+            {
+                actionLists.Add(new ActionList());
+            }
+
             action.manager = this;
-            action.index = actions.Count;
+            action.index = actionLists[layer].actions.Count;
+            actionLists[layer].actions.Add(action);
             actions[action.actionName] = action;
+
             action.Initialize();
         }
 

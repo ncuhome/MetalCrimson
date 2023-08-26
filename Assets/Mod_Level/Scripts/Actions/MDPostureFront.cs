@@ -6,7 +6,7 @@ namespace Mod_Level
     public class MDPostureFront : MDAction
     {
         public ATActionRegion region;
-        public MDPostureFront() { actionName = "PostureFront"; layer = "Normal"; }
+        public MDPostureFront() { actionName = "PostureFront"; layer = 0; }
         public override void Initialize()
         {
             region.time = -1f;
@@ -30,7 +30,7 @@ namespace Mod_Level
             ATCharacterState state = manager.Owner.GetAttribute<ATCharacterState>();
             if (state != null)
             {
-                state.posture = ATCharacterState.Posture.Front;
+                state.ActPosture = ATCharacterState.Posture.Front;
             }
             else
             {

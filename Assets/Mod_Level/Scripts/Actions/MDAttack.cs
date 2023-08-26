@@ -12,7 +12,7 @@ namespace Mod_Level
         /// 是否处于攻击状态
         /// </summary>
         private bool attacking = false;
-        public MDAttack() { actionName = "Attack"; layer = "Normal"; }
+        public MDAttack() { actionName = "Attack"; layer = 0; }
 
         public override bool ActionJudge()
         {
@@ -57,7 +57,7 @@ namespace Mod_Level
         {
             if (attacking) return;//处于攻击状态不执行新的攻击
             manager.CloseMixedLayer("Move");
-            switch (state.posture)
+            switch (state.ActPosture)
             {
                 case ATCharacterState.Posture.Up:
                     regions[0].Reset();

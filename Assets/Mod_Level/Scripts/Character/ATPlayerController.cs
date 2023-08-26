@@ -24,6 +24,17 @@ namespace Mod_Level
             if (state == null) Debug.LogError("未找到角色的状态管理器:<ATPlayerState>");
             Debug.Log($"is null {InputManager.inputActions == null}");
 
+            /*
+            ATAnimator at = null;
+            if(owner.TryGetAttribute("ATAnimator",ref at,(IAttribute _at)=>
+            {
+                animator = ((ATAnimator)_at).Animator;
+            }))
+            {
+                animator = at.Animator;
+            }*/
+
+
             InputManager.inputActions.Player.MoveLeft.performed += MoveLeft;
             InputManager.inputActions.Player.MoveLeft.canceled += _MoveLeft;
             InputManager.inputActions.Player.MoveRight.performed += MoveRight;
@@ -37,11 +48,35 @@ namespace Mod_Level
             InputManager.inputActions.Player.Skill1.performed += Skill1;
             InputManager.inputActions.Player.Skill2.performed += Skill2;
             InputManager.inputActions.Player.Interact.performed += Interact;
+
+
+            region_up.time = -1f;
+            region_up.actor = owner;
+            region_up.actionName = "PostureUpDefense";
+            region_up.actionType = "PassiveDefense";
+            region_up.GetComponent<ATActionResponse>().JudgeBreak = Defense;
+            region_up.Initialize();
+
+            region_front.time = -1f;
+            region_front.actor = owner;
+            region_front.actionName = "PostureUpDefense";
+            region_front.actionType = "PassiveDefense";
+            region_front.GetComponent<ATActionResponse>().JudgeBreak = Defense;
+            region_front.Initialize();
+
+            region_down.time = -1f;
+            region_down.actor = owner;
+            region_down.actionName = "PostureUpDefense";
+            region_down.actionType = "PassiveDefense";
+            region_down.GetComponent<ATActionResponse>().JudgeBreak = Defense;
+            region_down.Initialize();
         }
 
         #endregion 初始化
 
         #region 属性
+
+
 
         public float limitAngle = 60f;
 
@@ -50,6 +85,7 @@ namespace Mod_Level
         /// </summary>
         public float lineHeight = 2;
 
+        
         /// <summary>
         /// 动作管理器
         /// </summary>
@@ -65,6 +101,12 @@ namespace Mod_Level
         /// </summary>
         public LineRenderer line;
 
+
+        public ATActionRegion region_up;
+
+        public ATActionRegion region_front;
+
+        public ATActionRegion region_down;
         #endregion 属性
 
         #region 角色控制
@@ -153,6 +195,38 @@ namespace Mod_Level
             }
         }
 
+        private void PostureUp()
+        {
+            state.ActPosture = ATCharacterState.Posture.Up;
+            region_up.Reset();
+            region_down.gameObject.SetActive(false);
+            region_front.gameObject.SetActive(false);
+        }
+        private void PostureFront()
+        {
+            state.ActPosture = ATCharacterState.Posture.Front;
+            region_front.Reset();
+            region_down.gameObject.SetActive(false);
+            region_up.gameObject.SetActive(false);
+        }
+        private void PostureDown()
+        {
+            state.ActPosture = ATCharacterState.Posture.Down;
+            region_down.Reset();
+            region_up.gameObject.SetActive(false);
+            region_front.gameObject.SetActive(false);
+        }
+
+        /// <summary>
+        /// 防御判定
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        private bool Defense(ActionInfo info)
+        {
+            return true;
+        }
+
         #endregion 角色控制
 
         #region Unity
@@ -183,42 +257,24 @@ namespace Mod_Level
             {
                 if (delta.y > 0)//上
                 {
-                    if (state.posture == ATCharacterState.Posture.Front)
+                    if (state.ActPosture == ATCharacterState.Posture.Front || state.ActPosture == ATCharacterState.Posture.Down)
                     {
-                        actionManager.Stop("PostureFront");
-                        actionManager.Action("PostureUp");
-                    }
-                    else if (state.posture == ATCharacterState.Posture.Down)
-                    {
-                        actionManager.Stop("PostureDown");
-                        actionManager.Action("PostureUp");
+                        PostureUp();
                     }
                 }
                 else//下
                 {
-                    if (state.posture == ATCharacterState.Posture.Front)
+                    if (state.ActPosture == ATCharacterState.Posture.Front || state.ActPosture == ATCharacterState.Posture.Up)
                     {
-                        actionManager.Stop("PostureFront");
-                        actionManager.Action("PostureDown");
-                    }
-                    else if (state.posture == ATCharacterState.Posture.Up)
-                    {
-                        actionManager.Stop("PostureUp");
-                        actionManager.Action("PostureDown");
+                        PostureDown();
                     }
                 }
             }
             else//前
             {
-                if (state.posture == ATCharacterState.Posture.Up)
+                if (state.ActPosture == ATCharacterState.Posture.Up || state.ActPosture == ATCharacterState.Posture.Down)
                 {
-                    actionManager.Stop("PostureUp");
-                    actionManager.Action("PostureFront");
-                }
-                else if (state.posture == ATCharacterState.Posture.Down)
-                {
-                    actionManager.Stop("PostureDown");
-                    actionManager.Action("PostureFront");
+                    PostureFront();
                 }
             }
         }

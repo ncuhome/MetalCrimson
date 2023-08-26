@@ -7,7 +7,7 @@ namespace Mod_Level
     /// </summary>
     public class MDUseItem:MDAction
     {
-        public MDUseItem() { actionName = "UseItem"; layer = "Normal"; }
+        public MDUseItem() { actionName = "UseItem"; layer = 0; }
 
         public override void Initialize()
         {

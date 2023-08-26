@@ -24,7 +24,7 @@ namespace Mod_Level
     /// </summary>
     public abstract class MDSkill:MDAction
     {
-        public MDSkill() { actionName = "Skill";layer = "Normal"; }
+        public MDSkill() { actionName = "Skill";layer = 0; }
         /// <summary>
         /// 基础魔力消耗
         /// </summary>

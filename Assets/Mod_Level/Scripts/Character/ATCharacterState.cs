@@ -1,7 +1,6 @@
 ﻿// Ignore Spelling: mana Armor
 
 using ER.Entity2D;
-using System;
 using UnityEngine;
 
 namespace Mod_Level
@@ -103,7 +102,6 @@ namespace Mod_Level
 
         #endregion 相关
 
-
         #region 属性
 
         [Header("属性 - 基础")]
@@ -115,7 +113,6 @@ namespace Mod_Level
 
         [Tooltip("魔力值")]
         public float defMana;
-
 
         [Tooltip("移动速度")]
         public float defSpeed;
@@ -135,19 +132,20 @@ namespace Mod_Level
         [Tooltip("韧性抗性")]
         public float defTenacity;
 
-
         [Tooltip("护甲")]
         public float defArmor;
 
         [Tooltip("护甲等级")]
         public float defArmorLevel;
 
-        #endregion 基础属性
+        #endregion 属性
 
         #region 属性
 
         [Header("当前属性")]
-        public Posture posture = Posture.Front;
+        [Tooltip("角色架势 - 不要修改")]
+        [SerializeField]
+        private Posture posture = Posture.Front;
 
         /// <summary>
         /// 面朝方向
@@ -292,6 +290,33 @@ namespace Mod_Level
                 dead = value;
                 animator.SetBool("dead", value);
                 actionManager.ForceBackDefault();
+            }
+        }
+
+        public Posture ActPosture
+        {
+            get => posture;
+            set
+            {
+                posture = value;
+                switch (value)
+                {
+                    case Posture.Up:
+                        animator.SetInteger("posture_type", 1);
+                        break;
+
+                    case Posture.Front:
+                        animator.SetInteger("posture_type", 2);
+                        break;
+
+                    case Posture.Down:
+                        animator.SetInteger("posture_type", 3);
+                        break;
+
+                    default:
+                        animator.SetInteger("posture_type", 2);
+                        break;
+                }
             }
         }
 

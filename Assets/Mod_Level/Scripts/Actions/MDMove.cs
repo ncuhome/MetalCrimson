@@ -1,4 +1,5 @@
 ﻿using ER.Entity2D;
+using System.Buffers;
 using UnityEngine;
 
 namespace Mod_Level
@@ -21,7 +22,7 @@ namespace Mod_Level
         private ATCharacterState.Direction move_dir;//当前移动方向
 
         public MDMove()
-        { actionName = "Move"; layer = "Move"; }
+        { actionName = "Move"; layer = 1; }
 
         public override void Initialize()
         {
@@ -110,6 +111,10 @@ namespace Mod_Level
                         body.velocity = new Vector2(-state.speed, body.velocity.y);
                     }
                     break;
+            }
+            if(manager.Animator.GetInteger(manager.GetActionLayer(this)) != 2)
+            {
+                manager.SetActAnimationParam(this, this.index);
             }
         }
     }

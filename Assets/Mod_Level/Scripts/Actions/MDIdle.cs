@@ -5,7 +5,7 @@ namespace Mod_Level
 {
     public class MDIdle : MDAction
     {
-        public MDIdle() { actionName = "Idle"; layer = "All"; }
+        public MDIdle() { actionName = "Idle"; layer = 0; }
         public override void Initialize()
         {
 

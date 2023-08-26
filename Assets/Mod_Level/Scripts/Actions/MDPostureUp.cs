@@ -6,7 +6,7 @@ namespace Mod_Level
     public class MDPostureUp : MDAction
     {
         public ATActionRegion region;
-        public MDPostureUp() { actionName = "PostureUp"; layer = "Normal"; }
+        public MDPostureUp() { actionName = "PostureUp"; layer = 0; }
         public override void Initialize()
         {
             region.time = -1f;
@@ -30,7 +30,7 @@ namespace Mod_Level
             ATCharacterState state = manager.Owner.GetAttribute<ATCharacterState>();
             if (state != null)
             {
-                state.posture = ATCharacterState.Posture.Up;
+                state.ActPosture = ATCharacterState.Posture.Up;
             }
             else
             {

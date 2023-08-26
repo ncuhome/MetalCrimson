@@ -32,9 +32,9 @@ namespace ER.Entity2D
         /// </summary>
         public int index;
         /// <summary>
-        /// 所在动画层名称(动作管理器将根据此名称修改 相应的动画参数, 动画参数名称 = "act_"+"动画层名称")
+        /// 所在动画层索引
         /// </summary>
-        public string layer;
+        public int layer;
         #endregion
 
         #region 功能

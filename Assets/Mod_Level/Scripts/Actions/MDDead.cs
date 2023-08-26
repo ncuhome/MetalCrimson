@@ -4,7 +4,7 @@ namespace Mod_Level
 {
     public class MDDead : MDAction
     {
-        public MDDead() { actionName = "Dead";layer = "Normal"; }
+        public MDDead() { actionName = "Dead";layer = 0; }
         public override void Initialize()
         {
             ATCharacterState state = manager.Owner.GetAttribute<ATCharacterState>();

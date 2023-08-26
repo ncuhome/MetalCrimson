@@ -15,7 +15,7 @@ namespace Mod_Level
         private bool defensing = false;
 
         public MDDefence()
-        { actionName = "Defence"; layer = "Normal"; }
+        { actionName = "Defence"; layer = 0; }
 
         public override void Initialize()
         {
@@ -72,7 +72,7 @@ namespace Mod_Level
         protected override void StartAction(params string[] keys)
         {
             if (defensing) return;//处于防御状态不执行新的防御
-            switch (state.posture)
+            switch (state.ActPosture)
             {
                 case ATCharacterState.Posture.Up:
                     regions[0].Reset();

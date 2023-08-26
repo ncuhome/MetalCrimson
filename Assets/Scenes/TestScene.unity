@@ -13403,22 +13403,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &607987170774459213
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5511000769221102480}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 984917002296123683}
-  m_Father: {fileID: 1428287313681913864}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &655845747809554390
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -13471,7 +13455,7 @@ GameObject:
   - component: {fileID: 1801488761686155871}
   - component: {fileID: 7558021163324240464}
   m_Layer: 9
-  m_Name: DefenseRegion
+  m_Name: DefenseUpPassive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13493,7 +13477,7 @@ MonoBehaviour:
   actionName: Move
   manager: {fileID: 0}
   index: 0
-  layer: Move
+  layer: 1
   region_front: {fileID: 4357426239378653458}
   region_back: {fileID: 4685430294594543552}
 --- !u!1 &798700814710605080
@@ -13638,24 +13622,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttributeName: ATActionResponse
---- !u!114 &918385293033043284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5511000769221102480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6988070c9287de04a9624b551d7bc929, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  acting: 0
-  actionName: PostureUp
-  manager: {fileID: 0}
-  index: 0
-  layer: Normal
-  region: {fileID: 2434642421533493818}
 --- !u!33 &933316273890627089
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -13749,7 +13715,7 @@ Transform:
   - {fileID: 1734612760694182192}
   - {fileID: 469846084052696008}
   - {fileID: 4544910425836206810}
-  m_Father: {fileID: 607987170774459213}
+  m_Father: {fileID: 2237759795418753513}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &987123100145103249
@@ -13821,23 +13787,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &996586740551639260
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2095771202587782152}
-  - component: {fileID: 8780363681973379465}
-  m_Layer: 9
-  m_Name: PostureDown
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!33 &1028782431444743240
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -13862,7 +13811,7 @@ MonoBehaviour:
   actionName: Defence
   manager: {fileID: 0}
   index: 0
-  layer: Normal
+  layer: 0
   regions:
   - {fileID: 5603818097314067592}
   - {fileID: 8923908484691623965}
@@ -14154,7 +14103,7 @@ GameObject:
   - component: {fileID: 7821254746079657044}
   - component: {fileID: 5274841909196107288}
   m_Layer: 9
-  m_Name: DefenseRegion
+  m_Name: DefenseDownPassive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14259,14 +14208,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8616611080783540930}
-  - {fileID: 5077942488376992502}
   - {fileID: 2972896291041317851}
   - {fileID: 2237759795418753513}
-  - {fileID: 3591807782306524841}
-  - {fileID: 607987170774459213}
-  - {fileID: 5264997926613060490}
-  - {fileID: 2095771202587782152}
   - {fileID: 5342488847147161938}
+  - {fileID: 5077942488376992502}
+  - {fileID: 3591807782306524841}
   m_Father: {fileID: 7088463040132087269}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14598,7 +14544,7 @@ MonoBehaviour:
   actionName: Attack
   manager: {fileID: 0}
   index: 0
-  layer: Normal
+  layer: 0
   regions:
   - {fileID: 1611616168807888467}
   - {fileID: 2945650602749863482}
@@ -14810,22 +14756,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2095771202587782152
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 996586740551639260}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2589415115981934444}
-  m_Father: {fileID: 1428287313681913864}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2103559968907642907
 GameObject:
   m_ObjectHideFlags: 0
@@ -14928,6 +14858,9 @@ Transform:
   - {fileID: 5797937069865681501}
   - {fileID: 3804560306785475844}
   - {fileID: 8239519228631073259}
+  - {fileID: 984917002296123683}
+  - {fileID: 4346840991883296765}
+  - {fileID: 2589415115981934444}
   m_Father: {fileID: 1428287313681913864}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15288,7 +15221,7 @@ Transform:
   - {fileID: 5031174697683017362}
   - {fileID: 1565267320196258478}
   - {fileID: 6255261523414877605}
-  m_Father: {fileID: 2095771202587782152}
+  m_Father: {fileID: 2237759795418753513}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2612795459029677106
@@ -15943,29 +15876,12 @@ GameObject:
   - component: {fileID: 3252477729162003775}
   - component: {fileID: 7145885121391306663}
   m_Layer: 9
-  m_Name: DefenseRegion
+  m_Name: DefenseFrontPassive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!1 &3223549516010367390
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5264997926613060490}
-  - component: {fileID: 6203715990268870473}
-  m_Layer: 9
-  m_Name: PostureFront
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!60 &3252477729162003775
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -16809,7 +16725,7 @@ MonoBehaviour:
   actionName: Idle
   manager: {fileID: 0}
   index: 0
-  layer: All
+  layer: 0
 --- !u!4 &4254398299154210953
 Transform:
   m_ObjectHideFlags: 0
@@ -16922,7 +16838,7 @@ Transform:
   - {fileID: 5806366552748929746}
   - {fileID: 53721732830590826}
   - {fileID: 6725180850053858956}
-  m_Father: {fileID: 5264997926613060490}
+  m_Father: {fileID: 2237759795418753513}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4357426239378653458
@@ -17962,22 +17878,6 @@ MonoBehaviour:
   listType: 2
   TagList:
   - Enemy
---- !u!4 &5264997926613060490
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3223549516010367390}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4346840991883296765}
-  m_Father: {fileID: 1428287313681913864}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5274841909196107288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18155,23 +18055,6 @@ GameObject:
   - component: {fileID: 3252599580287503857}
   m_Layer: 9
   m_Name: p2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &5511000769221102480
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 607987170774459213}
-  - component: {fileID: 918385293033043284}
-  m_Layer: 9
-  m_Name: PostureUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18815,15 +18698,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttributeName: ATActionManager
   _actions:
-  - {fileID: 4235600698003317392}
-  - {fileID: 790766844277499380}
-  - {fileID: 1766150426207312967}
-  - {fileID: 1096838238732087190}
-  - {fileID: 6877078944090148098}
-  - {fileID: 918385293033043284}
-  - {fileID: 6203715990268870473}
-  - {fileID: 8780363681973379465}
-  - {fileID: 8533134060015146026}
+  - actions:
+    - {fileID: 4235600698003317392}
+    - {fileID: 1766150426207312967}
+    - {fileID: 1096838238732087190}
+    - {fileID: 8533134060015146026}
+  - actions:
+    - {fileID: 4235600698003317392}
+    - {fileID: 790766844277499380}
+    - {fileID: 6877078944090148098}
+  actionLists: []
 --- !u!4 &5902507305335182542
 Transform:
   m_ObjectHideFlags: 0
@@ -19210,24 +19094,6 @@ PolygonCollider2D:
       - {x: -0.14, y: -3.36}
       - {x: -0.88, y: -4}
   m_UseDelaunayMesh: 0
---- !u!114 &6203715990268870473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3223549516010367390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5652983ec222f564691b7d253b795484, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  acting: 0
-  actionName: PostureFront
-  manager: {fileID: 0}
-  index: 0
-  layer: Normal
-  region: {fileID: 5927442070951371435}
 --- !u!1 &6246121588829054065
 GameObject:
   m_ObjectHideFlags: 0
@@ -19824,7 +19690,7 @@ MonoBehaviour:
   actionName: Jump
   manager: {fileID: 0}
   index: 0
-  layer: Normal
+  layer: 1
 --- !u!4 &6883379571857715397
 Transform:
   m_ObjectHideFlags: 0
@@ -21192,7 +21058,7 @@ MonoBehaviour:
   actionName: UseItem
   manager: {fileID: 0}
   index: 0
-  layer: Normal
+  layer: 0
 --- !u!4 &8564565341880747557
 Transform:
   m_ObjectHideFlags: 0
@@ -21429,6 +21295,9 @@ MonoBehaviour:
   limitAngle: 60
   lineHeight: 2
   line: {fileID: 528386670424522435}
+  region_up: {fileID: 2434642421533493818}
+  region_front: {fileID: 5927442070951371435}
+  region_down: {fileID: 5586551166054012333}
 --- !u!60 &8745400991524166062
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -21481,24 +21350,6 @@ PolygonCollider2D:
       - {x: -0.28, y: 3.3600001}
       - {x: -0.87, y: 2.6200001}
   m_UseDelaunayMesh: 0
---- !u!114 &8780363681973379465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 996586740551639260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efb6e83c396b08040b2afbae35bceb24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  acting: 0
-  actionName: PostureDown
-  manager: {fileID: 0}
-  index: 0
-  layer: Normal
-  region: {fileID: 5586551166054012333}
 --- !u!212 &8787327714313019736
 SpriteRenderer:
   m_ObjectHideFlags: 0
