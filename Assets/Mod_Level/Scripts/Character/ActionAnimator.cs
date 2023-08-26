@@ -20,6 +20,5 @@ namespace Mod_Level
         {
             manager.Stop(actionName);
         }
-
     }
 }

@@ -1,5 +1,7 @@
 ﻿using ER.Entity2D;
+using System.Buffers;
 using System.Collections.Generic;
+using System.Net.Mail;
 
 namespace Mod_Level
 {
@@ -55,6 +57,7 @@ namespace Mod_Level
         protected override void StartAction(params string[] keys)
         {
             if (attacking) return;//处于攻击状态不执行新的攻击
+            manager.CloseMixedLayer("Move");
             switch (state.posture)
             {
                 case ATCharacterState.Posture.Up:
@@ -75,7 +78,7 @@ namespace Mod_Level
         }
         protected override void StopAction(params string[] keys)
         {
-
+            manager.OpenMixedLayer("Move");
         }
     }
 }
