@@ -17,7 +17,7 @@ namespace Mod_Level
         {
             collectRegion.EnterEvent += Collect;
             getRegion.EnterEvent += Get;
-            itemStore = ItemStoreManager.Instance.Creat(storeName);
+            itemStore = ItemStoreManager.Instance.Create(storeName);
         }
         #endregion
 

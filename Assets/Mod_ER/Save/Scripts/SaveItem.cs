@@ -25,6 +25,9 @@ namespace ER.Save
         public void Restore(SaveEntry saveEntry);
     }
 
+    /// <summary>
+    /// 存档对象
+    /// </summary>
     public abstract class SaveItem : MonoBehaviour, ISavable
     {
         public string identifier = "Test";
