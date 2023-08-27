@@ -66,5 +66,10 @@ namespace ER
             }
             mFilter.mesh = mesh;
         }
+
+        private void OnValidate()
+        {
+            UpdateSetPoints();
+        }
     }
 }

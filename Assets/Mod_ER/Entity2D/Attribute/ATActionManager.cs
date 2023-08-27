@@ -190,6 +190,16 @@ namespace ER.Entity2D
             }
             Debug.LogError($"未找到指定动作：{actionName}");
         }
+
+        public void ActionFunction(string actionName, string key)
+        {
+            if (actions.TryGetValue(actionName, out MDAction action))
+            {
+                action.ActionFunction(key);
+                return;
+            }
+            Debug.LogError($"未找到指定动作：{actionName}");
+        }
         #endregion
     }
 }

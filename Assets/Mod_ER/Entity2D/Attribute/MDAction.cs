@@ -70,6 +70,14 @@ namespace ER.Entity2D
         /// 停止活动
         /// </summary>
         protected abstract void StopAction(params string[] keys);
+        /// <summary>
+        /// 动作函数(由动画控制器调用, 作为动画帧事件)
+        /// </summary>
+        /// <param name="keys"></param>
+        public virtual void ActionFunction(string key)
+        {
+
+        }
         #endregion
     }
 }

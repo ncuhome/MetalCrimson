@@ -14,6 +14,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: act_0
     m_EventTreshold: 1
+  - m_ConditionMode: 6
+    m_ConditionEvent: posture_type
+    m_EventTreshold: 3
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5763248254969324284}
   m_Solo: 0
@@ -479,6 +482,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: act_0
     m_EventTreshold: 1
+  - m_ConditionMode: 6
+    m_ConditionEvent: posture_type
+    m_EventTreshold: 2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1708066570902772802}
   m_Solo: 0
@@ -647,6 +653,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: act_0
     m_EventTreshold: 2
+  - m_ConditionMode: 6
+    m_ConditionEvent: posture_type
+    m_EventTreshold: 2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5857348620639375417}
   m_Solo: 0
@@ -710,6 +719,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: act_0
     m_EventTreshold: 2
+  - m_ConditionMode: 6
+    m_ConditionEvent: posture_type
+    m_EventTreshold: 3
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 4665238655672384313}
   m_Solo: 0
@@ -735,6 +747,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: control
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: posture_type
+    m_EventTreshold: 1
   - m_ConditionMode: 6
     m_ConditionEvent: act_0
     m_EventTreshold: 2
@@ -789,67 +804,67 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: act_0
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: act_1
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: control
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 1
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: superArmor
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: vertigo
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: dead
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: move_speed
     m_Type: 1
     m_DefaultFloat: 3
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: attack_type
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: defence_type
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: posture_type
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Normal
@@ -1248,6 +1263,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: control
     m_EventTreshold: 0
+  - m_ConditionMode: 3
+    m_ConditionEvent: posture_type
+    m_EventTreshold: 1
   - m_ConditionMode: 6
     m_ConditionEvent: act_0
     m_EventTreshold: 1

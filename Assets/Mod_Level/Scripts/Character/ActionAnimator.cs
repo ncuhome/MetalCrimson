@@ -28,5 +28,14 @@ namespace Mod_Level
         {
             manager.Stop("Attack");
         }
+        /// <summary>
+        /// 调用动作的事件帧函数(第一个参数指定动作名称,第二个参数指定函数参数, 两个参数使用冒号分割)
+        /// </summary>
+        /// <param name="key"></param>
+        public void ActionFunction(string key)
+        {
+            string[] _params = key.Split(':');
+            manager.ActionFunction(_params[0], _params[1]);
+        }
     }
 }
