@@ -160,7 +160,7 @@ namespace ER.Entity2D
             List<MDBuff> removeBuffs = new();
             foreach (var buff in buffs)
             {
-                Debug.Log($"buff:{buff.buffName} : time:{buff.time}");
+                //Debug.Log($"buff:{buff.buffName} : time:{buff.time}");
                 if (buff.defTime > 0)
                 {
                     buff.time -= Time.deltaTime;

@@ -59,7 +59,7 @@ namespace Mod_Level
         {
             //如果不可以控制朝向则中断
             if (!state.ControlDir) return;
-            Debug.Log($"移动朝向:{move_dir}");
+            //Debug.Log($"移动朝向:{move_dir}");
             switch (dir)
             {
                 case ATCharacterState.Direction.Right:

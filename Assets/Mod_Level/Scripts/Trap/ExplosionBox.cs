@@ -28,6 +28,7 @@ namespace ER.Entity2D
             {
                 if (info.type == "Attack")
                 {
+                    Debug.Log($"爆炸箱子收到攻击:{info.infos["damage"]}");
                     if (info.infos.TryGetValue("damage", out object value))
                     {
                         HP -= (float)value;
@@ -50,7 +51,7 @@ namespace ER.Entity2D
             }
             action = GetAttribute<ATActionRegion>();
             action.time = -1;
-            action.hits = -1;
+            //action.hits = -1;
             action.actionName = "Explosion";
             action.actionType = "Attack";
             action.actor = this;

@@ -171,12 +171,12 @@ namespace ER.Entity2D
         /// <summary>
         /// 动作类型
         /// </summary>
-        public string actionType = "Unkown";
+        public string actionType = "Unknown";
 
         /// <summary>
         /// 动作名称
         /// </summary>
-        public string actionName = "Unkown";
+        public string actionName = "Unknown";
 
         /// <summary>
         /// 动作持续时间，小于0表示无限
@@ -196,7 +196,8 @@ namespace ER.Entity2D
         /// <summary>
         /// 判定次数，小于0表示无限
         /// </summary>
-        public int hits = 1;
+        [SerializeField]
+        private int hits = 1;
 
         /// <summary>
         /// 剩余判定次数
@@ -282,6 +283,7 @@ namespace ER.Entity2D
         #region 区域检测
         public void Reset()
         {
+            Debug.Log($"攻击次数:{hits}, 剩余:{remainHits}");
             remainHits = hits;
             remainTime = time;
             timers = new();
@@ -329,6 +331,7 @@ namespace ER.Entity2D
         private void Action(ATActionResponse response)
         {
             response.ActionResponse(Info);//响应此动作
+            Debug.Log($"攻击次数:{hits}, 剩余:{remainHits}");
             if (hits > 0)
             {
                 remainHits--;
@@ -346,7 +349,7 @@ namespace ER.Entity2D
         private void Enter(Collider2D collision)
         {
             ATActionResponse response = collision.gameObject.GetComponent<ATActionResponse>();
-            Debug.Log($"动作接触:{actionName}  对象:{response != null}, {collision.gameObject.name}");
+            //Debug.Log($"动作接触:{actionName}  对象:{response != null}, {collision.gameObject.name}");
             if (response != null)//必须是 response 封装的Collider才算有效判定
             {
                 if (timers.ContainsKey(response))//非初次接触对象

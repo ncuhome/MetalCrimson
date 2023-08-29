@@ -8,7 +8,10 @@ namespace Mod_Level
 {
     public class MDAttack : MDAction
     {
-        public List<ATActionRegion> regions;
+        //public List<ATActionRegion> regions;
+        [SerializeField]
+        [Tooltip("武器的伤害区域")]
+        private ATActionRegion region;
         private ATCharacterState state;
 
         public enum AttackState
@@ -28,7 +31,16 @@ namespace Mod_Level
         public override void Initialize()
         {
             state = manager.Owner.GetAttribute<ATCharacterState>();
-
+            region.time = 1;
+            //region.hits = 1;
+            region.actor = manager.Owner;
+            region.actionName = "Attack";
+            region.actionType = "Attack";
+            region.infos["damage"] = 15f;
+            region.infos["repel_mode"] = ATRepel.RepelMode.AutoDirection;
+            region.infos["repel_power"] = 10f;
+            region.Initialize();
+            /*
             #region 上架势
 
             regions[0].time = 0.5f;
@@ -60,7 +72,7 @@ namespace Mod_Level
             regions[2].infos["damage"] = 10f;
             regions[2].Initialize();
 
-            #endregion 下架势
+            #endregion 下架势*/
         }
 
         protected override void StartAction(params string[] keys)
@@ -80,6 +92,8 @@ namespace Mod_Level
         private void FuncAttacking()
         {
             atstate = AttackState.Attacking;
+            region.Reset();
+            /*
             switch (state.ActPosture)
             {
                 case ATCharacterState.Posture.Up:
@@ -96,12 +110,14 @@ namespace Mod_Level
 
                 default:
                     break;
-            }
+            }*/
         }
 
         private void FuncStoped()
         {
             atstate = AttackState.Stoped;
+            region.gameObject.SetActive(false);
+            /*
             switch (state.ActPosture)
             {
                 case ATCharacterState.Posture.Up:
@@ -118,7 +134,7 @@ namespace Mod_Level
 
                 default:
                     break;
-            }
+            }*/
         }
 
         public override void ActionFunction(string key)

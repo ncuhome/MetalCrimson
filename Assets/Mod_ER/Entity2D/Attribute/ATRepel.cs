@@ -4,6 +4,10 @@ using UnityEngine.UIElements;
 
 namespace ER.Entity2D
 {
+    /// <summary>
+    /// 击退箱子, 挂载在实体上, 即可接受击退动作;
+    /// 特有参数: repel_mode(ATRepel.RepelMode):击退类型; repel_power(float):击退力度; repel_dir(Vector2):击退方向(仅在 repel_mode 为 CustomDirection 时有效)
+    /// </summary>
     public class ATRepel : MonoAttribute
     {
         public enum RepelMode 
