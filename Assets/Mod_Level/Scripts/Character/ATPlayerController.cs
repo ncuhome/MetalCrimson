@@ -47,27 +47,6 @@ namespace Mod_Level
             InputManager.InputActions.Player.Skill1.performed += Skill1;
             InputManager.InputActions.Player.Skill2.performed += Skill2;
             InputManager.InputActions.Player.Interact.performed += Interact;
-
-            region_up.time = -1f;
-            region_up.actor = owner;
-            region_up.actionName = "PostureUpDefense";
-            region_up.actionType = "PassiveDefense";
-            region_up.GetComponent<ATActionResponse>().JudgeBreak = Defense;
-            region_up.Initialize();
-
-            region_front.time = -1f;
-            region_front.actor = owner;
-            region_front.actionName = "PostureUpDefense";
-            region_front.actionType = "PassiveDefense";
-            region_front.GetComponent<ATActionResponse>().JudgeBreak = Defense;
-            region_front.Initialize();
-
-            region_down.time = -1f;
-            region_down.actor = owner;
-            region_down.actionName = "PostureUpDefense";
-            region_down.actionType = "PassiveDefense";
-            region_down.GetComponent<ATActionResponse>().JudgeBreak = Defense;
-            region_down.Initialize();
         }
 
         #endregion 初始化
@@ -95,12 +74,6 @@ namespace Mod_Level
         /// 辅助线绘制
         /// </summary>
         public LineRenderer line;
-
-        public ATActionRegion region_up;
-
-        public ATActionRegion region_front;
-
-        public ATActionRegion region_down;
 
         #endregion 属性
 
@@ -195,25 +168,16 @@ namespace Mod_Level
         private void PostureUp()
         {
             state.ActPosture = ATCharacterState.Posture.Up;
-            region_up.Reset();
-            region_down.gameObject.SetActive(false);
-            region_front.gameObject.SetActive(false);
         }
 
         private void PostureFront()
         {
             state.ActPosture = ATCharacterState.Posture.Front;
-            region_front.Reset();
-            region_down.gameObject.SetActive(false);
-            region_up.gameObject.SetActive(false);
         }
 
         private void PostureDown()
         {
             state.ActPosture = ATCharacterState.Posture.Down;
-            region_down.Reset();
-            region_up.gameObject.SetActive(false);
-            region_front.gameObject.SetActive(false);
         }
 
         /// <summary>

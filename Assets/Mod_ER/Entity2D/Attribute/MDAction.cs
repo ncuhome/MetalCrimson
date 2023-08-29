@@ -7,8 +7,17 @@ namespace ER.Entity2D
     /// </summary>
     public abstract class MDAction : MonoBehaviour
     {
+        /// <summary>
+        /// 控制类型
+        /// </summary>
         public enum ControlType
         { Bool, Trigger }
+
+        /// <summary>
+        /// 动作阶段
+        /// </summary>
+        public enum ActionState
+        { Disable,Waiting, Acting, Stoped }
 
         #region 初始化
 
@@ -43,6 +52,14 @@ namespace ER.Entity2D
         /// 控制类型
         /// </summary>
         public ControlType controlType;
+
+        [SerializeField]
+        protected ActionState state;
+
+        /// <summary>
+        /// 动作状态
+        /// </summary>
+        public ActionState State => state;
 
         #endregion 属性
 

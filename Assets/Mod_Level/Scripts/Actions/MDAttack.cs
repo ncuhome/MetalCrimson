@@ -12,13 +12,7 @@ namespace Mod_Level
         [Tooltip("武器的伤害区域")]
         private ATActionRegion region;
 
-        private ATCharacterState state;
-
-        public enum AttackState
-        { Waiting, Attacking, Stoped, Disable }
-
-        private AttackState atstate = AttackState.Disable;
-        public AttackState AtkState { get => atstate; }
+        private ATCharacterState ownerState;
 
         public MDAttack()
         { actionName = "Attack"; controlType = ControlType.Trigger; }
@@ -30,7 +24,7 @@ namespace Mod_Level
 
         public override void Initialize()
         {
-            state = manager.Owner.GetAttribute<ATCharacterState>();
+            ownerState = manager.Owner.GetAttribute<ATCharacterState>();
             region.time = 1;
             region.hits = 1;
             region.actor = manager.Owner;
@@ -44,27 +38,27 @@ namespace Mod_Level
 
         protected override void StartAction(params string[] keys)
         {
-            if (atstate != AttackState.Disable) return;//处于攻击状态不执行新的攻击
+            if (state != ActionState.Disable) return;//处于攻击状态不执行新的攻击
             manager.CloseMixedLayer((int)AnimationLayer.Move);
-            atstate = AttackState.Waiting;
+            state = ActionState.Waiting;
         }
 
         protected override void StopAction(params string[] keys)
         {
             Debug.Log("退出攻击");
             manager.OpenMixedLayer((int)AnimationLayer.Move);
-            atstate = AttackState.Disable;
+            state = ActionState.Disable;
         }
 
         private void FuncAttacking()
         {
-            atstate = AttackState.Attacking;
+            state = ActionState.Acting;
             region.Reset();
         }
 
         private void FuncStoped()
         {
-            atstate = AttackState.Stoped;
+            state = ActionState.Stoped;
             region.gameObject.SetActive(false);
         }
 
@@ -89,7 +83,7 @@ namespace Mod_Level
         protected override void BreakAction(params string[] keys)
         {
             manager.OpenMixedLayer((int)AnimationLayer.Move);
-            atstate = AttackState.Disable;
+            state = ActionState.Disable;
         }
     }
 }

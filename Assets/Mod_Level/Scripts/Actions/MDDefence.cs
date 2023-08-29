@@ -6,115 +6,107 @@ namespace Mod_Level
 {
     public class MDDefence : MDAction
     {
-        public List<ATActionRegion> regions;
-        private ATCharacterState state;
+        [SerializeField]
+        [Tooltip("武器的格挡区域")]
+        private ATActionRegion region;
+        [SerializeField]
+        [Tooltip("武器的被动格挡区域")]
+        private ATActionRegion region_passive;
 
-        /// <summary>
-        /// 是否处于防御状态
-        /// </summary>
-        private bool defensing = false;
+        private ATCharacterState ownerState;
 
         public MDDefence()
         { actionName = "Defence"; controlType = ControlType.Bool; }
 
         public override void Initialize()
         {
-            state = manager.Owner.GetAttribute<ATCharacterState>();
+            ownerState = manager.Owner.GetAttribute<ATCharacterState>();
 
-            #region 上架势
 
-            regions[0].time = -1f;
-            regions[0].actor = manager.Owner;
-            regions[0].actionName = "PostureUpDefense";
-            regions[0].actionType = "Defense";
-            regions[0].EndEvent += () => defensing = false;
-            regions[0].GetComponent<ATActionResponse>().JudgeBreak = Defense;
-            regions[0].Initialize();
+            region.time = -1f;
+            region.actor = manager.Owner;
+            region.actionName = "Defence";
+            region.actionType = "Defence";
+            region.GetComponent<ATActionResponse>().JudgeBreak = Defence;
+            region.Initialize();
 
-            #endregion 上架势
+            region_passive.time = -1f;
+            region_passive.actor = manager.Owner;
+            region_passive.actionName = "Defence";
+            region_passive.actionType = "Defence";
+            region_passive.GetComponent<ATActionResponse>().JudgeBreak = Defence;
+            region_passive.Initialize();
 
-            #region 前架势
-
-            regions[1].time = -1f;
-            regions[1].actor = manager.Owner;
-            regions[1].actionName = "PostureFrontDefense";
-            regions[1].actionType = "Defense";
-            regions[1].EndEvent += () => defensing = false;
-            regions[1].GetComponent<ATActionResponse>().JudgeBreak = Defense;
-            regions[1].Initialize();
-
-            #endregion 前架势
-
-            #region 下架势
-
-            regions[2].time = -1f;
-            regions[2].actor = manager.Owner;
-            regions[2].actionName = "PostureDownDefense";
-            regions[2].actionType = "Defense";
-            regions[2].EndEvent += () => defensing = false;
-            regions[2].GetComponent<ATActionResponse>().JudgeBreak = Defense;
-            regions[2].Initialize();
-
-            #endregion 下架势
         }
 
-        private bool Defense(ActionInfo info)
+        private bool Defence(ActionInfo info)
         {
             return true;
         }
 
         public override bool ActionJudge()
         {
-            if (state.stamina.Value <= 0) return false;
+            if (ownerState.stamina.Value <= 0) return false;
             return true;
         }
 
         protected override void StartAction(params string[] keys)
         {
-            if (defensing) return;//处于防御状态不执行新的防御
-            switch (state.ActPosture)
-            {
-                case ATCharacterState.Posture.Up:
-                    regions[0].Reset();
-                    defensing = true;
-                    break;
-
-                case ATCharacterState.Posture.Front:
-                    regions[1].Reset();
-                    defensing = true;
-                    break;
-
-                case ATCharacterState.Posture.Down:
-                    regions[2].Reset();
-                    defensing = true;
-                    break;
-
-                default:
-                    break;
-            }
+            if (state != ActionState.Disable) return;//处于防御状态不执行新的防御
+            state = ActionState.Waiting;
+            enabled = true;
         }
 
         protected override void StopAction(params string[] keys)
         {
-            regions[0].gameObject.SetActive(false);
-            regions[1].gameObject.SetActive(false);
-            regions[2].gameObject.SetActive(false);
-            defensing = false;
+            state = ActionState.Disable;
+            enabled = false;
+        }
+
+        private void FuncDefence()
+        {
+            state = ActionState.Acting;
+            region.Reset();
+            region_passive.gameObject.SetActive(false);
+        }
+
+        private void FuncStop()
+        {
+            Debug.Log("防御停止");
+            state = ActionState.Stoped;
+            region.gameObject.SetActive(false);
+            region_passive.Reset();
+        }
+
+        public override void ActionFunction(string key)
+        {
+            switch (key)
+            {
+                case "Defence":
+                    FuncDefence();
+                    break;
+
+                case "Stop":
+                    FuncStop();
+                    break;
+
+                default:
+                    Debug.Log("未知参数");
+                    break;
+            }
         }
 
         private void Update()
         {
-            if (!defensing) return;
-            state.stamina.ModifyValue(-10 * Time.deltaTime, manager.Owner);
-            if (state.stamina.Value <= 0) StopAction();
+            if (state == ActionState.Acting) return;
+            ownerState.stamina.ModifyValue(-10 * Time.deltaTime, manager.Owner);
+            if (ownerState.stamina.Value <= 0) StopAction();
         }
 
         protected override void BreakAction(params string[] keys)
         {
-            regions[0].gameObject.SetActive(false);
-            regions[1].gameObject.SetActive(false);
-            regions[2].gameObject.SetActive(false);
-            defensing = false;
+            state = ActionState.Disable;
+            enabled = false;
         }
     }
 }

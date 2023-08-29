@@ -5,7 +5,7 @@ namespace Mod_Level
 {
     public class MDMove : MDAction
     {
-        private ATCharacterState state;
+        private ATCharacterState ownerState;
         private Rigidbody2D body;
 
         [SerializeField]
@@ -25,7 +25,7 @@ namespace Mod_Level
 
         public override void Initialize()
         {
-            state = manager.Owner.GetAttribute<ATCharacterState>();
+            ownerState = manager.Owner.GetAttribute<ATCharacterState>();
             body = manager.Owner.GetComponent<Rigidbody2D>();
 
             region_front.touchEvent += () => { movable_front = false; };
@@ -57,17 +57,17 @@ namespace Mod_Level
         private void ChangeDirection(ATCharacterState.Direction dir)
         {
             //如果不可以控制朝向则中断
-            if (!state.ControlDir) return;
+            if (!ownerState.ControlDir) return;
             //Debug.Log($"移动朝向:{move_dir}");
             switch (dir)
             {
                 case ATCharacterState.Direction.Right:
-                    state.direction = ATCharacterState.Direction.Right;
+                    ownerState.direction = ATCharacterState.Direction.Right;
                     manager.Owner.transform.eulerAngles = new Vector3(0, 0, 0);
                     break;
 
                 case ATCharacterState.Direction.Left:
-                    state.direction = ATCharacterState.Direction.Left;
+                    ownerState.direction = ATCharacterState.Direction.Left;
                     manager.Owner.transform.eulerAngles = new Vector3(0, 180, 0);
                     break;
             }
@@ -84,7 +84,7 @@ namespace Mod_Level
         /// <returns></returns>
         private bool isMovable()
         {
-            if (state.direction == move_dir)//检测前方是否可移动
+            if (ownerState.direction == move_dir)//检测前方是否可移动
             {
                 return movable_front;
             }
@@ -98,16 +98,16 @@ namespace Mod_Level
             switch (move_dir)
             {
                 case ATCharacterState.Direction.Right:
-                    if (body.velocity.x < state.speed)
+                    if (body.velocity.x < ownerState.speed)
                     {
-                        body.velocity = new Vector2(state.speed, body.velocity.y);
+                        body.velocity = new Vector2(ownerState.speed, body.velocity.y);
                     }
                     break;
 
                 case ATCharacterState.Direction.Left:
-                    if (body.velocity.x > -state.speed)
+                    if (body.velocity.x > -ownerState.speed)
                     {
-                        body.velocity = new Vector2(-state.speed, body.velocity.y);
+                        body.velocity = new Vector2(-ownerState.speed, body.velocity.y);
                     }
                     break;
             }
