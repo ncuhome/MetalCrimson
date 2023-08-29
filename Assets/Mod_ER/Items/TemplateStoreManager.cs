@@ -1,6 +1,4 @@
-﻿
-using ER.Items;
-using ER.Save;
+﻿using ER.Save;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,13 +10,16 @@ namespace ER.Items
     public class TemplateStoreManager : Singleton<TemplateStoreManager>
     {
         #region 属性
+
         /// <summary>
         /// 仓库组
         /// </summary>
         private Dictionary<string, ItemTemplateStore> stores = new Dictionary<string, ItemTemplateStore>();
-        #endregion
+
+        #endregion 属性
 
         #region 功能
+
         /// <summary>
         /// 重新加载预设目录
         /// </summary>
@@ -38,6 +39,7 @@ namespace ER.Items
                 stores[name] = store;
             }
         }
+
         /// <summary>
         /// 取仓库
         /// </summary>
@@ -61,15 +63,15 @@ namespace ER.Items
         /// </summary>
         /// <param name="name"></param>
         public void Clear(string name)
-        { 
-            if(stores.TryGetValue(name, out var store))
+        {
+            if (stores.TryGetValue(name, out var store))
             {
                 store.Clear();
                 return;
             }
             Debug.Log("指定静态仓库不存在");
         }
-        #endregion
 
+        #endregion 功能
     }
 }

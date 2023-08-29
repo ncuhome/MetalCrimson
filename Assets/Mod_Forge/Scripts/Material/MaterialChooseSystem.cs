@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class MaterialChooseSystem : MonoBehaviour
@@ -23,62 +21,71 @@ public class MaterialChooseSystem : MonoBehaviour
     /// 是否扩展选择区
     /// </summary>
     public bool showMore = false;
+
     /// <summary>
     /// 扩展按钮组件
     /// </summary>
     public ShowMoreButton showMoreButton = null;
+
     /// <summary>
     /// 滑动条组件
     /// </summary>
     public Slider slider = null;
+
     /// <summary>
     /// 材料父物体Transform组件
     /// </summary>
     public RectTransform MaterialsParentTransform = null;
+
     /// <summary>
     /// 父物体基准位置
     /// </summary>
     private Vector3 oldVec;
+
     /// <summary>
     /// 滑动条目标值
     /// </summary>
     public float targetValue;
+
     /// <summary>
     /// 滑动条原有值
     /// </summary>
     private float oldValue;
+
     /// <summary>
     /// 计时器
     /// </summary>
     private float timer;
+
     /// <summary>
     /// 是否能进行拖动滑动条
     /// </summary>
     public bool sliderDrag;
+
     /// <summary>
     /// 初始化单例
     /// </summary>
-    void Awake()
+    private void Awake()
     {
         if (instance == null)
         {
             instance = this;
         }
     }
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         oldVec = MaterialsParentTransform.localPosition;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-
         MoveMaterials();
         MoveSlider();
-
     }
+
     /// <summary>
     /// 进行滑动条的拖动或者自动移动
     /// </summary>
@@ -106,6 +113,7 @@ public class MaterialChooseSystem : MonoBehaviour
             }
         }
     }
+
     /// <summary>
     /// 移动材料位置
     /// </summary>
@@ -139,11 +147,9 @@ public class MaterialChooseSystem : MonoBehaviour
 
     public void HideMaterialPanel()
     {
-
     }
 
     public void ShowMaterialPanel()
     {
-
     }
 }

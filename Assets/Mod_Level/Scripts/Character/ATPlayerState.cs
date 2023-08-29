@@ -1,6 +1,4 @@
-﻿using ER.Entity2D;
-
-namespace Mod_Level
+﻿namespace Mod_Level
 {
     /// <summary>
     /// 玩家属性
@@ -8,15 +6,14 @@ namespace Mod_Level
     public class ATPlayerState : ATCharacterState
     {
         #region 初始化
-        public ATPlayerState() { AttributeName = nameof(ATPlayerState); }
+
+        public ATPlayerState()
+        { AttributeName = nameof(ATPlayerState); }
+
         public override void Initialize()
         {
-            
         }
-        #endregion
 
-        #region 属性
-
-        #endregion
+        #endregion 初始化
     }
 }

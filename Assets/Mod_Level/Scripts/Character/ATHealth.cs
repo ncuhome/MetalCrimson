@@ -3,10 +3,11 @@ using System;
 
 namespace Mod_Level
 {
-    public class ATHealth:ATValue
+    public class ATHealth : ATValue
     {
         private ATCharacterState state;
         private ATBuffManager buffManager;
+
         public ATHealth()
         {
             AttributeName = nameof(ATHealth);
@@ -20,7 +21,7 @@ namespace Mod_Level
                 print("添加委托成功");
             };
             ATActionResponse response = null;
-            if(owner.TryGetAttribute("ATActionResponse",ref response ,action))
+            if (owner.TryGetAttribute("ATActionResponse", ref response, action))
             {
                 response.ActionEvent += GetDamage;
                 print("添加委托成功");
@@ -28,20 +29,19 @@ namespace Mod_Level
 
             state = owner.GetAttribute<ATCharacterState>();
 
-            owner.TryGetAttribute("ATBuffManager", ref buffManager, (IAttribute attribute)=>
+            owner.TryGetAttribute("ATBuffManager", ref buffManager, (IAttribute attribute) =>
             {
                 buffManager = (ATBuffManager)attribute;
             });
-
         }
 
         private void GetDamage(ActionInfo actionInfo)
         {
             //print($"接受判定:{actionInfo.type}");
-            if(actionInfo.type == "Attack")
+            if (actionInfo.type == "Attack")
             {
                 //print("接受攻击");
-                if (actionInfo.infos.TryGetValue("damage",out var damage))
+                if (actionInfo.infos.TryGetValue("damage", out var damage))
                 {
                     float dg = (float)damage;
                     ModifyValue(-dg, actionInfo.actor);

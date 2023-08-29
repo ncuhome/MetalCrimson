@@ -11,20 +11,23 @@
         /// 特征的名称
         /// </summary>
         public string Name { get; set; }
+
         /// <summary>
         /// 所属实体对象
         /// </summary>
         public Entity Owner { get; set; }
+
         /// <summary>
         /// 该特征被添加进实体时的初始化
         /// </summary>
         public void Initialize();
+
         /// <summary>
         /// 销毁该特征，释放资源
         /// </summary>
         public void Destroy();
-
     }
+
     /// <summary>
     /// 对 特征 接口进一步封装，适用于非组件类型的特征封装；
     /// 注意在构造函数中重新复制特征的名称；
@@ -35,13 +38,18 @@
         /// 特征名称
         /// </summary>
         protected string AttributeName;
+
         /// <summary>
         /// 特征所属的实体对象
         /// </summary>
         protected Entity owner;
+
         public string Name { get => AttributeName; set => AttributeName = value; }
         public Entity Owner { get => owner; set => owner = value; }
+
         public abstract void Initialize();
-        public void Destroy() { }
+
+        public void Destroy()
+        { }
     }
 }

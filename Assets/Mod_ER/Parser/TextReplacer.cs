@@ -1,9 +1,9 @@
 ﻿#define Test
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace ER.Parser
@@ -17,6 +17,7 @@ namespace ER.Parser
         /// 消息输出接口
         /// </summary>
         public static event Action<string> Output = message => Debug.Log(message);
+
         public LanguagePackLoadException() : base("语言包加载错误")
         {
             Output("语言包加载错误");
@@ -29,6 +30,7 @@ namespace ER.Parser
     }
 
 #pragma warning disable CS0661 // 类型定义运算符 == 或运算符 !=，但不重写 Object.GetHashCode()
+
     public struct LanguagePackInfo
 #pragma warning restore CS0661 // 类型定义运算符 == 或运算符 !=，但不重写 Object.GetHashCode()
     {
@@ -36,23 +38,29 @@ namespace ER.Parser
         /// 消息输出接口
         /// </summary>
         public static event Action<string> Output = message => Debug.Log(message);
+
         public string LanguagePackPath;
+
         /// <summary>
         /// 语言包名称
         /// </summary>
         public string LanguagePackName;
+
         /// <summary>
         /// 语言包版本
         /// </summary>
         public string LanguagePackVersion;
+
         /// <summary>
         /// 语言包作者
         /// </summary>
         public string LanguagePackAuthor;
+
         /// <summary>
         /// 语言包图片路径
         /// </summary>
         public string ImagePath;
+
         /// <summary>
         /// 语言包描述
         /// </summary>
@@ -66,7 +74,6 @@ namespace ER.Parser
             Output($"author:{LanguagePackAuthor}");
             Output($"image:{ImagePath}");
             Output($"description:{LanguagePackDescription}");
-
         }
 
         public static LanguagePackInfo Empty
@@ -96,6 +103,7 @@ namespace ER.Parser
 
             return true;
         }
+
         public static bool operator !=(LanguagePackInfo obj, LanguagePackInfo obj2)
         {
             return !(obj == obj2);
@@ -111,56 +119,68 @@ namespace ER.Parser
         /// 消息输出接口
         /// </summary>
         public static event Action<string> Output = message => Debug.Log(message);
+
         /// <summary>
         /// 语言包说明文件名称
         /// </summary>
         public const string IllustrationFileName = "illustration.ini";
+
         /// <summary>
         /// 路径转接文件名称
         /// </summary>
         public const string AdapterFileName = "adapter.ini";
 
         #region 语言包信息
+
         /// <summary>
         /// 文件包所在的路径
         /// </summary>
         public string LanguagePackPath { get; private set; } = string.Empty;
+
         /// <summary>
         /// 语言包名称
         /// </summary>
         public string LanguagePackName = string.Empty;
+
         /// <summary>
         /// 语言包版本
         /// </summary>
         public string LanguagePackVersion = string.Empty;
+
         /// <summary>
         /// 语言包作者
         /// </summary>
         public string LanguagePackAuthor = string.Empty;
+
         /// <summary>
         /// 语言包图片路径
         /// </summary>
         public string ImagePath = string.Empty;
+
         /// <summary>
         /// 语言包描述
         /// </summary>
         public string LanguagePackDescription = string.Empty;
+
         /// <summary>
         /// 路径转接器，用于快速查找文本文件所在的路径
         /// </summary>
         private Dictionary<string, string> PathAdapter = new Dictionary<string, string>();
-        #endregion
+
+        #endregion 语言包信息
 
         /// <summary>
         /// 当前正在加载的文本片段文件路径（用于避免重复加载）
         /// </summary>
         private string loadedFilePath = string.Empty;
+
         /// <summary>
         /// 文本缓存器
         /// </summary>
         private INIParser TextCache = new INIParser();
 
         #region 语言包函数
+
         /// <summary>
         /// 加载语言包
         /// </summary>
@@ -176,6 +196,7 @@ namespace ER.Parser
                 Output("加载失败");
             }
         }
+
         /// <summary>
         /// 封装一个语言包对象，当语言包存在缺失成分时，将使用默认包中的内容
         /// </summary>
@@ -221,8 +242,8 @@ namespace ER.Parser
             Output($"author:{LanguagePackAuthor}");
             Output($"image:{ImagePath}");
             Output($"description:{LanguagePackDescription}");
-
         }
+
         /// <summary>
         /// 获取语言包配置信息
         /// </summary>
@@ -242,6 +263,7 @@ namespace ER.Parser
                 LanguagePackDescription = parser.GetValue("description", "description") + string.Empty
             };
         }
+
         /// <summary>
         /// 加载语言包，覆盖旧的包
         /// </summary>
@@ -274,6 +296,7 @@ namespace ER.Parser
             }
             return false;
         }
+
         /// <summary>
         /// 缓存指定文本片段
         /// </summary>
@@ -282,7 +305,7 @@ namespace ER.Parser
         public bool Load(string name)
         {
             Debug.Log($"加载片段:{name}");
-            foreach(var pair in PathAdapter)
+            foreach (var pair in PathAdapter)
             {
                 Debug.Log($"<{pair.Key},{pair.Value}>");
             }
@@ -294,7 +317,6 @@ namespace ER.Parser
                     {
                         TextCache.ParseINIFile(path);
                         loadedFilePath = path;
-
                     }
                     return true;
                 }
@@ -305,6 +327,7 @@ namespace ER.Parser
             }
             return false;
         }
+
         /// <summary>
         /// 清空文本缓存
         /// </summary>
@@ -313,6 +336,7 @@ namespace ER.Parser
             TextCache.Clear();
             loadedFilePath = string.Empty;
         }
+
         /// <summary>
         /// 清空文本缓存，只保留指定节段的文本
         /// </summary>
@@ -321,6 +345,7 @@ namespace ER.Parser
         {
             TextCache.Reserve(sections);
         }
+
         /// <summary>
         /// 清除指定文本片段
         /// </summary>
@@ -329,6 +354,7 @@ namespace ER.Parser
         {
             TextCache.Clear(sections);
         }
+
         /// <summary>
         /// 读取指定键的文本内容，如果不存在相应的文本内容则返回null
         /// </summary>
@@ -355,9 +381,9 @@ namespace ER.Parser
                     }
                     return null;
                 }
-
             }
         }
+
         /// <summary>
         /// 根据路径获取文本内容，默认最后一部分名称是键名，前面的是路径名，路径使用"."分隔部分名
         /// </summary>
@@ -369,7 +395,7 @@ namespace ER.Parser
             {
                 //获取截断点索引
                 int index = path.Length - 1;
-                for (;index>=0; index--)
+                for (; index >= 0; index--)
                 {
                     if (path[index] == '.')
                     {
@@ -377,12 +403,13 @@ namespace ER.Parser
                     }
                 }
                 string sectionName = path.Substring(0, index);
-                string keyName = path.Substring(index+1);
+                string keyName = path.Substring(index + 1);
                 //Debug.Log($"sectionName:{sectionName},keyName:{keyName}");
                 return this[sectionName, keyName];
             }
         }
-        #endregion
+
+        #endregion 语言包函数
     }
 
     /// <summary>
@@ -394,14 +421,17 @@ namespace ER.Parser
         /// 消息输出接口
         /// </summary>
         public static event Action<string> Output = message => Debug.Log(message);
+
         /// <summary>
         /// 语言包文件夹路径
         /// </summary>
         public string LanguagePackPath = string.Empty;
+
         /// <summary>
         /// 默认语言包
         /// </summary>
         public string defaultPack = string.Empty;
+
         /// <summary>
         /// 当前选择的语言包
         /// </summary>
@@ -409,7 +439,6 @@ namespace ER.Parser
 
         private List<LanguagePackInfo> packs = new List<LanguagePackInfo>();
 
-        
         /// <summary>
         /// 检查并更新语言包
         /// </summary>
@@ -437,12 +466,14 @@ namespace ER.Parser
                 }
             }
         }
+
         public LanguagePackInfo[] GetPackInfos()
         {
             return packs.ToArray();
         }
 
         #region 静态工具方法
+
         public static bool PathExist(string path)
         {
             if (File.Exists(path) || Directory.Exists(path))
@@ -454,20 +485,23 @@ namespace ER.Parser
                 return false;
             }
         }
+
         public static bool IsDirectory(string path)
         {
             FileAttributes attributes = File.GetAttributes(path);
             return (attributes & FileAttributes.Directory) == FileAttributes.Directory;
         }
+
         public static void CompressFolder(string sourceFolderPath, string compressedFilePath)
         {
             ZipFile.CreateFromDirectory(sourceFolderPath, compressedFilePath);
         }
+
         public static void DecompressFolder(string compressedFilePath, string decompressedFolderPath)
         {
             ZipFile.ExtractToDirectory(compressedFilePath, decompressedFolderPath);
         }
-        #endregion
+
+        #endregion 静态工具方法
     }
 }
-

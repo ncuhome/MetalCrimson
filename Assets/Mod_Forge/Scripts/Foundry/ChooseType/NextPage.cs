@@ -1,21 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class NextPage : MonoBehaviour, IPointerClickHandler
 {
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-
     }
+
     /// <summary>
     /// 点击事件
     /// </summary>
@@ -28,6 +25,7 @@ public class NextPage : MonoBehaviour, IPointerClickHandler
                 TypeSystem.Instance.index++;
                 TypeSystem.Instance.RefreshTypes();
                 break;
+
             case 2:
                 TypeSystem.Instance.childIndex++;
                 TypeSystem.Instance.RefreshTypes();

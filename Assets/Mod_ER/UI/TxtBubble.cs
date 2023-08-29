@@ -1,81 +1,88 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace ER.UI
 {
-    delegate void DelTest(string parma);
+    internal delegate void DelTest(string parma);
+
     public class TxtBubble : MonoBehaviour
     {
         #region 组件
+
         public RectTransform box;//大小控制组件
         public RectTransform trf;//比例控制组件
         public TMP_Text text;//文本
-        #endregion
+
+        #endregion 组件
 
         #region 属性
+
         /// <summary>
         /// 打印间隔
         /// </summary>
         public float print_cd = 0.25f;
+
         /// <summary>
         /// 单行最大长度限制
         /// </summary>
         public int max_row = 20;
+
         /// <summary>
         /// 动画播放速度
         /// </summary>
-        public float animation_speed=6;
+        public float animation_speed = 6;
+
         /// <summary>
         /// 字体颜色
         /// </summary>
         public Color color = Color.black;
+
         /// <summary>
         /// 文本缓存
         /// </summary>
         private string txtTemp;
-        private enum panel { closed, openning, opened, closing }
+
+        private enum panel
+        { closed, openning, opened, closing }
+
         private panel status = panel.closed;
         private int charIndex = 0;//打字机字符索引
-        #endregion
+
+        #endregion 属性
 
         #region 回调委托
+
         private void Opened()
         {
             status = panel.opened;
             text.gameObject.SetActive(true);
             text.color = color;
         }
+
         private void Closed()
         {
             status = panel.closed;
             gameObject.SetActive(false);
         }
-        #endregion
+
+        #endregion 回调委托
 
         #region 功能函数
 
         private void AutoSize()
         {
-            Debug.Log(new Vector2(Mathf.Min(max_row,text.preferredWidth) + 10, text.preferredHeight + 10));
-            if(max_row < text.preferredWidth)
+            Debug.Log(new Vector2(Mathf.Min(max_row, text.preferredWidth) + 10, text.preferredHeight + 10));
+            if (max_row < text.preferredWidth)
             {
                 box.sizeDelta = new Vector2(max_row + 10, text.preferredHeight + 10);
             }
             else
             {
-                box.sizeDelta = new Vector2(text.preferredWidth + 10, text.preferredHeight/2 + 10);
+                box.sizeDelta = new Vector2(text.preferredWidth + 10, text.preferredHeight / 2 + 10);
             }
-            
-
-            
         }
+
         /// <summary>
         /// 打开面板
         /// </summary>
@@ -85,12 +92,13 @@ namespace ER.UI
             UIAnimator.Instance.GetAnimationInfo(trf).speed = animation_speed;
             UIAnimator.Instance.StartAnimation(trf);
             charIndex = 0;
-            if(!gameObject.activeSelf)
+            if (!gameObject.activeSelf)
             {
                 gameObject.SetActive(true);
             }
             text.gameObject.SetActive(false);
         }
+
         /// <summary>
         /// 关闭面板
         /// </summary>
@@ -101,6 +109,7 @@ namespace ER.UI
             UIAnimator.Instance.GetAnimationInfo(trf).speed = animation_speed;
             UIAnimator.Instance.StartAnimation(trf);
         }
+
         /// <summary>
         /// 添加显示文本
         /// </summary>
@@ -109,6 +118,7 @@ namespace ER.UI
             txtTemp += txt;
             StartCoroutine(PrintAnimation());
         }
+
         public void Clear()
         {
             text.text = txtTemp = "";
@@ -125,13 +135,15 @@ namespace ER.UI
                 yield return new WaitForSeconds(print_cd);
             }
         }
-        #endregion
-        
+
+        #endregion 功能函数
+
         #region Unity
+
         private void Update()
         {
-            
         }
-        #endregion
+
+        #endregion Unity
     }
 }

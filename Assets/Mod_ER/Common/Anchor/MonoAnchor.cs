@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ER
 {
@@ -12,19 +11,23 @@ namespace ER
         /// 锚点标签
         /// </summary>
         public string AnchorTag { get; set; }
+
         /// <summary>
         /// 锚点位置
         /// </summary>
-        public Vector3 Point { get;set; }
+        public Vector3 Point { get; set; }
+
         /// <summary>
         /// 锚点的所有者
         /// </summary>
         public object Owner { get; }
+
         /// <summary>
         /// 销毁函数
         /// </summary>
         public void Destroy();
     }
+
     /// <summary>
     /// 虚拟钩子
     /// </summary>
@@ -37,10 +40,17 @@ namespace ER
 
         public string AnchorTag { get => tag; set => tag = value; }
         public Vector3 Point { get => point; set => point = value; }
-        public VirtualAnchor(float x=0, float y=0,float z = 0) { tag = "Unkown";point = new Vector3(x, y,z); }
-        public VirtualAnchor(string tag, float x = 0, float y = 0, float z = 0) { this.tag = tag; point = new Vector3(x, y,z); }
-        public void Destroy() { }
+
+        public VirtualAnchor(float x = 0, float y = 0, float z = 0)
+        { tag = "Unkown"; point = new Vector3(x, y, z); }
+
+        public VirtualAnchor(string tag, float x = 0, float y = 0, float z = 0)
+        { this.tag = tag; point = new Vector3(x, y, z); }
+
+        public void Destroy()
+        { }
     }
+
     /// <summary>
     /// 组件钩子
     /// </summary>
@@ -53,7 +63,7 @@ namespace ER
         public object Owner { get => gameObject; }
 
         public void Destroy()
-        { 
+        {
             Destroy(this);
         }
 
@@ -61,6 +71,5 @@ namespace ER
         {
             AnchorManager.Instance.AddAnchor(this);
         }
-
     }
 }

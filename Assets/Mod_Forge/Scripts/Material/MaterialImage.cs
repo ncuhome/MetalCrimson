@@ -1,35 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using System;
+
 public class MaterialImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     /// <summary>
     /// 对应的图片Transform组件
     /// </summary>
     private RectTransform rectTransform;
+
     /// <summary>
     /// 是否进入高炉判定区
     /// </summary>
     private bool inFurnace = false, inModel = false;
+
     /// <summary>
     /// 回归坐标
     /// </summary>
     private Vector3 lastPosition;
+
     /// <summary>
     /// 对应的材料脚本
     /// </summary>
     public MaterialScript materialScript = null;
+
     /// <summary>
     /// 是否能进行拖动
     /// </summary>
     public bool canBeDrag = true;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
     }
+
     /// <summary>
     /// 开始拖动，记录回归坐标
     /// </summary>
@@ -39,6 +44,7 @@ public class MaterialImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         lastPosition = rectTransform.position;
         Debug.Log("开始拖拽");
     }
+
     /// <summary>
     /// 进行拖动
     /// </summary>
@@ -49,6 +55,7 @@ public class MaterialImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         RectTransformUtility.ScreenPointToWorldPointInRectangle(rectTransform, eventData.position, eventData.enterEventCamera, out pos);
         rectTransform.position = pos;
     }
+
     /// <summary>
     /// 结束拖动，判断是否在判定区内，如果是则进行添加材料
     /// </summary>
@@ -73,7 +80,7 @@ public class MaterialImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("BlastFurnace"))
         {
@@ -88,7 +95,7 @@ public class MaterialImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
     }
 
-    void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("BlastFurnace"))
         {

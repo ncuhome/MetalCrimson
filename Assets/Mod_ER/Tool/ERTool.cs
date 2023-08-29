@@ -1,12 +1,8 @@
 ﻿using ER.Parser;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Rendering;
 
 namespace ER
 {
@@ -113,7 +109,6 @@ namespace ER
         /// <returns></returns>
         public static Texture2D LoadTextureByIO(string path, int width = 2, int height = 2)
         {
-
             // 从本地文件系统读取图片数据
             byte[] imageData = System.IO.File.ReadAllBytes(path);
 
@@ -150,10 +145,11 @@ namespace ER
         /// <param name="color"></param>
         /// <param name="alpha"></param>
         /// <returns></returns>
-        public static Color ModifyAlpha(this Color color,float alpha)
+        public static Color ModifyAlpha(this Color color, float alpha)
         {
-            return new Color(color.r,color.g,color.b,alpha);
+            return new Color(color.r, color.g, color.b, alpha);
         }
+
         public static void PassEvent<T>(this PointerEventData data, ExecuteEvents.EventFunction<T> function) where T : IEventSystemHandler
         {
             List<RaycastResult> results = new List<RaycastResult>();

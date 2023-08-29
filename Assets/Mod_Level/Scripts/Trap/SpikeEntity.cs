@@ -5,7 +5,7 @@ public class SpikeEntity : Entity
 {
     protected override void Initialized()
     {
-        ATActionRegion region=GetAttribute<ATActionRegion>();
+        ATActionRegion region = GetAttribute<ATActionRegion>();
         Debug.Log($"尖刺初始化:{region != null}");
         region.time = -1;
         region.actor = this;

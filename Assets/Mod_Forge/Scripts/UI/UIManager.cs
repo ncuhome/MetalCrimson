@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -9,6 +7,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     private static UIManager instance;
+
     public static UIManager Instance
     {
         get
@@ -16,26 +15,27 @@ public class UIManager : MonoBehaviour
             return instance;
         }
     }
+
     public Button ReturnButton, CancelButton, FinishButton;
+
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
-    void Awake()
+    private void Awake()
     {
         if (instance == null)
         {
             instance = this;
         }
     }
-    // Start is called before the first frame update
-    void Start()
-    {
 
+    // Start is called before the first frame update
+    private void Start()
+    {
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-
     }
 }

@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-using ER.Save;
+﻿using ER;
 using ER.Items;
-using ER;
+using ER.Save;
 
 namespace Mod_Level
 {
@@ -9,7 +8,7 @@ namespace Mod_Level
     /// 玩家配置类:
     /// 用于玩家初始化 以及 记录玩家的信息
     /// </summary>
-    public class PlayerConfigure : MonoSingleton<PlayerConfigure>,ISavable
+    public class PlayerConfigure : MonoSingleton<PlayerConfigure>, ISavable
     {
         public string Identifier => "player_configure";
 
@@ -33,9 +32,6 @@ namespace Mod_Level
 
         public void Restore(SaveEntry saveEntry)
         {
-            
         }
-
-
     }
 }

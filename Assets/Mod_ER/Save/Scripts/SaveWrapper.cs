@@ -87,7 +87,7 @@ namespace ER.Save
     /// <summary>
     /// 存档封装器
     /// </summary>
-    public class SaveWrapper:Singleton<SaveWrapper>
+    public class SaveWrapper : Singleton<SaveWrapper>
     {
         #region 属性
 

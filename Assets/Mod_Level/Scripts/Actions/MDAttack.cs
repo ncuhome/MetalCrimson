@@ -1,7 +1,6 @@
 ﻿// Ignore Spelling: Atk
 
 using ER.Entity2D;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Mod_Level
@@ -12,6 +11,7 @@ namespace Mod_Level
         [SerializeField]
         [Tooltip("武器的伤害区域")]
         private ATActionRegion region;
+
         private ATCharacterState state;
 
         public enum AttackState
@@ -40,7 +40,6 @@ namespace Mod_Level
             region.infos["repel_mode"] = ATRepel.RepelMode.AutoDirection;
             region.infos["repel_power"] = 10f;
             region.Initialize();
-            
         }
 
         protected override void StartAction(params string[] keys)
@@ -61,14 +60,12 @@ namespace Mod_Level
         {
             atstate = AttackState.Attacking;
             region.Reset();
-           
         }
 
         private void FuncStoped()
         {
             atstate = AttackState.Stoped;
             region.gameObject.SetActive(false);
-            
         }
 
         public override void ActionFunction(string key)

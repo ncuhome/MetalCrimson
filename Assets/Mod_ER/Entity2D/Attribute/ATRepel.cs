@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace ER.Entity2D
 {
@@ -10,16 +9,18 @@ namespace ER.Entity2D
     /// </summary>
     public class ATRepel : MonoAttribute
     {
-        public enum RepelMode 
-        { 
+        public enum RepelMode
+        {
             /// <summary>
             /// 不启用击退
             /// </summary>
             Off,
+
             /// <summary>
             /// 自动确定击退方向
             /// </summary>
             AutoDirection,
+
             /// <summary>
             /// 自定义击退方向
             /// </summary>
@@ -27,7 +28,10 @@ namespace ER.Entity2D
         }
 
         #region 初始化
-        public ATRepel() { AttributeName = nameof(ATRepel); }
+
+        public ATRepel()
+        { AttributeName = nameof(ATRepel); }
+
         public override void Initialize()
         {
             Action<IAttribute> action = (IAttribute attribute) =>
@@ -36,18 +40,20 @@ namespace ER.Entity2D
             };
 
             ATActionResponse response = owner.GetAttribute<ATActionResponse>();
-            if(response == null)
+            if (response == null)
             {
-                owner.CreateDelegation("ATActionResponse",action);
+                owner.CreateDelegation("ATActionResponse", action);
             }
             else
             {
                 action(response);
             }
         }
-        #endregion
+
+        #endregion 初始化
 
         #region 功能
+
         private void Repeled(ActionInfo info)
         {
             RepelMode mode = RepelMode.Off;
@@ -55,7 +61,7 @@ namespace ER.Entity2D
             {
                 mode = (RepelMode)_mode;
             }
-            if(mode!= RepelMode.Off)
+            if (mode != RepelMode.Off)
             {
                 float power = 0;
                 Vector2 dir = Vector2.zero;
@@ -63,11 +69,12 @@ namespace ER.Entity2D
                 {
                     power = (float)pwoer;
                 }
-                switch(mode)
+                switch (mode)
                 {
                     case RepelMode.AutoDirection:
                         dir = ((Vector2)owner.transform.position - info.position).normalized;
                         break;
+
                     case RepelMode.CustomDirection:
 
                         if (info.infos.TryGetValue("repel_dir", out object direction))
@@ -79,6 +86,7 @@ namespace ER.Entity2D
                 owner.GetComponent<Rigidbody2D>().velocity += dir * power;
             }
         }
-        #endregion
+
+        #endregion 功能
     }
 }

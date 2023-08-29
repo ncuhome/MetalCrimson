@@ -9,13 +9,16 @@ namespace ER
     public class ObjectPoolManager : Singleton<ObjectPoolManager>
     {
         #region 字段
+
         /// <summary>
         /// 池字典
         /// </summary>
         private Dictionary<string, ObjectPool> poolDictionary = new Dictionary<string, ObjectPool>();
-        #endregion
+
+        #endregion 字段
 
         #region 功能函数
+
         /// <summary>
         /// 从对应对象池中取对象
         /// </summary>
@@ -33,6 +36,7 @@ namespace ER
                 return null;
             }
         }
+
         /// <summary>
         /// 从对应对象池中取对象
         /// </summary>
@@ -40,7 +44,7 @@ namespace ER
         /// <returns>获取到的对象</returns>
         public Water this[string poolName]
         {
-            get=>GetObject(poolName);
+            get => GetObject(poolName);
         }
 
         /// <summary>
@@ -59,6 +63,7 @@ namespace ER
                 Debug.LogWarning("对象池不存在：" + poolName);
             }
         }
+
         /// <summary>
         /// 注册对象池
         /// </summary>
@@ -74,6 +79,7 @@ namespace ER
                 Debug.LogWarning("对象池已存在：" + pool.PoolName);
             }
         }
+
         /// <summary>
         /// 注销对象池
         /// </summary>
@@ -89,6 +95,7 @@ namespace ER
                 Debug.LogWarning("对象池不存在：" + poolName);
             }
         }
-        #endregion
+
+        #endregion 功能函数
     }
 }

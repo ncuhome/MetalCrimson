@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 namespace States
 {
@@ -11,48 +9,54 @@ namespace States
     public class StateSystemManager : MonoBehaviour
     {
         #region 单例封装
+
         private static StateSystemManager instance;
+
         public static StateSystemManager Instance
         {
             get { return instance; }
         }
+
         #endregion 单例封装
 
-        #region  属性
+        #region 属性
+
         private Dictionary<string, StateSystem> stateSystems = new Dictionary<string, StateSystem>();
 
         /// <summary>
         /// 状态系统列表
         /// </summary>
-        public Dictionary<string, StateSystem> StateSystems { get { return stateSystems; } }
+        public Dictionary<string, StateSystem> StateSystems
+        { get { return stateSystems; } }
 
         #endregion 属性
 
         #region 方法
 
-        void Awake()
+        private void Awake()
         {
             if (instance == null)
             {
                 instance = this;
             }
         }
-        // Start is called before the first frame update
-        void Start()
-        {
 
+        // Start is called before the first frame update
+        private void Start()
+        {
         }
 
         /// <summary>
         /// 执行每个状态中的Update部分
         /// </summary>
-        void Update()
+        private void Update()
         {
             foreach (var stateSystem in stateSystems.Values)
             {
                 stateSystem.currentState.OnState();
             }
         }
+
         /// <summary>
         /// 创建新的状态系统
         /// </summary>
@@ -75,6 +79,7 @@ namespace States
                 stateSystems.Remove(name);
             }
         }
+
         /// <summary>
         /// 判断指定系统是否存在
         /// </summary>
@@ -88,6 +93,7 @@ namespace States
             }
             return false;
         }
+
         /// <summary>
         /// 获取指定状态仓库
         /// </summary>

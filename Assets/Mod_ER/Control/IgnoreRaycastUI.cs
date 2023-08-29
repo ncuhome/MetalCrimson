@@ -8,7 +8,7 @@ namespace ER.Control
     /// <summary>
     /// 完全忽略鼠标动作的UI控件
     /// </summary>
-    public class IgnoreRaycastUI:MonoBehaviour,IHandler
+    public class IgnoreRaycastUI : MonoBehaviour, IHandler
     {
         public void OnPointerEnter(PointerEventData eventData)
         {

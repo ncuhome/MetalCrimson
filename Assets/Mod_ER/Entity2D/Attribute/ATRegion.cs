@@ -1,7 +1,6 @@
 ﻿// Ignore Spelling: collider
 
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 namespace ER.Entity2D
@@ -18,8 +17,10 @@ namespace ER.Entity2D
     public class ATRegion : MonoAttribute
     {
         #region 初始化
+
         public ATRegion()
-        { AttributeName = nameof(ATRegion);}
+        { AttributeName = nameof(ATRegion); }
+
         public override void Initialize()
         {
         }
@@ -37,6 +38,7 @@ namespace ER.Entity2D
         /// 所属区域索引
         /// </summary>
         public int index;
+
         public enum ListType
         { Off, BlackList, WhiteList }
 
@@ -82,22 +84,33 @@ namespace ER.Entity2D
         #endregion 函数
 
         #region 区域检测
-        protected void EnterAction(Collider2D collider) { if (EnterEvent != null) EnterEvent(collider); }
-        protected void StayAction(Collider2D collider) { if (StayEvent != null) StayEvent( collider); }
-        protected void ExitAction(Collider2D collider) { if (ExitEvent != null) ExitEvent( collider); }
+
+        protected void EnterAction(Collider2D collider)
+        { if (EnterEvent != null) EnterEvent(collider); }
+
+        protected void StayAction(Collider2D collider)
+        { if (StayEvent != null) StayEvent(collider); }
+
+        protected void ExitAction(Collider2D collider)
+        { if (ExitEvent != null) ExitEvent(collider); }
 
         /// <summary>
         /// 子类额外过程接口（进入）
         /// </summary>
-        protected virtual void VirtualEnter(Collider2D collider) { }
+        protected virtual void VirtualEnter(Collider2D collider)
+        { }
+
         /// <summary>
         /// 子类额外过程接口（保持）
         /// </summary>
-        protected virtual void VirtualStay(Collider2D collider) { }
+        protected virtual void VirtualStay(Collider2D collider)
+        { }
+
         /// <summary>
         /// 子类额外过程接口（离开）
         /// </summary>
-        protected virtual void VirtualExit(Collider2D collider) { }
+        protected virtual void VirtualExit(Collider2D collider)
+        { }
 
         /// <summary>
         /// 条件检测(检测标签是否在白名单/黑名单内)
@@ -109,7 +122,7 @@ namespace ER.Entity2D
             {
                 case ListType.Off: return true;
                 case ListType.BlackList:
-                    if(TagList.Contains(collider.tag))
+                    if (TagList.Contains(collider.tag))
                     {
                         return false;
                     }
@@ -125,14 +138,15 @@ namespace ER.Entity2D
                 default: return false;
             }
         }
+
         protected virtual void OnCollisionEnter2D(Collision2D collision)
         {
-            Debug.Log("collision接触:"+ collision.gameObject.tag);
+            Debug.Log("collision接触:" + collision.gameObject.tag);
             if (Judge(collision.collider))
             {
                 EnterAction(collision.collider);
                 VirtualEnter(collision.collider);
-                if (manager != null) manager.SetState(true, index,collision.collider);
+                if (manager != null) manager.SetState(true, index, collision.collider);
             }
         }
 
@@ -166,6 +180,7 @@ namespace ER.Entity2D
                 if (manager != null) manager.SetState(true, index, collider);
             }
         }
+
         protected virtual void OnTriggerStay2D(Collider2D collider)
         {
             if (Judge(collider))

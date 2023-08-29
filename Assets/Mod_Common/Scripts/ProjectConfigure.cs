@@ -1,7 +1,6 @@
 ﻿using ER;
 using ER.Items;
 using ER.Save;
-using ER.TextPacker;
 using Mod_Console;
 using System;
 using UnityEngine;

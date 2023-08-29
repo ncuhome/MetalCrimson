@@ -9,7 +9,9 @@ namespace Mod_ControlPanel
     public class ControllerAllotter
     {
         #region 单例模式
+
         private static ControllerAllotter instance;
+
         /// <summary>
         /// 私有构造函数，防止外部实例化
         /// </summary>
@@ -17,6 +19,7 @@ namespace Mod_ControlPanel
         {
             InitializeControlStacks();
         }
+
         /// <summary>
         /// 单例对象
         /// </summary>
@@ -31,48 +34,55 @@ namespace Mod_ControlPanel
                 return instance;
             }
         }
-        #endregion
+
+        #endregion 单例模式
 
         #region 属性
+
         /// <summary>
         /// 最大同时控制数量（注意：重设权栈的数量时会清空当前所有面板的控制权）
         /// </summary>
         public int MaxCount
-        { 
-            get=>maxCount;
-            set 
+        {
+            get => maxCount;
+            set
             {
                 OffAll();
                 maxCount = value;
-                while(controlStacks.Count<maxCount)
+                while (controlStacks.Count < maxCount)
                 {
                     controlStacks.Add(new Stack<ControlPanel>());
                 }
-                while(controlStacks.Count > maxCount)
+                while (controlStacks.Count > maxCount)
                 {
-                    controlStacks.RemoveAt(controlStacks.Count-1);
+                    controlStacks.RemoveAt(controlStacks.Count - 1);
                 }
             }
         }
+
         private int maxCount = 4;
+
         /// <summary>
         /// 控制权栈集合
         /// </summary>
         private List<Stack<ControlPanel>> controlStacks;
-        #endregion
+
+        #endregion 属性
+
         /// <summary>
         /// 取消所有控制权
         /// </summary>
         public void OffAll()
         {
-            foreach(var cstk in controlStacks)
+            foreach (var cstk in controlStacks)
             {
-                while(cstk.Count > 0)
+                while (cstk.Count > 0)
                 {
                     cstk.Pop().PowerOff();
                 }
             }
         }
+
         private void InitializeControlStacks()
         {
             controlStacks = new List<Stack<ControlPanel>>();
@@ -81,6 +91,7 @@ namespace Mod_ControlPanel
                 controlStacks.Add(new Stack<ControlPanel>());
             }
         }
+
         /// <summary>
         /// 获取主栈控制权
         /// </summary>
@@ -103,6 +114,7 @@ namespace Mod_ControlPanel
 
             return true;
         }
+
         /// <summary>
         /// 移除指定面板的控制权（前提是当前面板处于有控制权状态）
         /// </summary>
@@ -134,6 +146,7 @@ namespace Mod_ControlPanel
 
             return success;
         }
+
         /// <summary>
         /// 获取并行栈控制权
         /// </summary>
@@ -141,7 +154,6 @@ namespace Mod_ControlPanel
         /// <returns></returns>
         public bool GetParallelPower(ControlPanel panel)
         {
-
             // 在栈集合中找到一个空栈，并将面板加入
             foreach (var stack in controlStacks)
             {

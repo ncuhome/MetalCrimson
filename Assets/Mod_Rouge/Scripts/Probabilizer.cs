@@ -1,6 +1,5 @@
 ﻿// Ignore Spelling: Probabilizer
 
-using Mod_Console;
 using UnityEngine;
 
 namespace Mod_Rouge
@@ -24,7 +23,7 @@ namespace Mod_Rouge
                 for (int i = 1; i < probabilities.Length; i++)
                 {
                     //ConsolePanel.Print($"概率a[{(RoomType)i}]：{probabilities[i]}");
-                    probabilities[i] += probabilities[i-1];
+                    probabilities[i] += probabilities[i - 1];
                     //ConsolePanel.Print($"概率b[{(RoomType)i}]：{probabilities[i]}");
                 }
                 float value = Random.Range(0, probabilities[probabilities.Length - 1]);

@@ -1,12 +1,11 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 namespace Test
 {
     /// <summary>
-    /// Íæ¼Ò¿ØÖÆÆ÷
+    /// çŽ©å®¶æŽ§åˆ¶å™¨
     /// </summary>
-    public class PlayerController:MonoBehaviour
+    public class PlayerController : MonoBehaviour
     {
-
     }
 }

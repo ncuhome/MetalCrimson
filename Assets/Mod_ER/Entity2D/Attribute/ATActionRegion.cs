@@ -64,6 +64,7 @@ namespace ER.Entity2D
         /// 动作的其他信息
         /// </summary>
         public Dictionary<string, object> infos = new();
+
         /// <summary>
         /// 动作发生位置
         /// </summary>
@@ -132,13 +133,16 @@ namespace ER.Entity2D
         #endregion 初始化
 
         #region 事件
+
         /// <summary>
         /// 区域消失时触发的事件
         /// </summary>
         public event Action EndEvent;
-        #endregion
+
+        #endregion 事件
 
         #region 属性
+
         /// <summary>
         /// 缓存区，判定生效需要在下一帧执行
         /// </summary>
@@ -281,6 +285,7 @@ namespace ER.Entity2D
         #endregion 属性
 
         #region 区域检测
+
         public void Reset()
         {
             //Debug.Log($"攻击次数:{hits}, 剩余:{remainHits}");
@@ -384,6 +389,7 @@ namespace ER.Entity2D
                 }
             }
         }
+
         /// <summary>
         /// 区域生命周期结束
         /// </summary>
@@ -399,12 +405,13 @@ namespace ER.Entity2D
                 gameObject.SetActive(false);
             }
         }
+
         /// <summary>
         /// 执行缓存区
         /// </summary>
         private void UpdateTemp()
         {
-            for(int i=0;i<temp.Count;i++)
+            for (int i = 0; i < temp.Count; i++)
             {
                 if (temp[i].PreResponse(Info))
                 {
@@ -412,7 +419,7 @@ namespace ER.Entity2D
                     break;
                 }
             }
-            for(int i = 0; i < temp.Count; i++)
+            for (int i = 0; i < temp.Count; i++)
             {
                 Action(temp[i]);
             }

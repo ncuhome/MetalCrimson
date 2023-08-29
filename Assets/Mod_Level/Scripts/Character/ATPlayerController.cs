@@ -34,7 +34,6 @@ namespace Mod_Level
                 animator = at.Animator;
             }*/
 
-
             InputManager.InputActions.Player.MoveLeft.performed += MoveLeft;
             InputManager.InputActions.Player.MoveLeft.canceled += _MoveLeft;
             InputManager.InputActions.Player.MoveRight.performed += MoveRight;
@@ -48,7 +47,6 @@ namespace Mod_Level
             InputManager.InputActions.Player.Skill1.performed += Skill1;
             InputManager.InputActions.Player.Skill2.performed += Skill2;
             InputManager.InputActions.Player.Interact.performed += Interact;
-
 
             region_up.time = -1f;
             region_up.actor = owner;
@@ -76,8 +74,6 @@ namespace Mod_Level
 
         #region 属性
 
-
-
         public float limitAngle = 60f;
 
         /// <summary>
@@ -85,7 +81,6 @@ namespace Mod_Level
         /// </summary>
         public float lineHeight = 2;
 
-        
         /// <summary>
         /// 动作管理器
         /// </summary>
@@ -101,12 +96,12 @@ namespace Mod_Level
         /// </summary>
         public LineRenderer line;
 
-
         public ATActionRegion region_up;
 
         public ATActionRegion region_front;
 
         public ATActionRegion region_down;
+
         #endregion 属性
 
         #region 角色控制
@@ -204,6 +199,7 @@ namespace Mod_Level
             region_down.gameObject.SetActive(false);
             region_front.gameObject.SetActive(false);
         }
+
         private void PostureFront()
         {
             state.ActPosture = ATCharacterState.Posture.Front;
@@ -211,6 +207,7 @@ namespace Mod_Level
             region_down.gameObject.SetActive(false);
             region_up.gameObject.SetActive(false);
         }
+
         private void PostureDown()
         {
             state.ActPosture = ATCharacterState.Posture.Down;

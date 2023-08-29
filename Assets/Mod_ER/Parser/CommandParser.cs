@@ -1,12 +1,9 @@
 ﻿#define TESTs
+
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ER.Parser
 {
@@ -19,6 +16,7 @@ namespace ER.Parser
         /// 消息输出接口
         /// </summary>
         public static event Action<string> Output = message => Console.WriteLine(message);
+
         /// <summary>
         /// 解析指令字符串
         /// </summary>
@@ -42,7 +40,6 @@ namespace ER.Parser
                 }
 #endif
 
-
                 string command = string.Empty;//首参数为指令头
                 if (parameters[0].Value != null)
                 {
@@ -53,17 +50,17 @@ namespace ER.Parser
                 Data[] ps = new Data[parameters.Count - 1];//剩余数据元作为指令的参数
                 for (int i = 0; i < ps.Length; i++)
                 {
-                    if (parameters[i+1].Type == DataType.Function)//如果参数是一条指令，则运行该指令取其返回值作为参数
+                    if (parameters[i + 1].Type == DataType.Function)//如果参数是一条指令，则运行该指令取其返回值作为参数
                     {
 #pragma warning disable CS8602
-                        ps[i] = Parse(parameters[i+1].Value.ToString() + string.Empty, interpreter);
+                        ps[i] = Parse(parameters[i + 1].Value.ToString() + string.Empty, interpreter);
 #pragma warning restore CS8602
                     }
                     else
                     {
                         ps[i] = parameters[i + 1];
                     }
-              }
+                }
 #if TEST
                 for (int i = 0; i < ps.Length; i++)
                 {
@@ -75,6 +72,7 @@ namespace ER.Parser
             Output("解析参数为空！");
             return Data.Empty;
         }
+
         /// <summary>
         /// 解析指令文件
         /// </summary>
@@ -82,11 +80,11 @@ namespace ER.Parser
         /// <param name="interpreter">指令器</param>
         public static void Command(string fileName, Interpreter interpreter)
         {
-            if(File.Exists(fileName))
+            if (File.Exists(fileName))
             {
                 StreamReader reader = new StreamReader(fileName);
                 string line = reader.ReadLine();
-                while (line!=null)
+                while (line != null)
                 {
                     Parse(line, interpreter);
                     line = reader.ReadLine();
@@ -97,6 +95,7 @@ namespace ER.Parser
                 Output("指令文件不存在！");
             }
         }
+
         /// <summary>
         /// 将字符串切割为若干数据元(以空格切割单元)
         /// </summary>
@@ -127,12 +126,15 @@ namespace ER.Parser
                         case '\\':
                             temp.Append(c);
                             break;
+
                         case 'r':
                             temp.Append('\r');
                             break;
+
                         case 'n':
                             temp.Append('\n');
                             break;
+
                         case 't':
                             temp.Append('\r');
                             break;
@@ -140,6 +142,7 @@ namespace ER.Parser
                         case '<':
                             temp.Append('<');
                             break;
+
                         case '>':
                             temp.Append('>');
                             break;
@@ -156,7 +159,9 @@ namespace ER.Parser
                             break;
 
                         case ' '://分割符号
+
                             #region 分割
+
                             if (instruct > 0 || quote > 0)
                             {
                                 temp.Append(c);
@@ -169,9 +174,11 @@ namespace ER.Parser
                                     case 2:
                                         list.Add(Data.ParseTo(s, DataType.Text));
                                         break;
+
                                     case 1:
                                         list.Add(Data.ParseTo(s, DataType.Function));
                                         break;
+
                                     case 0:
                                         list.Add(Data.ParseTo(s));
                                         break;
@@ -179,18 +186,22 @@ namespace ER.Parser
                                 mode = 0;
                                 temp.Clear();
                             }
-                            #endregion
+
+                            #endregion 分割
+
                             break;
+
                         case '\\'://开启转义
-                            if(instruct > 0)
+                            if (instruct > 0)
                             {
-                                temp.Append(c);   
+                                temp.Append(c);
                             }
                             else
                             {
                                 trans = true;
                             }
                             break;
+
                         case '['://指令头
                             if (quote > 0)
                             {
@@ -209,6 +220,7 @@ namespace ER.Parser
                                 instruct++;
                             }
                             break;
+
                         case ']'://指令尾
                             if (quote > 0)
                             {
@@ -223,6 +235,7 @@ namespace ER.Parser
                                 }
                             }
                             break;
+
                         case '<'://引用头
                             if (instruct > 0 || quote > 0)
                             {
@@ -234,6 +247,7 @@ namespace ER.Parser
                             }
                             quote++;
                             break;
+
                         case '>'://引用尾
                             quote--;
                             if (instruct > 0 || quote > 0)
@@ -241,14 +255,15 @@ namespace ER.Parser
                                 temp.Append(c);
                             }
                             break;
+
                         default:
                             temp.Append(c);
                             break;
-
                     }
                 }
             }
-#region 分割
+
+            #region 分割
 
             if (temp.Length > 0)//缓存不为空
             {
@@ -258,20 +273,24 @@ namespace ER.Parser
                     case 2:
                         list.Add(Data.ParseTo(s, DataType.Text));
                         break;
+
                     case 1:
                         list.Add(Data.ParseTo(s, DataType.Function));
                         break;
+
                     case 0:
                         list.Add(Data.ParseTo(s));
                         break;
                 }
                 temp.Clear();
             }
-#endregion
-            return list;
 
+            #endregion 分割
+
+            return list;
         }
     }
+
     /// <summary>
     /// 指令器
     /// </summary>
@@ -289,6 +308,7 @@ namespace ER.Parser
 
             return Effectuate(commandName, parameters);
         }
+
         /// <summary>
         /// 解释指令语句
         /// </summary>

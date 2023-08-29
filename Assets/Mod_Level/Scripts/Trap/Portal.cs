@@ -1,29 +1,32 @@
 ﻿using ER.Entity2D;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Mod_Level
 {
     /// <summary>
     /// 传送门
     /// </summary>
-    public class Portal:MonoBehaviour
+    public class Portal : MonoBehaviour
     {
         [SerializeField]
         [Tooltip("检测距离")]
         private float length = 10;
+
         /// <summary>
         /// 传送目的地
         /// </summary>
         [SerializeField]
         private Transform aimPosition;
+
         [SerializeField]
         private int aimLayerIndex = 7;
 
         [SerializeField]
         [Tooltip("检测区域")]
         private ATRegion region;
+
         private ATCharacterState state;
+
         /// <summary>
         /// 是否进入等待区域
         /// </summary>
@@ -58,6 +61,7 @@ namespace Mod_Level
                 Waitting = true;
             }
         }
+
         private void ExitRegion(Collider2D collider)
         {
             if (collider.tag == "Player")
@@ -73,7 +77,7 @@ namespace Mod_Level
 
         private void Update()
         {
-            if(waitting)
+            if (waitting)
             {
                 if (state.interact == ATCharacterState.InteractState.Wait)
                 {

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ER.Graphics
@@ -7,7 +6,7 @@ namespace ER.Graphics
     /// <summary>
     /// 未完成
     /// </summary>
-    public class PolygonMesh:MonoBehaviour
+    public class PolygonMesh : MonoBehaviour
     {
         /// <summary>
         /// 多边形点
@@ -22,15 +21,17 @@ namespace ER.Graphics
         {
             UpdatePoints();
         }
+
         private Vector3[] GetPoints()
         {
             Vector3[] array = new Vector3[points.Count];
-            for(int i=0;i<array.Length;i++)
+            for (int i = 0; i < array.Length; i++)
             {
                 array[i] = points[i].position;
             }
             return array;
         }
+
         [ContextMenu("重设位置")]
         public void UpdatePoints()
         {

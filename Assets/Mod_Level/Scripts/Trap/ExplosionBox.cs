@@ -2,7 +2,7 @@
 
 namespace ER.Entity2D
 {
-    public class ExplosionBox:Entity
+    public class ExplosionBox : Entity
     {
         [SerializeField]
         private float HP = 1;
@@ -21,7 +21,6 @@ namespace ER.Entity2D
 
         private ATActionRegion action;
 
-
         protected override void Initialized()
         {
             GetAttribute<ATActionResponse>().ActionEvent += delegate (ActionInfo info)
@@ -39,7 +38,7 @@ namespace ER.Entity2D
                     }
                 }
             };
-            if(catchBoom)
+            if (catchBoom)
             {
                 GetAttribute<ATRegion>().EnterEvent += delegate (Collider2D c)
                 {
@@ -58,7 +57,6 @@ namespace ER.Entity2D
             action.infos["damage"] = damage;
             action.infos["repel_mode"] = ATRepel.RepelMode.AutoDirection;
             action.infos["repel_power"] = repel_power;
-            
         }
 
         private void Boom()
@@ -71,7 +69,5 @@ namespace ER.Entity2D
         {
             Destroy(gameObject);
         }
-
-
     }
 }

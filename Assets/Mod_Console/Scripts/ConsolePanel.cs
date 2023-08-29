@@ -1,5 +1,4 @@
-﻿
-using ER;
+﻿using ER;
 using ER.Parser;
 using System.Collections.Generic;
 using System.Text;
@@ -10,8 +9,8 @@ namespace Mod_Console
 {
     public class ConsolePanel : MonoSingleton<ConsolePanel>
     {
-
         #region 组件 | 属性
+
         /// <summary>
         /// 控制台画布
         /// </summary>

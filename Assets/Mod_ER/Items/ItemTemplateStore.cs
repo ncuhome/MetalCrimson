@@ -1,7 +1,6 @@
 ﻿using ER.Parser;
 using System.Collections.Generic;
 using DataType = ER.Parser.DataType;
-using UnityEngine;
 
 namespace ER.Items
 {
@@ -11,11 +10,13 @@ namespace ER.Items
     public class ItemTemplateStore
     {
         #region 属性
+
         private string name;
         public string Name { get => name; }
         private Dictionary<string, ItemTemplate> items = new();
         private Dictionary<int, ItemTemplate> items_ID = new();
-        #endregion
+
+        #endregion 属性
 
         public ItemTemplateStore(string name)
         {
@@ -23,6 +24,7 @@ namespace ER.Items
         }
 
         #region 管理
+
         /// <summary>
         /// 加载物品信息表
         /// </summary>
@@ -307,9 +309,11 @@ namespace ER.Items
                 return null;
             }
         }
-        #endregion
+
+        #endregion 管理
 
         #region 辅助
+
         /// <summary>
         /// 判断指定物品模板是否存在
         /// </summary>
@@ -339,6 +343,7 @@ namespace ER.Items
             }
             return infos;
         }
-        #endregion
+
+        #endregion 辅助
     }
 }

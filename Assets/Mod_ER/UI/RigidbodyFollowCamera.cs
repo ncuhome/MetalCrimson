@@ -1,17 +1,11 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ER.UI
 {
     /// <summary>
     /// 玩家跟随镜头
     /// </summary>
-    public class RigidbodyFollowCamera:MonoBehaviour
+    public class RigidbodyFollowCamera : MonoBehaviour
     {
         #region 属性
 
@@ -19,6 +13,7 @@ namespace ER.UI
         /// 跟随对象
         /// </summary>
         public Rigidbody2D aim;
+
         public Rigidbody2D self;
         public bool Xlock = false;//X轴锁定
         public bool Ylock = false;//Y轴锁定
@@ -37,14 +32,15 @@ namespace ER.UI
 
         public float Rate = 3;//镜头移动倍率
 
-
         private bool shaking = false;//是否是震动状态
         public float power = 1;//震动力度
         public float timer = 0;//效果持续时间
         public int status = 0;//震动状态标记
-        #endregion
+
+        #endregion 属性
 
         #region 功能函数
+
         /// <summary>
         /// 一般镜头震动
         /// </summary>
@@ -67,9 +63,11 @@ namespace ER.UI
             timer = _time;
             status = 0;
         }
-        #endregion
+
+        #endregion 功能函数
 
         #region 内部函数
+
         /// <summary>
         /// 获取随机二维向量
         /// </summary>
@@ -77,32 +75,32 @@ namespace ER.UI
         /// <returns></returns>
         private Vector2 RandomVector2(float ef)
         {
-            return new Vector2(UnityEngine.Random.value -0.5f, UnityEngine.Random.value-0.5f)*ef;
+            return new Vector2(UnityEngine.Random.value - 0.5f, UnityEngine.Random.value - 0.5f) * ef;
         }
 
         private void Follow()
         {
-            if(aim !=null)
+            if (aim != null)
             {
                 if (follow)
                 {
                     aimPosition = aim.position;
                 }
             }
-            if(Xlock)
+            if (Xlock)
             {
-                if(aimPosition.x < limitMin.x)
+                if (aimPosition.x < limitMin.x)
                 {
                     aimPosition.x = limitMin.x;
                 }
-                else if(aimPosition.x >limitMax.x)
+                else if (aimPosition.x > limitMax.x)
                 {
                     aimPosition.x = limitMax.x;
                 }
             }
-            if(Ylock)
+            if (Ylock)
             {
-                if(aimPosition.y<limitMin.y)
+                if (aimPosition.y < limitMin.y)
                 {
                     aimPosition.y = limitMin.y;
                 }
@@ -118,7 +116,7 @@ namespace ER.UI
             Debug.Log("相机跟随中");
             if (transition)
             {
-                if(lockMaxSpeed && speed > maxSpeed) { speed= maxSpeed; }
+                if (lockMaxSpeed && speed > maxSpeed) { speed = maxSpeed; }
                 self.velocity = move.normalized * speed;
             }
             else
@@ -126,27 +124,32 @@ namespace ER.UI
                 transform.position = aim.transform.position + Vector3.back * height;
             }
         }
-        #endregion
+
+        #endregion 内部函数
 
         #region Unity
+
         private void Update()
         {
-            if(shaking)
+            if (shaking)
             {
-                switch(status)
+                switch (status)
                 {
                     case 0:
-                        transform.position += (Vector3)RandomVector2(1)*power;
+                        transform.position += (Vector3)RandomVector2(1) * power;
                         status = 1;
                         break;
+
                     case 1:
                         transform.position += (Vector3)RandomVector2(0.5f) * power;
                         status = 2;
                         break;
+
                     case 2:
                         transform.position += (Vector3)RandomVector2(0.3f) * power;
                         status = 3;
                         break;
+
                     case 3:
                         transform.position += (Vector3)RandomVector2(0.8f) * power;
                         status = 0;
@@ -160,6 +163,7 @@ namespace ER.UI
                 Follow();
             }
         }
-        #endregion
+
+        #endregion Unity
     }
 }

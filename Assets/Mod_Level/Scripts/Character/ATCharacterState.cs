@@ -2,7 +2,6 @@
 
 using ER.Entity2D;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Mod_Level
@@ -300,16 +299,18 @@ namespace Mod_Level
             set
             {
                 posture = value;
-                if(stopTag != null)
+                if (stopTag != null)
                     StopCoroutine(stopTag);
                 switch (value)
                 {
                     case Posture.Up:
                         stopTag = StartCoroutine(PostureChange(animator.GetFloat("posture"), 3));
                         break;
+
                     case Posture.Front:
                         stopTag = StartCoroutine(PostureChange(animator.GetFloat("posture"), 2));
                         break;
+
                     case Posture.Down:
                         stopTag = StartCoroutine(PostureChange(animator.GetFloat("posture"), 1));
                         break;
@@ -321,12 +322,13 @@ namespace Mod_Level
         }
 
         private Coroutine stopTag;//协程标记(用于关闭协程)
-        private IEnumerator PostureChange(float start,float end)
+
+        private IEnumerator PostureChange(float start, float end)
         {
             float timer = 0;
-            while(true)
+            while (true)
             {
-                timer += Time.deltaTime* postureSpeed;
+                timer += Time.deltaTime * postureSpeed;
                 animator.SetFloat("posture", Mathf.Lerp(start, end, timer));
                 yield return 0;
 
@@ -343,6 +345,5 @@ namespace Mod_Level
         }
 
         #endregion 属性
-
     }
 }

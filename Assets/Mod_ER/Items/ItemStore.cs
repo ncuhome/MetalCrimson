@@ -40,10 +40,11 @@ namespace ER.Items
                 }
             }
         }
+
         /// <summary>
         /// 仓库中物品的数量
         /// </summary>
-        public int Count { get=>items.Count; }
+        public int Count { get => items.Count; }
 
         /// <summary>
         /// 仓库物品
@@ -68,6 +69,7 @@ namespace ER.Items
         #endregion 构造
 
         #region 方法
+
         /// <summary>
         /// 通过ID查找物品
         /// </summary>
@@ -75,10 +77,10 @@ namespace ER.Items
         /// <returns></returns>
         public ItemVariable[] Find(int id)
         {
-            List<ItemVariable> items = new List<ItemVariable> ();
+            List<ItemVariable> items = new List<ItemVariable>();
             foreach (ItemVariable item in items)
             {
-                if(item.ID == id)
+                if (item.ID == id)
                 {
                     items.Add(item);
                 }
@@ -89,7 +91,7 @@ namespace ER.Items
         public void Print()
         {
             ConsolePanel.Print($"[{storeName}]");
-            foreach(var item in items)
+            foreach (var item in items)
             {
                 item.Print();
             }

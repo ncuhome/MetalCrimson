@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
-using UnityEditor;
 
 namespace ER.Parser
 {
@@ -35,6 +30,7 @@ namespace ER.Parser
 
             return data;
         }
+
         /// <summary>
         /// 解析CSV文本
         /// </summary>
@@ -43,7 +39,7 @@ namespace ER.Parser
         public static List<string[]> ParseCSVText(string text)
         {
             List<string[]> data = new List<string[]>();
-            string[] lines=text.Split('\n');
+            string[] lines = text.Split('\n');
             foreach (string line in lines)
             {
                 string[] fields = ParseCSVLine(line);
@@ -51,6 +47,7 @@ namespace ER.Parser
             }
             return data;
         }
+
         public static string[] ParseCSVLine(string line)
         {
             List<string> fields = new List<string>();
@@ -90,6 +87,7 @@ namespace ER.Parser
 
             return fields.ToArray();
         }
+
         /// <summary>
         /// 尝试将一个字符串数组 解析为 一个整型数组；无法解析的数据将自动填入0
         /// </summary>
@@ -97,9 +95,9 @@ namespace ER.Parser
         public static int[] TryParseToIntArray(this string[] strings)
         {
             int[] values = new int[strings.Length];
-            for(int i=0;i<strings.Length;i++)
+            for (int i = 0; i < strings.Length; i++)
             {
-                if (int.TryParse(strings[i],out int v))
+                if (int.TryParse(strings[i], out int v))
                 {
                     values[i] = v;
                 }
@@ -107,6 +105,7 @@ namespace ER.Parser
             }
             return values;
         }
+
         /// <summary>
         /// 尝试将一个字符串数组 解析为 一个单精度浮点数组；无法解析的数据将自动填入0
         /// </summary>
@@ -126,5 +125,4 @@ namespace ER.Parser
             return values;
         }
     }
-
 }

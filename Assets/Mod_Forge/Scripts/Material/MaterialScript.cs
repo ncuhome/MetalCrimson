@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using TMPro;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
-
 
 public class MaterialScript : MonoBehaviour
 {
@@ -13,16 +10,17 @@ public class MaterialScript : MonoBehaviour
     public MaterialImage imageScript = null;
     public GameObject materialVisual = null;
     public ER.Items.ItemVariable MaterialItem = null;
-    // Start is called before the first frame update
-    void Start()
-    {
 
+    // Start is called before the first frame update
+    private void Start()
+    {
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
     }
+
     /// <summary>
     /// 刷新信息
     /// </summary>

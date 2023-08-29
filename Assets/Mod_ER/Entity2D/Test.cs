@@ -1,5 +1,4 @@
 ﻿using ER.Entity2D;
-using System.Diagnostics;
 
 namespace Test
 {
@@ -10,9 +9,9 @@ namespace Test
             AttributeName = "unim";
             print("UUIUI");
         }
+
         public override void Initialize()
         {
-
         }
 
         public void Awake()

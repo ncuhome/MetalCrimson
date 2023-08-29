@@ -1,6 +1,5 @@
 ﻿using ER.Save;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,7 +15,7 @@ public class InputManager : MonoBehaviour
     {
         get
         {
-            if(inputActions == null)
+            if (inputActions == null)
             {
                 inputActions = new DefaultControl();
                 inputActions.Enable();
@@ -29,24 +28,26 @@ public class InputManager : MonoBehaviour
     /// 按键绑定完成
     /// </summary>
     public static event Action rebindComplete;
+
     /// <summary>
     /// 按键绑定取消
     /// </summary>
     public static event Action rebindCancelled;
+
     /// <summary>
     /// 按键绑定开始
     /// </summary>
-    public static event Action<InputAction,int> rebindStarted;
-
+    public static event Action<InputAction, int> rebindStarted;
 
     private void Awake()
     {
-        if(inputActions == null)
+        if (inputActions == null)
         {
             inputActions = new DefaultControl();
             inputActions.Enable();
         }
     }
+
     /// <summary>
     /// 重新绑定一个动作
     /// </summary>
@@ -54,7 +55,7 @@ public class InputManager : MonoBehaviour
     /// <param name="bindingIndex">绑定索引</param>
     /// <param name="text">消息文本</param>
     /// <param name="excludMouse">是否排除鼠标</param>
-    public static void InputRebind(string actionName, int bindingIndex,TMP_Text text,bool excludeMouse)
+    public static void InputRebind(string actionName, int bindingIndex, TMP_Text text, bool excludeMouse)
     {
         InputAction action = inputActions.asset.FindAction(actionName);
         if (action == null || action.bindings.Count <= bindingIndex)
@@ -67,14 +68,14 @@ public class InputManager : MonoBehaviour
         {
             int firstPartIndex = bindingIndex + 1;
             //下一份绑定体是复合绑定体
-            if(firstPartIndex < action.bindings.Count && action.bindings[firstPartIndex].isComposite)
+            if (firstPartIndex < action.bindings.Count && action.bindings[firstPartIndex].isComposite)
             {
-                Rebind(action, bindingIndex, true,text, excludeMouse);
+                Rebind(action, bindingIndex, true, text, excludeMouse);
             }
         }
         else
         {
-            Rebind(action,bindingIndex,false,text, excludeMouse);
+            Rebind(action, bindingIndex, false, text, excludeMouse);
         }
     }
 
@@ -83,7 +84,7 @@ public class InputManager : MonoBehaviour
     /// </summary>
     /// <param name="actionToRebind">需要重绑的动作</param>
     /// <param name="bindingIndex">动作的输入索引</param>
-    private static void Rebind(InputAction actionToRebind, int bindingIndex,bool composite, TMP_Text text,bool excludeMouse)
+    private static void Rebind(InputAction actionToRebind, int bindingIndex, bool composite, TMP_Text text, bool excludeMouse)
     {
         if (actionToRebind == null || bindingIndex < 0)
             return;
@@ -102,10 +103,10 @@ public class InputManager : MonoBehaviour
             if (composite)
             {
                 int nextBindingIndex = bindingIndex + 1;
-                if(nextBindingIndex < actionToRebind.bindings.Count && actionToRebind.bindings[nextBindingIndex].isComposite)
-                    Rebind(actionToRebind,nextBindingIndex, composite, text, excludeMouse);
+                if (nextBindingIndex < actionToRebind.bindings.Count && actionToRebind.bindings[nextBindingIndex].isComposite)
+                    Rebind(actionToRebind, nextBindingIndex, composite, text, excludeMouse);
             }
-            SaveBindingOverride( actionToRebind );
+            SaveBindingOverride(actionToRebind);
             rebindComplete?.Invoke();
         });
         rebind.OnCancel(operation =>
@@ -116,7 +117,7 @@ public class InputManager : MonoBehaviour
         });
 
         rebind.WithCancelingThrough("<Keyboard/escape>");
-        if(excludeMouse)
+        if (excludeMouse)
         {
             rebind.WithControlsExcluding("Mouse");
         }
@@ -126,7 +127,7 @@ public class InputManager : MonoBehaviour
         rebind.Start();
     }
 
-    public static string GetBindingName(string actionName,int bindingIndex)
+    public static string GetBindingName(string actionName, int bindingIndex)
     {
         if (inputActions == null)
         {
@@ -135,10 +136,10 @@ public class InputManager : MonoBehaviour
         InputAction action = inputActions.asset.FindAction(actionName);
         return action.GetBindingDisplayString(bindingIndex);
     }
-    
+
     public static void SaveBindingOverride(InputAction action)
     {
-        for(int i=0;i<action.bindings.Count;i++)
+        for (int i = 0; i < action.bindings.Count; i++)
         {
             SettingsManager.Instance[action.actionMap + action.name + i] = action.bindings[i].overridePath;
         }
@@ -152,12 +153,12 @@ public class InputManager : MonoBehaviour
         }
         Debug.Log("正在读取覆盖按键");
         InputAction action = inputActions.asset.FindAction(actionName);
-        for(int i=0;i<action.bindings.Count;i++)
+        for (int i = 0; i < action.bindings.Count; i++)
         {
             string overridePath = SettingsManager.Instance[action.actionMap + action.name + i];
-            if(overridePath != null)
+            if (overridePath != null)
             {
-                action.ApplyBindingOverride(i,overridePath);
+                action.ApplyBindingOverride(i, overridePath);
             }
             else
             {
@@ -166,11 +167,12 @@ public class InputManager : MonoBehaviour
         }
         action.Enable();
     }
-    public static void ResetBinding(string actionName,int bindingIndex)
+
+    public static void ResetBinding(string actionName, int bindingIndex)
     {
         InputAction action = inputActions.asset.FindAction(actionName);
 
-        if(action ==null|| action.bindings.Count<=bindingIndex)
+        if (action == null || action.bindings.Count <= bindingIndex)
         {
             Debug.LogError("找不到指定动作或者绑定");
             return;

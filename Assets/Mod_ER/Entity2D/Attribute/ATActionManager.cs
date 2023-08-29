@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ER.Entity2D
@@ -25,19 +23,19 @@ namespace ER.Entity2D
             {
                 Add(action);
             }*/
-            ATAnimator at = null; 
-            if(owner.TryGetAttribute("ATAnimator",ref at, (IAttribute _at)=>
+            ATAnimator at = null;
+            if (owner.TryGetAttribute("ATAnimator", ref at, (IAttribute _at) =>
                 {
                     animator = ((ATAnimator)_at).Animator;
-            }))
+                }))
             {
                 animator = at.Animator;
             }
-            for(int i=0;i<_actions.Count;i++)
+            for (int i = 0; i < _actions.Count; i++)
             {
                 Add(_actions[i], i);
             }
-            _actions=null;
+            _actions = null;
         }
 
         #endregion 初始化
@@ -57,7 +55,8 @@ namespace ER.Entity2D
         /// <summary>
         /// 动画机
         /// </summary>
-        public Animator Animator { get { return animator; } }
+        public Animator Animator
+        { get { return animator; } }
 
         [SerializeField]
         [Tooltip("预加载动作列表 - 不要在运行后修改")]
@@ -66,6 +65,7 @@ namespace ER.Entity2D
         #endregion 属性
 
         #region 动作管理
+
         /// <summary>
         /// 打开混合动画层
         /// </summary>
@@ -73,6 +73,7 @@ namespace ER.Entity2D
         {
             animator.SetLayerWeight(layerIndex, 1f);
         }
+
         /// <summary>
         /// 关闭混合动画层
         /// </summary>
@@ -80,6 +81,7 @@ namespace ER.Entity2D
         {
             animator.SetLayerWeight(layerIndex, 0f);
         }
+
         /// <summary>
         /// 打开混合动画层
         /// </summary>
@@ -88,6 +90,7 @@ namespace ER.Entity2D
         {
             animator.SetLayerWeight(animator.GetLayerIndex(layerName), 1f);
         }
+
         /// <summary>
         /// 关闭混合动画层
         /// </summary>
@@ -95,6 +98,7 @@ namespace ER.Entity2D
         {
             animator.SetLayerWeight(animator.GetLayerIndex(layerName), 0f);
         }
+
         /// <summary>
         /// 获取动作对应控制参数
         /// </summary>
@@ -106,13 +110,14 @@ namespace ER.Entity2D
             sb.Append(action.actionName);
             return sb.ToString();
         }
+
         /// <summary>
         /// 添加新的动作
         /// </summary>
         /// <param name="action"></param>
-        public void Add(MDAction action,int layer)
+        public void Add(MDAction action, int layer)
         {
-            if(actions.ContainsKey(action.actionName))
+            if (actions.ContainsKey(action.actionName))
             {
                 Debug.LogWarning($"该动作槽位已经被占用:{action.actionName}");
             }
@@ -123,6 +128,7 @@ namespace ER.Entity2D
 
             action.Initialize();
         }
+
         /// <summary>
         /// 触发角色动作
         /// </summary>
@@ -132,16 +138,18 @@ namespace ER.Entity2D
             Debug.Log($"激发动作: {actionName}");
             if (actions.TryGetValue(actionName, out MDAction action))
             {
-                if(action.ActionJudge())
+                if (action.ActionJudge())
                 {
-                    switch(action.controlType)
+                    switch (action.controlType)
                     {
                         case MDAction.ControlType.Bool:
-                            animator.SetBool(GetActionParamName(action),true);                                
+                            animator.SetBool(GetActionParamName(action), true);
                             break;
+
                         case MDAction.ControlType.Trigger:
                             animator.SetTrigger(GetActionParamName(action));
                             break;
+
                         default:
                             Debug.LogError($"未知控制类型:{action.controlType}");
                             break;
@@ -155,6 +163,7 @@ namespace ER.Entity2D
             }
             Debug.LogError($"未找到指定动作：{actionName}");
         }
+
         /// <summary>
         /// 终止指定动作
         /// </summary>
@@ -168,8 +177,10 @@ namespace ER.Entity2D
                     case MDAction.ControlType.Bool:
                         animator.SetBool(GetActionParamName(action), false);
                         break;
+
                     case MDAction.ControlType.Trigger:
                         break;
+
                     default:
                         Debug.LogError($"未知控制类型:{action.controlType}");
                         break;
@@ -179,6 +190,7 @@ namespace ER.Entity2D
             }
             Debug.LogError($"未找到指定动作：{actionName}");
         }
+
         /// <summary>
         /// 触发动作的特定函数
         /// </summary>
@@ -193,6 +205,7 @@ namespace ER.Entity2D
             }
             Debug.LogError($"未找到指定动作：{actionName}");
         }
+
         /// <summary>
         /// 中断指定动作
         /// </summary>
@@ -206,8 +219,10 @@ namespace ER.Entity2D
                     case MDAction.ControlType.Bool:
                         animator.SetBool(GetActionParamName(action), false);
                         break;
+
                     case MDAction.ControlType.Trigger:
                         break;
+
                     default:
                         Debug.LogError($"未知控制类型:{action.controlType}");
                         break;
@@ -217,6 +232,7 @@ namespace ER.Entity2D
             }
             Debug.LogError($"未找到指定动作：{actionName}");
         }
-        #endregion
+
+        #endregion 动作管理
     }
 }

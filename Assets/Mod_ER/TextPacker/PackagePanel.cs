@@ -84,7 +84,6 @@ namespace ER.TextPacker
         [Tooltip("\"刷新资源\"按钮")]
         [SerializeField]
         private Button RefrashButton;
-        
 
         [SerializeField]
         [Tooltip("警告文本")]
@@ -157,8 +156,10 @@ namespace ER.TextPacker
             UpdateUIText(ApplyButton.GetComponentInChildren<TMP_Text>(), "button_apply", "Apply");//更新应用按钮
 
             DisplayDefaultInfo();
+
             #endregion 更新UI文本
         }
+
         [ContextMenu("关闭面板")]
         public void ClosePanel()
         {
@@ -254,6 +255,7 @@ namespace ER.TextPacker
         #endregion 公开方法
 
         #region 内部方法
+
         /// <summary>
         /// 向用户发送信息
         /// </summary>
@@ -268,11 +270,12 @@ namespace ER.TextPacker
         private void ClearAssetPanel()
         {
             PackItem[] pitems = AssetPanel.transform.GetComponentsInChildren<PackItem>();
-            foreach(var pitem in pitems)
-            { 
+            foreach (var pitem in pitems)
+            {
                 pitem.ClosePanel();
             }
         }
+
         /// <summary>
         /// 移除加载列表中的所有选项
         /// </summary>
@@ -291,8 +294,9 @@ namespace ER.TextPacker
         private void DisplayDefaultInfo()
         {
             infoImage.sprite = DefImage;
-            UpdateInfoDisplay(LanguagePackInfo.Empty ,DefImage);
+            UpdateInfoDisplay(LanguagePackInfo.Empty, DefImage);
         }
+
         /// <summary>
         /// 打开资源文件夹
         /// </summary>
@@ -527,6 +531,7 @@ namespace ER.TextPacker
             catchRegion = null;
             CancelAllRegion();
         }
+
         /// <summary>
         /// 更新控件的文本内容
         /// </summary>
@@ -550,7 +555,9 @@ namespace ER.TextPacker
         #endregion 内部方法
 
         #region Unity
+
         private float timer = 0f;
+
         protected override void Awake()
         {
             base.Awake();
@@ -559,6 +566,7 @@ namespace ER.TextPacker
             OpenFolderButton.onClick.AddListener(OpenAssetFolder);
             RefrashButton.onClick.AddListener(UpdateAssets);
         }
+
         private void Update()
         {
             if (draging)
@@ -569,9 +577,9 @@ namespace ER.TextPacker
                     DragCofirm();
                 }
             }
-            if(timer>=0)
+            if (timer >= 0)
             {
-                timer-=Time.deltaTime;
+                timer -= Time.deltaTime;
             }
         }
 

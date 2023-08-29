@@ -48,7 +48,7 @@ public class UIInputRebind : MonoBehaviour
     [SerializeField]
     [Tooltip("重设按钮")]
     private Button resetButton;
-     
+
     #endregion 属性
 
     #region 功能
@@ -66,6 +66,7 @@ public class UIInputRebind : MonoBehaviour
         InputManager.rebindComplete += UpdateUI;
         InputManager.rebindCancelled += UpdateUI;
     }
+
     private void OnDisable()
     {
         InputManager.rebindComplete -= UpdateUI;
@@ -115,7 +116,7 @@ public class UIInputRebind : MonoBehaviour
 
     private void DoRebind()
     {
-        InputManager.InputRebind(actionName, bindingIndex,rebindText,excludeMouse);
+        InputManager.InputRebind(actionName, bindingIndex, rebindText, excludeMouse);
     }
 
     private void DoReset()

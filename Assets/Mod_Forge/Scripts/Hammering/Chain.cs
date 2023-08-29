@@ -1,31 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
+
 public class Chain : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     /// <summary>
     /// 锁链对应图片
     /// </summary>
     private RectTransform rectTransform;
+
     /// <summary>
     /// 鼠标坐标与原坐标差
     /// </summary>
     private Vector3 posDiff;
+
     /// <summary>
     /// 原坐标
     /// </summary>
     private Vector3 lastPos;
+
     /// <summary>
     /// 拖动后的坐标y分量
     /// </summary>
     private float newPosY;
+
     private float lastPosY;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
     }
+
     /// <summary>
     /// 拖动开始，记录原坐标，计算坐标差
     /// </summary>
@@ -39,6 +44,7 @@ public class Chain : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
         lastPos = rectTransform.position;
         lastPosY = newPosY;
     }
+
     /// <summary>
     /// 拖动，跟随拖动并且减去坐标差，且控制拖动范围，只允许改变y轴
     /// </summary>
@@ -62,6 +68,7 @@ public class Chain : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
 
         IncreaseTemperature();
     }
+
     /// <summary>
     /// 拖动结束，自动弹回原坐标
     /// </summary>
@@ -97,7 +104,4 @@ public class Chain : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
         }
         lastPosY = newPosY;
     }
-
-
-
 }

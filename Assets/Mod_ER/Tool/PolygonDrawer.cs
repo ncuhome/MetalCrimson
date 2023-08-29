@@ -15,16 +15,15 @@ namespace ER
         private MeshRenderer mRenderer;
         private MeshFilter mFilter;
 
-        void Start()
+        private void Start()
         {
             Draw();
         }
 
-        void Update()
+        private void Update()
         {
             Draw();
         }
-
 
         [ContextMenu("重新获取区域设定点")]
         public void UpdateSetPoints()

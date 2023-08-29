@@ -1,5 +1,4 @@
-﻿using Mod_Console;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,12 +12,14 @@ namespace ER.Parser
     public class INIHandler
     {
         private Dictionary<string, Dictionary<string, string>> sections;
+
         public INIHandler()
         {
             sections = new();
         }
 
         #region 写入方法
+
         /// <summary>
         /// 添加新的节段
         /// </summary>
@@ -30,6 +31,7 @@ namespace ER.Parser
                 sections[sectionName] = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             }
         }
+
         /// <summary>
         /// 添加键值对
         /// </summary>
@@ -77,6 +79,7 @@ namespace ER.Parser
             }
             return false;
         }
+
         /// <summary>
         /// 保存内容到本地INI文件
         /// </summary>
@@ -85,6 +88,7 @@ namespace ER.Parser
         {
             File.WriteAllText(path, GetSaveString());
         }
+
         /// <summary>
         /// 获取保存信息文本
         /// </summary>
@@ -111,9 +115,11 @@ namespace ER.Parser
             }
             return txt.ToString();
         }
-        #endregion
+
+        #endregion 写入方法
 
         #region 读取
+
         public void ParseINIFile(string filePath)
         {
             if (!File.Exists(filePath))
@@ -124,11 +130,13 @@ namespace ER.Parser
             string[] lines = File.ReadAllLines(filePath);
             ParseINIText(lines);
         }
+
         public void ParseINIText(string INIText)
         {
             string[] lines = INIText.Split('\n');
             ParseINIText(lines);
         }
+
         public void ParseINIText(string[] lines)
         {
             string currentSection = string.Empty;
@@ -164,13 +172,16 @@ namespace ER.Parser
                 }
             }
         }
-        #endregion
+
+        #endregion 读取
 
         #region 内容操作
+
         public void Clear()
         {
             sections.Clear();
         }
+
         /// <summary>
         /// 清空文本缓存，只保留指定节段的文本
         /// </summary>
@@ -195,6 +206,7 @@ namespace ER.Parser
             // 更新节段信息为保留的节段信息
             this.sections = newSections;
         }
+
         /// <summary>
         /// 获取指定键值对
         /// </summary>
@@ -213,6 +225,7 @@ namespace ER.Parser
 
             return null;
         }
+
         public Dictionary<string, string> GetSection(string sectionName)
         {
             if (sections.TryGetValue(sectionName, out var sectionData))
@@ -221,6 +234,7 @@ namespace ER.Parser
             }
             return null;
         }
+
         private string UnescapeValue(string value)
         {
             StringBuilder unescapedValue = new StringBuilder();
@@ -265,25 +279,29 @@ namespace ER.Parser
 
             return unescapedValue.ToString();
         }
+
         private string EscapeValue(string value)
         {
             StringBuilder sb = new();
-            foreach(char c in value)
+            foreach (char c in value)
             {
-                switch(c)
+                switch (c)
                 {
                     case '\n':
                         sb.Append('\\');
                         sb.Append('n');
                         break;
+
                     case '\r':
                         sb.Append('\\');
                         sb.Append('r');
                         break;
+
                     case '\t':
                         sb.Append('\\');
                         sb.Append('t');
                         break;
+
                     default:
                         sb.Append(c);
                         break;
@@ -291,7 +309,8 @@ namespace ER.Parser
             }
             return sb.ToString();
         }
-        #endregion
+
+        #endregion 内容操作
 
         public void Print()
         {

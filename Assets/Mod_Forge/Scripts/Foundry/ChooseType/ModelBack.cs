@@ -1,8 +1,8 @@
+﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
+
 public class ModelBack : MonoBehaviour
 {
     public Image image;
@@ -17,14 +17,14 @@ public class ModelBack : MonoBehaviour
     public Color targetColor;
     public float colorTime;
     public bool startColor;
-    // Start is called before the first frame update
-    void Start()
-    {
 
+    // Start is called before the first frame update
+    private void Start()
+    {
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (startMove)
         {
@@ -57,7 +57,7 @@ public class ModelBack : MonoBehaviour
         }
     }
 
-    IEnumerator WaitForExit()
+    private IEnumerator WaitForExit()
     {
         yield return new WaitForSeconds(1f);
         Action<int> action2 = TypeSystem.Instance.GetComponentExit;

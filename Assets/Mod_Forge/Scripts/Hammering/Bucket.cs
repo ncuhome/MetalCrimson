@@ -1,29 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
+
 public class Bucket : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler
 {
     private RectTransform rectTransform;
     private bool inFurnace = false;
     private Vector3 lastPosition;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-
     }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (HammeringSystem.Instance.startHammering) { return; }
         if (HammeringSystem.Instance.temperature == 0) { return; }
         lastPosition = rectTransform.position;
     }
+
     public void OnDrag(PointerEventData eventData)
     {
         if (HammeringSystem.Instance.startHammering) { return; }
@@ -44,7 +45,7 @@ public class Bucket : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHa
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "BlastFurnace")
         {
@@ -53,7 +54,7 @@ public class Bucket : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHa
         }
     }
 
-    void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag == "BlastFurnace")
         {
