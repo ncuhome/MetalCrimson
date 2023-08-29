@@ -64,12 +64,12 @@ public class UIInputRebind : MonoBehaviour
             UpdateUI();
         }
         InputManager.rebindComplete += UpdateUI;
-        InputManager.rebindCanceled += UpdateUI;
+        InputManager.rebindCancelled += UpdateUI;
     }
     private void OnDisable()
     {
         InputManager.rebindComplete -= UpdateUI;
-        InputManager.rebindCanceled -= UpdateUI;
+        InputManager.rebindCancelled -= UpdateUI;
     }
 
     /// <summary>

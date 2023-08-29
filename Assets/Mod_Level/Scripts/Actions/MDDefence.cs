@@ -15,7 +15,7 @@ namespace Mod_Level
         private bool defensing = false;
 
         public MDDefence()
-        { actionName = "Defence"; layer = 0; }
+        { actionName = "Defence"; controlType = ControlType.Bool; }
 
         public override void Initialize()
         {
@@ -107,6 +107,14 @@ namespace Mod_Level
             if (!defensing) return;
             state.stamina.ModifyValue(-10 * Time.deltaTime, manager.Owner);
             if (state.stamina.Value <= 0) StopAction();
+        }
+
+        protected override void BreakAction(params string[] keys)
+        {
+            regions[0].gameObject.SetActive(false);
+            regions[1].gameObject.SetActive(false);
+            regions[2].gameObject.SetActive(false);
+            defensing = false;
         }
     }
 }

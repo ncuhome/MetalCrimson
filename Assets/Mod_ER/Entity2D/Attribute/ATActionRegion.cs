@@ -197,7 +197,7 @@ namespace ER.Entity2D
         /// 判定次数，小于0表示无限
         /// </summary>
         [SerializeField]
-        private int hits = 1;
+        public int hits = 1;
 
         /// <summary>
         /// 剩余判定次数
@@ -283,7 +283,7 @@ namespace ER.Entity2D
         #region 区域检测
         public void Reset()
         {
-            Debug.Log($"攻击次数:{hits}, 剩余:{remainHits}");
+            //Debug.Log($"攻击次数:{hits}, 剩余:{remainHits}");
             remainHits = hits;
             remainTime = time;
             timers = new();
@@ -331,7 +331,7 @@ namespace ER.Entity2D
         private void Action(ATActionResponse response)
         {
             response.ActionResponse(Info);//响应此动作
-            Debug.Log($"攻击次数:{hits}, 剩余:{remainHits}");
+            //Debug.Log($"攻击次数:{hits}, 剩余:{remainHits}");
             if (hits > 0)
             {
                 remainHits--;

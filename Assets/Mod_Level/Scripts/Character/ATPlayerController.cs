@@ -22,7 +22,7 @@ namespace Mod_Level
 
             state = owner.GetAttribute<ATCharacterState>();
             if (state == null) Debug.LogError("未找到角色的状态管理器:<ATPlayerState>");
-            Debug.Log($"is null {InputManager.inputActions == null}");
+            Debug.Log($"is null {InputManager.InputActions == null}");
 
             /*
             ATAnimator at = null;
@@ -35,19 +35,19 @@ namespace Mod_Level
             }*/
 
 
-            InputManager.inputActions.Player.MoveLeft.performed += MoveLeft;
-            InputManager.inputActions.Player.MoveLeft.canceled += _MoveLeft;
-            InputManager.inputActions.Player.MoveRight.performed += MoveRight;
-            InputManager.inputActions.Player.MoveRight.canceled += _MoveRight;
+            InputManager.InputActions.Player.MoveLeft.performed += MoveLeft;
+            InputManager.InputActions.Player.MoveLeft.canceled += _MoveLeft;
+            InputManager.InputActions.Player.MoveRight.performed += MoveRight;
+            InputManager.InputActions.Player.MoveRight.canceled += _MoveRight;
 
-            InputManager.inputActions.Player.Attack.performed += Attack;
-            InputManager.inputActions.Player.Defense.performed += Defense;
-            InputManager.inputActions.Player.Defense.canceled += _Defense;
-            InputManager.inputActions.Player.Jump.performed += Jump;
+            InputManager.InputActions.Player.Attack.performed += Attack;
+            InputManager.InputActions.Player.Defense.performed += Defense;
+            InputManager.InputActions.Player.Defense.canceled += _Defense;
+            InputManager.InputActions.Player.Jump.performed += Jump;
 
-            InputManager.inputActions.Player.Skill1.performed += Skill1;
-            InputManager.inputActions.Player.Skill2.performed += Skill2;
-            InputManager.inputActions.Player.Interact.performed += Interact;
+            InputManager.InputActions.Player.Skill1.performed += Skill1;
+            InputManager.InputActions.Player.Skill2.performed += Skill2;
+            InputManager.InputActions.Player.Interact.performed += Interact;
 
 
             region_up.time = -1f;
@@ -119,7 +119,7 @@ namespace Mod_Level
 
         private void _MoveLeft(InputAction.CallbackContext ctx)
         {
-            if (InputManager.inputActions.Player.MoveRight.phase == InputActionPhase.Performed)
+            if (InputManager.InputActions.Player.MoveRight.phase == InputActionPhase.Performed)
             {
                 MoveRight(ctx);
             }
@@ -137,7 +137,7 @@ namespace Mod_Level
 
         private void _MoveRight(InputAction.CallbackContext ctx)
         {
-            if (InputManager.inputActions.Player.MoveLeft.phase == InputActionPhase.Performed)
+            if (InputManager.InputActions.Player.MoveLeft.phase == InputActionPhase.Performed)
             {
                 MoveLeft(ctx);
             }
@@ -149,6 +149,8 @@ namespace Mod_Level
 
         private void Attack(InputAction.CallbackContext ctx)
         {
+            Debug.Log("按下攻击键");
+            Debug.Log($"条件:{state.ControlAct} && {!state.Vertigo}");
             if (state.ControlAct && !state.Vertigo)
                 actionManager.Action("Attack");
         }
@@ -244,7 +246,7 @@ namespace Mod_Level
             line.SetPosition(0, start);
             line.SetPosition(1, end);
             Vector3 delta = end - start;
-            float angle = 0;
+            float angle;
             if (state.direction == ATCharacterState.Direction.Right)
             {
                 angle = Vector2.Angle(delta, Vector2.right);

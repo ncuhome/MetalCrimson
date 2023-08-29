@@ -7,6 +7,7 @@ namespace ER.Entity2D
     /// </summary>
     public abstract class MDAction:MonoBehaviour
     {
+        public enum ControlType { Bool,Trigger}
 
         #region 初始化
         public MDAction() { actionName = "Unknown"; }
@@ -18,6 +19,10 @@ namespace ER.Entity2D
 
 
         #region 属性
+
+        /// <summary>
+        /// 动作活动状态
+        /// </summary>
         public bool acting;
         /// <summary>
         /// 动作名称
@@ -28,13 +33,9 @@ namespace ER.Entity2D
         /// </summary>
         public ATActionManager manager;
         /// <summary>
-        /// 动作索引
+        /// 控制类型
         /// </summary>
-        public int index;
-        /// <summary>
-        /// 所在动画层索引
-        /// </summary>
-        public int layer;
+        public ControlType controlType;
         #endregion
 
         #region 功能
@@ -61,7 +62,14 @@ namespace ER.Entity2D
             acting = false;
             StopAction(keys);
         }
-
+        /// <summary>
+        /// 中断该动作
+        /// </summary>
+        public void BreakACT(params string[] keys)
+        {
+            acting = false;
+            BreakAction(keys);
+        }
         /// <summary>
         /// 开启活动
         /// </summary>
@@ -70,6 +78,11 @@ namespace ER.Entity2D
         /// 停止活动
         /// </summary>
         protected abstract void StopAction(params string[] keys);
+        /// <summary>
+        /// 中断活动
+        /// </summary>
+        /// <param name="keys"></param>
+        protected abstract void BreakAction(params string[] keys);
         /// <summary>
         /// 动作函数(由动画控制器调用, 作为动画帧事件)
         /// </summary>

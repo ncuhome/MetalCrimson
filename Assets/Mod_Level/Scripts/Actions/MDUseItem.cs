@@ -7,7 +7,7 @@ namespace Mod_Level
     /// </summary>
     public class MDUseItem:MDAction
     {
-        public MDUseItem() { actionName = "UseItem"; layer = 0; }
+        public MDUseItem() { actionName = "UseItem"; controlType =  ControlType.Trigger; }
 
         public override void Initialize()
         {
@@ -29,5 +29,9 @@ namespace Mod_Level
             
         }
 
+        protected override void BreakAction(params string[] keys)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

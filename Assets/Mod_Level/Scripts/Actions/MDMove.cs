@@ -22,7 +22,7 @@ namespace Mod_Level
         private ATCharacterState.Direction move_dir;//当前移动方向
 
         public MDMove()
-        { actionName = "Move"; layer = 1; }
+        { actionName = "Move"; controlType = ControlType.Bool; }
 
         public override void Initialize()
         {
@@ -112,10 +112,11 @@ namespace Mod_Level
                     }
                     break;
             }
-            if(manager.Animator.GetInteger(manager.GetActionLayer(this)) != 2)
-            {
-                manager.SetActAnimationParam(this, this.index);
-            }
+        }
+
+        protected override void BreakAction(params string[] keys)
+        {
+            enabled = false;
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿// Ignore Spelling: mana Armor
 
 using ER.Entity2D;
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Mod_Level
@@ -255,9 +257,10 @@ namespace Mod_Level
             {
                 vertigo = value;
                 animator.SetBool("vertigo", value);
-                actionManager.ForceBackDefault();
             }
         }
+
+        public float postureSpeed = 5f;//架势切换速度
 
         /// <summary>
         /// 是否可控制动作
@@ -269,7 +272,6 @@ namespace Mod_Level
             {
                 control_act = value;
                 animator.SetBool("control", value);
-                actionManager.ForceBackDefault();
             }
         }
 
@@ -289,7 +291,6 @@ namespace Mod_Level
             {
                 dead = value;
                 animator.SetBool("dead", value);
-                actionManager.ForceBackDefault();
             }
         }
 
@@ -299,24 +300,37 @@ namespace Mod_Level
             set
             {
                 posture = value;
+                if(stopTag != null)
+                    StopCoroutine(stopTag);
                 switch (value)
                 {
                     case Posture.Up:
-                        animator.SetInteger("posture_type", 1);
+                        stopTag = StartCoroutine(PostureChange(animator.GetFloat("posture"), 3));
                         break;
-
                     case Posture.Front:
-                        animator.SetInteger("posture_type", 2);
+                        stopTag = StartCoroutine(PostureChange(animator.GetFloat("posture"), 2));
                         break;
-
                     case Posture.Down:
-                        animator.SetInteger("posture_type", 3);
+                        stopTag = StartCoroutine(PostureChange(animator.GetFloat("posture"), 1));
                         break;
 
                     default:
-                        animator.SetInteger("posture_type", 2);
                         break;
                 }
+            }
+        }
+
+        private Coroutine stopTag;//协程标记(用于关闭协程)
+        private IEnumerator PostureChange(float start,float end)
+        {
+            float timer = 0;
+            while(true)
+            {
+                timer += Time.deltaTime* postureSpeed;
+                animator.SetFloat("posture", Mathf.Lerp(start, end, timer));
+                yield return 0;
+
+                if (timer >= 1) yield break;
             }
         }
 
@@ -329,5 +343,6 @@ namespace Mod_Level
         }
 
         #endregion 属性
+
     }
 }

@@ -6,13 +6,6 @@ using UnityEngine;
 
 namespace ER.Entity2D
 {
-    [Serializable]
-    public class ActionList
-    {
-        [SerializeField]
-        public List<MDAction> actions = new();
-    }
-
     /// <summary>
     /// 对角色动作的管理
     /// </summary>
@@ -42,10 +35,7 @@ namespace ER.Entity2D
             }
             for(int i=0;i<_actions.Count;i++)
             {
-                for(int k = 0; k < _actions[i].actions.Count;k++)
-                {
-                    Add(_actions[i].actions[k],i);
-                }
+                Add(_actions[i], i);
             }
             _actions=null;
         }
@@ -71,23 +61,24 @@ namespace ER.Entity2D
 
         [SerializeField]
         [Tooltip("预加载动作列表 - 不要在运行后修改")]
-        private List<ActionList> _actions;
-
-        [Tooltip("动作列表")]
-        [SerializeField]
-        private List<ActionList> actionLists = new();
+        private List<MDAction> _actions;
 
         #endregion 属性
 
         #region 动作管理
         /// <summary>
-        /// 设置动作的动画参数
+        /// 打开混合动画层
         /// </summary>
-        /// <param name="layer"></param>
-        /// <param name="aim_index"></param>
-        public void SetActAnimationParam(MDAction action,int aim_index)
+        public void OpenMixedLayer(int layerIndex)
         {
-            animator.SetInteger(GetActionLayer(action), aim_index);
+            animator.SetLayerWeight(layerIndex, 1f);
+        }
+        /// <summary>
+        /// 关闭混合动画层
+        /// </summary>
+        public void CloseMixedLayer(int layerIndex)
+        {
+            animator.SetLayerWeight(layerIndex, 0f);
         }
         /// <summary>
         /// 打开混合动画层
@@ -97,7 +88,6 @@ namespace ER.Entity2D
         {
             animator.SetLayerWeight(animator.GetLayerIndex(layerName), 1f);
         }
-
         /// <summary>
         /// 关闭混合动画层
         /// </summary>
@@ -105,31 +95,15 @@ namespace ER.Entity2D
         {
             animator.SetLayerWeight(animator.GetLayerIndex(layerName), 0f);
         }
-
         /// <summary>
-        /// 强制将所有动作停止
-        /// </summary>
-        public void ForceBackDefault()
-        {
-            foreach(var pairs in actions)
-            {
-                MDAction action = pairs.Value;
-                if (action.acting)
-                {
-                    action.acting = false;
-                }
-                animator.SetInteger(GetActionLayer(action), 0);
-            }
-        }
-        /// <summary>
-        /// 获取动作对应层的控制参数 字符串
+        /// 获取动作对应控制参数
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        public string GetActionLayer(MDAction action)
+        public string GetActionParamName(MDAction action)
         {
             StringBuilder sb = new StringBuilder("act_");
-            sb.Append(action.layer);
+            sb.Append(action.actionName);
             return sb.ToString();
         }
         /// <summary>
@@ -143,31 +117,36 @@ namespace ER.Entity2D
                 Debug.LogWarning($"该动作槽位已经被占用:{action.actionName}");
             }
             if (layer < 0) { Debug.LogError($"动作层级索引无效!:{action.actionName}"); return; }
-            while(layer >= actionLists.Count)
-            {
-                actionLists.Add(new ActionList());
-            }
 
             action.manager = this;
-            action.index = actionLists[layer].actions.Count;
-            actionLists[layer].actions.Add(action);
             actions[action.actionName] = action;
 
             action.Initialize();
         }
-
         /// <summary>
         /// 触发角色动作
         /// </summary>
         /// <param name="actionName">动作名称</param>
         public void Action(string actionName, params string[] keys)
         {
+            Debug.Log($"激发动作: {actionName}");
             if (actions.TryGetValue(actionName, out MDAction action))
             {
                 if(action.ActionJudge())
                 {
-                    Debug.Log($"动作参数:{GetActionLayer(action)}, 值:{action.index}");
-                    animator.SetInteger(GetActionLayer(action), action.index);
+                    switch(action.controlType)
+                    {
+                        case MDAction.ControlType.Bool:
+                            animator.SetBool(GetActionParamName(action),true);                                
+                            break;
+                        case MDAction.ControlType.Trigger:
+                            animator.SetTrigger(GetActionParamName(action));
+                            break;
+                        default:
+                            Debug.LogError($"未知控制类型:{action.controlType}");
+                            break;
+                    }
+                    Debug.Log($"执行动作:{actionName}");
                     action.StartACT(keys);
                     return;
                 }
@@ -184,18 +163,56 @@ namespace ER.Entity2D
         {
             if (actions.TryGetValue(actionName, out MDAction action))
             {
-                animator.SetInteger(GetActionLayer(action), 0);
-                action.StopACT(keys);
+                switch (action.controlType)
+                {
+                    case MDAction.ControlType.Bool:
+                        animator.SetBool(GetActionParamName(action), false);
+                        break;
+                    case MDAction.ControlType.Trigger:
+                        break;
+                    default:
+                        Debug.LogError($"未知控制类型:{action.controlType}");
+                        break;
+                }
+                action.StopACT();
                 return;
             }
             Debug.LogError($"未找到指定动作：{actionName}");
         }
-
+        /// <summary>
+        /// 触发动作的特定函数
+        /// </summary>
+        /// <param name="actionName"></param>
+        /// <param name="key"></param>
         public void ActionFunction(string actionName, string key)
         {
             if (actions.TryGetValue(actionName, out MDAction action))
             {
                 action.ActionFunction(key);
+                return;
+            }
+            Debug.LogError($"未找到指定动作：{actionName}");
+        }
+        /// <summary>
+        /// 中断指定动作
+        /// </summary>
+        /// <param name="actionName"></param>
+        public void Break(string actionName)
+        {
+            if (actions.TryGetValue(actionName, out MDAction action))
+            {
+                switch (action.controlType)
+                {
+                    case MDAction.ControlType.Bool:
+                        animator.SetBool(GetActionParamName(action), false);
+                        break;
+                    case MDAction.ControlType.Trigger:
+                        break;
+                    default:
+                        Debug.LogError($"未知控制类型:{action.controlType}");
+                        break;
+                }
+                action.BreakACT();
                 return;
             }
             Debug.LogError($"未找到指定动作：{actionName}");

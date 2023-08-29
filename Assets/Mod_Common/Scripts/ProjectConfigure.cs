@@ -51,7 +51,7 @@ public class ProjectConfigure : MonoSingleton<ProjectConfigure>
         //初始化所有静态仓库
         TemplateStoreManager.Instance.Load();
         //设置语言包路径
-        PackagePanel.Instance.packsPath = LanguagePackPath;
+        //PackagePanel.Instance.packsPath = LanguagePackPath;
 
         ObjectPool pool = GetComponent<ObjectPool>();
         if (pool != null)

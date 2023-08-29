@@ -10,7 +10,21 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class InputManager : MonoBehaviour
 {
-    public static DefaultControl inputActions;
+    private static DefaultControl inputActions;
+
+    public static DefaultControl InputActions
+    {
+        get
+        {
+            if(inputActions == null)
+            {
+                inputActions = new DefaultControl();
+                inputActions.Enable();
+            }
+            return inputActions;
+        }
+    }
+
     /// <summary>
     /// 按键绑定完成
     /// </summary>
@@ -18,7 +32,7 @@ public class InputManager : MonoBehaviour
     /// <summary>
     /// 按键绑定取消
     /// </summary>
-    public static event Action rebindCanceled;
+    public static event Action rebindCancelled;
     /// <summary>
     /// 按键绑定开始
     /// </summary>
@@ -98,7 +112,7 @@ public class InputManager : MonoBehaviour
         {
             actionToRebind.Enable();
             operation.Dispose();
-            rebindCanceled?.Invoke();
+            rebindCancelled?.Invoke();
         });
 
         rebind.WithCancelingThrough("<Keyboard/escape>");

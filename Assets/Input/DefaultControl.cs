@@ -176,6 +176,17 @@ public partial class @DefaultControl: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""02fd8551-4736-458e-aa86-7250b5bfd05f"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""8fabf7e5-2b32-454b-93d0-089c9f11950e"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
