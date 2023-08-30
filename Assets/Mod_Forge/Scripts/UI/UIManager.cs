@@ -18,6 +18,9 @@ public class UIManager : MonoBehaviour
     }
     public Button ReturnButton, CancelButton, FinishButton;
     public Canvas canvas;
+
+    public Transform materialProgressing, foundry, chooseMaterial, componentSplicing, chooseCraft;
+    public TipScript tipScript;
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>

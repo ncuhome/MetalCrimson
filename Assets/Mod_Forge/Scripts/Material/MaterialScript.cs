@@ -29,7 +29,7 @@ public class MaterialScript : MonoBehaviour
     public void RefreshInfo()
     {
         if (MaterialItem == null) { return; }
-        if (MaterialItem.GetInt("Num") < MaterialSystem.Instance.needMaterialNum)
+        if (MaterialItem.GetFloat("Num") < MaterialSystem.Instance.needMaterialNum)
         {
             materialImage.color = Color.gray;
             imageScript.canBeDrag = false;
@@ -40,6 +40,6 @@ public class MaterialScript : MonoBehaviour
             materialImage.color = Color.white;
         }
         materialNameText.text = MaterialItem.GetText("Name");
-        materialNumText.text = "拥有：" + MaterialItem.GetInt("Num");
+        materialNumText.text = "拥有：" + MaterialItem.GetFloat("Num");
     }
 }

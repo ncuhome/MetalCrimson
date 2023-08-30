@@ -66,6 +66,7 @@ public class MaterialImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             if (TypeSystem.Instance.stateSystem.currentState.ID == 3)
             {
+                TypeSystem.Instance.materialScript = materialScript;
                 Action<int> action2 = TypeSystem.Instance.ChosenModelExit;
                 TypeSystem.Instance.stateSystem[3].ChangeExitAction(action2);
                 TypeSystem.Instance.stateSystem.states[3].ChangeExitJudgement(4, true);

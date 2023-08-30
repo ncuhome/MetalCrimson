@@ -88,7 +88,7 @@ public struct ChildType
     /// <summary>
     /// 消耗费用
     /// </summary>
-    public int costMaterialNum;
+    public float costMaterialNum;
     /// <summary>
     /// 锋利度
     /// </summary>
@@ -190,6 +190,8 @@ public class TypeSystem : MonoBehaviour
     public bool moving;
 
     public ChildModelCard childModelCard;
+
+    public MaterialScript materialScript;
     #endregion
 
     #region 方法
@@ -279,7 +281,7 @@ public class TypeSystem : MonoBehaviour
                 types[i].childTypes[j].Tags = childModels[j].SplitText("Tags", ';');
                 Debug.Log(childModels[j].GetText("NameTmp") + " " + childModels[j].ID);
                 types[i].childTypes[j].typeSprite = Resources.Load<Sprite>(childModels[j].GetText("Address"));
-                types[i].childTypes[j].costMaterialNum = childModels[j].GetInt("CostNum");
+                types[i].childTypes[j].costMaterialNum = childModels[j].GetFloat("CostNum");
                 types[i].childTypes[j].sharpness = childModels[j].GetFloat("Sharpness");
                 types[i].childTypes[j].durability = childModels[j].GetFloat("Durability");
                 types[i].childTypes[j].weight = childModels[j].GetFloat("Weight");
@@ -639,10 +641,20 @@ public class TypeSystem : MonoBehaviour
     /// </summary>
     public void OpenModelBack()
     {
+        AddComponent();
         modelBack.targetVec = chosenChildModel.typeObject.transform.localPosition + new Vector3(400, 0, 0);
         modelBack.oldVec = chosenChildModel.typeObject.transform.localPosition;
         modelBack.startMove = true;
         moving = true;
+    }
+
+    public void AddComponent()
+    {
+        ItemTemplate childModelItem = TemplateStoreManager.Instance["Item"][chosenChildModelID];
+        ComponentSystem.Instance.AddComponent(childModelItem.GetInt("P_ID"), materialScript.MaterialItem);
+        materialScript.MaterialItem.CreateAttribute("Num", materialScript.MaterialItem.GetFloat("Num") - childModelItem.GetFloat("CostNum"));
+        materialScript.RefreshInfo();
+        UIManager.Instance.tipScript.ShowTips(childModelItem.GetInt("P_ID"));
     }
 
     public void ShowCard(ChildType childType)
