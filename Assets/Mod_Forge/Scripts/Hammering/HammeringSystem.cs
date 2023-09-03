@@ -59,11 +59,15 @@ public class HammeringSystem : MonoBehaviour
         {
             Slider.SetActive(false);
             ChooseMaterialPanel.SetActive(false);
+            UIManager.Instance.ReturnButton.interactable = false;
+            UIManager.Instance.CancelButton.interactable = false;
         }
         else
         {
             Slider.SetActive(true);
             ChooseMaterialPanel.SetActive(true);
+            UIManager.Instance.ReturnButton.interactable = true;
+            UIManager.Instance.CancelButton.interactable = true;
         }
 
         if (temperature < 0)
