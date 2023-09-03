@@ -22,7 +22,6 @@ namespace Mod_Level
 
             state = owner.GetAttribute<ATCharacterState>();
             if (state == null) Debug.LogError("未找到角色的状态管理器:<ATPlayerState>");
-            Debug.Log($"is null {InputManager.InputActions == null}");
 
             /*
             ATAnimator at = null;
@@ -117,8 +116,6 @@ namespace Mod_Level
 
         private void Attack(InputAction.CallbackContext ctx)
         {
-            Debug.Log("按下攻击键");
-            Debug.Log($"条件:{state.ControlAct} && {!state.Vertigo}");
             if (state.ControlAct && !state.Vertigo)
                 actionManager.Action("Attack");
         }

@@ -5,22 +5,6 @@ using System.Collections.Generic;
 namespace Mod_Level
 {
     /// <summary>
-    /// 修正委托
-    /// </summary>
-    public class CorrectValueDelegate
-    {
-        /// <summary>
-        /// 优先级
-        /// </summary>
-        public int level;
-
-        /// <summary>
-        /// 数值修正委托
-        /// </summary>
-        public Func<float, float> correct;
-    }
-
-    /// <summary>
     /// 技能的基类
     /// </summary>
     public abstract class MDSkill : MDAction

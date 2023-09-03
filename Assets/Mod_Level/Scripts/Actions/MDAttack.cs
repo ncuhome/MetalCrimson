@@ -19,6 +19,8 @@ namespace Mod_Level
 
         public override bool ActionJudge()
         {
+
+            if (state != ActionState.Disable) return false;//处于攻击状态不执行新的攻击
             return true;
         }
 
@@ -38,14 +40,12 @@ namespace Mod_Level
 
         protected override void StartAction(params string[] keys)
         {
-            if (state != ActionState.Disable) return;//处于攻击状态不执行新的攻击
             manager.CloseMixedLayer((int)AnimationLayer.Move);
             state = ActionState.Waiting;
         }
 
         protected override void StopAction(params string[] keys)
         {
-            Debug.Log("退出攻击");
             manager.OpenMixedLayer((int)AnimationLayer.Move);
             state = ActionState.Disable;
         }

@@ -41,7 +41,7 @@ namespace ER.Entity2D
                     if (touchEvent != null) touchEvent();
                 }
                 record.Add(collider.gameObject);
-                Debug.Log($"进入:{collider.gameObject.name}, tag:{collider.tag}");
+                //Debug.Log($"进入:{collider.gameObject.name}, tag:{collider.tag}");
             }
         }
 

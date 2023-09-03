@@ -135,7 +135,7 @@ namespace ER.Entity2D
         /// <param name="actionName">动作名称</param>
         public void Action(string actionName, params string[] keys)
         {
-            Debug.Log($"激发动作: {actionName}");
+            //Debug.Log($"激发动作: {actionName}");
             if (actions.TryGetValue(actionName, out MDAction action))
             {
                 if (action.ActionJudge())
@@ -154,11 +154,11 @@ namespace ER.Entity2D
                             Debug.LogError($"未知控制类型:{action.controlType}");
                             break;
                     }
-                    Debug.Log($"执行动作:{actionName}");
+                    //Debug.Log($"执行动作:{actionName}");
                     action.StartACT(keys);
                     return;
                 }
-                Debug.Log($"动作未能执行:{actionName}");
+                //Debug.Log($"动作未能执行:{actionName}");
                 return;
             }
             Debug.LogError($"未找到指定动作：{actionName}");

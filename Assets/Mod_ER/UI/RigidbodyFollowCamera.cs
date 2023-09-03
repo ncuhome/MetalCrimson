@@ -113,7 +113,7 @@ namespace ER.UI
             Vector2 move = aimPosition - (Vector2)transform.position;
             speed = move.magnitude * Rate;
 
-            Debug.Log("相机跟随中");
+            //Debug.Log("相机跟随中");
             if (transition)
             {
                 if (lockMaxSpeed && speed > maxSpeed) { speed = maxSpeed; }

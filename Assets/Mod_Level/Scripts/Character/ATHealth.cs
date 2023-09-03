@@ -18,13 +18,13 @@ namespace Mod_Level
             Action<IAttribute> action = (IAttribute response) =>
             {
                 ((ATActionResponse)response).ActionEvent += GetDamage;
-                print("添加委托成功");
+                //print("添加委托成功");
             };
             ATActionResponse response = null;
             if (owner.TryGetAttribute("ATActionResponse", ref response, action))
             {
                 response.ActionEvent += GetDamage;
-                print("添加委托成功");
+                //print("添加委托成功");
             }
 
             state = owner.GetAttribute<ATCharacterState>();

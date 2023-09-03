@@ -42,7 +42,7 @@ namespace Mod_Level
 
         private void Collect(Collider2D c)
         {
-            Debug.Log("吸引物品");
+            //Debug.Log("吸引物品");
             CollectibleItem item = c.GetComponent<CollectibleItem>();
             if (item != null)
             {
@@ -52,7 +52,7 @@ namespace Mod_Level
 
         private void Get(Collider2D c)
         {
-            Debug.Log("拾取物品");
+            //Debug.Log("拾取物品");
             CollectibleItem item = c.GetComponent<CollectibleItem>();
             if (item != null)
             {

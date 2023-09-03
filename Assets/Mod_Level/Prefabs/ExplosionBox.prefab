@@ -149,7 +149,7 @@ Transform:
   m_Children:
   - {fileID: 3284186455608720409}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6932620636451177434
 SpriteRenderer:
@@ -212,16 +212,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 8427363399651218213}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b158cef17233ae1448acf6a31e02a8c8, type: 3}
+  m_Script: {fileID: 11500000, guid: 71fed5e804c7f1a4fb74fc24cee69f10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Attributes:
   - {fileID: 5661620600014286627}
-  - {fileID: 1006552490361816460}
   - {fileID: 2472981684966318665}
   HP: 1
   catchBoom: 0
-  damage: 80
+  damage: 1
   repel_power: 50
   leaveTime: 1
 --- !u!50 &4992999994989943422

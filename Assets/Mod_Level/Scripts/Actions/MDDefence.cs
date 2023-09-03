@@ -41,7 +41,8 @@ namespace Mod_Level
 
         private bool Defence(ActionInfo info)
         {
-            return true;
+            if (info.type == "Attack") return true;
+            return false;
         }
 
         public override bool ActionJudge()
@@ -52,7 +53,6 @@ namespace Mod_Level
 
         protected override void StartAction(params string[] keys)
         {
-            if (state != ActionState.Disable) return;//处于防御状态不执行新的防御
             state = ActionState.Waiting;
             enabled = true;
         }
@@ -98,9 +98,9 @@ namespace Mod_Level
 
         private void Update()
         {
-            if (state == ActionState.Acting) return;
+            if (state != ActionState.Acting) return;
             ownerState.stamina.ModifyValue(-10 * Time.deltaTime, manager.Owner);
-            if (ownerState.stamina.Value <= 0) StopAction();
+            if (ownerState.stamina.Value <= 0) manager.Stop("Defence");
         }
 
         protected override void BreakAction(params string[] keys)

@@ -23,12 +23,12 @@ namespace ER.Entity2D
         /// <summary>
         /// 动作类型
         /// </summary>
-        public string type = "Unkown";
+        public string type = "Unknown";
 
         /// <summary>
         /// 动作名称
         /// </summary>
-        public string name = "Unkown";
+        public string name = "Unknown";
 
         /// <summary>
         /// 动作持续时间，小于0表示无限
@@ -292,6 +292,7 @@ namespace ER.Entity2D
             remainHits = hits;
             remainTime = time;
             timers = new();
+            temp = new();
             gameObject.SetActive(true);
         }
 
@@ -384,7 +385,7 @@ namespace ER.Entity2D
                 }
                 else//初次接触对象
                 {
-                    response.ActionResponse(Info);//响应此动作
+                    temp.Add(response);//添加至缓存区
                     timers[response] = new Timer() { time = 0, enter = true };//添加计时器
                 }
             }
@@ -413,10 +414,12 @@ namespace ER.Entity2D
         {
             for (int i = 0; i < temp.Count; i++)
             {
+                Debug.Log($"动作预响应: {temp[i].gameObject.name}");
                 if (temp[i].PreResponse(Info))
                 {
+                    Debug.Log("动作终止");
                     End();
-                    break;
+                    return;
                 }
             }
             for (int i = 0; i < temp.Count; i++)
@@ -450,6 +453,10 @@ namespace ER.Entity2D
                     timer.Value.time = 0;
                 }
             }
+        }
+
+        private void LateUpdate()
+        {
             UpdateTemp();
         }
 

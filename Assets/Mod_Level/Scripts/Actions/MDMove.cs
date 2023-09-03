@@ -98,16 +98,16 @@ namespace Mod_Level
             switch (move_dir)
             {
                 case ATCharacterState.Direction.Right:
-                    if (body.velocity.x < ownerState.speed)
+                    if (body.velocity.x < ownerState["Speed"])
                     {
-                        body.velocity = new Vector2(ownerState.speed, body.velocity.y);
+                        body.velocity = new Vector2(ownerState["Speed"], body.velocity.y);
                     }
                     break;
 
                 case ATCharacterState.Direction.Left:
-                    if (body.velocity.x > -ownerState.speed)
+                    if (body.velocity.x > -ownerState["Speed"])
                     {
-                        body.velocity = new Vector2(-ownerState.speed, body.velocity.y);
+                        body.velocity = new Vector2(-ownerState["Speed"], body.velocity.y);
                     }
                     break;
             }

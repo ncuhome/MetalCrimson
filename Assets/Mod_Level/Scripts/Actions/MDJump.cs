@@ -28,7 +28,7 @@ namespace Mod_Level
         protected override void StartAction(params string[] keys)
         {
             if (detector.Type == ATEnvironmentDetector.EnvironmentType.Land)
-                body.velocity = new Vector2(body.velocity.x, ownerState.jump);
+                body.velocity = new Vector2(body.velocity.x, ownerState["Jump"]);
         }
 
         protected override void StopAction(params string[] keys)
