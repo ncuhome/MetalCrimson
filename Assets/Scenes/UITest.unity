@@ -15278,7 +15278,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SavePath: Assets/StreamingAssets/Saves
-  DataPath: "Assets/StreamingAssets/\u6A21\u5177\u4FE1\u606F\u8868.csv"
   MapSettingsPath: Assets/StreamingAssets/mapsettings.ini
 --- !u!4 &1459209532
 Transform:
@@ -21437,7 +21436,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2000553532
 RectTransform:
   m_ObjectHideFlags: 0
