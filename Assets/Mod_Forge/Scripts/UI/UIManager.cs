@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
 
     public Transform materialProgressing, foundry, chooseMaterial, componentSplicing, chooseCraft;
     public TipScript tipScript;
+    public Sprite Error, Correct;
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
