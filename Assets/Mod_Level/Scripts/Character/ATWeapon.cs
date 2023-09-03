@@ -32,7 +32,7 @@ namespace Mod_Level
         /// <summary>
         /// 更新武器属性(未写完)
         /// </summary>
-        public void UpdateInfo()
+        public void UpdateInfo(Weapon info)
         {
 
         }

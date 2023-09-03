@@ -23,7 +23,7 @@ namespace ER.Parser
         {
             if (!File.Exists(filePath))
             {
-                throw new FileNotFoundException("INI file not found.", filePath);
+                throw new FileNotFoundException($"INI file not found: {filePath}");
             }
 
             string[] lines = File.ReadAllLines(filePath);

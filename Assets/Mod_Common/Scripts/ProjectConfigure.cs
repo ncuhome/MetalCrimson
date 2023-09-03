@@ -15,13 +15,10 @@ namespace Mod_Common
     public class ProjectConfigure : MonoSingleton<ProjectConfigure>
     {
         [Tooltip("存档目录路径")]
-        public string SavePath = @"Assets/StreamingAssets/Saves";
-
-        [Tooltip("物品模板数据表路径")]
-        public string DataPath = @"Assets/StreamingAssets/模具信息表.csv";
+        public string SavePath = Application.streamingAssetsPath + @"/Saves";
 
         [Tooltip("地图配置文件路径")]
-        public string MapSettingsPath = @"Assets/StreamingAssets/mapsettings.ini";
+        public string MapSettingsPath = Application.streamingAssetsPath + @"/mapsettings.ini";
 
         private void Settings()//设置预设
         {
@@ -43,12 +40,14 @@ namespace Mod_Common
             //启用预设设置选项
             //Settings();
 
-            //更新地图配置
-            RougeMap.Instance.LoadConfig(MapSettingsPath);
             //设置使用的指令解释器
             ConsolePanel.interpreter = new AInterpreter();
             //设置存档目录
             SaveManager.Instance.savePackPath = SavePath;
+            ConsolePanel.Print($"MapSettingsPath:{MapSettingsPath}");
+
+            //更新地图配置
+            //RougeMap.Instance.LoadConfig(MapSettingsPath);
             //设置存档解析器为Json解析器
             SaveWrapper.Instance.interpreter = new JsonInterpreter();
             //初始化所有静态仓库

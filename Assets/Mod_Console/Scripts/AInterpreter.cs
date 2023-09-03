@@ -3,6 +3,8 @@ using ER.Parser;
 using ER.Save;
 using Mod_Rouge;
 using System.IO;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Mod_Console
 {
@@ -536,6 +538,15 @@ namespace Mod_Console
             return Data.Empty;
         }
 
+        private Data CMD_scene_load(Data[] parameters)
+        {
+            if(parameters.IsMate(DataType.Text))
+            {
+                SceneManager.LoadScene((string)parameters[0].Value);
+            }
+            return Data.Empty;
+        }
+
         #endregion 指令函数
 
         public override Data EffectuateSuper(string commandName, Data[] parameters)
@@ -616,6 +627,9 @@ namespace Mod_Console
 
                 case "forge":
                     return CMD_forge(parameters);
+
+                case "scene_load":
+                    return CMD_scene_load(parameters);
 
                 default:
                     return Data.Error;
