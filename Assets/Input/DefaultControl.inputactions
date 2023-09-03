@@ -154,17 +154,6 @@
                 },
                 {
                     "name": "",
-                    "id": "02fd8551-4736-458e-aa86-7250b5bfd05f",
-                    "path": "<Keyboard>/k",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "8fabf7e5-2b32-454b-93d0-089c9f11950e",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -225,7 +214,7 @@
             "id": "2f398e79-7cac-4768-808c-6f666343d7fd",
             "actions": [
                 {
-                    "name": "Menu",
+                    "name": "QTE",
                     "type": "Button",
                     "id": "91d9d3a1-6fad-4579-8aa0-e0649d8d39e4",
                     "expectedControlType": "Button",
@@ -234,9 +223,27 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Back",
+                    "name": "Hammering",
                     "type": "Button",
-                    "id": "cbac3555-348c-4d24-b74f-1a4e25793480",
+                    "id": "3798e8af-d6b0-458d-bb51-bd055a8b7e9a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UpLine",
+                    "type": "Button",
+                    "id": "63ce8bbe-9a31-478b-9cfd-b4cfce1bdb21",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DownLine",
+                    "type": "Button",
+                    "id": "7fe52e5d-71e7-4390-8315-5703e9637fd8",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -247,22 +254,44 @@
                 {
                     "name": "",
                     "id": "619db61b-99e4-4f34-96d0-eece63f7beeb",
-                    "path": "<Keyboard>/escape",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Menu",
+                    "action": "QTE",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "7d096aaa-3fe2-4cc2-b704-1988619e9003",
-                    "path": "<Keyboard>/escape",
+                    "id": "3927777d-d410-432e-8d6a-bf7b1dced403",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Back",
+                    "action": "Hammering",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e1881bbe-2493-4971-8a4c-786ec3a809c9",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UpLine",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9a70ff56-d3d2-44be-bc01-3f59f9f700dd",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DownLine",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

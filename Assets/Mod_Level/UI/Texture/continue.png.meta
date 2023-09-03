@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Mod_Level/UI/Texture/continue.png.meta
 guid: 6fed508bacf753145946430d75cba215
+========
+guid: 4b73c9da65cccaf4195c764c68b60150
+>>>>>>>> dev/forge:Assets/Mod_Level/UI/PlayerStateBar.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

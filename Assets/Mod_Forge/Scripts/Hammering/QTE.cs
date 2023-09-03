@@ -68,17 +68,6 @@ public class QTE : MonoBehaviour
         QTEValueTransform.sizeDelta = new Vector2(QTEBackgroundTransform.rect.width, value * QTEBackgroundTransform.rect.height);
         QTEValueTransform.localPosition = new Vector3(QTEBackgroundTransform.localPosition.x, QTEBackgroundTransform.localPosition.y - QTEBackgroundTransform.rect.height / 2);
 
-        if (HammeringSystem.Instance.startHammering)
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                StartQTE();
-            }
-            if (Input.GetKeyUp(KeyCode.E))
-            {
-                HammeringSystem.Instance.HammerMaterial(QTEJudgement());
-            }
-        }
     }
 
     public float QTEJudgement()

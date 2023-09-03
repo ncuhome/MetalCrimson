@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Mod_Level/UI/Texture/test-UI-a1.jpeg.meta
 guid: c0fa13e0899638240bab3c2e19fd7a69
+========
+guid: 6fed508bacf753145946430d75cba215
+>>>>>>>> dev/forge:Assets/Mod_Level/UI/continue.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

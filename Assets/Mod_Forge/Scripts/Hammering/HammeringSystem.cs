@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class HammeringSystem : MonoBehaviour
@@ -16,22 +18,18 @@ public class HammeringSystem : MonoBehaviour
     }
 
     #endregion 单例封装
-
     /// <summary>
     /// 已经添加的材料数
     /// </summary>
     public int AddedMaterialNum = 0;
-
     /// <summary>
     /// 添加的材料对应的材料脚本
     /// </summary>
     public MaterialScript[] materialScripts = null;
-
     /// <summary>
     /// 炉子里的材料
     /// </summary>
     public GameObject[] materialInFurnaces = null;
-
     public Material glowMaterial;
     public float temperature = 0f;
     public bool startHammering;
@@ -39,8 +37,7 @@ public class HammeringSystem : MonoBehaviour
     private ER.Items.ItemVariable newItem;
     private int HitTimes;
     private bool isNewMaterial;
-
-    private void Awake()
+    void Awake()
     {
         //构筑单例，并初始化
         if (instance == null)
@@ -49,19 +46,14 @@ public class HammeringSystem : MonoBehaviour
             materialScripts = new MaterialScript[3];
         }
     }
-
     // Start is called before the first frame update
-    private void Start()
+    void Start()
     {
     }
 
     // Update is called once per frame
-    private void Update()
+    void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            StartHammering();
-        }
 
         if (temperature > 0)
         {
@@ -78,8 +70,8 @@ public class HammeringSystem : MonoBehaviour
         {
             temperature = 0;
         }
-    }
 
+    }
     /// <summary>
     /// 判断是否能添加材料
     /// </summary>
@@ -101,7 +93,6 @@ public class HammeringSystem : MonoBehaviour
         }
         return false;
     }
-
     /// <summary>
     /// 添加材料
     /// </summary>
@@ -113,7 +104,6 @@ public class HammeringSystem : MonoBehaviour
         AddedMaterialNum++;
         materialScript.RefreshInfo();
     }
-
     /// <summary>
     /// 放回材料后修复顺序
     /// </summary>
@@ -130,7 +120,6 @@ public class HammeringSystem : MonoBehaviour
             }
         }
     }
-
     /// <summary>
     /// 放回材料
     /// </summary>
@@ -186,6 +175,7 @@ public class HammeringSystem : MonoBehaviour
 
         if (AddedMaterialNum > 1)
         {
+
         }
         else
         {
@@ -233,7 +223,6 @@ public class HammeringSystem : MonoBehaviour
 
         return item.Clone();
     }
-
     /// <summary>
     /// 叠锻数值变换
     /// </summary>

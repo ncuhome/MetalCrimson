@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Mod_Level/UI/Texture/PlayerStateBar.png.meta
 guid: 4b73c9da65cccaf4195c764c68b60150
+========
+guid: 44970c37407b732448353160385bda85
+>>>>>>>> dev/forge:Assets/Mod_Level/UI/MessageLine.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

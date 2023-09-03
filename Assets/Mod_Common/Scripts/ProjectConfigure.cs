@@ -1,73 +1,78 @@
-﻿using ER;
+﻿
+using ER;
 using ER.Items;
 using ER.Save;
 using Mod_Console;
+using Mod_Rouge;
 using System;
 using UnityEngine;
 
-/// <summary>
-/// 项目配置器，用于对整个项目进行有序的初始化
-/// </summary>
-public class ProjectConfigure : MonoSingleton<ProjectConfigure>
+namespace Mod_Common
 {
-    [Tooltip("存档目录路径 - 不要修改")]
-    public string SavePath = Application.streamingAssetsPath + "/Saves";
-
-    [Tooltip("语言包目录路径 - 不要修改")]
-    public string LanguagePackPath = Application.streamingAssetsPath + "/Language";
-
-    [Tooltip("地图配置文件路径 - 不要修改")]
-    public string MapSettingsPath = Application.streamingAssetsPath + "/mapsettings.ini";
-
-    private void Settings()//设置预设
+    /// <summary>
+    /// 项目配置器，用于对整个项目进行有序的初始化
+    /// </summary>
+    public class ProjectConfigure : MonoSingleton<ProjectConfigure>
     {
-        SettingsManager.Instance["Volume"] = 100 + "";
-        SettingsManager.Instance["Move Up"] = (int)KeyCode.W + "";
-        SettingsManager.Instance["Move Down"] = (int)KeyCode.S + "";
-        SettingsManager.Instance["Move Left"] = (int)KeyCode.A + "";
-        SettingsManager.Instance["Move Right"] = (int)KeyCode.D + "";
-        SettingsManager.Instance["Attack"] = (int)KeyCode.J + "";
-        SettingsManager.Instance["Debug"] = (int)KeyCode.F12 + "";
-        ConsolePanel.Print("Loading Settings");
-        SettingsManager.Instance.SaveSettings();
-        ConsolePanel.Print("Saving Settings");
-        ConsolePanel.Print($"音量大小：{SettingsManager.Instance["Volume"]}");
-    }
+        [Tooltip("存档目录路径")]
+        public string SavePath = @"Assets/StreamingAssets/Saves";
 
-    private void Start()
-    {
-        //启用预设设置选项
-        //Settings();
-        //更新地图配置
-        //RougeMap.Instance.LoadConfig(MapSettingsPath);
+        [Tooltip("物品模板数据表路径")]
+        public string DataPath = @"Assets/StreamingAssets/模具信息表.csv";
 
-        //设置使用的指令解释器
-        ConsolePanel.interpreter = new AInterpreter();
-        //设置存档目录
-        SaveManager.Instance.savePackPath = SavePath;
-        //设置存档解析器为Json解析器
-        SaveWrapper.Instance.interpreter = new JsonInterpreter();
-        //初始化所有静态仓库
-        TemplateStoreManager.Instance.Load();
-        //设置语言包路径
-        //PackagePanel.Instance.packsPath = LanguagePackPath;
+        [Tooltip("地图配置文件路径")]
+        public string MapSettingsPath = @"Assets/StreamingAssets/mapsettings.ini";
 
-        ObjectPool pool = GetComponent<ObjectPool>();
-        if (pool != null)
+        private void Settings()//设置预设
         {
-            ObjectPoolManager.Instance.RegisterPool(pool);
+            SettingsManager.Instance["Volume"] = 100 + "";
+            SettingsManager.Instance["Move Up"] = (int)KeyCode.W + "";
+            SettingsManager.Instance["Move Down"] = (int)KeyCode.S + "";
+            SettingsManager.Instance["Move Left"] = (int)KeyCode.A + "";
+            SettingsManager.Instance["Move Right"] = (int)KeyCode.D + "";
+            SettingsManager.Instance["Attack"] = (int)KeyCode.J + "";
+            SettingsManager.Instance["Debug"] = (int)KeyCode.F12 + "";
+            ConsolePanel.Print("Loading Settings");
+            SettingsManager.Instance.SaveSettings();
+            ConsolePanel.Print("Saving Settings");
+            ConsolePanel.Print($"音量大小：{SettingsManager.Instance["Volume"]}");
         }
-    }
 
-    private void Update()
-    {
-        KeyCode code = (KeyCode)Convert.ToInt32(SettingsManager.Instance["Debug"]);
-
-        if (Input.anyKeyDown)
+        private void Start()
         {
-            if (Input.GetKeyDown(code))//开启/关闭控制台
+            //启用预设设置选项
+            //Settings();
+
+            //更新地图配置
+            RougeMap.Instance.LoadConfig(MapSettingsPath);
+            //设置使用的指令解释器
+            ConsolePanel.interpreter = new AInterpreter();
+            //设置存档目录
+            SaveManager.Instance.savePackPath = SavePath;
+            //设置存档解析器为Json解析器
+            SaveWrapper.Instance.interpreter = new JsonInterpreter();
+            //初始化所有静态仓库
+            TemplateStoreManager.Instance.Load();
+
+            ObjectPool pool = GetComponent<ObjectPool>();
+            if (pool != null)
             {
-                ConsolePanel.Instance.SwitchUsing();
+                ObjectPoolManager.Instance.RegisterPool(pool);
+            }
+
+            ForgeConfigure.Instance.InitForgeManager();
+        }
+
+        private void Update()
+        {
+            KeyCode code = (KeyCode)Convert.ToInt32(SettingsManager.Instance["Debug"]);
+
+            if (Input.anyKeyDown)
+            {
+                if (Input.GetKeyDown(code))//开启/关闭控制台
+                {
+                    ConsolePanel.Instance.SwitchUsing();
+                }
             }
         }
     }
