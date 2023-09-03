@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using UnityEngine;
 
 namespace ER.Parser
 {
@@ -17,7 +18,7 @@ namespace ER.Parser
         public static List<string[]> ParseCSV(string filePath)
         {
             List<string[]> data = new List<string[]>();
-
+            Debug.Log($"FilePath:{filePath}");
             using (StreamReader reader = new StreamReader(filePath))
             {
                 while (!reader.EndOfStream)
