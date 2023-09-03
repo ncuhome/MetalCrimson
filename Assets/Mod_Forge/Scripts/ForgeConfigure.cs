@@ -50,6 +50,7 @@ public class ForgeConfigure : MonoBehaviour
         UIManager.Instance.materialProgressing.gameObject.SetActive(false);
         UIManager.Instance.chooseMaterial.gameObject.SetActive(false);
         UIManager.Instance.chooseCraft.gameObject.SetActive(true);
+        MaterialSystem.Instance.HideMaterialPanel();
     }
     public void EnterFoundry()
     {
