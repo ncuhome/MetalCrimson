@@ -1,5 +1,6 @@
 ﻿using ER.Save;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 namespace ER.Items
@@ -35,6 +36,10 @@ namespace ER.Items
                 string name = s.Substring(0, sp);
                 string[] paths = s.Substring(sp + 1).Split(',');
                 ItemTemplateStore store = new ItemTemplateStore(name);
+                for(int i=0;i<paths.Length;i++)
+                {
+                    paths[i] = Path.Combine(Application.streamingAssetsPath, paths[i]);
+                }
                 store.LoadItemsList(paths);
                 stores[name] = store;
             }

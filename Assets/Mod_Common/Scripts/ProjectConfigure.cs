@@ -5,6 +5,7 @@ using ER.Save;
 using Mod_Console;
 using Mod_Rouge;
 using System;
+using System.IO;
 using UnityEngine;
 
 namespace Mod_Common
@@ -15,10 +16,10 @@ namespace Mod_Common
     public class ProjectConfigure : MonoSingleton<ProjectConfigure>
     {
         [Tooltip("存档目录路径")]
-        public string SavePath = Application.streamingAssetsPath + @"/Saves";
+        public string SavePath;
 
         [Tooltip("地图配置文件路径")]
-        public string MapSettingsPath = Application.streamingAssetsPath + @"/mapsettings.ini";
+        public string MapSettingsPath;
 
         private void Settings()//设置预设
         {
@@ -33,6 +34,13 @@ namespace Mod_Common
             SettingsManager.Instance.SaveSettings();
             ConsolePanel.Print("Saving Settings");
             ConsolePanel.Print($"音量大小：{SettingsManager.Instance["Volume"]}");
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            SavePath = Path.Combine(Application.streamingAssetsPath, "Saves");
+            MapSettingsPath = Path.Combine(Application.streamingAssetsPath, "mapsettings.ini");
         }
 
         private void Start()
