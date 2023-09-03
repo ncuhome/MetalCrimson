@@ -143,7 +143,6 @@ public class ComponentSystem : MonoBehaviour
     {
         InitComponentItemStore();
         targetVec = chooseComponentTransform.localPosition;
-        RefreshTypes();
     }
     /// <summary>
     /// 初始化部件物品库设置
@@ -155,27 +154,28 @@ public class ComponentSystem : MonoBehaviour
         componentTypes = new List<ComponentType>();
         componentInAnvil = new List<ComponentScript>();
 
+        ItemVariable rawIron = new ItemVariable(TemplateStoreManager.Instance["Item"]["RawIron"], true);
         for (int i = 0; i < 2; i++)
         {
-            Debug.Log(AddComponent(183771));
-            Debug.Log(AddComponent(183772));
-            Debug.Log(AddComponent(183773));
+            Debug.Log(AddComponent(8083771, rawIron));
+            Debug.Log(AddComponent(8083772, rawIron));
+            Debug.Log(AddComponent(8083773, rawIron));
         }
         for (int i = 0; i < 4; i++)
         {
-            Debug.Log(AddComponent(165881));
-            Debug.Log(AddComponent(180731));
-            Debug.Log(AddComponent(183801));
-            Debug.Log(AddComponent(172731));
-            Debug.Log(AddComponent(172731));
-            Debug.Log(AddComponent(172691));
+            Debug.Log(AddComponent(8065881, rawIron));
+            Debug.Log(AddComponent(8083801, rawIron));
+            Debug.Log(AddComponent(8080731, rawIron));
+            Debug.Log(AddComponent(8072731, rawIron));
+            Debug.Log(AddComponent(8072691, rawIron));
+            Debug.Log(AddComponent(8066731, rawIron));
         }
 
     }
     /// <summary>
     /// 通过NameTmp添加部件,添加成功返回true，否则返回false
     /// </summary>
-    public bool AddComponent(string NameTmp)
+    public bool AddComponent(string NameTmp, ItemVariable materialItem)
     {
         if (TemplateStoreManager.Instance["Item"][NameTmp] == null) { return false; } // 如果没找到返回false
 
@@ -184,6 +184,17 @@ public class ComponentSystem : MonoBehaviour
         ItemVariable newComponentItem = componentsItemStore[componentsItemStore.Count - 1];
 
         newComponentItem.CreateAttribute("Name", newComponentItem.GetText("Name", false));
+        newComponentItem.CreateAttribute("Material_ID", materialItem.ID);
+
+        ItemTemplate modelItem = TemplateStoreManager.Instance["Item"][newComponentItem.GetInt("Model_ID")];
+        newComponentItem.CreateAttribute("Density", materialItem.GetFloat("Density", false));
+        newComponentItem.CreateAttribute("Mm", newComponentItem.GetFloat("Density") * modelItem.GetFloat("CostNum"));
+        newComponentItem.CreateAttribute("Flexability", materialItem.GetFloat("Flexability", false));
+        newComponentItem.CreateAttribute("Toughness", materialItem.GetFloat("Toughness", false));
+        newComponentItem.CreateAttribute("AntiSolution", materialItem.GetFloat("AntiSolution", false));
+        newComponentItem.CreateAttribute("M", newComponentItem.GetFloat("Mm") * newComponentItem.GetFloat("Weight"));
+        newComponentItem.CreateAttribute("Dur", (newComponentItem.GetFloat("Flexability") / 8 + newComponentItem.GetFloat("Toughness")) * newComponentItem.GetFloat("Duability"));
+        newComponentItem.CreateAttribute("Sharp", newComponentItem.GetFloat("Sharpness") * (10 + newComponentItem.GetFloat("Toughness") / 10));
 
         componentPrefab = Resources.Load<GameObject>("Prefabs/Components/" + NameTmp);
         ComponentType componentType = GetComponentType(TemplateStoreManager.Instance["Item"][NameTmp].GetInt("MotherModel_ID"));
@@ -194,18 +205,18 @@ public class ComponentSystem : MonoBehaviour
 
         ComponentScript newComponentScript = newComponentObject.GetComponent<ComponentScript>();
         newComponentScript.ComponentItem = newComponentItem;
-        // newComponentScript.componentImage.sprite = Resources.Load<Sprite>(TemplateStoreManager.Instance["Item"][NameTmp].GetText("StaticAddress"));
-        // newComponentScript.componentImage.SetNativeSize();
         newComponentScript.RefreshInfo();
 
-
         if (currentTypeID == 0) { currentTypeID = componentType.typeID; }
+
+        RefreshTypes();
+
         return true;
     }
     /// <summary>
     /// 通过ID添加部件,添加成功返回true，否则返回false
     /// </summary>
-    public bool AddComponent(int id)
+    public bool AddComponent(int id, ItemVariable materialItem)
     {
 
         if (TemplateStoreManager.Instance["Item"][id] == null) { return false; }// 如果没找到返回false
@@ -215,6 +226,17 @@ public class ComponentSystem : MonoBehaviour
         ItemVariable newComponentItem = componentsItemStore[componentsItemStore.Count - 1];
 
         newComponentItem.CreateAttribute("Name", newComponentItem.GetText("Name", false));
+        newComponentItem.CreateAttribute("Material_ID", materialItem.ID);
+
+        ItemTemplate modelItem = TemplateStoreManager.Instance["Item"][newComponentItem.GetInt("Model_ID")];
+        newComponentItem.CreateAttribute("Density", materialItem.GetFloat("Density", false));
+        newComponentItem.CreateAttribute("Mm", newComponentItem.GetFloat("Density") * modelItem.GetFloat("CostNum"));
+        newComponentItem.CreateAttribute("Flexability", materialItem.GetFloat("Flexability", false));
+        newComponentItem.CreateAttribute("Toughness", materialItem.GetFloat("Toughness", false));
+        newComponentItem.CreateAttribute("AntiSolution", materialItem.GetFloat("AntiSolution", false));
+        newComponentItem.CreateAttribute("M", newComponentItem.GetFloat("Mm") * newComponentItem.GetFloat("Weight"));
+        newComponentItem.CreateAttribute("Dur", (newComponentItem.GetFloat("Flexability") / 8 + newComponentItem.GetFloat("Toughness")) * newComponentItem.GetFloat("Duability"));
+        newComponentItem.CreateAttribute("Sharp", newComponentItem.GetFloat("Sharpness") * (10 + newComponentItem.GetFloat("Toughness") / 10));
 
         componentPrefab = Resources.Load<GameObject>("Prefabs/Components/" + newComponentItem.GetText("NameTmp"));
         ComponentType componentType = GetComponentType(TemplateStoreManager.Instance["Item"][id].GetInt("MotherModel_ID"));
@@ -225,12 +247,12 @@ public class ComponentSystem : MonoBehaviour
 
         ComponentScript newComponentScript = newComponentObject.GetComponent<ComponentScript>();
         newComponentScript.ComponentItem = newComponentItem;
-        // newComponentScript.componentImage.sprite = Resources.Load<Sprite>(TemplateStoreManager.Instance["Item"][id].GetText("StaticAddress"));
-        // newComponentScript.componentImage.SetNativeSize();
+
         newComponentScript.RefreshInfo();
 
-
         if (currentTypeID == 0) { currentTypeID = componentType.typeID; }
+
+        RefreshTypes();
         return true;
     }
 
@@ -271,13 +293,19 @@ public class ComponentSystem : MonoBehaviour
         if (ComponentChooseSystem.Instance.showMore)
         {
             targetVec = new Vector3(-126, 0, 0);
-            componentLayout.constraintCount = 1;
+            if (componentLayout)
+            {
+                componentLayout.constraintCount = 1;
+            }
             ComponentChooseSystem.Instance.showMore = false;
         }
         else
         {
             targetVec = new Vector3(-126, 457, 0);
-            componentLayout.constraintCount = 3;
+            if (componentLayout)
+            {
+                componentLayout.constraintCount = 3;
+            }
             ComponentChooseSystem.Instance.showMore = true;
         }
     }
@@ -381,6 +409,8 @@ public class ComponentSystem : MonoBehaviour
             inLink.Match(outLink);
         }
         componentInAnvil.Add(componentScript);
+        WeaponSystem.Instance.AddAttribute(componentScript);
+        WeaponSystem.Instance.RefreshWeaponInfo();
         FindNextInPrompt();
         FindNextOutPrompt();
     }
@@ -388,6 +418,8 @@ public class ComponentSystem : MonoBehaviour
     public void RemoveComponentFromAnvil(ComponentScript componentScript)
     {
         componentInAnvil.Remove(componentScript);
+        WeaponSystem.Instance.RemoveAttribute(componentScript);
+        WeaponSystem.Instance.RefreshWeaponInfo();
         if (componentScript.inPrompt && componentScript.inPrompt.linkedPrompt) { componentScript.inPrompt.RemoveLink(); }
         if (componentScript.outPrompt && componentScript.outPrompt.linkedPrompt) { componentScript.outPrompt.RemoveLink(); }
         FindNextInPrompt();

@@ -267,7 +267,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 41ded6ae327031a489f5a401d3def065, type: 3}
+  m_Sprite: {fileID: -1411838429, guid: 41ded6ae327031a489f5a401d3def065, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -414,6 +414,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6415290336250345751}
     m_Modifications:
+    - target: {fileID: 4107401233867263097, guid: 84b6356b55a55d94d8f61eec720893f3, type: 3}
+      propertyPath: errorSprite
+      value: 
+      objectReference: {fileID: -1014579946, guid: 07e123d326d5e9f49825e984c3d19be6, type: 3}
     - target: {fileID: 4256537863324167968, guid: 84b6356b55a55d94d8f61eec720893f3, type: 3}
       propertyPath: m_Name
       value: OutPrompt

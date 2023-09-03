@@ -100,7 +100,7 @@ public class HammeringSystem : MonoBehaviour
     {
         materialScripts[AddedMaterialNum] = materialScript;
         materialInFurnaces[AddedMaterialNum].SetActive(true);
-        materialScript.MaterialItem.CreateAttribute("Num", materialScript.MaterialItem.GetInt("Num") - 1);
+        materialScript.MaterialItem.CreateAttribute("Num", materialScript.MaterialItem.GetFloat("Num") - 1);
         AddedMaterialNum++;
         materialScript.RefreshInfo();
     }
@@ -130,6 +130,7 @@ public class HammeringSystem : MonoBehaviour
         if (isNewMaterial)
         {
             MaterialSystem.Instance.AddForgedMaterial(newItem);
+            materialScripts[id].MaterialItem.CreateAttribute("Temperature", 0f);
             materialScripts[id] = null;
             materialInFurnaces[id].SetActive(false);
             isNewMaterial = false;
@@ -138,11 +139,11 @@ public class HammeringSystem : MonoBehaviour
         }
         else
         {
-            materialScripts[id].MaterialItem.CreateAttribute("Num", materialScripts[id].MaterialItem.GetInt("Num") + 1);
-            materialScripts[id] = null;
+            materialScripts[id].MaterialItem.CreateAttribute("Num", materialScripts[id].MaterialItem.GetFloat("Num") + 1);
             materialInFurnaces[id].SetActive(false);
             AddedMaterialNum--;
             materialScripts[id].RefreshInfo();
+            materialScripts[id] = null;
         }
         FixMaterials();
         return true;
@@ -207,15 +208,15 @@ public class HammeringSystem : MonoBehaviour
         ER.Items.ItemVariable item = newItem.Clone();
         float n = Mathf.Floor(HitTimes / 5);
         float Pref = QTEPerf;
-        float FbR = (1 + (2 * newItem.GetFloat("Temperature", true) - newItem.GetInt("ForgeTemp")) * (newItem.GetInt("MeltTemp") - newItem.GetFloat("Temperature", true))) * 25 / (Mathf.Pow((2 * newItem.GetInt("MeltTemp") - newItem.GetInt("ForgeTemp")), 2) * 32);
+        float FbR = (1 + (2 * newItem.GetFloat("Temperature", true) - newItem.GetInt("ForgeTemp")) * (newItem.GetInt("MeltTemp") - newItem.GetFloat("Temperature", true))) * 5 / Mathf.Pow(2 * newItem.GetInt("MeltTemp") - newItem.GetInt("ForgeTemp"), 2);
         float deltaFb = (4 / (n + 2) - (1 * (1 - FbR))) * Pref;
-        float ThR = Mathf.Pow((newItem.GetFloat("Temperature", true) * newItem.GetFloat("Temperature", true) / newItem.GetInt("ForgeTemp") / newItem.GetInt("MeltTemp")), newItem.GetFloat("HeatPreference"));
-        float deltaTh = Mathf.Pow((newItem.GetFloat("Toughness") * (1 + newItem.GetFloat("Pressability")) / newItem.GetFloat("Toughness", true)), ((1 + n - newItem.GetFloat("Stubborn")) / 2)) * ThR * Pref;
+        float ThR = Mathf.Pow(newItem.GetFloat("Temperature", true) * newItem.GetFloat("Temperature", true) / newItem.GetInt("ForgeTemp") / newItem.GetInt("MeltTemp"), newItem.GetFloat("HeatPreference"));
+        float deltaTh = Mathf.Pow(newItem.GetFloat("Toughness") * (1 + newItem.GetFloat("Pressability")) / newItem.GetFloat("Toughness", true), (1 + n - newItem.GetFloat("Stubborn")) / 2) * ThR * Pref;
         float AtsR = FbR;
         float deltaAts = newItem.GetFloat("AntiSolution") * (1 + newItem.GetFloat("AtsGrowth")) / (2 * newItem.GetFloat("AntiSolution", true)) * AtsR * Pref;
-        item.CreateAttribute("Flexability", item.GetFloat("Flexability", true) + FbR);
-        item.CreateAttribute("Toughness", item.GetFloat("Toughness", true) + ThR);
-        item.CreateAttribute("AntiSolution", item.GetFloat("AntiSolution", true) + AtsR);
+        item.CreateAttribute("Flexability", item.GetFloat("Flexability", true) + deltaFb);
+        item.CreateAttribute("Toughness", item.GetFloat("Toughness", true) + deltaTh);
+        item.CreateAttribute("AntiSolution", item.GetFloat("AntiSolution", true) + deltaAts);
         HitTimes++;
         item.CreateAttribute("IsForged", true);
 

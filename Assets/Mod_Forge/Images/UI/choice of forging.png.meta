@@ -113,19 +113,19 @@ TextureImporter:
       name: choice of forging_0
       rect:
         serializedVersion: 2
-        x: 236
-        y: 395
-        width: 882
-        height: 994
+        x: 195
+        y: 402
+        width: 933
+        height: 987
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 14, z: 0, w: 5}
+      border: {x: 38, y: 11, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 875e69781bc4e4247b7a44080a470e24
-      internalID: 1659628954
+      spriteID: 8264ee1e77a086d4b97869568c076a2c
+      internalID: 1527579264
       vertices: []
       indices: 
       edges: []
@@ -141,7 +141,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      choice of forging_0: 1659628954
+      choice of forging_0: 1527579264
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

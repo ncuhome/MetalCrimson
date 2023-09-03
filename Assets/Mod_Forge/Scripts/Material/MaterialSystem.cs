@@ -59,7 +59,7 @@ public class MaterialSystem : MonoBehaviour
     /// 移动时间
     /// </summary>
     private float moveTime;
-    public int needMaterialNum;
+    public float needMaterialNum;
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
@@ -97,7 +97,7 @@ public class MaterialSystem : MonoBehaviour
     {
         InitMaterialItemStore();
         targetVec = chooseMaterialTransform.localPosition;
-        ShowMaterialPanel();
+        //ShowMaterialPanel();
     }
     /// <summary>
     /// 初始化材料物品库设置
@@ -111,6 +111,9 @@ public class MaterialSystem : MonoBehaviour
         for (int i = 0; i < 6; i++)
         {
             Debug.Log(AddNormalMaterial("RawIron"));
+            AddNormalMaterial(77692);
+            AddNormalMaterial(77693);
+            AddNormalMaterial(77694);
         }
     }
     /// <summary>
@@ -125,7 +128,7 @@ public class MaterialSystem : MonoBehaviour
         {
             if ((materialsItemStore[i].GetText("NameTmp") == NameTmp) && (!materialsItemStore[i].GetBool("IsForged")))
             {
-                materialsItemStore[i].CreateAttribute("Num", materialsItemStore[i].GetInt("Num") + 1);
+                materialsItemStore[i].CreateAttribute("Num", materialsItemStore[i].GetFloat("Num") + 1);
                 GetMaterialScript(i).RefreshInfo();
                 return true;
             }
@@ -134,7 +137,7 @@ public class MaterialSystem : MonoBehaviour
         materialsItemStore.AddItem(new ItemVariable(TemplateStoreManager.Instance["Item"][NameTmp], true));
         ItemVariable newMaterialItem = materialsItemStore[materialsItemStore.Count - 1];
 
-        newMaterialItem.CreateAttribute("Num", 1);
+        newMaterialItem.CreateAttribute("Num", 1f);
         newMaterialItem.CreateAttribute("IsForged", false);
         newMaterialItem.CreateAttribute("Name", newMaterialItem.GetText("Name", false));
         newMaterialItem.CreateAttribute("Temperature", 0f);
@@ -167,7 +170,7 @@ public class MaterialSystem : MonoBehaviour
             }
             if (materialsItemStore[i].GetInt("ID") == id)
             {
-                materialsItemStore[i].CreateAttribute("Num", materialsItemStore[i].GetInt("Num") + 1);
+                materialsItemStore[i].CreateAttribute("Num", materialsItemStore[i].GetFloat("Num") + 1);
                 GetMaterialScript(i).RefreshInfo();
                 return true;
             }
@@ -177,7 +180,7 @@ public class MaterialSystem : MonoBehaviour
         materialsItemStore.AddItem(new ItemVariable(TemplateStoreManager.Instance["Item"][id], true));
         ItemVariable newMaterialItem = materialsItemStore[materialsItemStore.Count - 1];
 
-        newMaterialItem.CreateAttribute("Num", 1);
+        newMaterialItem.CreateAttribute("Num", 1f);
         newMaterialItem.CreateAttribute("IsForged", false);
         newMaterialItem.CreateAttribute("Name", newMaterialItem.GetText("Name", false));
         newMaterialItem.CreateAttribute("Temperature", 0f);
@@ -195,7 +198,7 @@ public class MaterialSystem : MonoBehaviour
 
     public bool AddForgedMaterial(ItemVariable forgedItem)
     {
-        forgedItem.CreateAttribute("Num", 1);
+        forgedItem.CreateAttribute("Num", 1f);
         forgedItem.CreateAttribute("Temperature", 0f);
         materialsItemStore.AddItem(forgedItem);
         GameObject forgedMaterialObject = Instantiate(materialPrefab);
@@ -214,7 +217,7 @@ public class MaterialSystem : MonoBehaviour
         for (int index = 0; index < materials.Count; index++)
         {
             ItemVariable item = materials[index].GetComponent<MaterialScript>().MaterialItem;
-            if (item.GetInt("Num") == 0)
+            if (item.GetFloat("Num") == 0)
             {
                 materialsItemStore.RemoveItem(index);
                 Destroy(materials[index]);

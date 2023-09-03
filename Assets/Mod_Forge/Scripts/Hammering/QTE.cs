@@ -65,8 +65,7 @@ public class QTE : MonoBehaviour
             HammerValue = Mathf.Lerp(HammerValue, 0, t * 5);
         }
         HammerTransform.eulerAngles = new Vector3(0, 0, -HammerValue * 120 + 30);
-        QTEValueTransform.sizeDelta = new Vector2(QTEBackgroundTransform.rect.width, value * QTEBackgroundTransform.rect.height);
-        QTEValueTransform.localPosition = new Vector3(QTEBackgroundTransform.localPosition.x, QTEBackgroundTransform.localPosition.y - QTEBackgroundTransform.rect.height / 2);
+        QTEValueTransform.localPosition = new Vector3(QTEBackgroundTransform.localPosition.x, QTEBackgroundTransform.localPosition.y + (value - 0.5f) * QTEBackgroundTransform.rect.height);
 
     }
 

@@ -36,4 +36,44 @@ public class ForgeConfigure : MonoBehaviour
         UIInputManager.Instance.InitInputManager();
         WeaponSystem.Instance.InitWeaponSystem();
     }
+
+    public void EnterMaterialProgressing()
+    {
+        UIManager.Instance.materialProgressing.gameObject.SetActive(true);
+        UIManager.Instance.chooseMaterial.gameObject.SetActive(true);
+        UIManager.Instance.chooseCraft.gameObject.SetActive(false);
+        MaterialSystem.Instance.ShowMaterialPanel();
+    }
+
+    public void ExitMaterialProgressing()
+    {
+        UIManager.Instance.materialProgressing.gameObject.SetActive(false);
+        UIManager.Instance.chooseMaterial.gameObject.SetActive(false);
+        UIManager.Instance.chooseCraft.gameObject.SetActive(true);
+    }
+    public void EnterFoundry()
+    {
+        UIManager.Instance.foundry.gameObject.SetActive(true);
+        UIManager.Instance.chooseMaterial.gameObject.SetActive(true);
+        UIManager.Instance.chooseCraft.gameObject.SetActive(false);
+    }
+
+    public void ExitFoundry()
+    {
+        UIManager.Instance.foundry.gameObject.SetActive(false);
+        UIManager.Instance.chooseMaterial.gameObject.SetActive(false);
+        UIManager.Instance.chooseCraft.gameObject.SetActive(true);
+    }
+
+    public void EnterComponentSplicing()
+    {
+        UIManager.Instance.componentSplicing.gameObject.SetActive(true);
+        UIManager.Instance.chooseCraft.gameObject.SetActive(false);
+    }
+
+    public void ExitComponentSplicing()
+    {
+        UIManager.Instance.componentSplicing.gameObject.SetActive(false);
+        UIManager.Instance.chooseCraft.gameObject.SetActive(true);
+    }
 }

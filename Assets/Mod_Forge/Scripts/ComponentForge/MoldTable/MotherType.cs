@@ -8,6 +8,7 @@ public class MotherType : MonoBehaviour, IPointerClickHandler
 {
     public Image typeImage;
     public TextMeshProUGUI typeText;
+    public Image typeBackground;
     public bool startMove;
     public Vector3 targetVec;
     public Vector3 oldVec;
@@ -64,10 +65,12 @@ public class MotherType : MonoBehaviour, IPointerClickHandler
             targetColor = new Color(typeImage.color.r, typeImage.color.g, typeImage.color.b, targetAlpha);
             typeImage.color = Color.Lerp(oldColor, targetColor, colorTime * 2.5f);
             typeText.color = Color.Lerp(oldColor, targetColor, colorTime * 2.5f);
+            typeBackground.color = Color.Lerp(oldColor, targetColor, colorTime * 2.5f);
             if (colorTime > 0.4f)
             {
                 typeImage.color = targetColor;
                 typeText.color = targetColor;
+                typeBackground.color = targetColor;
                 startColor = false;
                 colorTime = 0;
             }

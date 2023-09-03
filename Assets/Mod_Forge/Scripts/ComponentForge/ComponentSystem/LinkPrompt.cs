@@ -7,8 +7,6 @@ public class LinkPrompt : MonoBehaviour
 {
 
     public Image promptImage;
-    public Sprite correctSprite;
-    public Sprite errorSprite;
 
     public LinkPrompt linkedPrompt;
     public ComponentScript componentScript;
@@ -28,13 +26,13 @@ public class LinkPrompt : MonoBehaviour
 
     public void Correct()
     {
-        promptImage.sprite = correctSprite;
+        promptImage.sprite = UIManager.Instance.Correct;
         promptImage.enabled = true;
     }
 
     public void Error()
     {
-        promptImage.sprite = errorSprite;
+        promptImage.sprite = UIManager.Instance.Error;
         promptImage.enabled = true;
     }
 
