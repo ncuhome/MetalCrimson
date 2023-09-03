@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -46,12 +46,12 @@ public class UIInputManager : MonoBehaviour
             instance = this;
         }
 
-        InputManager.inputActions.UI.QTE.performed += StartQTE;
-        InputManager.inputActions.UI.QTE.canceled += FinishQTE;
-        InputManager.inputActions.UI.Hammering.performed += StartHammering;
+        InputManager.InputActions.UI.QTE.performed += StartQTE;
+        InputManager.InputActions.UI.QTE.canceled += FinishQTE;
+        InputManager.InputActions.UI.Hammering.performed += StartHammering;
 
-        InputManager.inputActions.UI.UpLine.performed += UpLine;
-        InputManager.inputActions.UI.DownLine.performed += DownLine;
+        InputManager.InputActions.UI.UpLine.performed += UpLine;
+        InputManager.InputActions.UI.DownLine.performed += DownLine;
     }
 
     private void StartQTE(InputAction.CallbackContext ctx)

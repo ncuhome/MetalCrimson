@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -94,7 +94,7 @@ public class LineSystem : MonoBehaviour
     /// </summary>
     private void InitLineItemStore()
     {
-        ItemStoreManager.Instance.Creat("lineItemStore");
+        ItemStoreManager.Instance.Create("lineItemStore");
         linesItemStore = ItemStoreManager.Instance.Stores["lineItemStore"];
         lines = new List<GameObject>();
 

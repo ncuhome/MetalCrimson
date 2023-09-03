@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ER.Items;
@@ -62,7 +62,7 @@ public class WeaponSystem : MonoBehaviour
 
     private void InitWeaponItemStore()
     {
-        ItemStoreManager.Instance.Creat("weaponItemStore");
+        ItemStoreManager.Instance.Create("weaponItemStore");
         weaponItemStore = ItemStoreManager.Instance.Stores["componentItemStore"];
         weapons = new List<Weapon>();
         WeaponBuild();

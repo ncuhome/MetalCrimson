@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ER.Items;
@@ -149,7 +149,7 @@ public class ComponentSystem : MonoBehaviour
     /// </summary>
     private void InitComponentItemStore()
     {
-        ItemStoreManager.Instance.Creat("componentItemStore");
+        ItemStoreManager.Instance.Create("componentItemStore");
         componentsItemStore = ItemStoreManager.Instance.Stores["componentItemStore"];
         componentTypes = new List<ComponentType>();
         componentInAnvil = new List<ComponentScript>();
