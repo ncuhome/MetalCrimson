@@ -39,18 +39,18 @@ namespace Mod_Level
         {
             health.Owner = owner;
             health.Initialize();
-            this["Health"] = 100;
-            health.SetMax(this["Health",true],null);
+            this["Health"] = defaultHealth;
+            health.SetMax(this["Health", true], null);
             stamina.Owner = owner;
             stamina.Initialize();
-            this["Stamina"] = 100;
-            stamina.SetMax(this["Stamina",true],null);
+            this["Stamina"] = defaultStamina;
+            stamina.SetMax(this["Stamina", true], null);
             mana.Owner = owner;
             mana.Initialize();
-            this["Mana"] = 100;
+            this["Mana"] = defaultMana;
             mana.SetMax(this["Mana", true], null);
-            this["Speed"] = 10f;
-            this["Jump"] = 20f;
+            this["Speed"] = defaultSpeed;
+            this["Jump"] = defaultJump;
 
             ATAnimator ator = owner.GetAttribute<ATAnimator>();
             if (animator != null)
@@ -154,6 +154,13 @@ namespace Mod_Level
         /// 角色魔力值
         /// </summary>
         public ATValue mana;
+
+        [Header("属性初始化 - 仅在初始值有效")]
+        public float defaultSpeed = 30f;
+        public float defaultJump = 20f;
+        public float defaultHealth = 100f;
+        public float defaultMana = 100f;
+        public float defaultStamina = 100f;
 
         #endregion 一般属性
 
@@ -355,7 +362,9 @@ namespace Mod_Level
             if (attributes.ContainsKey(attributeName))
             {
                 attributes[attributeName].Remove(correctTag);
+                return;
             }
+            Debug.Log($"移除修正失败: {correctTag}");
         }
 
         /// <summary>
@@ -401,7 +410,7 @@ namespace Mod_Level
         {
             Destroy(owner.gameObject);
         }
- 
+
         #endregion 其他方法
     }
 }

@@ -52,8 +52,10 @@ namespace ER
         /// </summary>
         /// <param name="obj">游戏物体对象</param>
         /// <param name="poolName">对象池名称</param>
-        public void ReturnObject(Water obj, string poolName)
+        public void ReturnObject(Water obj)
         {
+            if (obj == null || obj.Pool == null) return;
+            string poolName = obj.Pool.PoolName;
             if (poolDictionary.TryGetValue(poolName, out ObjectPool pool))
             {
                 pool.ReturnObject(obj);

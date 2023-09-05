@@ -72,7 +72,7 @@ namespace ER.Control
             };
         }
 
-        public DelControlHandle PackDelegate(Action action)
+        public Action<InputAction.CallbackContext> PackDelegate(Action action)
         {
             return delegate (InputAction.CallbackContext context)
             {
@@ -84,7 +84,7 @@ namespace ER.Control
             };
         }
 
-        public DelControlHandle PackDelegate(Action<InputAction.CallbackContext> action)
+        public Action<InputAction.CallbackContext> PackDelegate(Action<InputAction.CallbackContext> action)
         {
             return delegate (InputAction.CallbackContext context)
             {
@@ -180,7 +180,7 @@ namespace ER.Control
             };
         }
 
-        public DelControlHandle PackDelegate(Action action)
+        public Action<InputAction.CallbackContext> PackDelegate(Action action)
         {
             return delegate (InputAction.CallbackContext context)
             {
@@ -192,7 +192,7 @@ namespace ER.Control
             };
         }
 
-        public DelControlHandle PackDelegate(Action<InputAction.CallbackContext> action)
+        public Action<InputAction.CallbackContext> PackDelegate(Action<InputAction.CallbackContext> action)
         {
             return delegate (InputAction.CallbackContext context)
             {

@@ -3,6 +3,7 @@ using ER;
 using ER.Items;
 using ER.Save;
 using Mod_Console;
+using Mod_Level;
 using Mod_Rouge;
 using System;
 using System.IO;
@@ -21,6 +22,7 @@ namespace Mod_Common
         [Tooltip("地图配置文件路径")]
         public string MapSettingsPath;
 
+        /*
         private void Settings()//设置预设
         {
             SettingsManager.Instance["Volume"] = 100 + "";
@@ -34,10 +36,11 @@ namespace Mod_Common
             SettingsManager.Instance.SaveSettings();
             ConsolePanel.Print("Saving Settings");
             ConsolePanel.Print($"音量大小：{SettingsManager.Instance["Volume"]}");
-        }
+        }*/
 
         protected override void Awake()
         {
+            Debug.Log("CommonConfigure");
             base.Awake();
             SavePath = Path.Combine(Application.streamingAssetsPath, "Saves");
             MapSettingsPath = Path.Combine(Application.streamingAssetsPath, "mapsettings.ini");
@@ -61,17 +64,20 @@ namespace Mod_Common
             //初始化所有静态仓库
             TemplateStoreManager.Instance.Load();
 
+            SceneManager.Instance.AddScene(new LevelConfigure());
+            /*
             ObjectPool pool = GetComponent<ObjectPool>();
             if (pool != null)
             {
                 ObjectPoolManager.Instance.RegisterPool(pool);
             }
-
-            ForgeConfigure.Instance.InitForgeManager();
+            */
+            //ForgeConfigure.Instance.InitForgeManager();
         }
 
         private void Update()
         {
+            /*
             KeyCode code = (KeyCode)Convert.ToInt32(SettingsManager.Instance["Debug"]);
 
             if (Input.anyKeyDown)
@@ -80,7 +86,7 @@ namespace Mod_Common
                 {
                     ConsolePanel.Instance.SwitchUsing();
                 }
-            }
+            }*/
         }
     }
 }

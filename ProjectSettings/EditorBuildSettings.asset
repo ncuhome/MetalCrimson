@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/UITest.unity
     guid: 5dbfb3ceec2532947a5c78a54ac00eee
   - enabled: 1
-    path: Assets/Scenes/TestScene.unity
+    path: Assets/Scenes/LevelScene.unity
     guid: cc37558fd9413c243bc0849154928422
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity

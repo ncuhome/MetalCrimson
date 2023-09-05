@@ -16,8 +16,9 @@ namespace ER
         /// 通过名称获取指定预制体
         /// </summary>
         /// <param name="name"></param>
+        /// <param name="copy">是否获取它的拷贝</param>
         /// <returns></returns>
-        public GameObject this[string name]
+        public GameObject this[string name,bool copy = true]
         {
             get
             {
@@ -25,6 +26,10 @@ namespace ER
                 {
                     if (pb.name == name)
                     {
+                        if(copy)
+                        {
+                            return Instantiate(pb);
+                        }
                         return pb;
                     }
                 }

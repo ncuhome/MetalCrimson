@@ -166,9 +166,17 @@ namespace ER.Entity2D
                     buff.time -= Time.deltaTime;
                     if (buff.time <= 0)
                     {
-                        buff.EffectOnExit();
+                        buff.Exit();
                         removeBuffs.Add(buff);
                     }
+                    else
+                    {
+                        buff.Stay();
+                    }
+                }
+                else
+                {
+                    buff.Stay();
                 }
             }
             foreach (var buff in removeBuffs)

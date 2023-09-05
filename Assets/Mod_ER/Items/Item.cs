@@ -1,4 +1,6 @@
-﻿using ER.Parser;
+﻿// Ignore Spelling: Tmp
+
+using ER.Parser;
 using Mod_Console;
 using System;
 using System.Collections.Generic;
@@ -622,6 +624,8 @@ namespace ER.Items
 
         #region 属性
 
+        private Dictionary<string, object> attributeObject;//通用属性接口
+
         /// <summary>
         /// 物品的名称
         /// </summary>
@@ -689,6 +693,27 @@ namespace ER.Items
                 return value;
             }
             return attributeText[key];
+        }
+
+        /// <summary>
+        /// 获取对象型属性
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public object GetObject(string key)
+        {
+            return attributeObject[key];
+        }
+
+        /// <summary>
+        /// 获取对象型属性
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public object GetObject<T>(string key) where T : class, new()
+        {
+            return attributeObject[key] as T;
         }
 
         /// <summary>
@@ -867,6 +892,37 @@ namespace ER.Items
             return TryGetBool(key, out value);
         }
 
+        /// <summary>
+        /// 获取对象型属性
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public bool TryGetObject(string key, out object value)
+        {
+            if (attributeObject.TryGetValue(key, out value))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 获取对象型属性
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public bool TryGetObject<T>(string key, out T value) where T : class, new()
+        {
+            if (attributeObject.TryGetValue(key, out object obj))
+            {
+                value = obj as T;
+                return true;
+            }
+            value = default(T);
+            return false;
+        }
+
         #endregion 获取属性
 
         #region 创建|修改属性
@@ -889,6 +945,15 @@ namespace ER.Items
         public override void CreateAttribute(string key, bool value)
         {
             attributeBool[key] = value;
+        }
+        /// <summary>
+        /// 创建引用类型的属性
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="obj"></param>
+        public void CreateObjectAttribute(string key, object obj)
+        {
+            attributeObject[key] = obj;
         }
 
         #endregion 创建|修改属性
