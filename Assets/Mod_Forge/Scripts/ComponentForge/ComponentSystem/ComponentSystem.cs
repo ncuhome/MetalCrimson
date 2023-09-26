@@ -196,12 +196,10 @@ public class ComponentSystem : MonoBehaviour
         newComponentItem.CreateAttribute("Dur", (newComponentItem.GetFloat("Flexability") / 8 + newComponentItem.GetFloat("Toughness")) * newComponentItem.GetFloat("Duability"));
         newComponentItem.CreateAttribute("Sharp", newComponentItem.GetFloat("Sharpness") * (10 + newComponentItem.GetFloat("Toughness") / 10));
 
-        componentPrefab = Resources.Load<GameObject>("Prefabs/Components/" + NameTmp);
         ComponentType componentType = GetComponentType(TemplateStoreManager.Instance["Item"][NameTmp].GetInt("MotherModel_ID"));
         GameObject newComponentObject = Instantiate(componentPrefab, componentType.typeObject.transform);
         componentType.Add(newComponentObject);
-        newComponentObject.transform.localScale = Vector3.one;
-
+        //newComponentObject.transform.localScale = Vector3.one;
 
         ComponentScript newComponentScript = newComponentObject.GetComponent<ComponentScript>();
         newComponentScript.ComponentItem = newComponentItem;
@@ -238,11 +236,10 @@ public class ComponentSystem : MonoBehaviour
         newComponentItem.CreateAttribute("Dur", (newComponentItem.GetFloat("Flexability") / 8 + newComponentItem.GetFloat("Toughness")) * newComponentItem.GetFloat("Duability"));
         newComponentItem.CreateAttribute("Sharp", newComponentItem.GetFloat("Sharpness") * (10 + newComponentItem.GetFloat("Toughness") / 10));
 
-        componentPrefab = Resources.Load<GameObject>("Prefabs/Components/" + newComponentItem.GetText("NameTmp"));
         ComponentType componentType = GetComponentType(TemplateStoreManager.Instance["Item"][id].GetInt("MotherModel_ID"));
         GameObject newComponentObject = Instantiate(componentPrefab, componentType.typeObject.transform);
         componentType.Add(newComponentObject);
-        newComponentObject.transform.localScale = Vector3.one;
+        //newComponentObject.transform.localScale = Vector3.one;
 
 
         ComponentScript newComponentScript = newComponentObject.GetComponent<ComponentScript>();

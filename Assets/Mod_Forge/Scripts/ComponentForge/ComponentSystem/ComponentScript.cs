@@ -8,6 +8,7 @@ public class ComponentScript : MonoBehaviour
 {
     public ComponentImage componentImage = null;
     public ER.Items.ItemVariable ComponentItem = null;
+    public ComponentSprite componentSprite = null;
     public LinkPrompt inPrompt = null;
     public LinkPrompt outPrompt = null;
     public int inNum;
@@ -44,6 +45,8 @@ public class ComponentScript : MonoBehaviour
             outPrompt.componentScript = this;
             outPrompt.inPrompt = false;
         }
+        componentImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(ComponentItem.GetText("StaticAddress"));
+        componentImage.GetComponent<Image>().SetNativeSize();
     }
 
 }
