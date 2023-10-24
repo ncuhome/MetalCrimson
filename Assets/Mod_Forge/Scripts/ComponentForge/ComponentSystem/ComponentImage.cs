@@ -62,6 +62,7 @@ public class ComponentImage : MonoBehaviour, IPointerDownHandler
     public void MoveBack()
     {
         GetComponent<Image>().enabled = true;
+        Destroy(componentScript.componentSprite.gameObject);
         ComponentSystem.Instance.RemoveComponentFromAnvil(componentScript);
     }
 

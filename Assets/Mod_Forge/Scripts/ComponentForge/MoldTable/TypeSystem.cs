@@ -575,7 +575,7 @@ public class TypeSystem : MonoBehaviour
     /// </summary>
     public void ReturnChildModel()
     {
-        currentMotherModel.typeScript.SetAlpha(1f);
+        currentMotherModel.typeScript.SetAlpha(0.75f);
         currentMotherModel.typeScript.oldVec = new Vector3(0, 100, 0);
         currentMotherModel.typeScript.targetVec = GetPosition(0);
         currentMotherModel.typeScript.startMove = true;
@@ -584,7 +584,7 @@ public class TypeSystem : MonoBehaviour
         {
             if (i > 6) { return; }
             ChildType childType = currentMotherModel.childTypes[i];
-            childType.typeScript.SetAlpha(1f);
+            childType.typeScript.SetAlpha(0.75f);
             childType.typeScript.oldVec = new Vector3(0, 100, 0);
             childType.typeScript.targetVec = GetPosition(Mathf.CeilToInt((i + 1) * 8f / 7f - 1));
             childType.typeScript.startMove = true;

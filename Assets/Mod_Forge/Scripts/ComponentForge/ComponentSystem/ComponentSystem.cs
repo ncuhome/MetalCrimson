@@ -265,6 +265,8 @@ public class ComponentSystem : MonoBehaviour
             }
         }
         Destroy(componentScript.gameObject);
+        FindNextInPrompt();
+        FindNextOutPrompt();
     }
 
     /// <summary>
@@ -419,8 +421,6 @@ public class ComponentSystem : MonoBehaviour
         WeaponSystem.Instance.RefreshWeaponInfo();
         if (componentScript.inPrompt && componentScript.inPrompt.linkedPrompt) { componentScript.inPrompt.RemoveLink(); }
         if (componentScript.outPrompt && componentScript.outPrompt.linkedPrompt) { componentScript.outPrompt.RemoveLink(); }
-        FindNextInPrompt();
-        FindNextOutPrompt();
     }
 
     public void FindNextOutPrompt()
@@ -456,6 +456,8 @@ public class ComponentSystem : MonoBehaviour
             RemoveComponent(componentInAnvil[i]);
         }
         componentInAnvil = new List<ComponentScript>();
+        outLink = null;
+        inLink = null;
     }
 
     public void Undo()
