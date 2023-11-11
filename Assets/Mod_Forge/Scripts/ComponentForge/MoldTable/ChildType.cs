@@ -24,6 +24,7 @@ public class ChildModelType : MonoBehaviour, IPointerClickHandler, IPointerEnter
     public Color targetColor;
     public float colorTime;
     public bool startColor;
+    public bool showChildModel;
 
     // Start is called before the first frame update
     void Start()
@@ -72,6 +73,8 @@ public class ChildModelType : MonoBehaviour, IPointerClickHandler, IPointerEnter
                 colorTime = 0;
             }
         }
+
+        showChildModel = (typeImage.color.a != 0);
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -91,20 +94,24 @@ public class ChildModelType : MonoBehaviour, IPointerClickHandler, IPointerEnter
     {
         typeImage.color = new Color(typeImage.color.r, typeImage.color.g, typeImage.color.b, a);
         typeText.color = new Color(typeText.color.r, typeText.color.g, typeText.color.b, a);
+        typeBackground.color = new Color(typeBackground.color.r, typeBackground.color.g, typeBackground.color.b, 1f);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (!showChildModel) { return; }
         TypeSystem.Instance.ShowCard(TypeSystem.Instance.GetChildType(motherId, id));
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (!showChildModel) { return; }
         TypeSystem.Instance.HideCard();
     }
 
     public void OnPointerMove(PointerEventData eventData)
     {
+        if (!showChildModel) { return; }
         Vector2 pos;
         RectTransform rectTransform = UIManager.Instance.canvas.GetComponent<RectTransform>();
         RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, eventData.position, eventData.enterEventCamera, out pos);

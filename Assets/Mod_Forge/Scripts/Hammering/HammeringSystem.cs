@@ -23,6 +23,10 @@ public class HammeringSystem : MonoBehaviour
     /// </summary>
     public int AddedMaterialNum = 0;
     /// <summary>
+    /// 最大添加的材料数
+    /// </summary>
+    public int MaxMaterialNum = 1;
+    /// <summary>
     /// 添加的材料对应的材料脚本
     /// </summary>
     public MaterialScript[] materialScripts = null;
@@ -59,11 +63,15 @@ public class HammeringSystem : MonoBehaviour
         {
             Slider.SetActive(false);
             ChooseMaterialPanel.SetActive(false);
+            UIManager.Instance.ReturnButton.interactable = false;
+            UIManager.Instance.CancelButton.interactable = false;
         }
         else
         {
             Slider.SetActive(true);
             ChooseMaterialPanel.SetActive(true);
+            UIManager.Instance.ReturnButton.interactable = true;
+            UIManager.Instance.CancelButton.interactable = true;
         }
 
         if (temperature < 0)
@@ -86,7 +94,7 @@ public class HammeringSystem : MonoBehaviour
             canFindMaterial = true;
         }
 
-        if ((AddedMaterialNum < 3) && canFindMaterial)
+        if ((AddedMaterialNum < MaxMaterialNum) && canFindMaterial)
         {
             AddMaterial(materialScript);
             return true;

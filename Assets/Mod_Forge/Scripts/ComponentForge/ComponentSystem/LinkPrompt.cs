@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class LinkPrompt : MonoBehaviour
 {
 
-    public Image promptImage;
+    public SpriteRenderer promptImage;
 
     public LinkPrompt linkedPrompt;
     public ComponentScript componentScript;

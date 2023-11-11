@@ -9,6 +9,7 @@ public class ForgeConfigure : MonoBehaviour
     public static ForgeConfigure Instance { get { return instance; } }
     #endregion
 
+    public bool initComplete = false;
     void Awake()
     {
         if (instance == null)
@@ -25,7 +26,10 @@ public class ForgeConfigure : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (!initComplete)
+        {
+            InitForgeManager();
+        }
     }
 
     public void InitForgeManager()
@@ -35,6 +39,7 @@ public class ForgeConfigure : MonoBehaviour
         TypeSystem.Instance.InitTypeSystem();
         UIInputManager.Instance.InitInputManager();
         WeaponSystem.Instance.InitWeaponSystem();
+        initComplete = true;
     }
 
     public void EnterMaterialProgressing()
@@ -50,6 +55,7 @@ public class ForgeConfigure : MonoBehaviour
         UIManager.Instance.materialProgressing.gameObject.SetActive(false);
         UIManager.Instance.chooseMaterial.gameObject.SetActive(false);
         UIManager.Instance.chooseCraft.gameObject.SetActive(true);
+        MaterialSystem.Instance.HideMaterialPanel();
     }
     public void EnterFoundry()
     {

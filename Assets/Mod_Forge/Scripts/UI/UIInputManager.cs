@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Mod_Console;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -56,6 +57,7 @@ public class UIInputManager : MonoBehaviour
 
     private void StartQTE(InputAction.CallbackContext ctx)
     {
+        if (ConsolePanel.Instance.canvas.activeSelf) {return;}
         if (HammeringSystem.Instance.startHammering)
         {
             QTE.Instance.StartQTE();
@@ -64,6 +66,7 @@ public class UIInputManager : MonoBehaviour
 
     private void FinishQTE(InputAction.CallbackContext ctx)
     {
+        if (ConsolePanel.Instance.canvas.activeSelf) {return;}
         if (HammeringSystem.Instance.startHammering)
         {
             HammeringSystem.Instance.HammerMaterial(QTE.Instance.QTEJudgement());
@@ -72,11 +75,13 @@ public class UIInputManager : MonoBehaviour
 
     private void StartHammering(InputAction.CallbackContext ctx)
     {
+        if (ConsolePanel.Instance.canvas.activeSelf) {return;}
         HammeringSystem.Instance.StartHammering();
     }
 
     private void UpLine(InputAction.CallbackContext ctx)
     {
+        if (ConsolePanel.Instance.canvas.activeSelf) {return;}
         if (RampStageSystem.Instance.startRamp)
         {
             RampStageSystem.Instance.UpLine();
@@ -85,6 +90,7 @@ public class UIInputManager : MonoBehaviour
 
     private void DownLine(InputAction.CallbackContext ctx)
     {
+        if (ConsolePanel.Instance.canvas.activeSelf) {return;}
         if (RampStageSystem.Instance.startRamp)
         {
             RampStageSystem.Instance.DownLine();

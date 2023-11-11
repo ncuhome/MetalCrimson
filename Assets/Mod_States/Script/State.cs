@@ -85,11 +85,19 @@ namespace States
         /// </summary>
         public void ExitJudgement()
         {
-            foreach (var kvp in exitID)
+            var keys = new List<int>(exitID.Keys);
+            // foreach (var kvp in exitID)
+            // {
+            //     if (kvp.Value == true)
+            //     {
+            //         OnExitState(kvp.Key);
+            //     }
+            // }
+            for (int i = 0; i < keys.Count; i++)
             {
-                if (kvp.Value == true)
+                if (exitID[keys[i]] == true)
                 {
-                    OnExitState(kvp.Key);
+                    OnExitState(keys[i]);
                 }
             }
         }

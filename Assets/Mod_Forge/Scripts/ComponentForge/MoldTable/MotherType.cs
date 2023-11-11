@@ -110,5 +110,6 @@ public class MotherType : MonoBehaviour, IPointerClickHandler
     {
         typeImage.color = new Color(typeImage.color.r, typeImage.color.g, typeImage.color.b, a);
         typeText.color = new Color(typeText.color.r, typeText.color.g, typeText.color.b, a);
+        typeBackground.color = new Color(typeBackground.color.r, typeBackground.color.g, typeBackground.color.b, 1f);
     }
 }

@@ -31,7 +31,7 @@ public class WeaponSystem : MonoBehaviour
 
     public Weapon currentWeapon;
 
-    public WeaponInfo weaponInfo;
+    public WeaponInfoPanel weaponInfoPanel;
 
     /// <summary>
     /// Awake is called when the script instance is being loaded.
@@ -91,13 +91,14 @@ public class WeaponSystem : MonoBehaviour
 
     public void RefreshWeaponInfo()
     {
-        weaponInfo.weapon = currentWeapon;
-        weaponInfo.RefreshInfo();
+        weaponInfoPanel.weapon = currentWeapon;
+        weaponInfoPanel.RefreshInfo();
     }
 
     public void FinishWeaponBuild()
     {
         if (ComponentSystem.Instance.outPort || ComponentSystem.Instance.inPort || (ComponentSystem.Instance.componentInAnvil.Count == 0)) { return; }
+        currentWeapon.FinishBuild();
         weapons.Add(currentWeapon);
         currentWeapon.transform.SetParent(weaponPlaceTrans);
         ComponentSystem.Instance.FinishBuild();
