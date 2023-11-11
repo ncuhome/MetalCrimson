@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class WeaponInfo : MonoBehaviour
+public class WeaponInfoPanel : MonoBehaviour
 {
     public Weapon weapon;
     public TMP_Text Durability;

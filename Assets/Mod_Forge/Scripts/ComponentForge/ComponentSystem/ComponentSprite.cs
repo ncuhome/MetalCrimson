@@ -8,7 +8,7 @@ public class ComponentSprite : MonoBehaviour
     /// <summary>
     /// 对应的图片Transform组件
     /// </summary>
-    private RectTransform rectTransform;
+    private Transform spriteTransform;
     /// <summary>
     /// 对应的材料脚本
     /// </summary>
@@ -34,7 +34,7 @@ public class ComponentSprite : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rectTransform = GetComponent<RectTransform>();
+        spriteTransform = GetComponent<Transform>();
     }
 
     public void Update()
@@ -154,7 +154,7 @@ public class ComponentSprite : MonoBehaviour
     public void AddComponent()
     {
         Debug.Log("AddComponent");
-        rectTransform.SetParent(ComponentSystem.Instance.AnvilTrans);
+        spriteTransform.SetParent(ComponentSystem.Instance.AnvilTrans);
         if (ComponentSystem.Instance.inLink)
         {
             if (ComponentSystem.Instance.inLink == componentScript.inPrompt)

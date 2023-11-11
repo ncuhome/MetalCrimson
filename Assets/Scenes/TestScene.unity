@@ -423,7 +423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 410df8f16cb0d974bbba2862e10bb684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptImage: {fileID: 196422232}
+  promptImage: {fileID: 0}
   linkedPrompt: {fileID: 450511804}
   componentScript: {fileID: 0}
   inPrompt: 0
@@ -792,6 +792,10 @@ PrefabInstance:
       propertyPath: bar
       value: 
       objectReference: {fileID: 429959433}
+    - target: {fileID: 3124327618157492850, guid: 4980ef78ceb427e4ebec6c01b21e81bb, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3789507961411931016, guid: 4980ef78ceb427e4ebec6c01b21e81bb, type: 3}
       propertyPath: m_TagString
       value: Enemy
@@ -850,7 +854,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4388513181614841560, guid: 4980ef78ceb427e4ebec6c01b21e81bb, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4388513181614841560, guid: 4980ef78ceb427e4ebec6c01b21e81bb, type: 3}
       propertyPath: m_TagString
@@ -872,6 +876,10 @@ PrefabInstance:
       propertyPath: Attributes.Array.data[7]
       value: 
       objectReference: {fileID: 582600831}
+    - target: {fileID: 7363498050934306949, guid: 4980ef78ceb427e4ebec6c01b21e81bb, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7776488423981816195, guid: 4980ef78ceb427e4ebec6c01b21e81bb, type: 3}
       propertyPath: m_TagString
       value: Enemy
@@ -1131,10 +1139,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   componentScript: {fileID: 0}
-  canBeDrag: 1
-  startDrag: 0
-  inAnvil: 0
-  canSplicing: 1
   offset: {x: 0, y: 0, z: 0}
 --- !u!114 &271338471
 MonoBehaviour:
@@ -1444,10 +1448,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   componentScript: {fileID: 0}
-  canBeDrag: 1
-  startDrag: 0
-  inAnvil: 0
-  canSplicing: 1
   offset: {x: 11.549421, y: -11.627975, z: 0}
 --- !u!114 &331885497
 MonoBehaviour:
@@ -1678,7 +1678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 410df8f16cb0d974bbba2862e10bb684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptImage: {fileID: 450511805}
+  promptImage: {fileID: 0}
   linkedPrompt: {fileID: 196422231}
   componentScript: {fileID: 0}
   inPrompt: 1
@@ -3363,12 +3363,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 160005c046df5564d9873eb99863f2e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  length: 10
-  aimPosition: {fileID: 1954792647}
-  aimLayerIndex: 7
-  region: {fileID: 794310234}
-  state: {fileID: 0}
-  waitting: 0
 --- !u!212 &794310231
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10536,10 +10530,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   componentScript: {fileID: 0}
-  canBeDrag: 1
-  startDrag: 0
-  inAnvil: 0
-  canSplicing: 1
   offset: {x: -11.549414, y: 11.627978, z: 0}
 --- !u!114 &1632176512
 MonoBehaviour:
@@ -11433,7 +11423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 410df8f16cb0d974bbba2862e10bb684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptImage: {fileID: 1839172646}
+  promptImage: {fileID: 0}
   linkedPrompt: {fileID: 1867445601}
   componentScript: {fileID: 0}
   inPrompt: 1
@@ -11506,7 +11496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 410df8f16cb0d974bbba2862e10bb684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptImage: {fileID: 1867445602}
+  promptImage: {fileID: 0}
   linkedPrompt: {fileID: 1839172645}
   componentScript: {fileID: 0}
   inPrompt: 0
@@ -13170,6 +13160,10 @@ PrefabInstance:
     - target: {fileID: 4388513181614841560, guid: 4980ef78ceb427e4ebec6c01b21e81bb, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4388513181614841560, guid: 4980ef78ceb427e4ebec6c01b21e81bb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4814084348618132729, guid: 4980ef78ceb427e4ebec6c01b21e81bb, type: 3}
       propertyPath: m_Mesh

@@ -11,16 +11,16 @@ GameObject:
   - component: {fileID: 6959290786722198672}
   - component: {fileID: 920518738954869397}
   - component: {fileID: 5533329497741631861}
-  - component: {fileID: 4294371952245883214}
-  m_Layer: 5
+  - component: {fileID: 1649921074770774859}
+  m_Layer: 0
   m_Name: SharpHeld
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &6959290786722198672
-RectTransform:
+--- !u!4 &6959290786722198672
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -33,13 +33,8 @@ RectTransform:
   m_Children:
   - {fileID: 1929830363490397019}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1, y: 1}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &920518738954869397
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -80,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 6a3b77424418bdb47840497fba54c010, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -112,8 +107,8 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0}
   cursorOffset: {x: 0, y: 0, z: 0}
   dragFromOtherScript: 0
---- !u!61 &4294371952245883214
-BoxCollider2D:
+--- !u!60 &1649921074770774859
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -154,9 +149,21 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.8, y: 1.56}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.39999998, y: 0.35}
+      - {x: 0.39999998, y: 0.39999998}
+      - {x: -0.39999998, y: 0.39999998}
+      - {x: -0.39999998, y: 0.35}
+      - {x: -0.10324722, y: -0.07296785}
+      - {x: -0.39999998, y: -0.37}
+      - {x: -0.39999998, y: -0.39999998}
+      - {x: 0.39999998, y: -0.39999998}
+      - {x: 0.3983785, y: -0.3778366}
+      - {x: 0.35567743, y: -0.32783663}
+      - {x: 0.11135479, y: -0.081346355}
+      - {x: 0.28486872, y: 0.19648604}
+  m_UseDelaunayMesh: 0
 --- !u!1 &8252756911117880531
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +175,7 @@ GameObject:
   - component: {fileID: 1929830363490397019}
   - component: {fileID: 7124906749353166134}
   - component: {fileID: 4364652127775415522}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: InPrompt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
