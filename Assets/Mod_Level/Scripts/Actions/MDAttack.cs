@@ -19,8 +19,12 @@ namespace Mod_Level
 
         public override bool ActionJudge()
         {
-
-            if (state != ActionState.Disable) return false;//处于攻击状态不执行新的攻击
+            if (state != ActionState.Disable)
+            {
+                //将此动作加入缓冲区
+                manager.AddBufferAction(actionName);
+                return false;//处于攻击状态不执行新的攻击
+            }
             return true;
         }
 

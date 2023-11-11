@@ -9,11 +9,23 @@ namespace ER.Entity2D
     /// </summary>
     public class ATActionManager : MonoAttribute
     {
+        /// <summary>
+        /// 动作缓冲
+        /// </summary>
+        public class Buffer
+        {
+            /// <summary>
+            /// 动作对象
+            /// </summary>
+            public string action;
+            /// <summary>
+            /// 保留时间
+            /// </summary>
+            public float timer;
+        }
         #region 初始化
-
         public ATActionManager()
         { AttributeName = nameof(ATActionManager); }
-
         public override void Initialize()
         {
             /*
@@ -37,10 +49,10 @@ namespace ER.Entity2D
             }
             _actions = null;
         }
-
         #endregion 初始化
 
         #region 属性
+        private Buffer buffer;
 
         /// <summary>
         /// 角色拥有的动作集合
@@ -65,6 +77,28 @@ namespace ER.Entity2D
         #endregion 属性
 
         #region 动作管理
+        public void ActionBuffer()
+        {
+            if (buffer != null)
+            {
+                Action(buffer.action);
+                buffer = null;
+            }
+        }
+        /// <summary>
+        /// 添加动作缓存
+        /// </summary>
+        public void AddBufferAction(string actionName,float leaveTime = 0.5f)
+        {
+            if(actions.ContainsKey(actionName))
+            {
+                buffer = new Buffer()
+                {
+                    action = actionName,
+                    timer = leaveTime
+                };
+            }
+        }
 
         /// <summary>
         /// 打开混合动画层
@@ -234,5 +268,15 @@ namespace ER.Entity2D
         }
 
         #endregion 动作管理
+
+        private void Update()
+        {
+            if(buffer != null)
+            {
+                buffer.timer -= Time.deltaTime;
+                if (buffer.timer <= 0) buffer = null;
+
+            }
+        }
     }
 }
