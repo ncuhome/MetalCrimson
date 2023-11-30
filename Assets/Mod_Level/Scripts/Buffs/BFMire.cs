@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Mod_Level
 {
+    /// <summary>
+    /// 沼泽debuff
+    /// </summary>
     public class BFMire : MDBuff
     {
         private ATCharacterState state;

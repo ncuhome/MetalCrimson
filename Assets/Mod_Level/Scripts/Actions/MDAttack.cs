@@ -56,12 +56,17 @@ namespace Mod_Level
 
         private void FuncAttacking()
         {
+            if (!ownerState.ControlAct) return;
+            ownerState.ControlDir = false;
             state = ActionState.Acting;
+            Debug.Log("攻击效果出现!");
             region.Reset();
         }
 
         private void FuncStoped()
         {
+            if (!ownerState.ControlAct) return;
+            ownerState.ControlDir = true;
             state = ActionState.Stoped;
             region.gameObject.SetActive(false);
         }
@@ -86,8 +91,11 @@ namespace Mod_Level
 
         protected override void BreakAction(params string[] keys)
         {
+            Debug.Log("攻击动作被中断!");
             manager.OpenMixedLayer((int)AnimationLayer.Move);
             state = ActionState.Disable;
+            Debug.Log($"State:{state}");
+            ownerState.ControlDir = true;
         }
     }
 }

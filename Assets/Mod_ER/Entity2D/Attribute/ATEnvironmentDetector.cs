@@ -35,6 +35,7 @@ namespace ER.Entity2D
             if (region == null) { Debug.LogError("环境检测器缺少区域体"); }
             else
             {
+                Debug.Log("环境检测器初始化...");
                 region.touchEvent += () => { Land(); };
                 region.notTouchEvent += () => { Air(); };
             }
@@ -71,6 +72,7 @@ namespace ER.Entity2D
         private void Land()
         {
             type = EnvironmentType.Land;
+            Debug.Log("着陆");
             animator.SetInteger("env", (int)type);
             if (OnLandEvent != null) { OnLandEvent(); }
         }
@@ -78,6 +80,7 @@ namespace ER.Entity2D
         private void Air()
         {
             type = EnvironmentType.Air;
+            Debug.Log("悬空");
             animator.SetInteger("env", (int)type);
             if (OnAirEvent != null) { OnAirEvent(); }
         }

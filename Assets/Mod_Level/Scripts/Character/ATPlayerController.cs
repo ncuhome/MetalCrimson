@@ -46,6 +46,8 @@ namespace Mod_Level
             InputManager.InputActions.Player.Skill1.performed += Skill1;
             InputManager.InputActions.Player.Skill2.performed += Skill2;
             InputManager.InputActions.Player.Interact.performed += Interact;
+
+            InputManager.InputActions.Player.Dash.performed += Dash;
         }
 
         #endregion 初始化
@@ -73,15 +75,32 @@ namespace Mod_Level
         /// 辅助线绘制
         /// </summary>
         public LineRenderer line;
+        [Tooltip("瞄准线基准点偏移量")]
+        public Vector2 start_offset;
 
         #endregion 属性
 
         #region 角色控制
 
+        private float LastTime_left = -1;
+        private float LastTime_right = -1;
+
+        
+
         private void MoveLeft(InputAction.CallbackContext ctx)
         {
             if (state.ControlAct && !state.Vertigo)
-                actionManager.Action("Move", "left");
+            {
+                if (Time.time-LastTime_left < 0.2f)
+                {
+                    actionManager.Action("Move", "left","run");
+                }
+                else
+                {
+                    actionManager.Action("Move", "left");
+                }
+                LastTime_left = Time.time;
+            }
         }
 
         private void _MoveLeft(InputAction.CallbackContext ctx)
@@ -99,7 +118,17 @@ namespace Mod_Level
         private void MoveRight(InputAction.CallbackContext ctx)
         {
             if (state.ControlAct && !state.Vertigo)
-                actionManager.Action("Move", "right");
+            {
+                if (Time.time - LastTime_right < 0.2f)
+                {
+                    actionManager.Action("Move", "right", "run");
+                }
+                else
+                {
+                    actionManager.Action("Move", "right");
+                }
+                LastTime_right = Time.time;
+            }
         }
 
         private void _MoveRight(InputAction.CallbackContext ctx)
@@ -117,7 +146,10 @@ namespace Mod_Level
         private void Attack(InputAction.CallbackContext ctx)
         {
             if (state.ControlAct && !state.Vertigo)
+            {
+                state.ControlDir = false;
                 actionManager.Action("Attack");
+            }
         }
 
         private void Defense(InputAction.CallbackContext ctx)
@@ -162,6 +194,12 @@ namespace Mod_Level
             }
         }
 
+        public void Dash(InputAction.CallbackContext ctx)
+        {
+            if (state.ControlAct && !state.Vertigo)
+                actionManager.Action("Dash");
+        }
+
         private void PostureUp()
         {
             state.ActPosture = ATCharacterState.Posture.Up;
@@ -177,15 +215,6 @@ namespace Mod_Level
             state.ActPosture = ATCharacterState.Posture.Down;
         }
 
-        /// <summary>
-        /// 防御判定
-        /// </summary>
-        /// <param name="info"></param>
-        /// <returns></returns>
-        private bool Defense(ActionInfo info)
-        {
-            return true;
-        }
 
         #endregion 角色控制
 
@@ -199,7 +228,7 @@ namespace Mod_Level
         {
             Vector3 start = owner.transform.position;
             Vector3 end = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            start -= new Vector3(0, 0, lineHeight);
+            start -= new Vector3(start_offset.x, start_offset.y, lineHeight);
             end = new Vector3(end.x, end.y, start.z);
             line.SetPosition(0, start);
             line.SetPosition(1, end);

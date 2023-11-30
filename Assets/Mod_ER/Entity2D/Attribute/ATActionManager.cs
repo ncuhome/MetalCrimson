@@ -239,7 +239,15 @@ namespace ER.Entity2D
             }
             Debug.LogError($"未找到指定动作：{actionName}");
         }
-
+        /// <summary>
+        /// 获取指定动作的状态
+        /// </summary>
+        /// <param name="actionName"></param>
+        /// <returns></returns>
+        public MDAction.ActionState GetActionState(string actionName)
+        {
+            return actions[actionName].State;
+        }
         /// <summary>
         /// 中断指定动作
         /// </summary>
