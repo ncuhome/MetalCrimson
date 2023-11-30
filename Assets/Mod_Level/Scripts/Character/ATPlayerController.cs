@@ -22,7 +22,6 @@ namespace Mod_Level
 
             state = owner.GetAttribute<ATCharacterState>();
             if (state == null) Debug.LogError("未找到角色的状态管理器:<ATPlayerState>");
-            Debug.Log($"is null {InputManager.inputActions == null}");
 
             /*
             ATAnimator at = null;
@@ -34,49 +33,24 @@ namespace Mod_Level
                 animator = at.Animator;
             }*/
 
+            InputManager.InputActions.Player.MoveLeft.performed += MoveLeft;
+            InputManager.InputActions.Player.MoveLeft.canceled += _MoveLeft;
+            InputManager.InputActions.Player.MoveRight.performed += MoveRight;
+            InputManager.InputActions.Player.MoveRight.canceled += _MoveRight;
 
-            InputManager.inputActions.Player.MoveLeft.performed += MoveLeft;
-            InputManager.inputActions.Player.MoveLeft.canceled += _MoveLeft;
-            InputManager.inputActions.Player.MoveRight.performed += MoveRight;
-            InputManager.inputActions.Player.MoveRight.canceled += _MoveRight;
+            InputManager.InputActions.Player.Attack.performed += Attack;
+            InputManager.InputActions.Player.Defense.performed += Defense;
+            InputManager.InputActions.Player.Defense.canceled += _Defense;
+            InputManager.InputActions.Player.Jump.performed += Jump;
 
-            InputManager.inputActions.Player.Attack.performed += Attack;
-            InputManager.inputActions.Player.Defense.performed += Defense;
-            InputManager.inputActions.Player.Defense.canceled += _Defense;
-            InputManager.inputActions.Player.Jump.performed += Jump;
-
-            InputManager.inputActions.Player.Skill1.performed += Skill1;
-            InputManager.inputActions.Player.Skill2.performed += Skill2;
-            InputManager.inputActions.Player.Interact.performed += Interact;
-
-
-            region_up.time = -1f;
-            region_up.actor = owner;
-            region_up.actionName = "PostureUpDefense";
-            region_up.actionType = "PassiveDefense";
-            region_up.GetComponent<ATActionResponse>().JudgeBreak = Defense;
-            region_up.Initialize();
-
-            region_front.time = -1f;
-            region_front.actor = owner;
-            region_front.actionName = "PostureUpDefense";
-            region_front.actionType = "PassiveDefense";
-            region_front.GetComponent<ATActionResponse>().JudgeBreak = Defense;
-            region_front.Initialize();
-
-            region_down.time = -1f;
-            region_down.actor = owner;
-            region_down.actionName = "PostureUpDefense";
-            region_down.actionType = "PassiveDefense";
-            region_down.GetComponent<ATActionResponse>().JudgeBreak = Defense;
-            region_down.Initialize();
+            InputManager.InputActions.Player.Skill1.performed += Skill1;
+            InputManager.InputActions.Player.Skill2.performed += Skill2;
+            InputManager.InputActions.Player.Interact.performed += Interact;
         }
 
         #endregion 初始化
 
         #region 属性
-
-
 
         public float limitAngle = 60f;
 
@@ -85,7 +59,6 @@ namespace Mod_Level
         /// </summary>
         public float lineHeight = 2;
 
-        
         /// <summary>
         /// 动作管理器
         /// </summary>
@@ -101,12 +74,6 @@ namespace Mod_Level
         /// </summary>
         public LineRenderer line;
 
-
-        public ATActionRegion region_up;
-
-        public ATActionRegion region_front;
-
-        public ATActionRegion region_down;
         #endregion 属性
 
         #region 角色控制
@@ -119,7 +86,7 @@ namespace Mod_Level
 
         private void _MoveLeft(InputAction.CallbackContext ctx)
         {
-            if (InputManager.inputActions.Player.MoveRight.phase == InputActionPhase.Performed)
+            if (InputManager.InputActions.Player.MoveRight.phase == InputActionPhase.Performed)
             {
                 MoveRight(ctx);
             }
@@ -137,7 +104,7 @@ namespace Mod_Level
 
         private void _MoveRight(InputAction.CallbackContext ctx)
         {
-            if (InputManager.inputActions.Player.MoveLeft.phase == InputActionPhase.Performed)
+            if (InputManager.InputActions.Player.MoveLeft.phase == InputActionPhase.Performed)
             {
                 MoveLeft(ctx);
             }
@@ -198,23 +165,16 @@ namespace Mod_Level
         private void PostureUp()
         {
             state.ActPosture = ATCharacterState.Posture.Up;
-            region_up.Reset();
-            region_down.gameObject.SetActive(false);
-            region_front.gameObject.SetActive(false);
         }
+
         private void PostureFront()
         {
             state.ActPosture = ATCharacterState.Posture.Front;
-            region_front.Reset();
-            region_down.gameObject.SetActive(false);
-            region_up.gameObject.SetActive(false);
         }
+
         private void PostureDown()
         {
             state.ActPosture = ATCharacterState.Posture.Down;
-            region_down.Reset();
-            region_up.gameObject.SetActive(false);
-            region_front.gameObject.SetActive(false);
         }
 
         /// <summary>
@@ -244,7 +204,7 @@ namespace Mod_Level
             line.SetPosition(0, start);
             line.SetPosition(1, end);
             Vector3 delta = end - start;
-            float angle = 0;
+            float angle;
             if (state.direction == ATCharacterState.Direction.Right)
             {
                 angle = Vector2.Angle(delta, Vector2.right);

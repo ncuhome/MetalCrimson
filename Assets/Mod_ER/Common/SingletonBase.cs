@@ -9,6 +9,7 @@ namespace ER
     public class Singleton<T> where T : class, new()
     {
         private static T instance;
+
         public static T Instance
         {
             get
@@ -41,6 +42,7 @@ namespace ER
                 return instance;
             }
         }
+
         /// <summary>
         /// 替换单例对象为自身，如果已存在则销毁自身
         /// </summary>
@@ -54,6 +56,7 @@ namespace ER
             }
             Destroy(gameObject);
         }
+
         protected virtual void Awake()
         {
             PasteInstance();

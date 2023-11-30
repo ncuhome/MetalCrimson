@@ -3,44 +3,48 @@
 using ER.Entity2D;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 namespace Mod_Level
 {
     /// <summary>
     /// 视野区域, 如果视野中有敌人则进入战斗状态
     /// </summary>
-    public class ATEye: ATRegion
+    public class ATEye : ATRegion
     {
         private ATCharacterState state;
 
         [SerializeField]
         protected List<Entity> record = new List<Entity>();
 
-        public ATEye() { AttributeName = nameof(ATEye); }
+        public ATEye()
+        { AttributeName = nameof(ATEye); }
+
         public override void Initialize()
         {
             state = owner.GetAttribute<ATCharacterState>();
         }
 
         #region 事件
+
         /// <summary>
         /// 当目下存在实体时触发的事件
         /// </summary>
         public event Action eyeEvent;
+
         /// <summary>
         /// 当目下实体个数发生改变时触发的事件(新加入/新移除的实体对象)
         /// </summary>
         public event Action<Entity> modifyEyeEvent;
+
         /// <summary>
         /// 当目下没有实体时触发的事件
         /// </summary>
         public event Action notEyeEvent;
-        #endregion
 
-        protected bool Judge(Collider2D collider,out Entity entity)
+        #endregion 事件
+
+        protected bool Judge(Collider2D collider, out Entity entity)
         {
             //如果是 Entity 则返回 true
             entity = collider.GetComponent<Entity>();
@@ -49,13 +53,13 @@ namespace Mod_Level
 
         protected override void OnCollisionEnter2D(Collision2D collision)
         {
-            if (Judge(collision.collider,out Entity entity))
+            if (Judge(collision.collider, out Entity entity))
             {
                 EnterAction(collision.collider);
                 VirtualEnter(collision.collider);
 
                 if (entity == null) return;
-                if(!record.Contains(entity))
+                if (!record.Contains(entity))
                 {
                     if (record.Count == 0)
                         eyeEvent?.Invoke();
@@ -104,7 +108,7 @@ namespace Mod_Level
         protected override void OnTriggerEnter2D(Collider2D collider)
         {
             Debug.Log("collider接触" + collider.gameObject.tag);
-            if (Judge(collider,out Entity entity))
+            if (Judge(collider, out Entity entity))
             {
                 EnterAction(collider);
                 VirtualEnter(collider);
@@ -119,6 +123,7 @@ namespace Mod_Level
                 }
             }
         }
+
         protected override void OnTriggerStay2D(Collider2D collider)
         {
             if (Judge(collider, out Entity entity))
@@ -154,6 +159,5 @@ namespace Mod_Level
                 }
             }
         }
-
     }
 }

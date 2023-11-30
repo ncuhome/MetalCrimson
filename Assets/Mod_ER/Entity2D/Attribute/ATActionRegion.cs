@@ -23,12 +23,12 @@ namespace ER.Entity2D
         /// <summary>
         /// 动作类型
         /// </summary>
-        public string type = "Unkown";
+        public string type = "Unknown";
 
         /// <summary>
         /// 动作名称
         /// </summary>
-        public string name = "Unkown";
+        public string name = "Unknown";
 
         /// <summary>
         /// 动作持续时间，小于0表示无限
@@ -64,6 +64,7 @@ namespace ER.Entity2D
         /// 动作的其他信息
         /// </summary>
         public Dictionary<string, object> infos = new();
+
         /// <summary>
         /// 动作发生位置
         /// </summary>
@@ -132,13 +133,16 @@ namespace ER.Entity2D
         #endregion 初始化
 
         #region 事件
+
         /// <summary>
         /// 区域消失时触发的事件
         /// </summary>
         public event Action EndEvent;
-        #endregion
+
+        #endregion 事件
 
         #region 属性
+
         /// <summary>
         /// 缓存区，判定生效需要在下一帧执行
         /// </summary>
@@ -171,12 +175,12 @@ namespace ER.Entity2D
         /// <summary>
         /// 动作类型
         /// </summary>
-        public string actionType = "Unkown";
+        public string actionType = "Unknown";
 
         /// <summary>
         /// 动作名称
         /// </summary>
-        public string actionName = "Unkown";
+        public string actionName = "Unknown";
 
         /// <summary>
         /// 动作持续时间，小于0表示无限
@@ -196,6 +200,7 @@ namespace ER.Entity2D
         /// <summary>
         /// 判定次数，小于0表示无限
         /// </summary>
+        [SerializeField]
         public int hits = 1;
 
         /// <summary>
@@ -280,11 +285,14 @@ namespace ER.Entity2D
         #endregion 属性
 
         #region 区域检测
+
         public void Reset()
         {
+            //Debug.Log($"攻击次数:{hits}, 剩余:{remainHits}");
             remainHits = hits;
             remainTime = time;
             timers = new();
+            temp = new();
             gameObject.SetActive(true);
         }
 
@@ -329,6 +337,7 @@ namespace ER.Entity2D
         private void Action(ATActionResponse response)
         {
             response.ActionResponse(Info);//响应此动作
+            //Debug.Log($"攻击次数:{hits}, 剩余:{remainHits}");
             if (hits > 0)
             {
                 remainHits--;
@@ -346,7 +355,7 @@ namespace ER.Entity2D
         private void Enter(Collider2D collision)
         {
             ATActionResponse response = collision.gameObject.GetComponent<ATActionResponse>();
-            Debug.Log($"动作接触:{actionName}  对象:{response != null}, {collision.gameObject.name}");
+            //Debug.Log($"动作接触:{actionName}  对象:{response != null}, {collision.gameObject.name}");
             if (response != null)//必须是 response 封装的Collider才算有效判定
             {
                 if (timers.ContainsKey(response))//非初次接触对象
@@ -376,11 +385,12 @@ namespace ER.Entity2D
                 }
                 else//初次接触对象
                 {
-                    response.ActionResponse(Info);//响应此动作
+                    temp.Add(response);//添加至缓存区
                     timers[response] = new Timer() { time = 0, enter = true };//添加计时器
                 }
             }
         }
+
         /// <summary>
         /// 区域生命周期结束
         /// </summary>
@@ -396,20 +406,23 @@ namespace ER.Entity2D
                 gameObject.SetActive(false);
             }
         }
+
         /// <summary>
         /// 执行缓存区
         /// </summary>
         private void UpdateTemp()
         {
-            for(int i=0;i<temp.Count;i++)
+            for (int i = 0; i < temp.Count; i++)
             {
+                Debug.Log($"动作预响应: {temp[i].gameObject.name}");
                 if (temp[i].PreResponse(Info))
                 {
+                    Debug.Log("动作终止");
                     End();
-                    break;
+                    return;
                 }
             }
-            for(int i = 0; i < temp.Count; i++)
+            for (int i = 0; i < temp.Count; i++)
             {
                 Action(temp[i]);
             }
@@ -440,6 +453,10 @@ namespace ER.Entity2D
                     timer.Value.time = 0;
                 }
             }
+        }
+
+        private void LateUpdate()
+        {
             UpdateTemp();
         }
 

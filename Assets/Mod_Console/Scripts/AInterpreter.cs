@@ -192,7 +192,7 @@ namespace Mod_Console
                     {
                         if (TemplateStoreManager.Instance["Item"].Exist(id))
                         {
-                            if (store.AddItem(new ItemVariable("Item",id)))
+                            if (store.AddItem(new ItemVariable("Item", id)))
                             {
                                 Print($"添加物品[{TemplateStoreManager.Instance["Item"][id].NameTmp}]成功");
                                 Print($"现在仓库中有{store.Count}");
@@ -228,7 +228,7 @@ namespace Mod_Console
                     if (TemplateStoreManager.Instance["Item"].Exist(tmpName))
                     {
                         ItemTemplate item = TemplateStoreManager.Instance["Item"][tmpName];
-                        if (store.AddItem(new ItemVariable("Item",item.ID)))
+                        if (store.AddItem(new ItemVariable("Item", item.ID)))
                         {
                             Print($"添加物品[{tmpName}]成功");
                             Print($"现在仓库中有{store.Count}");
@@ -508,13 +508,13 @@ namespace Mod_Console
             {
                 int index = (int)parameters[0].Value;
                 int times = 1;
-                if (parameters.IsMate(DataType.Integer,DataType.Integer))
+                if (parameters.IsMate(DataType.Integer, DataType.Integer))
                 {
                     times = (int)parameters[1].Value;
                     if (times <= 0) times = 1;
                 }
 
-                for (int i=0;i<times;i++)
+                for (int i = 0; i < times; i++)
                 {
                     switch (index)
                     {

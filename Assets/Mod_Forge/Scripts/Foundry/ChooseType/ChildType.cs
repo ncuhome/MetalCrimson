@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using System;
 using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
-using System;
+using UnityEngine.UI;
+
 public class ChildModelType : MonoBehaviour, IPointerClickHandler
 {
     public Image typeImage;
@@ -25,13 +24,12 @@ public class ChildModelType : MonoBehaviour, IPointerClickHandler
     public bool startColor;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (startMove)
         {

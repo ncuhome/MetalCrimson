@@ -1,7 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
- 
+
 /// <summary>
 /// 描边
 /// </summary>
@@ -11,12 +11,12 @@ public class Outline : BaseMeshEffect
 {
     protected Outline()
     {
- 
     }
- 
+
     //描边颜色
     [SerializeField]
-    Color m_OutlineColor = Color.white;
+    private Color m_OutlineColor = Color.white;
+
     public Color OutlineColor
     {
         get
@@ -29,11 +29,12 @@ public class Outline : BaseMeshEffect
             graphic.SetVerticesDirty();
         }
     }
- 
+
     //描边宽度
     [SerializeField]
     [Range(0, 5)]
-    int m_OutlineWidth = 1;
+    private int m_OutlineWidth = 1;
+
     public int OutlineWidth
     {
         get
@@ -46,17 +47,17 @@ public class Outline : BaseMeshEffect
             graphic.SetVerticesDirty();
         }
     }
- 
+
     //顶点缓存
-    List<UIVertex> m_VertexCache = new List<UIVertex>();
- 
+    private List<UIVertex> m_VertexCache = new List<UIVertex>();
+
     //材质路径
-    const string MaterialPath = "Assets/Shaders/Material/UIOutline.mat";
- 
+    private const string MaterialPath = "Assets/Shaders/Material/UIOutline.mat";
+
     protected override void Awake()
     {
         base.Awake();
- 
+
         if (graphic != null)
         {
             if (graphic.material == null
@@ -65,13 +66,13 @@ public class Outline : BaseMeshEffect
                 LoadOutlineMat();
             }
         }
- 
+
         RefreshOutline();
     }
 
     protected override void OnEnable()
     {
-        base.OnEnable(); 
+        base.OnEnable();
 
         if (graphic != null)
         {
@@ -81,10 +82,10 @@ public class Outline : BaseMeshEffect
                 LoadOutlineMat();
             }
         }
- 
+
         RefreshOutline();
     }
- 
+
     public void LoadOutlineMat()
     {
 #if UNITY_EDITOR
@@ -102,12 +103,13 @@ public class Outline : BaseMeshEffect
         base.graphic.material = new Material(shader);
 #endif
     }
- 
+
 #if UNITY_EDITOR
+
     protected override void OnValidate()
     {
         base.OnValidate();
- 
+
         if (graphic != null)
         {
             if (graphic.material == null
@@ -117,8 +119,9 @@ public class Outline : BaseMeshEffect
             }
         }
     }
+
 #endif
- 
+
     public void RefreshOutline()
     {
         if (base.graphic.canvas)
@@ -151,19 +154,19 @@ public class Outline : BaseMeshEffect
             }
         }
     }
- 
+
     public override void ModifyMesh(VertexHelper vh)
     {
         vh.GetUIVertexStream(m_VertexCache);
- 
+
         ApplyOutline();
- 
+
         vh.Clear();
         vh.AddUIVertexTriangleStream(m_VertexCache);
         m_VertexCache.Clear();
     }
- 
-    void ApplyOutline()
+
+    private void ApplyOutline()
     {
         for (int i = 0, count = m_VertexCache.Count - 3; i <= count; i += 3)
         {
@@ -222,8 +225,8 @@ public class Outline : BaseMeshEffect
             m_VertexCache[i + 2] = v3;
         }
     }
- 
-    static UIVertex SetNewPosAndUV(UIVertex vertex, int width,
+
+    private static UIVertex SetNewPosAndUV(UIVertex vertex, int width,
        Vector2 pPosCenter,
        Vector2 triangleX, Vector2 triangleY,
        Vector2 uvX, Vector2 uvY,
@@ -241,29 +244,29 @@ public class Outline : BaseMeshEffect
         uv += (Vector4)uvX / triangleX.magnitude * posXOffset * (Vector2.Dot(triangleX, Vector2.right) > 0 ? 1 : -1);
         uv += (Vector4)uvY / triangleY.magnitude * posYOffset * (Vector2.Dot(triangleY, Vector2.up) > 0 ? 1 : -1);
         vertex.uv0 = uv;
- 
+
         vertex.uv1 = uvOriginMin;
         vertex.uv2 = uvOriginMax;
- 
+
         return vertex;
     }
- 
-    static float Min(float pA, float pB, float pC)
+
+    private static float Min(float pA, float pB, float pC)
     {
         return Mathf.Min(Mathf.Min(pA, pB), pC);
     }
- 
-    static float Max(float pA, float pB, float pC)
+
+    private static float Max(float pA, float pB, float pC)
     {
         return Mathf.Max(Mathf.Max(pA, pB), pC);
     }
- 
-    static Vector2 Min(Vector2 pA, Vector2 pB, Vector2 pC)
+
+    private static Vector2 Min(Vector2 pA, Vector2 pB, Vector2 pC)
     {
         return new Vector2(Min(pA.x, pB.x, pC.x), Min(pA.y, pB.y, pC.y));
     }
- 
-    static Vector2 Max(Vector2 pA, Vector2 pB, Vector2 pC)
+
+    private static Vector2 Max(Vector2 pA, Vector2 pB, Vector2 pC)
     {
         return new Vector2(Max(pA.x, pB.x, pC.x), Max(pA.y, pB.y, pC.y));
     }

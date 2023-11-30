@@ -1,42 +1,50 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace States
 {
     [Serializable]
     public class State
     {
         #region 状态属性
+
         /// <summary>
         /// 状态ID
         /// </summary>
         public int ID { get; private set; } = 0;
+
         /// <summary>
         /// 状态名称
         /// </summary>
         public string stateName;
+
         /// <summary>
         /// 出口ID与对应判定bool
         /// </summary>
         public Dictionary<int, bool> exitID = new Dictionary<int, bool>();
+
         /// <summary>
         /// 状态中的Update事件
         /// </summary>
         private Action OnStateAction;
+
         /// <summary>
         /// 进入状态事件
         /// </summary>
         private Action OnEnterStateAction;
+
         /// <summary>
         /// 出状态事件，输入前往状态的ID
         /// </summary>
         private Action<int> OnExitStateAction;
+
         /// <summary>
         /// 状态所属系统
         /// </summary>
         public StateSystem stateSystem;
-        #endregion 属性
+
+        #endregion 状态属性
 
         #region 构造
 
@@ -54,6 +62,7 @@ namespace States
         #endregion 构造
 
         #region 方法
+
         /// <summary>
         /// 进入状态时的函数
         /// </summary>
@@ -61,6 +70,7 @@ namespace States
         {
             OnEnterStateAction?.Invoke();
         }
+
         /// <summary>
         /// 状态中Update函数
         /// </summary>
@@ -69,6 +79,7 @@ namespace States
             OnStateAction?.Invoke();
             ExitJudgement();
         }
+
         /// <summary>
         /// 出口判定，如果有出口为true则前往
         /// </summary>
@@ -82,6 +93,7 @@ namespace States
                 }
             }
         }
+
         /// <summary>
         /// 退出状态时的函数
         /// </summary>
@@ -92,13 +104,13 @@ namespace States
 
             OnExitStateAction?.Invoke(id);
 
-
             stateSystem.states[id].OnEnterState();
             stateSystem.currentState = stateSystem.states[id];
             stateSystem.lastState = this;
 
             ChangeExitJudgement(id, false);
         }
+
         /// <summary>
         /// 改变自定义状态循环函数
         /// </summary>
@@ -107,6 +119,7 @@ namespace States
         {
             OnStateAction = action;
         }
+
         /// <summary>
         /// 改变自定义出口函数
         /// </summary>
@@ -115,6 +128,7 @@ namespace States
         {
             OnExitStateAction = action;
         }
+
         /// <summary>
         /// 改变自定义入口函数
         /// </summary>
@@ -123,6 +137,7 @@ namespace States
         {
             OnEnterStateAction = action;
         }
+
         /// <summary>
         /// 改变或添加出口判定的值
         /// </summary>
@@ -132,6 +147,7 @@ namespace States
         {
             exitID[id] = value;
         }
-        #endregion
+
+        #endregion 方法
     }
 }

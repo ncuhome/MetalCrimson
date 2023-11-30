@@ -1,18 +1,21 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace States
 {
     [Serializable]
     public class StateSystem
     {
         #region 属性
+
         private int size;
+
         /// <summary>
         /// 状态系统名称
         /// </summary>
         public string systemName;
+
         /// <summary>
         /// 状态系统容量
         /// </summary>
@@ -25,10 +28,12 @@ namespace States
                 if (size < 0) size = 0;
             }
         }
+
         /// <summary>
         /// 状态ID与对应状态的词典
         /// </summary>
         public Dictionary<int, State> states = new();
+
         /// <summary>
         /// 当前状态
         /// </summary>
@@ -37,18 +42,20 @@ namespace States
         #endregion 属性
 
         #region 构造
+
         public StateSystem()
         {
-
         }
 
         public StateSystem(string name, int size = 64)
         {
             systemName = name; Size = size;
         }
+
         #endregion 构造
 
         #region 方法
+
         /// <summary>
         /// 添加状态
         /// </summary>

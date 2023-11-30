@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Mod_Level
 {
@@ -55,13 +54,13 @@ namespace Mod_Level
         {
             Vector2 AB = PointB.localPosition - PointA.localPosition;//方向向量
             float alpha = Vector2.Angle(new Vector2(1, 0), AB);
-            float bata = (offsetAngle + alpha)/180*Mathf.PI;
+            float bata = (offsetAngle + alpha) / 180 * Mathf.PI;
             offsetNow = new Vector2(Mathf.Cos(bata), Mathf.Sin(bata)) * offsetLength;
-            Debug.DrawLine(PointA.transform.position,(Vector2)PointA.transform.position+offsetNow);
+            Debug.DrawLine(PointA.transform.position, (Vector2)PointA.transform.position + offsetNow);
 
-            Image.localPosition = new Vector3(offsetNow.x + PointA.localPosition.x, offsetNow.y + PointA.localPosition.y,Image.localPosition.z);//确定新的P点坐标
-            
-            if(Vector2.Angle(AB,Vector2.right) > Vector2.Angle(DefAB,Vector2.right))
+            Image.localPosition = new Vector3(offsetNow.x + PointA.localPosition.x, offsetNow.y + PointA.localPosition.y, Image.localPosition.z);//确定新的P点坐标
+
+            if (Vector2.Angle(AB, Vector2.right) > Vector2.Angle(DefAB, Vector2.right))
             {
                 angleNow = Vector2.Angle(DefAB, AB);
             }
@@ -69,9 +68,8 @@ namespace Mod_Level
             {
                 angleNow = -Vector2.Angle(DefAB, AB);
             }
-            
+
             Image.eulerAngles = new Vector3(0, 0, angleNow);
-            
         }
     }
 }

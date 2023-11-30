@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using System;
-using ER.Items;
+﻿using ER.Items;
 using ER.Parser;
 using States;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
 
-#region  模板结构体
+#region 模板结构体
+
 /// <summary>
 /// 母模板结构
 /// </summary>
@@ -18,35 +17,43 @@ public struct Type
     /// 模板名称
     /// </summary>
     public string name;
+
     /// <summary>
     /// 模板ID
     /// </summary>
     public int ID;
+
     /// <summary>
     /// 模板描述
     /// </summary>
     public string Description;
+
     /// <summary>
     /// 模板标签
     /// </summary>
     public string[] Tags;
+
     /// <summary>
     /// 模板图像
     /// </summary>
     public Sprite typeSprite;
+
     /// <summary>
     /// 模板物体
     /// </summary>
     public GameObject typeObject;
+
     /// <summary>
     /// 模板脚本
     /// </summary>
     public MotherType typeScript;
+
     /// <summary>
     /// 对应子模板
     /// </summary>
     public ChildType[] childTypes;
 }
+
 /// <summary>
 /// 子模板结构
 /// </summary>
@@ -57,48 +64,59 @@ public struct ChildType
     /// 子模板名称
     /// </summary>
     public string name;
+
     /// <summary>
     /// 子模板ID
     /// </summary>
     public int ID;
+
     /// <summary>
     /// 对应母模板ID
     /// </summary>
     public int M_ID;
+
     /// <summary>
     /// 子模板描述
     /// </summary>
     public string Description;
+
     /// <summary>
     /// 子模板标签
     /// </summary>
     public string[] Tags;
+
     /// <summary>
     /// 子模板图像
     /// </summary>
     public Sprite typeSprite;
+
     /// <summary>
     /// 子模板物体
     /// </summary>
     public GameObject typeObject;
+
     /// <summary>
     /// 子模板脚本
     /// </summary>
     public ChildModelType typeScript;
+
     /// <summary>
     /// 消耗费用
     /// </summary>
     public int costMaterialNum;
 }
-#endregion
+
+#endregion 模板结构体
+
 /// <summary>
 /// 物体系统
 /// </summary>
 public class TypeSystem : MonoBehaviour
 {
-    #region  构建单例
+    #region 构建单例
 
     private static TypeSystem instance;
+
     /// <summary>
     /// 物体系统单例
     /// </summary>
@@ -109,76 +127,95 @@ public class TypeSystem : MonoBehaviour
             return instance;
         }
     }
-    #endregion
+
+    #endregion 构建单例
 
     #region 参数
+
     /// <summary>
     /// 母类型数量
     /// </summary>
     public int typeNum;
+
     /// <summary>
     /// 模具数组
     /// </summary>
     public Type[] types;
+
     /// <summary>
     /// 模具预制件
     /// </summary>
     public GameObject motherModelPrefab, childModelPrefab;
+
     /// <summary>
     /// 模具父物体Trans
     /// </summary>
     public Transform typeParentTrans;
+
     /// <summary>
     /// 母模具页数
     /// </summary>
     public int index = 1;
+
     /// <summary>
     /// 子模具页数
     /// </summary>
     public int childIndex = 1;
+
     /// <summary>
     /// 模拟layout的物件大小
     /// </summary>
     public Vector2 CellSize;
+
     /// <summary>
     /// 模拟Layout的间隙
     /// </summary>
     public Vector2 Spacing;
+
     /// <summary>
     /// 前后按钮
     /// </summary>
     public GameObject NextPageButton, LastPageButton;
+
     /// <summary>
     /// 状态系统
     /// </summary>
     public StateSystem stateSystem;
+
     /// <summary>
     /// 当前的母模板ID
     /// </summary>
     public int currentMotherModelID;
+
     /// <summary>
     /// 当前子模板ID
     /// </summary>
     public int chosenChildModelID;
+
     /// <summary>
     /// 当前母模板
     /// </summary>
     public Type currentMotherModel;
+
     /// <summary>
     /// 当前子模板
     /// </summary>
     public ChildType chosenChildModel;
+
     /// <summary>
     /// 卡背
     /// </summary>
     public ModelBack modelBack;
+
     /// <summary>
     /// 是否正在移动
     /// </summary>
     public bool moving;
-    #endregion
+
+    #endregion 参数
 
     #region 方法
+
     /// <summary>
     /// 构建单例
     /// </summary>
@@ -189,15 +226,17 @@ public class TypeSystem : MonoBehaviour
             instance = this;
         }
     }
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         InitState();
         InitTypeData();
         InitTypes();
     }
+
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         RefreshButton();
     }
@@ -205,7 +244,7 @@ public class TypeSystem : MonoBehaviour
     /// <summary>
     /// 初始化状态系统
     /// </summary>
-    void InitState()
+    private void InitState()
     {
         StateSystemManager.Instance.CreateStateSystem("TypeStateSystem");
         stateSystem = StateSystemManager.Instance["TypeStateSystem"];
@@ -230,10 +269,11 @@ public class TypeSystem : MonoBehaviour
         getComponent.ChangeExitJudgement(3, false);
         stateSystem.AddState(getComponent);
     }
+
     /// <summary>
     /// 初始化模具信息
     /// </summary>
-    void InitTypeData()
+    private void InitTypeData()
     {
         ItemTemplateStore modelStore = TemplateStoreManager.Instance["Item"];
         List<ItemTemplate> models = modelStore.FindContainsPart("Tags", "MainModel", ';');
@@ -262,10 +302,11 @@ public class TypeSystem : MonoBehaviour
             }
         }
     }
+
     /// <summary>
     /// 初始化模具物体
     /// </summary>
-    void InitTypes()
+    private void InitTypes()
     {
         for (int i = 0; i < typeNum; i++)
         {
@@ -274,11 +315,12 @@ public class TypeSystem : MonoBehaviour
         index = 1;
         childIndex = 1;
     }
+
     /// <summary>
     /// 生成模具物体
     /// </summary>
     /// <param name="i">模具索引</param>
-    void InstantiateType(int i)
+    private void InstantiateType(int i)
     {
         types[i].typeObject = Instantiate(motherModelPrefab);
         types[i].typeObject.transform.parent = typeParentTrans;
@@ -294,12 +336,13 @@ public class TypeSystem : MonoBehaviour
         }
         if (i >= 8) { types[i].typeObject.SetActive(false); }
     }
+
     /// <summary>
     /// 生成子模具物体
     /// </summary>
     /// <param name="motherIndex">母模具索引</param>
     /// <param name="childIndex">子模具索引</param>
-    void InstantiateChildType(int motherIndex, int childIndex)
+    private void InstantiateChildType(int motherIndex, int childIndex)
     {
         types[motherIndex].childTypes[childIndex].typeObject = Instantiate(childModelPrefab);
         types[motherIndex].childTypes[childIndex].typeObject.transform.parent = typeParentTrans;
@@ -312,6 +355,7 @@ public class TypeSystem : MonoBehaviour
         types[motherIndex].childTypes[childIndex].typeScript.motherId = types[motherIndex].ID;
         types[motherIndex].childTypes[childIndex].typeObject.SetActive(false);
     }
+
     /// <summary>
     /// 模拟Layout，返回索引对应位置
     /// </summary>
@@ -328,6 +372,7 @@ public class TypeSystem : MonoBehaviour
             return new Vector2((i - 5.5f) * (CellSize.x + Spacing.x), -0.5f * (CellSize.y + Spacing.y));
         }
     }
+
     /// <summary>
     /// 显示对应子模具
     /// </summary>
@@ -358,6 +403,7 @@ public class TypeSystem : MonoBehaviour
         moving = true;
         childIndex = 1;
     }
+
     /// <summary>
     /// 隐藏所有子模具
     /// </summary>
@@ -377,6 +423,7 @@ public class TypeSystem : MonoBehaviour
         }
         moving = true;
     }
+
     /// <summary>
     /// 刷新模具位置
     /// </summary>
@@ -398,6 +445,7 @@ public class TypeSystem : MonoBehaviour
                     }
                 }
                 break;
+
             case 2:
                 currentMotherModel = (Type)GetM_Type(currentMotherModelID);
                 for (int i = 0; i < currentMotherModel.childTypes.Length; i++)
@@ -416,10 +464,11 @@ public class TypeSystem : MonoBehaviour
                 break;
         }
     }
+
     /// <summary>
     /// 刷新按钮是否显示
     /// </summary>
-    void RefreshButton()
+    private void RefreshButton()
     {
         switch (stateSystem.currentState.ID)
         {
@@ -442,6 +491,7 @@ public class TypeSystem : MonoBehaviour
                     NextPageButton.SetActive(true);
                 }
                 break;
+
             case 2:
                 if (childIndex == 1)
                 {
@@ -461,6 +511,7 @@ public class TypeSystem : MonoBehaviour
                     NextPageButton.SetActive(true);
                 }
                 break;
+
             case 3:
                 LastPageButton.SetActive(false);
                 NextPageButton.SetActive(false);
@@ -491,6 +542,7 @@ public class TypeSystem : MonoBehaviour
         }
         moving = true;
     }
+
     /// <summary>
     /// 母模具移动回原有位置
     /// </summary>
@@ -544,6 +596,7 @@ public class TypeSystem : MonoBehaviour
 
         moving = true;
     }
+
     /// <summary>
     /// 退回子模具选择界面
     /// </summary>
@@ -572,6 +625,7 @@ public class TypeSystem : MonoBehaviour
 
         moving = true;
     }
+
     /// <summary>
     /// 获取ID对应母模具
     /// </summary>
@@ -585,6 +639,7 @@ public class TypeSystem : MonoBehaviour
         }
         return new Type();
     }
+
     /// <summary>
     /// 获取对应子模具
     /// </summary>
@@ -610,6 +665,7 @@ public class TypeSystem : MonoBehaviour
         modelBack.startMove = true;
         moving = true;
     }
+
     /// <summary>
     /// 打开卡背
     /// </summary>
@@ -632,12 +688,14 @@ public class TypeSystem : MonoBehaviour
             case 1:
                 HideChildModels();
                 break;
+
             case 3:
                 MaterialSystem.Instance.ShowMaterialPanel();
                 ChosenChildModel();
                 break;
         }
     }
+
     /// <summary>
     /// 状态3退出事件
     /// </summary>
@@ -650,11 +708,13 @@ public class TypeSystem : MonoBehaviour
                 MaterialSystem.Instance.HideMaterialPanel();
                 ReturnChildModel();
                 break;
+
             case 4:
                 CloseModelBack();
                 break;
         }
     }
+
     /// <summary>
     /// 状态4退出事件
     /// </summary>
@@ -669,6 +729,5 @@ public class TypeSystem : MonoBehaviour
         }
     }
 
-    #endregion
-
+    #endregion 方法
 }

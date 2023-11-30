@@ -1,7 +1,4 @@
-﻿
-using ER;
-using ER.Parser;
-using Mod_Console;
+﻿using ER.Parser;
 using System.IO;
 using UnityEngine;
 
@@ -24,6 +21,7 @@ namespace ER.Save
         private string settingsPath;
 
         private INIHandler INIHD;
+
         /// <summary>
         /// 初始化
         /// </summary>
@@ -50,6 +48,7 @@ namespace ER.Save
                 INIHD.AddSection("settings");
             }
         }
+
         /// <summary>
         /// 保存设置
         /// </summary>

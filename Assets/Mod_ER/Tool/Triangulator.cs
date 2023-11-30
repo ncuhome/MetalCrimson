@@ -1,7 +1,7 @@
 ﻿// Ignore Spelling: Triangulator
 
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace ER
 {

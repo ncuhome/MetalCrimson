@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
 public class QTE : MonoBehaviour
 {
     #region 单例封装
@@ -16,7 +15,10 @@ public class QTE : MonoBehaviour
     }
 
     #endregion 单例封装
-    enum MoveDirection { backward = -1, forward = 1 }
+
+    private enum MoveDirection
+    { backward = -1, forward = 1 }
+
     private float value;
     private float HammerValue;
     private MoveDirection HammerMoveDirection;
@@ -31,21 +33,21 @@ public class QTE : MonoBehaviour
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
-    void Awake()
+    private void Awake()
     {
         if (instance == null)
         {
             instance = this;
         }
     }
-    // Start is called before the first frame update
-    void Start()
-    {
 
+    // Start is called before the first frame update
+    private void Start()
+    {
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (startQTE)
         {
@@ -55,7 +57,6 @@ public class QTE : MonoBehaviour
             if (Mathf.Abs(value - 1f) < 0.01f) { moveDirection = MoveDirection.backward; }
             if (HammerValue < 0.95f) { HammerMoveDirection = MoveDirection.forward; }
             if (HammerValue > 1f) { HammerMoveDirection = MoveDirection.backward; }
-
         }
         else
         {

@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using System;
 using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
-using System;
+using UnityEngine.UI;
+
 public class MotherType : MonoBehaviour, IPointerClickHandler
 {
     public Image typeImage;
@@ -22,14 +21,14 @@ public class MotherType : MonoBehaviour, IPointerClickHandler
     public Color targetColor;
     public float colorTime;
     public bool startColor;
-    // Start is called before the first frame update
-    void Start()
-    {
 
+    // Start is called before the first frame update
+    private void Start()
+    {
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (startMove)
         {
@@ -85,6 +84,7 @@ public class MotherType : MonoBehaviour, IPointerClickHandler
                 TypeSystem.Instance.stateSystem[1].ChangeExitAction(action1);
                 TypeSystem.Instance.stateSystem[1].ChangeExitJudgement(2, true);
                 break;
+
             case 2:
                 Action<int> action2 = TypeSystem.Instance.ChildModelStateExit;
                 TypeSystem.Instance.stateSystem[2].ChangeExitAction(action2);
@@ -108,5 +108,4 @@ public class MotherType : MonoBehaviour, IPointerClickHandler
         typeImage.color = new Color(typeImage.color.r, typeImage.color.g, typeImage.color.b, a);
         typeText.color = new Color(typeText.color.r, typeText.color.g, typeText.color.b, a);
     }
-
 }

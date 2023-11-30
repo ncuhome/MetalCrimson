@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 
 namespace ER.Entity2D
@@ -30,7 +29,7 @@ namespace ER.Entity2D
             /// </summary>
             public Action<IAttribute> action;
 
-            public ConditionalDelegation(string name,Action<IAttribute> action)
+            public ConditionalDelegation(string name, Action<IAttribute> action)
             {
                 this.name = name;
                 this.action = action;
@@ -38,6 +37,7 @@ namespace ER.Entity2D
         }
 
         #region 属性
+
         [Tooltip("预加载特征列表")]
         public List<MonoAttribute> Attributes;
 
@@ -45,6 +45,7 @@ namespace ER.Entity2D
         /// 实体的特征对象(使用特征名称作为索引)
         /// </summary>
         private Dictionary<string, IAttribute> attributes = new();
+
         /// <summary>
         /// 条件委托列表
         /// </summary>
@@ -54,24 +55,27 @@ namespace ER.Entity2D
         #endregion 属性
 
         #region 条件委托管理
+
         /// <summary>
         /// 创建一个条件委托
         /// </summary>
-        public void CreateDelegation(string attributeName,Action<IAttribute> action)
+        public void CreateDelegation(string attributeName, Action<IAttribute> action)
         {
-            delegations.Add(new ConditionalDelegation(attributeName,action));
+            delegations.Add(new ConditionalDelegation(attributeName, action));
         }
+
         /// <summary>
         /// 尝试触发条件委托
         /// </summary>
         private void JudgeDelegation(IAttribute attribute)
         {
-            foreach(var del in delegations)
+            foreach (var del in delegations)
             {
-                if(del.name == attribute.Name) del.action(attribute);
+                if (del.name == attribute.Name) del.action(attribute);
             }
         }
-        #endregion
+
+        #endregion 条件委托管理
 
         #region 特征管理
 
@@ -142,6 +146,7 @@ namespace ER.Entity2D
                 return null;
             }
         }
+
         /// <summary>
         /// 获取指定特征，返回找到的第一个特征对象
         /// </summary>
@@ -149,9 +154,9 @@ namespace ER.Entity2D
         /// <returns></returns>
         public T GetAttribute<T>() where T : IAttribute
         {
-            foreach(IAttribute attribute in attributes.Values)
+            foreach (IAttribute attribute in attributes.Values)
             {
-                if(attribute is T) return (T)attribute;
+                if (attribute is T) return (T)attribute;
             }
             return default(T);
         }
@@ -162,7 +167,7 @@ namespace ER.Entity2D
         /// <typeparam name="T"></typeparam>
         /// <param name="callBack"></param>
         /// <returns></returns>
-        public bool TryGetAttribute<T>(string attributeName,ref T aim,Action<IAttribute> callBack) where T: IAttribute
+        public bool TryGetAttribute<T>(string attributeName, ref T aim, Action<IAttribute> callBack) where T : IAttribute
         {
             IAttribute t = this[attributeName];
             if (t != null)
@@ -177,13 +182,14 @@ namespace ER.Entity2D
         #endregion 特征管理
 
         #region Unity
+
         private void Awake()
         {
             if (Attributes != null && Attributes.Count > 0)
             {
                 foreach (var attribute in Attributes)
                 {
-                    if(Add(attribute, false))
+                    if (Add(attribute, false))
                     {
                         Debug.LogWarning($"预加载特征出现命名冲突:{attribute.Name}");
                     }
@@ -195,8 +201,8 @@ namespace ER.Entity2D
 
         protected virtual void Initialized()
         {
-            
         }
-        #endregion
+
+        #endregion Unity
     }
 }

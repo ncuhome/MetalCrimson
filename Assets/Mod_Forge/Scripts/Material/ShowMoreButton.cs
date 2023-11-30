@@ -1,23 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class ShowMoreButton : MonoBehaviour, IPointerClickHandler
 {
-
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-
     }
 
     //向目标坐标移动
-    void Update()
+    private void Update()
     {
-
     }
+
     /// <summary>
     /// 点击时运行，判定是展开还是合上
     /// </summary>

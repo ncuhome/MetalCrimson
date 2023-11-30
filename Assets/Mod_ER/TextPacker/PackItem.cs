@@ -242,7 +242,7 @@ namespace ER.TextPacker
 
         public void ClosePanel()
         {
-            if(button!=null)button.onClick.RemoveAllListeners();
+            if (button != null) button.onClick.RemoveAllListeners();
             cd_panel.type = UIAnimator.AnimationType.BoxClose_Right;
             cd_panel.callBack = () => { Destroy(gameObject); };
 

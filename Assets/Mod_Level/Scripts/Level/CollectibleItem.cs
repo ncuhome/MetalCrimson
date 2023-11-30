@@ -1,5 +1,4 @@
 ﻿using ER;
-using ER.Entity2D;
 using ER.Items;
 using UnityEngine;
 
@@ -17,7 +16,8 @@ namespace Mod_Level
         private Transform aim;
         private bool follow = false;
         private Item item;
-        public Item Item { get { return item; } }
+        public Item Item
+        { get { return item; } }
 
         private void Awake()
         {
@@ -39,7 +39,7 @@ namespace Mod_Level
             ResetState();
         }
 
-        public void Follow(Transform _aim,float _speed = 10)
+        public void Follow(Transform _aim, float _speed = 10)
         {
             aim = _aim;
             speed = _speed;
@@ -48,11 +48,11 @@ namespace Mod_Level
 
         private void Update()
         {
-            if(aim != null && follow)
+            if (aim != null && follow)
             {
                 Vector2 dir = (aim.position - transform.position).normalized;
                 //Debug.Log(dir);
-                transform.position += new Vector3(dir.x,dir.y,0) * speed * Time.deltaTime;
+                transform.position += new Vector3(dir.x, dir.y, 0) * speed * Time.deltaTime;
             }
         }
     }

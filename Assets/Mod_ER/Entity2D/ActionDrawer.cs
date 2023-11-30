@@ -6,20 +6,23 @@ namespace ER.Entity2D
     /// <summary>
     /// 动作区域绘制工具
     /// </summary>
-    public class ActionDrawer:MonoBehaviour
+    public class ActionDrawer : MonoBehaviour
     {
         /// <summary>
         /// 使用的材质
         /// </summary>
         public Material material;
+
         /// <summary>
         /// 相关点
         /// </summary>
         public List<Transform> points;
+
         /// <summary>
         /// 检测区域
         /// </summary>
         public PolygonCollider2D cld;
+
         private MeshRenderer mRenderer;
         private MeshFilter mFilter;
 
@@ -32,12 +35,14 @@ namespace ER.Entity2D
             }
             return array;
         }
+
         [ContextMenu("重设判定区域形状")]
         public void UpdateShape()
         {
             cld.points = GetPoints();
             Draw();
         }
+
         [ContextMenu("重新获取区域设定点")]
         public void UpdateSetPoints()
         {
@@ -79,9 +84,10 @@ namespace ER.Entity2D
             }
             mFilter.mesh = mesh;
         }
+
         #region Unity
 
-        void Start()
+        private void Start()
         {
             UpdateShape();
             Draw();
@@ -91,7 +97,7 @@ namespace ER.Entity2D
         {
             UpdateSetPoints();
         }
-        #endregion
 
+        #endregion Unity
     }
 }

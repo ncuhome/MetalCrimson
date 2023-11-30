@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.ExceptionServices;
 using System.Text;
 
 namespace ER.Parser
@@ -19,6 +18,7 @@ namespace ER.Parser
         }
 
         #region 读取
+
         public void ParseINIFile(string filePath)
         {
             if (!File.Exists(filePath))
@@ -29,11 +29,13 @@ namespace ER.Parser
             string[] lines = File.ReadAllLines(filePath);
             ParseINIText(lines);
         }
+
         public void ParseINIText(string INIText)
         {
             string[] lines = INIText.Split('\n');
             ParseINIText(lines);
         }
+
         public void ParseINIText(string[] lines)
         {
             string currentSection = string.Empty;
@@ -69,13 +71,16 @@ namespace ER.Parser
                 }
             }
         }
-        #endregion
+
+        #endregion 读取
 
         #region 内容操作
+
         public void Clear()
         {
             sections.Clear();
         }
+
         /// <summary>
         /// 清空文本缓存，只保留指定节段的文本
         /// </summary>
@@ -100,13 +105,14 @@ namespace ER.Parser
             // 更新节段信息为保留的节段信息
             this.sections = newSections;
         }
+
         /// <summary>
         /// 只清除指定文本缓存
         /// </summary>
         /// <param name="sections"></param>
         public void Clear(params string[] sections)
         {
-            for(int i=0;i<sections.Length;i++)
+            for (int i = 0; i < sections.Length; i++)
             {
                 if (this.sections.ContainsKey(sections[i]))
                 {
@@ -114,7 +120,8 @@ namespace ER.Parser
                 }
             }
         }
-        public string  GetValue(string section, string key)
+
+        public string GetValue(string section, string key)
         {
             if (sections.TryGetValue(section, out var sectionData))
             {
@@ -126,14 +133,16 @@ namespace ER.Parser
 
             return null;
         }
-        public Dictionary<string,string>  GetSection(string sectionName)
+
+        public Dictionary<string, string> GetSection(string sectionName)
         {
-            if(sections.TryGetValue(sectionName, out var sectionData))
+            if (sections.TryGetValue(sectionName, out var sectionData))
             {
                 return sectionData;
             }
             return null;
         }
+
         private void AddSection(string section)
         {
             if (!sections.ContainsKey(section))
@@ -141,6 +150,7 @@ namespace ER.Parser
                 sections.Add(section, new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase));
             }
         }
+
         private void AddKeyValuePair(string section, string key, string value)
         {
             if (sections.TryGetValue(section, out var sectionData))
@@ -148,6 +158,7 @@ namespace ER.Parser
                 sectionData[key] = UnescapeValue(value);
             }
         }
+
         private string UnescapeValue(string value)
         {
             StringBuilder unescapedValue = new StringBuilder();
@@ -192,15 +203,16 @@ namespace ER.Parser
 
             return unescapedValue.ToString();
         }
-        #endregion
+
+        #endregion 内容操作
 
         public void Print()
         {
             Console.WriteLine($"sections.Count:{sections.Count}");
-            foreach(var sec in sections)
+            foreach (var sec in sections)
             {
                 Console.WriteLine($"[{sec.Key}]:{sec.Value.Count}");
-                foreach(KeyValuePair<string,string> kv in sec.Value)
+                foreach (KeyValuePair<string, string> kv in sec.Value)
                 {
                     kv.Print();
                 }

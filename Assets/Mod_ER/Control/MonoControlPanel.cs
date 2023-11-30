@@ -105,6 +105,7 @@ namespace ER.Control
         {
             ControlManager.Instance.RegisterDictionary(this);
         }
+
         protected virtual void OnDestroy()
         {
             OnPanelDestroy();
@@ -208,7 +209,7 @@ namespace ER.Control
             ControlManager.Instance.RegisterDictionary(this);
         }
 
-        ControlPanel()
+        private ControlPanel()
         {
             ControlManager.Instance.RegisterDictionary(this);
         }

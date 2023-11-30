@@ -1,5 +1,4 @@
-﻿
-using ER;
+﻿using ER;
 using ER.Parser;
 using Mod_Console;
 using System.Collections.Generic;
@@ -317,12 +316,12 @@ namespace Mod_Rouge
                     break;
 
                 case 2://进入下一层
-                    exits = NextLevel() ;
+                    exits = NextLevel();
                     break;
 
                 default:
                     UpdateCheck();
-                    int count = Random.Range(exitMin_settings, exitMax_settings+1);//确定出口数量
+                    int count = Random.Range(exitMin_settings, exitMax_settings + 1);//确定出口数量
                     exits = new Room[count];
                     for (int i = 0; i < count; i++)
                     {
@@ -338,7 +337,7 @@ namespace Mod_Rouge
         /// <param name="index"></param>
         public Room SelectRoom(int index)
         {
-            if(roomType == RoomType.exit)
+            if (roomType == RoomType.exit)
             {
                 ConsolePanel.PrintError($"错误操作：请对地图初始化后进行选择出口");
                 return null;
@@ -409,12 +408,12 @@ namespace Mod_Rouge
 
         private Room BossRoom()
         {
-            return new Room (RoomType.boss, level); 
+            return new Room(RoomType.boss, level);
         }
 
         private Room EndRoom()
         {
-            return  new Room(RoomType.end, level) ;
+            return new Room(RoomType.end, level);
         }
 
         /// <summary>
@@ -422,12 +421,11 @@ namespace Mod_Rouge
         /// </summary>
         private Room[] NextLevel()
         {
-
             if (level < level_settings)
             {
                 Room[] rooms = new Room[2];
-                rooms[0] = new Room(RoomType.start, level+1);
-                rooms[1] = new Room(RoomType.exit, level+1);
+                rooms[0] = new Room(RoomType.start, level + 1);
+                rooms[1] = new Room(RoomType.exit, level + 1);
                 return rooms;
             }
             return new Room[] { new Room(RoomType.exit, level + 1) };

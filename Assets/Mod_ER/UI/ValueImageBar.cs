@@ -1,10 +1,8 @@
 ﻿// Ignore Spelling: Ptage
 
 using ER.Control;
-using JetBrains.Annotations;
 using System;
 using TMPro;
-using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -13,6 +11,7 @@ namespace ER.UI
     public class ValueImageBar : HandlerBase
     {
         #region 组件 |属性
+
         public TMP_Text text;
         public Image image;
         private float value = 0f;//0.0~1.0
@@ -33,6 +32,7 @@ namespace ER.UI
                 this.value = value;
             }
         }
+
         /// <summary>
         /// 显示的文本
         /// </summary>
@@ -47,6 +47,7 @@ namespace ER.UI
                 text.text = value;
             }
         }
+
         /// <summary>
         /// 是否显示文本提示
         /// </summary>
@@ -62,9 +63,11 @@ namespace ER.UI
                 text.gameObject.SetActive(value);
             }
         }
-        #endregion
+
+        #endregion 组件 |属性
 
         #region 方法
+
         /// <summary>
         /// 取比值，返回一个 0.0~1.0 的数
         /// </summary>
@@ -75,6 +78,7 @@ namespace ER.UI
         {
             return (float)number1 / number2;
         }
+
         /// <summary>
         /// 取比值，返回一个 0.0~1.0 的数
         /// </summary>
@@ -86,32 +90,39 @@ namespace ER.UI
             return number1 / number2;
         }
 
-        #endregion
+        #endregion 方法
 
         #region 委托|鼠标监控
+
         /// <summary>
         /// 被鼠标点击
         /// </summary>
         public event Action OnMouseClickEvent;
+
         /// <summary>
         /// 被鼠标进入
         /// </summary>
         public event Action OnMouseEnterEvent;
+
         /// <summary>
         /// 被鼠标离开
         /// </summary>
         public event Action OnMouseExitEvent;
+
         /// <summary>
         /// 被鼠标覆盖
         /// </summary>
         public event Action OnMouseCoverEvent;
+
         private bool enter = false;
+
         public override void OnPointerClick(PointerEventData eventData)
         {
             //print("鼠标点击");
             if (OnMouseClickEvent != null)
                 OnMouseClickEvent();
         }
+
         public override void OnPointerExit(PointerEventData eventData)
         {
             //print("鼠标离开");
@@ -119,6 +130,7 @@ namespace ER.UI
             if (OnMouseExitEvent != null)
                 OnMouseExitEvent.Invoke();
         }
+
         public override void OnPointerEnter(PointerEventData eventData)
         {
             //print("鼠标进入");
@@ -126,6 +138,7 @@ namespace ER.UI
             if (OnMouseEnterEvent != null)
                 OnMouseEnterEvent();
         }
+
         private void Update()
         {
             if (enter)
@@ -134,6 +147,7 @@ namespace ER.UI
                     OnMouseCoverEvent();
             }
         }
-        #endregion
+
+        #endregion 委托|鼠标监控
     }
 }

@@ -11,13 +11,17 @@ namespace ER.Entity2D
         [SerializeField]
         [Tooltip("特征名称")]
         protected string AttributeName;
+
         /// <summary>
         /// 特征所属的实体对象
         /// </summary>
         protected Entity owner;
+
         public string Name { get => AttributeName; set => AttributeName = value; }
         public Entity Owner { get => owner; set => owner = value; }
+
         public abstract void Initialize();
+
         public virtual void Destroy()
         {
             Destroy(gameObject);

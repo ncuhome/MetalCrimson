@@ -1,22 +1,21 @@
 ﻿// Ignore Spelling: collider
 
-
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace ER.Entity2D
 {
-
     public interface IRegionManager
     {
-        public void SetState(bool state,int index,Collider2D collider);
+        public void SetState(bool state, int index, Collider2D collider);
     }
 
     public class ATBaseRegionManager : MonoAttribute, IRegionManager
     {
-
         #region 初始化
-        public ATBaseRegionManager() { AttributeName = nameof(ATBaseRegionManager); }
+
+        public ATBaseRegionManager()
+        { AttributeName = nameof(ATBaseRegionManager); }
 
         public override void Initialize()
         {
@@ -28,9 +27,11 @@ namespace ER.Entity2D
                 }
             }
         }
-        #endregion
+
+        #endregion 初始化
 
         #region 属性
+
         [SerializeField]
         [Tooltip("区域检测初始化表")]
         public List<ATRegion> Regions = new();
@@ -39,21 +40,26 @@ namespace ER.Entity2D
         /// 区域状态
         /// </summary>
         protected List<bool> states = new();
+
         /// <summary>
         /// 检测区域
         /// </summary>
         protected List<ATRegion> regions = new();
+
         /// <summary>
         /// 标签名单模式
         /// </summary>
         public ATRegion.ListType listType = ATRegion.ListType.Off;
+
         /// <summary>
         /// 标签名单
         /// </summary>
         public List<string> TagList = new();
-        #endregion
+
+        #endregion 属性
 
         #region 函数
+
         /// <summary>
         /// 添加新的检测区域
         /// </summary>
@@ -68,6 +74,7 @@ namespace ER.Entity2D
                 region.TagList = TagList;
             }
         }
+
         /// <summary>
         /// 移除指定区域
         /// </summary>
@@ -86,6 +93,7 @@ namespace ER.Entity2D
                 }
             }
         }
+
         /// <summary>
         /// 设置区域状态
         /// </summary>
@@ -98,6 +106,7 @@ namespace ER.Entity2D
                 states[index] = state;
             }
         }
-        #endregion
+
+        #endregion 函数
     }
 }

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace ER.Parser
 {
@@ -16,26 +11,32 @@ namespace ER.Parser
         /// 未知类型，默认类型
         /// </summary>
         Unknown,
+
         /// <summary>
         /// 整型
         /// </summary>
         Integer,
+
         /// <summary>
         /// 浮点型
         /// </summary>
         Double,
+
         /// <summary>
         /// 布尔型
         /// </summary>
         Boolean,
+
         /// <summary>
         /// 文本型
         /// </summary>
         Text,
+
         /// <summary>
         /// 指令
         /// </summary>
         Function,
+
         /// <summary>
         /// 错误类型
         /// </summary>
@@ -48,15 +49,19 @@ namespace ER.Parser
     public struct Data
     {
         #region 属性
+
         public object Value { get; private set; }
         public DataType Type { get; private set; }
-        #endregion
+
+        #endregion 属性
 
         #region 静态
+
         /// <summary>
         /// 通知委托
         /// </summary>
         public static event Action<string> Output = message => Console.WriteLine(message);
+
         /// <summary>
         /// 获取指定字符创的数据解析
         /// </summary>
@@ -69,20 +74,23 @@ namespace ER.Parser
             data.Parse(dataString, type);
             return data;
         }
+
         /// <summary>
         /// 获取一个表示空的解析数据
         /// </summary>
         public static Data Empty => new Data(null, DataType.Unknown);
+
         /// <summary>
         /// 获取一个表示错误的解析数据
         /// </summary>
         public static Data Error => new Data(null, DataType.Error);
+
         public static DataType Parse(string dataString, out object Value, DataType type = DataType.Unknown)
         {
             switch (type)
             {
                 case DataType.Unknown:
-                    if(dataString.TryParseInt(out int iv))
+                    if (dataString.TryParseInt(out int iv))
                     {
                         Value = iv;
                         return DataType.Integer;
@@ -92,9 +100,9 @@ namespace ER.Parser
                         Value = dv;
                         return DataType.Double;
                     }
-                    else if(dataString.TryParseBoolean(out bool bv))
+                    else if (dataString.TryParseBoolean(out bool bv))
                     {
-                        Value= bv;
+                        Value = bv;
                         return DataType.Boolean;
                     }
                     Value = dataString;
@@ -142,10 +150,10 @@ namespace ER.Parser
                     Output("类型枚举出错！转化失败！");
                     Value = null;
                     return DataType.Error;
-
             }
         }
-        #endregion
+
+        #endregion 静态
 
         public Data(object value, DataType type)
         {
@@ -154,16 +162,21 @@ namespace ER.Parser
         }
 
         #region 方法
-        public int ToInt()=> (int)Value;
-        public float ToFloat()=>(float)Value;
-        public double ToDouble()=>(double)Value;
-        public new string ToString()=>Value.ToString();
+
+        public int ToInt() => (int)Value;
+
+        public float ToFloat() => (float)Value;
+
+        public double ToDouble() => (double)Value;
+
+        public new string ToString() => Value.ToString();
 
         /// <summary>
         /// 此数据是否为空数据
         /// </summary>
         /// <returns></returns>
         public bool isEmpty() => Value == null;
+
         /// <summary>
         /// 此数据是否为错误数据
         /// </summary>
@@ -188,6 +201,7 @@ namespace ER.Parser
             Value = v;
             return true;
         }
+
         /// <summary>
         /// 输出解析数据信息
         /// </summary>
@@ -202,7 +216,7 @@ namespace ER.Parser
                 Output($"[{Type}]:");
             }
         }
-        #endregion
+
+        #endregion 方法
     }
 }
-

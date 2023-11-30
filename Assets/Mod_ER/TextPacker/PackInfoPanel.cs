@@ -14,8 +14,10 @@ namespace ER.TextPacker
         private RectTransform rectTransform;
         private LanguagePackInfo info;
         private PackItem item;
+
         public PackItem Item
         { get => item; set => item = value; }
+
         public LanguagePackInfo Info
         { get { return info; } }
 

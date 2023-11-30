@@ -7,6 +7,5 @@ namespace Mod_Level
     /// </summary>
     public class UISelectPortal : MonoBehaviour
     {
-        
     }
 }

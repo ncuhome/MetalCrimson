@@ -1,14 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
 public class materialInFurnace : MonoBehaviour, IPointerClickHandler
 {
     /// <summary>
     /// 在炉子里的顺序ID
     /// </summary>
     public int ID;
+
     private MaterialScript materialScript;
     private Outline outline;
     private ShowOutLine showOutLine;
@@ -18,14 +18,14 @@ public class materialInFurnace : MonoBehaviour, IPointerClickHandler
     private float t;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         HDRColor = HammeringSystem.Instance.glowMaterial.color;
         c = materialImage.color;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (HammeringSystem.Instance.temperature > 0)
         {
@@ -68,7 +68,7 @@ public class materialInFurnace : MonoBehaviour, IPointerClickHandler
     /// <summary>
     /// This function is called when the object becomes enabled and active.
     /// </summary>
-    void OnEnable()
+    private void OnEnable()
     {
         materialScript = HammeringSystem.Instance.materialScripts[ID];
         outline = GetComponent<Outline>();
@@ -79,10 +79,11 @@ public class materialInFurnace : MonoBehaviour, IPointerClickHandler
     /// <summary>
     /// This function is called when the behaviour becomes disabled or inactive.
     /// </summary>
-    void OnDisable()
+    private void OnDisable()
     {
         HammeringSystem.Instance.glowMaterial.color = HDRColor;
     }
+
     /// <summary>
     /// 点击时返还材料
     /// </summary>

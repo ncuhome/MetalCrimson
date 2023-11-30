@@ -1,5 +1,4 @@
-﻿using ER;
-using ER.Parser;
+﻿using ER.Parser;
 using UnityEngine;
 
 namespace ER.TextPacker
@@ -10,10 +9,12 @@ namespace ER.TextPacker
     public static class TextManager
     {
         #region 属性
+
         /// <summary>
         /// 当前语言包对象
         /// </summary>
         private static LanguagePack pack;
+
         /// <summary>
         /// 当前语言包对象
         /// </summary>
@@ -21,7 +22,7 @@ namespace ER.TextPacker
         {
             get
             {
-                if(pack == null)
+                if (pack == null)
                 {
                     pack = new LanguagePack(PackagePanel.Instance.DefaultPackPath);
                 }
@@ -33,6 +34,7 @@ namespace ER.TextPacker
                 pack = value;
             }
         }
-        #endregion
+
+        #endregion 属性
     }
 }

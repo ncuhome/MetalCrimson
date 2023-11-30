@@ -116,29 +116,34 @@ namespace Mod_Console
 
         protected Data CMD_path(Data[] parameters)
         {
-            if(parameters.Length == 0)
+            if (parameters.Length == 0)
             {
                 Print($"dataPath:{Application.dataPath}");
             }
-            else if(parameters.IsMate(DataType.Integer))
+            else if (parameters.IsMate(DataType.Integer))
             {
                 switch ((int)parameters[0].Value)
                 {
                     case 0:
                         Print($"dataPath:{Application.dataPath}");
                         break;
+
                     case 1:
                         Print($"consoleLogPath:{Application.consoleLogPath}");
                         break;
+
                     case 2:
                         Print($"persistentDataPath:{Application.persistentDataPath}");
                         break;
+
                     case 3:
                         Print($"streamingAssetsPath:{Application.streamingAssetsPath}");
                         break;
+
                     case 4:
                         Print($"temporaryCachePath:{Application.temporaryCachePath}");
                         break;
+
                     default:
                         Print($"this is not a path index:{parameters[0].Value}");
                         break;
@@ -182,6 +187,7 @@ namespace Mod_Console
 
                     case "path":
                         return CMD_path(parameters);
+
                     default:
                         return Data.Error;
                 }

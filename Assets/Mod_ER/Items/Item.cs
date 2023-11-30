@@ -1,12 +1,7 @@
-﻿
-
-
-using ER.Parser;
+﻿using ER.Parser;
 using Mod_Console;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using DataType = ER.Parser.DataType;
 
@@ -24,6 +19,7 @@ namespace ER.Items
         /// 物品模板的名称
         /// </summary>
         public string NameTmp;
+
         /// <summary>
         /// 所在仓库名称
         /// </summary>
@@ -74,7 +70,6 @@ namespace ER.Items
             StoreName = storeName;
         }
 
-
         /// <summary>
         /// 检查物品信息，并将其中的ID和名称提出出来
         /// </summary>
@@ -111,6 +106,7 @@ namespace ER.Items
         /// 指物品的母本ID（模板ID）
         /// </summary>
         public int ID { get; protected set; } = 0;
+
         /// <summary>
         /// 所在仓库的名称
         /// </summary>
@@ -282,18 +278,22 @@ namespace ER.Items
         {
             return attributeInt.Copy();
         }
+
         public Dictionary<string, float> GetFloatAll()
         {
             return attributeFloat.Copy();
         }
+
         public Dictionary<string, string> GetTextAll()
         {
             return attributeText.Copy();
         }
+
         public Dictionary<string, bool> GetBoolAll()
         {
             return attributeBool.Copy();
         }
+
         #endregion 尝试获取属性
 
         #region 创建属性
@@ -386,6 +386,7 @@ namespace ER.Items
         /// 物品名称(系统内部的物品名称，和玩家所见的名称文本不同，不计入物品的拓展属性),属于字符串属性，keyName = "NameTmp"
         /// </summary>
         public string NameTmp { get; protected set; } = "Null";
+
         #region 构造
 
         public ItemTemplate()
@@ -427,7 +428,8 @@ namespace ER.Items
             ID = info.ID;
             StoreName = info.StoreName;
         }
-        #endregion
+
+        #endregion 构造
 
         /// <summary>
         /// 获取一个自身的深拷贝对象
@@ -745,7 +747,6 @@ namespace ER.Items
             return GetText(key);
         }
 
-
         /// <summary>
         /// 尝试获取整形属性，优先获取模板中的属性
         /// </summary>
@@ -891,6 +892,7 @@ namespace ER.Items
         }
 
         #endregion 创建|修改属性
+
         /// <summary>
         /// 创建深拷贝
         /// </summary>
@@ -907,6 +909,7 @@ namespace ER.Items
             clone.attributeInt = info.attributeInt;
             return clone;
         }
+
         /// <summary>
         /// 创建深拷贝
         /// </summary>

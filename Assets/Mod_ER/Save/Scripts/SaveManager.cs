@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,9 +8,10 @@ namespace ER.Save
     /// <summary>
     /// 存档系统
     /// </summary>
-    public class SaveManager:Singleton<SaveManager>
+    public class SaveManager : Singleton<SaveManager>
     {
         #region 事件
+
         /// <summary>
         /// 读档完毕时触发的事件
         /// </summary>
@@ -49,11 +48,9 @@ namespace ER.Save
             if (File.Exists(path))
             {
                 SaveWrapper.Instance.Unpack(File.ReadAllText(path));
-
             }
             else
-            { 
-                
+            {
             }
         }
 

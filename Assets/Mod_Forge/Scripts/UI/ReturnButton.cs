@@ -1,21 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using States;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using System;
-using States;
+
 public class ReturnButton : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-
     }
 
     public void Return()
@@ -32,11 +29,13 @@ public class ReturnButton : MonoBehaviour
             {
                 case 1:
                     break;
+
                 case 2:
                     Action<int> action1 = TypeSystem.Instance.ChildModelStateExit;
                     TypeSystem.Instance.stateSystem[2].ChangeExitAction(action1);
                     TypeSystem.Instance.stateSystem[2].ChangeExitJudgement(1, true);
                     break;
+
                 case 3:
                     Action<int> action2 = TypeSystem.Instance.ChosenModelExit;
                     TypeSystem.Instance.stateSystem[3].ChangeExitAction(action2);

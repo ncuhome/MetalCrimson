@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace ER
@@ -7,6 +6,7 @@ namespace ER
     public class PrefabManager : MonoSingleton<PrefabManager>
     {
         #region 预制体
+
         [SerializeField]
         public List<GameObject> prefabs = new List<GameObject>();
 
@@ -40,6 +40,7 @@ namespace ER
         {
             prefabs.Add(obj);
         }
+
         /// <summary>
         /// 移除指定预制体
         /// </summary>
@@ -48,13 +49,14 @@ namespace ER
         {
             prefabs.Remove(obj);
         }
+
         /// <summary>
         /// 移除指定预制体
         /// </summary>
         /// <param name="obj"></param>
         public void RemovePrefab(string name)
         {
-            for(int i =0;i<prefabs.Count;i++)
+            for (int i = 0; i < prefabs.Count; i++)
             {
                 if (prefabs[i].name == name)
                 {

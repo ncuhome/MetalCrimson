@@ -1,6 +1,8 @@
 ﻿// Ignore Spelling: mana Armor
 
 using ER.Entity2D;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Mod_Level
@@ -17,16 +19,38 @@ namespace Mod_Level
         #region 初始化
 
         public ATCharacterState()
-        { AttributeName = nameof(ATCharacterState); }
+        {
+            AttributeName = nameof(ATCharacterState);
+            CreateAttribute("Health");//生命值
+            CreateAttribute("Stamina");//精力值
+            CreateAttribute("Mana");//魔法值
+            CreateAttribute("Speed");//速度
+            CreateAttribute("Defence");//防御值
+            CreateAttribute("DefenceMultiply");//防御系数
+            CreateAttribute("Weight");//重量
+            CreateAttribute("Tenacity");//耐性抗性
+            CreateAttribute("Armor");//护甲
+            CreateAttribute("ArmorLevel");//护甲等级
+            CreateAttribute("Jump");//跳跃力
+            CreateAttribute("CDReduction");//冷却系数
+        }
 
         public override void Initialize()
         {
             health.Owner = owner;
             health.Initialize();
+            this["Health"] = 100;
+            health.SetMax(this["Health",true],null);
             stamina.Owner = owner;
             stamina.Initialize();
+            this["Stamina"] = 100;
+            stamina.SetMax(this["Stamina",true],null);
             mana.Owner = owner;
             mana.Initialize();
+            this["Mana"] = 100;
+            mana.SetMax(this["Mana", true], null);
+            this["Speed"] = 10f;
+            this["Jump"] = 20f;
 
             ATAnimator ator = owner.GetAttribute<ATAnimator>();
             if (animator != null)
@@ -35,10 +59,10 @@ namespace Mod_Level
             }
             else
             {
-                Debug.Log("一般获取属性动画机失败");
+                //Debug.Log("一般获取属性动画机失败");
                 owner.CreateDelegation("ATAnimator", (IAttribute at) =>
                 {
-                    Debug.Log("成功获取动画机");
+                    //Debug.Log("成功获取动画机");
                     animator = (at as ATAnimator).Animator;
                 });
             }
@@ -102,50 +126,14 @@ namespace Mod_Level
 
         #endregion 相关
 
-        #region 属性
+        #region 一般属性
 
-        [Header("属性 - 基础")]
-        [Tooltip("生命值")]
-        public float defHealth;
-
-        [Tooltip("精力值")]
-        public float defStamina;
-
-        [Tooltip("魔力值")]
-        public float defMana;
-
-        [Tooltip("移动速度")]
-        public float defSpeed;
-
-        [Tooltip("冷却系数")]
-        public float defCDMultiply;
-
-        [Tooltip("防御")]
-        public float defDefence;
-
-        [Tooltip("防御系数")]
-        public float defDefenceMultiply;
-
-        [Tooltip("重量")]
-        public float defWeight;
-
-        [Tooltip("韧性抗性")]
-        public float defTenacity;
-
-        [Tooltip("护甲")]
-        public float defArmor;
-
-        [Tooltip("护甲等级")]
-        public float defArmorLevel;
-
-        #endregion 属性
-
-        #region 属性
-
-        [Header("当前属性")]
-        [Tooltip("角色架势 - 不要修改")]
-        [SerializeField]
         private Posture posture = Posture.Front;
+
+        /// <summary>
+        /// 交互状态
+        /// </summary>
+        public InteractState interact = InteractState.None;
 
         /// <summary>
         /// 面朝方向
@@ -167,40 +155,9 @@ namespace Mod_Level
         /// </summary>
         public ATValue mana;
 
-        /// <summary>
-        /// 移动速度
-        /// </summary>
-        public float speed;
+        #endregion 一般属性
 
-        /// <summary>
-        /// 跳跃力度
-        /// </summary>
-        public float jump;
-
-        /// <summary>
-        /// 角色重量
-        /// </summary>
-        public float weight;
-
-        /// <summary>
-        /// 力量（用于做伤害参考值）
-        /// </summary>
-        public float power;
-
-        /// <summary>
-        /// 技能CD减免
-        /// </summary>
-        public float CDReduction;
-
-        /// <summary>
-        /// 防御值
-        /// </summary>
-        public float defence;
-
-        /// <summary>
-        /// 交互状态
-        /// </summary>
-        public InteractState interact = InteractState.None;
+        #region 状态
 
         /// <summary>
         /// 是否可控制动作
@@ -232,6 +189,10 @@ namespace Mod_Level
         /// </summary>
         private bool vertigo = false;
 
+        #endregion 状态
+
+        #region 属性器
+
         /// <summary>
         /// 是否霸体
         /// </summary>
@@ -255,9 +216,10 @@ namespace Mod_Level
             {
                 vertigo = value;
                 animator.SetBool("vertigo", value);
-                actionManager.ForceBackDefault();
             }
         }
+
+        public float postureSpeed = 5f;//架势切换速度
 
         /// <summary>
         /// 是否可控制动作
@@ -269,7 +231,6 @@ namespace Mod_Level
             {
                 control_act = value;
                 animator.SetBool("control", value);
-                actionManager.ForceBackDefault();
             }
         }
 
@@ -289,7 +250,6 @@ namespace Mod_Level
             {
                 dead = value;
                 animator.SetBool("dead", value);
-                actionManager.ForceBackDefault();
             }
         }
 
@@ -299,26 +259,140 @@ namespace Mod_Level
             set
             {
                 posture = value;
+                if (stopTag != null)
+                    StopCoroutine(stopTag);
                 switch (value)
                 {
                     case Posture.Up:
-                        animator.SetInteger("posture_type", 1);
+                        stopTag = StartCoroutine(PostureChange(animator.GetFloat("posture"), 3));
                         break;
 
                     case Posture.Front:
-                        animator.SetInteger("posture_type", 2);
+                        stopTag = StartCoroutine(PostureChange(animator.GetFloat("posture"), 2));
                         break;
 
                     case Posture.Down:
-                        animator.SetInteger("posture_type", 3);
+                        stopTag = StartCoroutine(PostureChange(animator.GetFloat("posture"), 1));
                         break;
 
                     default:
-                        animator.SetInteger("posture_type", 2);
                         break;
                 }
             }
         }
+
+        private Coroutine stopTag;//协程标记(用于关闭协程)
+
+        private IEnumerator PostureChange(float start, float end)
+        {
+            float timer = 0;
+            while (true)
+            {
+                timer += Time.deltaTime * postureSpeed;
+                animator.SetFloat("posture", Mathf.Lerp(start, end, timer));
+                yield return 0;
+
+                if (timer >= 1) yield break;
+            }
+        }
+
+        #endregion 属性器
+
+        #region 动态属性(数字型)
+
+        /// <summary>
+        /// 默认属性值
+        /// </summary>
+        private Dictionary<string, CorrectValue> attributes = new();
+
+        /// <summary>
+        /// 创建一个动态属性
+        /// </summary>
+        /// <param name="attributeName">动态属性名称</param>
+        /// <param name="defaultValue">默认值</param>
+        public void CreateAttribute(string attributeName, float defaultValue = 0)
+        {
+            if (attributes.ContainsKey(attributeName))
+            {
+                Debug.LogWarning($"该属性已经创建: {attributeName}");
+                return;
+            }
+            attributes[attributeName] = new CorrectValue(defaultValue);
+        }
+
+        /// <summary>
+        /// 移除指定动态属性
+        /// </summary>
+        /// <param name="attributeName"></param>
+        public void RemoveAttribute(string attributeName)
+        {
+            if (attributes.ContainsKey(attributeName))
+            {
+                attributes.Remove(attributeName);
+            }
+        }
+
+        /// <summary>
+        /// 添加动态属性的修正委托
+        /// </summary>
+        /// <param name="attributeName"></param>
+        /// <param name="correct"></param>
+        public void AddCorrectDelegate(string attributeName, CorrectValueDelegate correct)
+        {
+            if (attributes.ContainsKey(attributeName))
+            {
+                attributes[attributeName].Add(correct);
+            }
+        }
+
+        /// <summary>
+        /// 移除动态属性的修正委托
+        /// </summary>
+        /// <param name="attributeName"></param>
+        /// <param name="correctTag"></param>
+        public void RemoveCorrectDelegate(string attributeName, string correctTag)
+        {
+            if (attributes.ContainsKey(attributeName))
+            {
+                attributes[attributeName].Remove(correctTag);
+            }
+        }
+
+        /// <summary>
+        /// 获取属性值; 只能修改默认值
+        /// </summary>
+        /// <param name="attributeName">属性名称</param>
+        /// <param name="Default">是否获取它的默认值</param>
+        /// <returns></returns>
+        public float this[string attributeName, bool Default = false]
+        {
+            get
+            {
+                if (!attributes.ContainsKey(attributeName))
+                {
+                    Debug.LogError($"未找到该属性:{attributeName}");
+                    return -1;
+                }
+                var attribute = attributes[attributeName];
+                if (Default) return attribute.DefaultValue;
+                return attribute.Value;
+            }
+
+            set
+            {
+                if (!attributes.ContainsKey(attributeName))
+                {
+                    Debug.LogError($"未找到该属性:{attributeName}");
+                    return;
+                }
+                var attribute = attributes[attributeName];
+                attribute.DefaultValue = value;
+            }
+        }
+
+        #endregion 动态属性(数字型)
+
+        #region 其他方法
 
         /// <summary>
         /// 实体死亡, 销毁对象
@@ -327,7 +401,7 @@ namespace Mod_Level
         {
             Destroy(owner.gameObject);
         }
-
-        #endregion 属性
+ 
+        #endregion 其他方法
     }
 }
