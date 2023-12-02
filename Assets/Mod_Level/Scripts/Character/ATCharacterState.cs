@@ -11,7 +11,7 @@ namespace Mod_Level
     {
         #region 组件
 
-        private Animator animator;
+        protected Animator animator;
         private ATActionManager actionManager;
 
         #endregion 组件
@@ -21,9 +21,9 @@ namespace Mod_Level
         public ATCharacterState()
         {
             AttributeName = nameof(ATCharacterState);
-            CreateAttribute("Health");//生命值
-            CreateAttribute("Stamina");//精力值
-            CreateAttribute("Mana");//魔法值
+            CreateAttribute("Health");//生命值上限
+            CreateAttribute("Stamina");//精力值上限
+            CreateAttribute("Mana");//魔法值上限
             CreateAttribute("Speed");//速度
             CreateAttribute("Defence");//防御值
             CreateAttribute("DefenceMultiply");//防御系数
@@ -87,53 +87,16 @@ namespace Mod_Level
         #region 相关
 
         /// <summary>
-        /// 架势类型
-        /// </summary>
-        public enum Posture
-        { Up, Front, Down }
-
-        /// <summary>
         /// 方向枚举
         /// </summary>
         public enum Direction
         { Left, Right }
 
-        /// <summary>
-        /// 交互状态
-        /// </summary>
-        public enum InteractState
-        {
-            /// <summary>
-            /// 无交互
-            /// </summary>
-            None,
-
-            /// <summary>
-            /// 请求响应
-            /// </summary>
-            Wait,
-
-            /// <summary>
-            /// 正在交互
-            /// </summary>
-            Interacting,
-
-            /// <summary>
-            /// 交互结束
-            /// </summary>
-            Cancel,
-        }
 
         #endregion 相关
 
         #region 一般属性
 
-        private Posture posture = Posture.Front;
-
-        /// <summary>
-        /// 交互状态
-        /// </summary>
-        public InteractState interact = InteractState.None;
 
         /// <summary>
         /// 面朝方向
@@ -148,7 +111,7 @@ namespace Mod_Level
         /// <summary>
         /// 角色耐性值（精力）
         /// </summary>
-        public ATValue stamina;
+        public ATStamina stamina;
 
         /// <summary>
         /// 角色魔力值
@@ -210,6 +173,21 @@ namespace Mod_Level
         /// 是否处于战斗状态
         /// </summary>
         public bool fighting = false;
+
+        private int fightCount = 0;
+        /// <summary>
+        /// 敌人数量, 为0时是 和平状态, 否则为战斗状态
+        /// </summary>
+        public int FightCount
+        {
+            get => fightCount;
+            set
+            {
+                fightCount = value;
+                if (fightCount != 0) fighting = true;
+                else fighting = false;
+            }
+        }
 
         /// <summary>
         /// 是否眩晕
@@ -287,33 +265,6 @@ namespace Mod_Level
             }
         }
 
-        public Posture ActPosture
-        {
-            get => posture;
-            set
-            {
-                posture = value;
-                if (stopTag != null)
-                    StopCoroutine(stopTag);
-                switch (value)
-                {
-                    case Posture.Up:
-                        stopTag = StartCoroutine(PostureChange(animator.GetFloat("posture"), 3));
-                        break;
-
-                    case Posture.Front:
-                        stopTag = StartCoroutine(PostureChange(animator.GetFloat("posture"), 2));
-                        break;
-
-                    case Posture.Down:
-                        stopTag = StartCoroutine(PostureChange(animator.GetFloat("posture"), 1));
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-        }
         /// <summary>
         /// 是否可控制攻击
         /// </summary>
@@ -335,20 +286,7 @@ namespace Mod_Level
         /// </summary>
         public bool ControlUseItem { get => control_use_item; set => control_use_item = value; }
 
-        private Coroutine stopTag;//协程标记(用于关闭协程)
 
-        private IEnumerator PostureChange(float start, float end)
-        {
-            float timer = 0;
-            while (true)
-            {
-                timer += Time.deltaTime * postureSpeed;
-                animator.SetFloat("posture", Mathf.Lerp(start, end, timer));
-                yield return 0;
-
-                if (timer >= 1) yield break;
-            }
-        }
 
         #endregion 属性器
 

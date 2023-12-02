@@ -22,7 +22,6 @@ namespace Mod_Level
         {
             ownerState = manager.Owner.GetAttribute<ATCharacterState>();
 
-
             region.time = -1f;
             region.actor = manager.Owner;
             region.actionName = "Defence";
@@ -41,7 +40,10 @@ namespace Mod_Level
 
         private bool Defence(ActionInfo info)
         {
-            if (info.type == "Attack") return true;
+            if (info.type == "Attack")
+            {
+                return true;
+            }
             return false;
         }
 

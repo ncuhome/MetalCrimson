@@ -22,7 +22,7 @@ namespace Mod_Level
         [Tooltip("检测区域")]
         private ATRegion region;
 
-        private ATCharacterState state;
+        private ATPlayerState state;
 
         /// <summary>
         /// 是否进入等待区域
@@ -52,7 +52,7 @@ namespace Mod_Level
                 Debug.Log("是玩家");
                 Entity entity = collider.GetComponent<Entity>();
                 if (entity == null) return;
-                state = entity.GetAttribute<ATCharacterState>();
+                state = entity.GetAttribute<ATPlayerState>();
                 if (state == null) return;
 
                 Waitting = true;
@@ -65,7 +65,7 @@ namespace Mod_Level
             {
                 Entity entity = collider.GetComponent<Entity>();
                 if (entity == null) return;
-                state = entity.GetAttribute<ATCharacterState>();
+                state = entity.GetAttribute<ATPlayerState>();
                 if (state == null) return;
 
                 Waitting = false;
@@ -76,7 +76,7 @@ namespace Mod_Level
         {
             if (waitting)
             {
-                if (state.interact == ATCharacterState.InteractState.Wait)
+                if (state.interact == ATPlayerState.InteractState.Wait)
                 {
                     Debug.Log("传送！");
                     state.Owner.transform.position = aimPosition.position;

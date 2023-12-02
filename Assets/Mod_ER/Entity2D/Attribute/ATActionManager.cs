@@ -246,7 +246,11 @@ namespace ER.Entity2D
         /// <returns></returns>
         public MDAction.ActionState GetActionState(string actionName)
         {
-            return actions[actionName].State;
+            if(actions.ContainsKey(actionName))
+            {
+                return actions[actionName].State;
+            }
+            return MDAction.ActionState.Disable;
         }
         /// <summary>
         /// 中断指定动作

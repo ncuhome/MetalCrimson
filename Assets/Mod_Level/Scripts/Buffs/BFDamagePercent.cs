@@ -26,6 +26,13 @@ namespace Mod_Level
             buffTag.Add("buff");
         }
 
+        public BFDamagePercent(BuffSetInfo setInfo):base(setInfo)
+        {
+            buffName = "DamagePercent";
+            repeatType = RepeatType.MoreTime;
+            buffTag.Add("buff");
+        }
+
         public override void EffectOnEnter()
         {
             var state = owner.Owner.GetAttribute<ATCharacterState>();

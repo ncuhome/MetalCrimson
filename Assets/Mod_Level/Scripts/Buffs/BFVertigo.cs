@@ -15,7 +15,12 @@ namespace Mod_Level
             repeatType = RepeatType.MoreTime;
             buffTag.Add("debuff");
         }
-
+        public BFVertigo(BuffSetInfo setInfo):base(setInfo)
+        {
+            buffName = "Vertigo";
+            repeatType = RepeatType.MoreTime;
+            buffTag.Add("debuff");
+        }
         public override void EffectOnEnter()
         {
             state = owner.Owner.GetAttribute<ATCharacterState>();

@@ -1,6 +1,8 @@
-﻿using ER.Entity2D;
+﻿using ER;
+using ER.Entity2D;
 using ER.Items;
 using UnityEngine;
+
 
 namespace Mod_Level
 {
@@ -21,6 +23,8 @@ namespace Mod_Level
 
         private ItemVariable weaponItem;//武器对应的物品
 
+        public Transform bone_weapon_interface;//武器骨骼:weapon_interface transform
+
 
         public ATWeapon() { AttributeName = nameof(ATWeapon); }
         public override void Initialize()
@@ -32,9 +36,22 @@ namespace Mod_Level
         /// <summary>
         /// 更新武器属性(未写完)
         /// </summary>
-        public void UpdateInfo(Weapon info)
+        public void UpdateInfo(WeaponInfo info)
         {
-
+            if (bone_weapon_interface == null) return;
+            //销毁旧的武器部件
+            for(int i=0;i<bone_weapon_interface.childCount;i++)
+            {
+                Destroy(bone_weapon_interface.GetChild(i).gameObject);
+            }
+            for(int i=0;i<info.components.Count;i++)
+            {
+                ComponentStruct component = info.components[i];
+                GameObject cp = PrefabManager.Instance[component.NameTmp];
+                cp.transform.localPosition = component.position;
+                cp.transform.rotation = component.rotation;
+                cp.transform.localScale = component.scale;
+            }
         }
     }
 }

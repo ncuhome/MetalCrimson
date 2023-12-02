@@ -17,6 +17,12 @@ namespace Mod_Level
             repeatType = RepeatType.MoreTime;
             buffTag.Add("buff");
         }
+        public BFSuperArmor(BuffSetInfo setInfo):base(setInfo) 
+        {
+            buffName = "SuperArmor(";
+            repeatType = RepeatType.MoreTime;
+            buffTag.Add("buff");
+        }
 
         public override void EffectOnEnter()
         {

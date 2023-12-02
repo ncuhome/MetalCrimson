@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 namespace Mod_Level
 {
@@ -19,6 +18,7 @@ namespace Mod_Level
          * swing:巡逻
          * idle:待机
          */
+
         public override void Initialize()
         {
             actionManager = owner.GetAttribute<ATActionManager>();
@@ -31,14 +31,14 @@ namespace Mod_Level
                 if (eye.record.Contains(entity))
                 {
                     seePlayer = true;
-                    if(player == null) player = entity;
+                    if (player == null) player = entity;
                     Debug.Log("看见玩家");
                 }
                 else
                 {
                     Debug.Log("玩家消失");
                     player = null;
-                    for(int i=0;i<eye.record.Count;i++)
+                    for (int i = 0; i < eye.record.Count; i++)
                     {
                         if (eye.record[i].gameObject.tag == "Player")
                         {
@@ -46,32 +46,44 @@ namespace Mod_Level
                             break;
                         }
                     }
-                    if(player == null)
+                    if (player == null)
                     {
-                        seePlayer =false;
+                        seePlayer = false;
                     }
                 }
             };
         }
-        System.Random random = new System.Random(DateTime.Now.Millisecond);
+
+        private System.Random random = new System.Random(DateTime.Now.Millisecond);
+
         protected override bool ParseToDo(ToDo toDo)
         {
-            switch(toDo.name)
+            switch (toDo.name)
             {
                 case "idle":
                     DoDefault();
                     return false;
+
                 case "swing":
                     return DoSwing(toDo.infos);
+
                 case "chase":
                     return DoChase(toDo.infos);
+
                 case "attack":
                     return DoAttack(toDo.infos);
+
+                case "wait":
+                    return DoWait(toDo.infos);
+
+                case "attack_cd":
+                    return DoAttackCD(toDo.infos);
             }
             return false;
         }
 
         private float waitTime = 0f;
+
         protected override void DoDefault()
         {
             if (state.Dead) return;
@@ -91,10 +103,10 @@ namespace Mod_Level
                 });
                 return;
             }
-            Debug.Log($"waitTime:{waitTime}");
-            if(waitTime <= 0)
+            //Debug.Log($"waitTime:{waitTime}");
+            if (waitTime <= 0)
             {
-                waitTime = (float)random.NextDouble()*8 + 3;
+                waitTime = (float)random.NextDouble() * 8 + 3;
                 ToDoList.Add(new ToDo()
                 {
                     name = "swing",
@@ -104,9 +116,10 @@ namespace Mod_Level
 
         private float moveTime = 0f;
         private ATCharacterState.Direction direction;
+
         private bool DoSwing(Dictionary<string, object> infos)
         {
-            if (state.Dead) return true; 
+            if (state.Dead) return true;
             if (!state.ControlAct) return false;
             waitTime -= Time.deltaTime;
             moveTime -= Time.deltaTime;
@@ -127,15 +140,16 @@ namespace Mod_Level
             }
             else
             {
-                if(moveTime>0)
+                if (moveTime > 0)
                 {
-                    if(actionManager.GetActionState("Move") == MDAction.ActionState.Disable)//非运动状态
+                    if (actionManager.GetActionState("Attack") == MDAction.ActionState.Disable && actionManager.GetActionState("Move") == MDAction.ActionState.Disable)//非运动状态
                     {
                         switch (direction)
                         {
                             case ATCharacterState.Direction.Left:
                                 actionManager.Action("Move", "left");
                                 break;
+
                             case ATCharacterState.Direction.Right:
                                 actionManager.Action("Move", "right");
                                 break;
@@ -144,11 +158,11 @@ namespace Mod_Level
                 }
                 else
                 {
-                    if(actionManager.GetActionState("Move") != MDAction.ActionState.Disable)//停止移动, 并决定下一次移动
+                    if (actionManager.GetActionState("Move") != MDAction.ActionState.Disable)//停止移动, 并决定下一次移动
                     {
                         actionManager.Stop("Move");
                     }
-                    if(random.NextDouble() > 0.5)
+                    if (random.NextDouble() > 0.5)
                     {
                         direction = ATCharacterState.Direction.Right;
                     }
@@ -161,6 +175,7 @@ namespace Mod_Level
             }
             return false;
         }
+
         private bool DoChase(Dictionary<string, object> infos)
         {
             if (state.Dead) return true;
@@ -168,34 +183,192 @@ namespace Mod_Level
             if (player == null) return true;
             Vector2 p_pos = player.transform.position;//玩家位置
             Vector2 s_pos = owner.transform.position;//自己位置
-            if((p_pos-s_pos).magnitude < attack_distance)
-            {
-                actionManager.Stop("Move");
-                ToDoList.Add(new ToDo()
-                {
-                    name = "attack",
-                    infos = null
-                });
-                return true;
-            }
 
-            if (p_pos.x < s_pos.x)//玩家在左侧
+
+            if (actionManager.GetActionState("Attack") == MDAction.ActionState.Disable)
             {
-                actionManager.Action("Move", "left");
-            }
-            else
-            {
-                actionManager.Action("Move", "right");
+                if (p_pos.x < s_pos.x)//玩家在左侧
+                {
+                    if (actionManager.GetActionState("Move") == MDAction.ActionState.Disable)
+                    {
+                        actionManager.Action("Move", "left");
+                    }
+                    if(state.direction == ATCharacterState.Direction.Left)
+                    {
+                        if ((p_pos - s_pos).magnitude < attack_distance)
+                        {
+                            actionManager.Stop("Move");
+                            ToDoList.Add(new ToDo()
+                            {
+                                name = "attack",
+                                infos = null
+                            });
+                            return true;
+                        }
+                    }
+                }
+                else
+                {
+                    if (actionManager.GetActionState("Move") == MDAction.ActionState.Disable)
+                    {
+                        actionManager.Action("Move", "right");
+                    }
+                    if (state.direction == ATCharacterState.Direction.Right)
+                    {
+                        if ((p_pos - s_pos).magnitude < attack_distance)
+                        {
+                            actionManager.Stop("Move");
+                            ToDoList.Add(new ToDo()
+                            {
+                                name = "attack",
+                                infos = null
+                            });
+                            return true;
+                        }
+                    }
+                }
             }
             return false;
         }
+
         private float attack_distance = 5f;//攻击距离;
+
         private bool DoAttack(Dictionary<string, object> infos)
         {
             if (state.Dead) return true;
             if (!state.ControlAct) return false;
-            actionManager.Action("Attack");
+            Vector2 p_pos = player.transform.position;//玩家位置
+            Vector2 s_pos = owner.transform.position;//自己位置
+            if (p_pos.x < s_pos.x)//玩家在左侧
+            {
+                if (state.direction == ATCharacterState.Direction.Left)
+                {
+                    actionManager.Action("Attack");
+
+                    waitTime = (float)random.NextDouble() * 1f + 0.5f;
+                    Dictionary<string, object> ifs = new Dictionary<string, object>();
+                    ifs.Add("cd", 0.5f);
+                    ifs.Add("next_name", "attack_cd");
+                    ifs.Add("next_infos", null);
+                    ToDoList.Add(new ToDo()
+                    {
+                        name = "wait",
+                        infos = ifs
+                    });
+                }
+                else
+                {
+                    ToDoList.Add(new ToDo()
+                    {
+                        name = "chase",
+                        infos = null
+                    });
+                }
+            }
+            else
+            {
+                if (state.direction == ATCharacterState.Direction.Right)
+                {
+                    actionManager.Action("Attack");
+
+                    waitTime = (float)random.NextDouble() * 1f + 0.5f;
+                    Dictionary<string, object> ifs = new Dictionary<string, object>();
+                    ifs.Add("cd", 0.5f);
+                    ifs.Add("next_name", "attack_cd");
+                    ifs.Add("next_infos", null);
+                    ToDoList.Add(new ToDo()
+                    {
+                        name = "wait",
+                        infos = ifs
+                    });
+                }
+                else
+                {
+                    ToDoList.Add(new ToDo()
+                    {
+                        name = "chase",
+                        infos = null
+                    });
+                }
+            }
             return true;
+        }
+
+        private bool DoWait(Dictionary<string, object> infos)
+        {
+            if (state.Dead) return true;
+            if (!state.ControlAct) return false;
+            float timer = (float)infos["cd"];
+            timer -= Time.deltaTime;
+            infos["cd"] = timer;
+            if(timer<=0)
+            {
+                string name = (string)infos["next_name"];
+                if (name == "none")
+                    return true;
+                ToDoList.Add(new ToDo()
+                {
+                    name = name,
+                    infos = (Dictionary<string, object>)infos["next_infos"]
+                }) ;
+                return true;
+            }
+            return false;
+
+        }
+
+        private bool DoAttackCD(Dictionary<string, object> infos)
+        {
+            if (state.Dead) return true;
+            if (!state.ControlAct) return false;
+            waitTime -= Time.deltaTime;
+            moveTime -= Time.deltaTime;
+            if (waitTime <= 0)
+            {
+                actionManager.Stop("Move");
+                ToDoList.Add(new ToDo()
+                {
+                    name = "chase",
+                    infos = null
+                });
+                return true;
+            }
+            else
+            {
+                if (moveTime > 0)
+                {
+                    if (actionManager.GetActionState("Attack") == MDAction.ActionState.Disable && actionManager.GetActionState("Move") == MDAction.ActionState.Disable)//非运动状态
+                    {
+                        switch (direction)
+                        {
+                            case ATCharacterState.Direction.Left:
+                                actionManager.Action("Move", "left");
+                                break;
+
+                            case ATCharacterState.Direction.Right:
+                                actionManager.Action("Move", "right");
+                                break;
+                        }
+                    }
+                }
+                else
+                {
+                    if (actionManager.GetActionState("Move") != MDAction.ActionState.Disable)//停止移动, 并决定下一次移动
+                    {
+                        actionManager.Stop("Move");
+                    }
+                    if (random.NextDouble() > 0.5)
+                    {
+                        direction = ATCharacterState.Direction.Right;
+                    }
+                    else
+                    {
+                        direction = ATCharacterState.Direction.Left;
+                    }
+                    moveTime = (float)random.NextDouble() * 0.2f + 0.2f;
+                }
+            }
+            return false;
         }
     }
 }
