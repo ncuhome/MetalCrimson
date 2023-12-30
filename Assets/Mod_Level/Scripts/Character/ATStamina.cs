@@ -4,16 +4,15 @@ using UnityEngine;
 
 namespace Mod_Level
 {
-    public class ATHealth : ATValue
+    /// <summary>
+    /// 耐性
+    /// </summary>
+    public class ATStamina : ATValue
     {
         private ATCharacterState state;
-        [Tooltip("角色主贴图父物体")]
-        [SerializeField]
-        private RedFlashing charactor;
-
-        public ATHealth()
+        public ATStamina()
         {
-            AttributeName = nameof(ATHealth);
+            AttributeName = nameof(ATStamina);
         }
 
         public override void Initialize()
@@ -31,8 +30,6 @@ namespace Mod_Level
             }
 
             state = owner.GetAttribute<ATCharacterState>();
-
-
         }
 
         private void GetDamage(ActionInfo actionInfo)
@@ -41,17 +38,11 @@ namespace Mod_Level
             if (actionInfo.type == "Attack")
             {
                 //print("接受攻击");
-                if (actionInfo.infos.TryGetValue("damage", out var damage))
+                if (actionInfo.infos.TryGetValue("damage_stamina", out var damage))
                 {
                     float dg = (float)damage;
-                    dg *= state["DefenceMultiply"];
-                    if (state["Defence"] > 0)
-                    {
-                        dg -= state["Defence"];
-                    }
+                    dg -= state["Tenacity"]/2;
                     ModifyValue(-dg, actionInfo.actor);
-                    if(charactor!= null)
-                        charactor.Flash();
                 }
             }
         }

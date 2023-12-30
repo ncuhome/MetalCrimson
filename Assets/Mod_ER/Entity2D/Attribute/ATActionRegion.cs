@@ -343,6 +343,7 @@ namespace ER.Entity2D
                 remainHits--;
                 if (remainHits <= 0)
                 {
+                    Debug.Log("动作次数终止");
                     End();
                 }
             }
@@ -403,6 +404,7 @@ namespace ER.Entity2D
             }
             else
             {
+                Debug.Log("动作停止:取消激活");
                 gameObject.SetActive(false);
             }
         }
@@ -417,7 +419,7 @@ namespace ER.Entity2D
                 Debug.Log($"动作预响应: {temp[i].gameObject.name}");
                 if (temp[i].PreResponse(Info))
                 {
-                    Debug.Log("动作终止");
+                    Debug.Log("动作被其他动作终止");
                     End();
                     return;
                 }
@@ -440,6 +442,7 @@ namespace ER.Entity2D
                 remainTime -= Time.deltaTime;
                 if (remainTime <= 0)
                 {
+                    Debug.Log("动作超时终止");
                     End();
                 }//超时销毁自身
             }

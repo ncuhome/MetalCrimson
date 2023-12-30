@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1420436381299070130}
   m_Layer: 8
   m_Name: Box
-  m_TagString: Barrier
+  m_TagString: LDestroyableBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6753083603239071940
 SpriteRenderer:

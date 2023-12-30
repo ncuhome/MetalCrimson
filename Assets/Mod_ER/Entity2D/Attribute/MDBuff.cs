@@ -4,6 +4,32 @@ using System.Collections.Generic;
 namespace ER.Entity2D
 {
     /// <summary>
+    /// 效果设置信息
+    /// </summary>
+    public struct BuffSetInfo
+    {
+        /// <summary>
+        /// 效果名称
+        /// </summary>
+        public string buffName;
+
+        /// <summary>
+        /// 预期总共持续时间（小于0表示无限持续时间）
+        /// </summary>
+        public float defTime;
+
+        /// <summary>
+        /// 效果等级
+        /// </summary>
+        public int level;
+
+        /// <summary>
+        /// 其他初始化信息(拓展接口)
+        /// </summary>
+        public Dictionary<string, object> infos;
+    }
+
+    /// <summary>
     /// 效果
     /// </summary>
     [Serializable]
@@ -55,6 +81,20 @@ namespace ER.Entity2D
         /// 最大效果等级
         /// </summary>
         public int levelMax;
+
+        /// <summary>
+        /// 该效果对象对应的设置信息
+        /// </summary>
+        public BuffSetInfo SetInfo
+        {
+            get => new BuffSetInfo()
+            {
+                buffName = buffName,
+                defTime = defTime,
+                level = level,
+                infos = null
+            };
+        }
 
         /// <summary>
         /// 重复叠加策略
@@ -137,6 +177,16 @@ namespace ER.Entity2D
         public event Action<ATBuffManager> ExitEvent;
 
         #endregion 事件
+
+        public MDBuff()
+        {
+        }
+
+        public MDBuff(BuffSetInfo setInfo)
+        {
+            defTime = setInfo.defTime;
+            level = setInfo.level;
+        }
 
         #region 效果
 

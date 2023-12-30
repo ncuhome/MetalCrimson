@@ -5171,6 +5171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51092c2fb12af3942b8457d22d52e81b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponInfos: []
 --- !u!4 &424595088
 Transform:
   m_ObjectHideFlags: 0
@@ -7429,7 +7430,7 @@ GameObject:
   - component: {fileID: 590358707}
   m_Layer: 5
   m_Name: Anvil
-  m_TagString: Anvil
+  m_TagString: FAnvil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16506,7 +16507,7 @@ GameObject:
   - component: {fileID: 1543416908}
   m_Layer: 5
   m_Name: Blast Furnace
-  m_TagString: BlastFurnace
+  m_TagString: FBlastFurnace
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

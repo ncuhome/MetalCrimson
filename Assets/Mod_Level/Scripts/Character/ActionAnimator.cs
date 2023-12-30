@@ -28,6 +28,7 @@ namespace Mod_Level
         public void StopAttack()
         {
             manager.Stop("Attack");
+            Debug.Log("动画参数:停止攻击");
         }
 
         /// <summary>

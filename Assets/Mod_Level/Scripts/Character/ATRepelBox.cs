@@ -1,45 +1,21 @@
-﻿using System;
+﻿using ER.Entity2D;
+using System;
 using UnityEngine;
 
-namespace ER.Entity2D
+namespace Mod_Level
 {
-    /// <summary>
-    /// 击退箱子, 挂载在实体上, 即可接受击退动作;
-    /// 特有参数: repel_mode(ATRepel.RepelMode):击退类型; repel_power(float):击退力度; repel_dir(Vector2):击退方向(仅在 repel_mode 为 CustomDirection 时有效)
-    /// </summary>
-    public class ATRepel : MonoAttribute
+    public class ATRepelBox : ATRepel
     {
-        public enum RepelMode
-        {
-            /// <summary>
-            /// 不启用击退
-            /// </summary>
-            Off,
-
-            /// <summary>
-            /// 自动确定击退方向
-            /// </summary>
-            AutoDirection,
-
-            /// <summary>
-            /// 自定义击退方向
-            /// </summary>
-            CustomDirection,
-        }
-
-        #region 初始化
-
-        public ATRepel()
-        { AttributeName = nameof(ATRepel); }
-
+        private ATCharacterState state;
         public override void Initialize()
         {
             Action<IAttribute> action = (IAttribute attribute) =>
             {
-                ((ATActionResponse)attribute).ActionEvent += Repeled;
+                ((ATActionResponse)attribute).ActionEvent += GetRepel;
             };
 
             ATActionResponse response = owner.GetAttribute<ATActionResponse>();
+            state = owner.GetAttribute<ATCharacterState>();
             if (response == null)
             {
                 owner.CreateDelegation("ATActionResponse", action);
@@ -49,12 +25,7 @@ namespace ER.Entity2D
                 action(response);
             }
         }
-
-        #endregion 初始化
-
-        #region 功能
-
-        protected void Repeled(ActionInfo info)
+        private void GetRepel(ActionInfo info)
         {
             RepelMode mode = RepelMode.Off;
             if (info.infos.TryGetValue("repel_mode", out object _mode))
@@ -83,10 +54,17 @@ namespace ER.Entity2D
                         }
                         break;
                 }
+                if (power > state["Weight"])
+                {
+                    float corect = MathF.Abs(state["Weight"] - power);
+                    power = 0.0002f * corect * corect + 0.03f * corect + 2f;
+                }
+                else
+                {
+                    power = 1.5f;
+                }
                 owner.GetComponent<Rigidbody2D>().velocity += dir * power;
             }
         }
-
-        #endregion 功能
     }
 }

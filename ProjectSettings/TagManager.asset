@@ -4,17 +4,18 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - BlastFurnace
-  - Model
-  - Barrier
-  - Enemy
-  - CollectibleItem
-  - UI_1
-  - UI_2
-  - Anvil
-  - OnlyAttack
-  - OnlyDefence
-  - AttackDefence
+  - LBlock
+  - FBlastFurnace
+  - LPlayer
+  - LEnemy
+  - LDestroyableBlock
+  - LTool
+  - LCollectable
+  - FAnvil
+  - FModel
+  - FLAttackRegion
+  - FLDefenceRegion
+  - FLAttackDefenceRegion
   layers:
   - Default
   - TransparentFX
@@ -22,13 +23,13 @@ TagManager:
   - Test
   - Water
   - UI
-  - Item
-  - Entity
-  - Barried
+  - LItem
+  - LEntity
+  - LBlock
   - Tool
   - Background
-  - 
-  - 
+  - LMechanism
+  - LWeapon
   - 
   - 
   - 

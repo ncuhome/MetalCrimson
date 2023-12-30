@@ -26,6 +26,17 @@ namespace Mod_Level
             speed_lose = new CorrectValueDelegate(SpeedCoreect, 1, "Mire");
         }
 
+        public BFMire(BuffSetInfo setInfo):base(setInfo) 
+        {
+            buffName = "Mire";
+            repeatType = RepeatType.MoreTime;
+            buffTag.Add("debuff");
+            buffTag.Add("state");
+
+            jump_lose = new CorrectValueDelegate(JumpCoreect, 1, "Mire");
+            speed_lose = new CorrectValueDelegate(SpeedCoreect, 1, "Mire");
+        }
+
         private float JumpCoreect(float origin)
         {
             return origin * 0.5f;

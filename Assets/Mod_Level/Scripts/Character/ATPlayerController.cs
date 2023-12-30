@@ -20,7 +20,7 @@ namespace Mod_Level
 
             if (actionManager == null) Debug.LogError("未找到角色的动作管理器:<ATActionManager>");
 
-            state = owner.GetAttribute<ATCharacterState>();
+            state = owner.GetAttribute<ATPlayerState>();
             if (state == null) Debug.LogError("未找到角色的状态管理器:<ATPlayerState>");
 
             /*
@@ -69,7 +69,7 @@ namespace Mod_Level
         /// <summary>
         /// 玩家状态
         /// </summary>
-        private ATCharacterState state;
+        private ATPlayerState state;
 
         /// <summary>
         /// 辅助线绘制
@@ -179,7 +179,7 @@ namespace Mod_Level
         {
             if (state.ControlAct && !state.Vertigo)
             {
-                state.interact = ATCharacterState.InteractState.Wait;
+                state.interact = ATPlayerState.InteractState.Wait;
                 Debug.Log("玩家开启交互");
                 Invoke("_Interact", 0.5f);
             }
@@ -187,9 +187,9 @@ namespace Mod_Level
 
         public void _Interact()
         {
-            if (state.interact != ATCharacterState.InteractState.Interacting)
+            if (state.interact != ATPlayerState.InteractState.Interacting)
             {
-                state.interact = ATCharacterState.InteractState.None;
+                state.interact = ATPlayerState.InteractState.None;
                 Debug.Log("玩家关闭交互");
             }
         }
@@ -202,17 +202,17 @@ namespace Mod_Level
 
         private void PostureUp()
         {
-            state.ActPosture = ATCharacterState.Posture.Up;
+            state.ActPosture = ATPlayerState.Posture.Up;
         }
 
         private void PostureFront()
         {
-            state.ActPosture = ATCharacterState.Posture.Front;
+            state.ActPosture = ATPlayerState.Posture.Front;
         }
 
         private void PostureDown()
         {
-            state.ActPosture = ATCharacterState.Posture.Down;
+            state.ActPosture = ATPlayerState.Posture.Down;
         }
 
 
@@ -234,7 +234,7 @@ namespace Mod_Level
             line.SetPosition(1, end);
             Vector3 delta = end - start;
             float angle;
-            if (state.direction == ATCharacterState.Direction.Right)
+            if (state.direction == ATPlayerState.Direction.Right)
             {
                 angle = Vector2.Angle(delta, Vector2.right);
             }
@@ -246,14 +246,14 @@ namespace Mod_Level
             {
                 if (delta.y > 0)//上
                 {
-                    if (state.ActPosture == ATCharacterState.Posture.Front || state.ActPosture == ATCharacterState.Posture.Down)
+                    if (state.ActPosture == ATPlayerState.Posture.Front || state.ActPosture == ATPlayerState.Posture.Down)
                     {
                         PostureUp();
                     }
                 }
                 else//下
                 {
-                    if (state.ActPosture == ATCharacterState.Posture.Front || state.ActPosture == ATCharacterState.Posture.Up)
+                    if (state.ActPosture == ATPlayerState.Posture.Front || state.ActPosture == ATPlayerState.Posture.Up)
                     {
                         PostureDown();
                     }
@@ -261,7 +261,7 @@ namespace Mod_Level
             }
             else//前
             {
-                if (state.ActPosture == ATCharacterState.Posture.Up || state.ActPosture == ATCharacterState.Posture.Down)
+                if (state.ActPosture == ATPlayerState.Posture.Up || state.ActPosture == ATPlayerState.Posture.Down)
                 {
                     PostureFront();
                 }
