@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 1006552490361816460}
   m_Layer: 8
   m_Name: ExplosionBox
-  m_TagString: Barrier
+  m_TagString: LDestroyableBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -149,7 +149,7 @@ Transform:
   m_Children:
   - {fileID: 3284186455608720409}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6932620636451177434
 SpriteRenderer:

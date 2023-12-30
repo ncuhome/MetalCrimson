@@ -27,7 +27,8 @@ namespace Mod_Level
 
             eye.modifyEyeEvent += (entity) =>
             {
-                if (entity.gameObject.tag != "Player") return;
+                if (entity.gameObject.tag != GameTagText.L_PLAYER) return;
+                Debug.Log("实体进入/离开视野");
                 if (eye.record.Contains(entity))
                 {
                     seePlayer = true;
@@ -40,7 +41,7 @@ namespace Mod_Level
                     player = null;
                     for (int i = 0; i < eye.record.Count; i++)
                     {
-                        if (eye.record[i].gameObject.tag == "Player")
+                        if (eye.record[i].gameObject.tag == GameTagText.L_PLAYER)
                         {
                             player = eye.record[i];
                             break;
