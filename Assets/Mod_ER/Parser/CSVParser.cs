@@ -18,7 +18,6 @@ namespace ER.Parser
         public static List<string[]> ParseCSV(string filePath)
         {
             List<string[]> data = new List<string[]>();
-            Debug.Log($"FilePath:{filePath}");
             using (StreamReader reader = new StreamReader(filePath))
             {
                 while (!reader.EndOfStream)

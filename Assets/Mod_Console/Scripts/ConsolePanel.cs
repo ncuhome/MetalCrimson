@@ -1,14 +1,61 @@
 ﻿using ER;
+using ER.Control;
 using ER.Parser;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Mod_Console
 {
-    public class ConsolePanel : MonoSingleton<ConsolePanel>
+    public class ConsolePanel :  MonoControlPanel
     {
+        #region 单例封装
+        ConsolePanel() { handleName = "ConsolePanel"; _panelType = IControlPanel.PanelType.Single; }
+
+        private static ConsolePanel instance;
+
+        public static ConsolePanel Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    Debug.LogError($"单例对象不存在:{typeof(ConsolePanel)}");
+                }
+                return instance;
+            }
+        }
+
+        /// <summary>
+        /// 替换单例对象为自身，如果已存在则销毁自身
+        /// </summary>
+        protected bool PasteInstance()
+        {
+            if (instance == null)
+            {
+                instance = this;
+                DontDestroyOnLoad(gameObject);
+                return true;
+            }
+            Destroy(gameObject);
+            return false;
+        }
+
+        protected override void Awake()
+        {
+            if(PasteInstance())
+            {
+                base.Awake();
+
+                //开关控制台
+                InputManager.InputActions.UI.ConsolePanel.performed += (InputAction.CallbackContext ctx)=> SwitchUsing();
+            }
+        }
+        #endregion
+
         #region 组件 | 属性
 
         /// <summary>
@@ -68,6 +115,7 @@ namespace Mod_Console
         {
             canvas.SetActive(false);
             input.DeactivateInputField();
+            ControlManager.Instance.UnregisterPower(this);
         }
 
         /// <summary>
@@ -77,6 +125,7 @@ namespace Mod_Console
         {
             canvas.SetActive(true);
             input.ActivateInputField();
+            ControlManager.Instance.RegisterPower(this);
         }
 
         /// <summary>
@@ -227,6 +276,7 @@ namespace Mod_Console
                 input.selectionFocusPosition = input.text.Length;
             }
         }
+
 
         private void Update()
         {

@@ -1,5 +1,8 @@
 ﻿using ER.Entity2D;
+using System;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
 
 namespace Mod_Level
 {
@@ -13,6 +16,7 @@ namespace Mod_Level
         /// <summary>
         /// 目标描述类
         /// </summary>
+        [Serializable]
         protected struct ToDo
         {
             public string name;//目标名称
@@ -21,7 +25,7 @@ namespace Mod_Level
 
         #endregion 相关
 
-        private bool active = false;//AI是否活动
+        public bool active = false;//AI是否活动
 
         public BaseAI()
         { AttributeName = "AI"; }
@@ -31,7 +35,8 @@ namespace Mod_Level
         /// <summary>
         /// 行动目标
         /// </summary>
-        private List<ToDo> ToDoList = new();
+        [SerializeField]
+        protected List<ToDo> ToDoList = new();
 
         protected void Do()
         {
@@ -41,9 +46,10 @@ namespace Mod_Level
             }
             else
             {
-                if (ParseToDo(ToDoList[0]))
+                ToDo todo = ToDoList[ToDoList.Count-1];
+                if (ParseToDo(todo))
                 {
-                    ToDoList.RemoveAt(0);
+                    ToDoList.Remove(todo);
                 }
             }
         }

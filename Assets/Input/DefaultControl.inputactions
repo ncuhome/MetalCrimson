@@ -94,6 +94,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "568a9545-ba19-44a7-b710-fee5a56d1a39",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -206,6 +215,17 @@
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8610dd64-8970-470b-beee-658cbebaa4c0",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -244,6 +264,15 @@
                     "name": "DownLine",
                     "type": "Button",
                     "id": "7fe52e5d-71e7-4390-8315-5703e9637fd8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ConsolePanel",
+                    "type": "Button",
+                    "id": "19d416e0-4b2e-4175-bb85-3a80b3a12898",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -292,6 +321,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "DownLine",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fd9f9e47-ff82-41b5-8048-7e127133a60c",
+                    "path": "<Keyboard>/f12",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ConsolePanel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -110,6 +110,7 @@ namespace ER
 
         private void Awake()
         {
+            ObjectPoolManager.Instance.RegisterPool(this);
             pool = new Queue<Water>();
             SetSize(PoolSize);
             if (Prefab == null || Prefab.GetComponent<Water>() == null)

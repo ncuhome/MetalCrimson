@@ -15,7 +15,7 @@ namespace Mod_Level
         private ATCharacterState state;
 
         [SerializeField]
-        protected List<Entity> record = new List<Entity>();
+        public List<Entity> record = new List<Entity>();
 
         public ATEye()
         { AttributeName = nameof(ATEye); }

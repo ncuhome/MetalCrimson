@@ -46,8 +46,8 @@ namespace Mod_Level
                     float dg = (float)damage;
                     ModifyValue(-dg, actionInfo.actor);
                     BFRigidity bf = new BFRigidity();
-                    bf.defTime = 1f;
-
+                    bf.defTime = 0.2f;
+                    bf.ResetTime();
                     buffManager.Add(bf);
                 }
             }

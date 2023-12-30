@@ -112,7 +112,10 @@ namespace ER.Entity2D
             corrects.Remove(@delegate);
             UpdateValue();
         }
-
+        /// <summary>
+        /// 移除指定的修正委托
+        /// </summary>
+        /// <param name="tag"></param>
         public void Remove(string tag)
         {
             for (int i = 0; i < corrects.Count; i++)
@@ -120,10 +123,10 @@ namespace ER.Entity2D
                 if (corrects[i].tag == tag)
                 {
                     corrects.RemoveAt(i);
+                    UpdateValue();
                     return;
                 }
             }
-            UpdateValue();
         }
 
         private float UpdateValue()

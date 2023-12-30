@@ -22,6 +22,7 @@ namespace Mod_Level
 
         public override bool ActionJudge()
         {
+            Debug.Log($"是否可跳跃:{detector.Type == ATEnvironmentDetector.EnvironmentType.Land}");
             return true;
         }
 

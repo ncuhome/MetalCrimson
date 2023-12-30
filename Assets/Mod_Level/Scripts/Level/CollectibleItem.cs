@@ -23,6 +23,14 @@ namespace Mod_Level
         {
             sprite = GetComponent<SpriteRenderer>();
         }
+        /// <summary>
+        /// 更新物品信息(使用浅拷贝)
+        /// </summary>
+        /// <param name="item"></param>
+        public void UpdateItemInfo(Item item)
+        {
+            this.item = item;
+        }
 
         public override void ResetState()
         {

@@ -19,9 +19,6 @@ namespace Mod_Level
         private Transform aimPosition;
 
         [SerializeField]
-        private int aimLayerIndex = 7;
-
-        [SerializeField]
         [Tooltip("检测区域")]
         private ATRegion region;
 
@@ -85,10 +82,6 @@ namespace Mod_Level
                     state.Owner.transform.position = aimPosition.position;
                 }
             }
-
-            //Debug.DrawRay(transform.position, Vector2.up*length);
-            //注意，使用射线遮罩时，目标图层的索引需要转化成二进制数才能有效
-            //RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, length,1<<aimLayerIndex);
         }
     }
 }

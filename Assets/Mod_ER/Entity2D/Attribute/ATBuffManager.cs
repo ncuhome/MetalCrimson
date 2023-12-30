@@ -61,6 +61,7 @@ namespace ER.Entity2D
                         break;
 
                     case MDBuff.RepeatType.MoreTime:
+                        Debug.Log($"时间叠加! {buff.buffName}:add:{buff.time},old:{bf.time}");
                         bf.time += buff.time;
                         break;
 
@@ -166,9 +167,17 @@ namespace ER.Entity2D
                     buff.time -= Time.deltaTime;
                     if (buff.time <= 0)
                     {
-                        buff.EffectOnExit();
+                        buff.Exit();
                         removeBuffs.Add(buff);
                     }
+                    else
+                    {
+                        buff.Stay();
+                    }
+                }
+                else
+                {
+                    buff.Stay();
                 }
             }
             foreach (var buff in removeBuffs)

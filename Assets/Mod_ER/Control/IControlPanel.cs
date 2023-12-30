@@ -69,20 +69,18 @@ namespace ER.Control
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        public DelControlHandle PackDelegate(Action action);
+        public Action<InputAction.CallbackContext> PackDelegate(Action action);
 
         /// <summary>
         /// 将普通委托封装成检测面板状态的控制委托
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        public DelControlHandle PackDelegate(Action<InputAction.CallbackContext> action);
+        public Action<InputAction.CallbackContext> PackDelegate(Action<InputAction.CallbackContext> action);
 
         /// <summary>
         /// 在面板被销毁时触发的函数
         /// </summary>
         public void OnPanelDestroy();
     }
-
-    public delegate void DelControlHandle(InputAction.CallbackContext context);
 }

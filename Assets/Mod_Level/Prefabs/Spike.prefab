@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 9219128837188676283}
   - component: {fileID: 5293586468984351273}
   - component: {fileID: 6777404695595125711}
+  - component: {fileID: 8675974896721576550}
   - component: {fileID: 3784368198849898690}
   - component: {fileID: 495914268732421068}
-  - component: {fileID: 8675974896721576550}
   m_Layer: 8
   m_Name: Spike
   m_TagString: Barrier
@@ -34,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5293586468984351273
 SpriteRenderer:
@@ -137,6 +137,24 @@ PolygonCollider2D:
       - {x: 0.5, y: -0.5}
       - {x: 0.5, y: 0.5}
   m_UseDelaunayMesh: 0
+--- !u!114 &8675974896721576550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253406279601745234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 542fe7dfe63b8e54ca37620b0316e49a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttributeName: ATRegion
+  index: 0
+  listType: 2
+  TagList:
+  - Player
+  - Enemy
 --- !u!114 &3784368198849898690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,21 +194,3 @@ MonoBehaviour:
   remainHits: 1
   hitCD: 1
   destroy: 0
---- !u!114 &8675974896721576550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1253406279601745234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 542fe7dfe63b8e54ca37620b0316e49a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AttributeName: ATRegion
-  index: 0
-  listType: 2
-  TagList:
-  - Player
-  - Enemy

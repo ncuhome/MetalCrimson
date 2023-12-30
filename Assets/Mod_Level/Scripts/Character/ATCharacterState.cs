@@ -39,18 +39,18 @@ namespace Mod_Level
         {
             health.Owner = owner;
             health.Initialize();
-            this["Health"] = 100;
-            health.SetMax(this["Health",true],null);
+            this["Health"] = defaultHealth;
+            health.SetMax(this["Health", true], null);
             stamina.Owner = owner;
             stamina.Initialize();
-            this["Stamina"] = 100;
-            stamina.SetMax(this["Stamina",true],null);
+            this["Stamina"] = defaultStamina;
+            stamina.SetMax(this["Stamina", true], null);
             mana.Owner = owner;
             mana.Initialize();
-            this["Mana"] = 100;
+            this["Mana"] = defaultMana;
             mana.SetMax(this["Mana", true], null);
-            this["Speed"] = 10f;
-            this["Jump"] = 20f;
+            this["Speed"] = defaultSpeed;
+            this["Jump"] = defaultJump;
 
             ATAnimator ator = owner.GetAttribute<ATAnimator>();
             if (animator != null)
@@ -155,6 +155,13 @@ namespace Mod_Level
         /// </summary>
         public ATValue mana;
 
+        [Header("属性初始化 - 仅在初始值有效")]
+        public float defaultSpeed = 30f;
+        public float defaultJump = 20f;
+        public float defaultHealth = 100f;
+        public float defaultMana = 100f;
+        public float defaultStamina = 100f;
+
         #endregion 一般属性
 
         #region 状态
@@ -168,6 +175,26 @@ namespace Mod_Level
         /// 是否可控制朝向
         /// </summary>
         private bool control_dir = true;
+        /// <summary>
+        /// 是否可控制攻击
+        /// </summary>
+        private bool control_attack = true;
+        /// <summary>
+        /// 是否可控制防御
+        /// </summary>
+        private bool control_defence = true;
+        /// <summary>
+        /// 是否可控制技能
+        /// </summary>
+        private bool control_skill = true;
+        /// <summary>
+        /// 是否可控制架势
+        /// </summary>
+        private bool control_posture = true;
+        /// <summary>
+        /// 是否可控制使用物品
+        /// </summary>
+        private bool control_use_item = true;
 
         /// <summary>
         /// 是否死亡
@@ -216,6 +243,7 @@ namespace Mod_Level
             {
                 vertigo = value;
                 animator.SetBool("vertigo", value);
+                if(value)BreakAction();
             }
         }
 
@@ -231,17 +259,23 @@ namespace Mod_Level
             {
                 control_act = value;
                 animator.SetBool("control", value);
+                if (!value) BreakAction();
+            }
+        }
+
+        private void BreakAction()
+        {
+            if (actionManager.GetActionState("Attack") != MDAction.ActionState.Disable)
+            {
+                Debug.Log("中断攻击");
+                actionManager.Break("Attack");
             }
         }
 
         /// <summary>
         /// 是否可控制朝向
         /// </summary>
-        public bool ControlDir
-        {
-            get => control_dir;
-            set => control_dir = value;
-        }
+        public bool ControlDir { get => control_dir; set => control_dir = value; }
 
         public bool Dead
         {
@@ -280,6 +314,26 @@ namespace Mod_Level
                 }
             }
         }
+        /// <summary>
+        /// 是否可控制攻击
+        /// </summary>
+        public bool ControlAttack { get => control_attack; set => control_attack = value; }
+        /// <summary>
+        /// 是否可控制防御
+        /// </summary>
+        public bool ControlDefence { get => control_defence; set => control_defence = value; }
+        /// <summary>
+        /// 是否可控制技能
+        /// </summary>
+        public bool ControlSkill { get => control_skill; set => control_skill = value; }
+        /// <summary>
+        /// 是否可控制架势
+        /// </summary>
+        public bool ControlPosture { get => control_posture; set => control_posture = value; }
+        /// <summary>
+        /// 是否可控制使用物品
+        /// </summary>
+        public bool ControlUseItem { get => control_use_item; set => control_use_item = value; }
 
         private Coroutine stopTag;//协程标记(用于关闭协程)
 
@@ -355,7 +409,9 @@ namespace Mod_Level
             if (attributes.ContainsKey(attributeName))
             {
                 attributes[attributeName].Remove(correctTag);
+                return;
             }
+            Debug.Log($"移除修正失败: {correctTag}");
         }
 
         /// <summary>
@@ -401,7 +457,7 @@ namespace Mod_Level
         {
             Destroy(owner.gameObject);
         }
- 
+
         #endregion 其他方法
     }
 }

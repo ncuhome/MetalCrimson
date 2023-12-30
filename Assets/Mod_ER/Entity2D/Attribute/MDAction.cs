@@ -89,6 +89,7 @@ namespace ER.Entity2D
         {
             acting = false;
             StopAction(keys);
+            manager.ActionBuffer();
         }
 
         /// <summary>
@@ -98,6 +99,7 @@ namespace ER.Entity2D
         {
             acting = false;
             BreakAction(keys);
+            manager.ActionBuffer();
         }
 
         /// <summary>

@@ -38,10 +38,10 @@ namespace ER.Entity2D
             {
                 if (record.Count == 0)
                 {
-                    if (touchEvent != null) touchEvent();
+                    touchEvent?.Invoke();
                 }
                 record.Add(collider.gameObject);
-                //Debug.Log($"进入:{collider.gameObject.name}, tag:{collider.tag}");
+                Debug.Log($"进入:{collider.gameObject.name}, tag:{collider.tag}");
             }
         }
 
@@ -51,7 +51,7 @@ namespace ER.Entity2D
             {
                 if (record.Count == 0)
                 {
-                    if (touchEvent != null) touchEvent();
+                    touchEvent?.Invoke();
                 }
                 record.Add(collider.gameObject);
                 Debug.Log($"进入:{collider.gameObject.name}, tag:{collider.tag}");
@@ -65,7 +65,7 @@ namespace ER.Entity2D
                 record.Remove(collider.gameObject);
                 if (record.Count == 0)
                 {
-                    if (notTouchEvent != null) notTouchEvent();
+                    notTouchEvent?.Invoke();
                 }
                 Debug.Log($"离开:{collider.gameObject.name}, tag:{collider.tag}");
             }
