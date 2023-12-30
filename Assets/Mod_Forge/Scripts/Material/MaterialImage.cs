@@ -83,13 +83,13 @@ public class MaterialImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("BlastFurnace"))
+        if (other.CompareTag("FBlastFurnace"))
         {
             Debug.Log("进入");
             inFurnace = true;
         }
 
-        if (other.CompareTag("Model"))
+        if (other.CompareTag("FModel"))
         {
             Debug.Log("进入模具");
             inModel = true;
@@ -98,13 +98,13 @@ public class MaterialImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("BlastFurnace"))
+        if (other.CompareTag("FBlastFurnace"))
         {
             Debug.Log("退出");
             inFurnace = false;
         }
 
-        if (other.CompareTag("Model"))
+        if (other.CompareTag("FModel"))
         {
             Debug.Log("退出模具");
             inModel = false;

@@ -171,7 +171,7 @@ public class ComponentSprite : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Anvil")
+        if (other.tag == "FAnvil")
         {
             inAnvil = true;
         }
@@ -179,7 +179,7 @@ public class ComponentSprite : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "Anvil")
+        if (other.tag == "FAnvil")
         {
             inAnvil = false;
         }
