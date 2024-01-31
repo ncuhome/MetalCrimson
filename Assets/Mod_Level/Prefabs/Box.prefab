@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3075078510443713895}
   - component: {fileID: 663757035228119368}
   - component: {fileID: 6223574867842275647}
-  - component: {fileID: 1420436381299070130}
+  - component: {fileID: 8847438990637453125}
   m_Layer: 8
   m_Name: Box
   m_TagString: LDestroyableBlock
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttributeName: ATActionResponse
---- !u!114 &1420436381299070130
+--- !u!114 &8847438990637453125
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,13 +182,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4030275753065360453}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71fed5e804c7f1a4fb74fc24cee69f10, type: 3}
+  m_Script: {fileID: 11500000, guid: 04826f66633402646862042b5fc428c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Attributes:
   - {fileID: 6223574867842275647}
   HP: 1
-  catchBoom: 0
-  damage: 1
-  repel_power: 50
-  leaveTime: 1
+  infos: []
