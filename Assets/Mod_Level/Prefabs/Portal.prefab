@@ -119,7 +119,7 @@ MonoBehaviour:
   index: 0
   listType: 2
   TagList:
-  - Player
+  - LPlayer
 --- !u!61 &7568579303236079900
 BoxCollider2D:
   m_ObjectHideFlags: 0

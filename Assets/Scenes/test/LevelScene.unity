@@ -4016,7 +4016,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttributeName: AI
-  active: 1
+  active: 0
   ToDoList: []
 --- !u!4 &837624738
 Transform:
