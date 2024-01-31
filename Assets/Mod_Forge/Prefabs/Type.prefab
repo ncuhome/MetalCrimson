@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3321246475240607315}
   m_Layer: 5
   m_Name: TypeImage
-  m_TagString: Model
+  m_TagString: FModel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 7534615018001808891}
   m_Layer: 5
   m_Name: TypeBackground
-  m_TagString: Untagged
+  m_TagString: FModel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 3740146294372799837}
   m_Layer: 5
   m_Name: ChildTypes
-  m_TagString: Model
+  m_TagString: FModel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 1143884678937237769}
   m_Layer: 5
   m_Name: Type
-  m_TagString: Model
+  m_TagString: FModel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -372,7 +372,7 @@ GameObject:
   - component: {fileID: 6354259534271732214}
   m_Layer: 5
   m_Name: TypeText
-  m_TagString: Model
+  m_TagString: FModel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

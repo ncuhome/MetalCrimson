@@ -25,6 +25,13 @@ namespace Mod_Level
             buffTag.Add("debuff");
         }
 
+        public BFDamage(BuffSetInfo setInfo):base(setInfo)
+        {
+            buffName = "Damage";
+            repeatType = RepeatType.MoreTime;
+            buffTag.Add("debuff");
+        }
+
         public override void EffectOnEnter()
         {
             var state = owner.Owner.GetAttribute<ATCharacterState>();

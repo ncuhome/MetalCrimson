@@ -1365,7 +1365,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: fb6d11ff98b2be241a584433beb7d1cc, type: 2}
+  m_Motion: {fileID: 7400000, guid: 21f50c5c3ff98e34ea0595c7aabe6a74, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1663,7 +1663,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Humanoid
+  m_Name: Humanoid2
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: control

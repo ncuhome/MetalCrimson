@@ -3302,7 +3302,7 @@ GameObject:
   - component: {fileID: 7841797236435017449}
   m_Layer: 7
   m_Name: Player
-  m_TagString: Player
+  m_TagString: LPlayer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3326,7 +3326,7 @@ Transform:
   - {fileID: 3853265041969033789}
   - {fileID: 9084366962378309256}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6473674255060757083
 MonoBehaviour:
@@ -3557,29 +3557,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttributeName: ATCharacterState
-  defHealth: 0
-  defStamina: 0
-  defMana: 0
-  defSpeed: 0
-  defCDMultiply: 0
-  defDefence: 0
-  defDefenceMultiply: 0
-  defWeight: 0
-  defTenacity: 0
-  defArmor: 0
-  defArmorLevel: 0
-  posture: 1
   direction: 1
   health: {fileID: 336915339947519217}
-  stamina: {fileID: 2509506608700310373}
+  stamina: {fileID: 0}
   mana: {fileID: 2313211614230183386}
-  speed: 10
-  jump: 35
-  weight: 0
-  power: 0
-  CDReduction: 0
-  defence: 0
-  interact: 0
+  defaultSpeed: 30
+  defaultJump: 20
+  defaultHealth: 100
+  defaultMana: 100
+  defaultStamina: 100
   fighting: 0
   postureSpeed: 5
 --- !u!1 &4647577100458687986
@@ -5102,6 +5088,7 @@ MonoBehaviour:
   negative: 0
   overflow: 0
   SelfIncrease: 1
+  charactor: {fileID: 0}
 --- !u!1 &7360379259349401832
 GameObject:
   m_ObjectHideFlags: 0
@@ -6553,6 +6540,7 @@ MonoBehaviour:
   limitAngle: 60
   lineHeight: 2
   line: {fileID: 4513665636736526533}
+  start_offset: {x: 0, y: 0}
 --- !u!120 &4513665636736526533
 LineRenderer:
   serializedVersion: 2

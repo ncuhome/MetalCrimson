@@ -15,6 +15,12 @@ namespace Mod_Level
             repeatType = RepeatType.MoreTime;
             buffTag.Add("debuff");
         }
+        public BFRigidity(BuffSetInfo setInfo):base(setInfo) 
+        {
+            buffName = "Rigidity";
+            repeatType = RepeatType.MoreTime;
+            buffTag.Add("debuff");
+        }
 
         public override void EffectOnEnter()
         {

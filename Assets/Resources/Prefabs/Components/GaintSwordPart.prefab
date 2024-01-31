@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 3464989624119994474}
   m_Layer: 0
   m_Name: GaintSwordPart
-  m_TagString: OnlyAttack
+  m_TagString: FLAttackRegion
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

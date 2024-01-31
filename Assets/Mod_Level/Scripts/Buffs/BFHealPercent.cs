@@ -25,6 +25,13 @@ namespace Mod_Level
             repeatType = RepeatType.MoreTime;
             buffTag.Add("buff");
         }
+        public BFHealPercent(BuffSetInfo setInfo):base(setInfo) 
+        {
+            buffName = "HealPercent";
+            repeatType = RepeatType.MoreTime;
+            buffTag.Add("buff");
+        }
+
 
         public override void EffectOnEnter()
         {
