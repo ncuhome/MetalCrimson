@@ -239,10 +239,10 @@ TextureImporter:
       name: "\u573A\u666F\u7D20\u6750\u7ED8\u5236v2_6"
       rect:
         serializedVersion: 2
-        x: 625
-        y: 1002
-        width: 108
-        height: 65
+        x: 1833
+        y: 175
+        width: 140
+        height: 105
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -252,27 +252,6 @@ TextureImporter:
       bones: []
       spriteID: 4ad345537ab8b1744b47017803b81d2d
       internalID: -424516937
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\u573A\u666F\u7D20\u6750\u7ED8\u5236v2_7"
-      rect:
-        serializedVersion: 2
-        x: 768
-        y: 1013
-        width: 55
-        height: 90
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 88c92414dce2c49479691177ae97e62c
-      internalID: -674633324
       vertices: []
       indices: 
       edges: []
@@ -304,8 +283,8 @@ TextureImporter:
         serializedVersion: 2
         x: 59
         y: 19
-        width: 1324
-        height: 1026
+        width: 1271
+        height: 1087
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -344,10 +323,10 @@ TextureImporter:
       name: "\u573A\u666F\u7D20\u6750\u7ED8\u5236v2_11"
       rect:
         serializedVersion: 2
-        x: 1832
+        x: 1973
         y: 86
-        width: 440
-        height: 624
+        width: 300
+        height: 618
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
