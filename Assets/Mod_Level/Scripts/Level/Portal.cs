@@ -47,7 +47,7 @@ namespace Mod_Level
         private void EnterRegion(Collider2D collider)
         {
             Debug.Log("有物体进入传送门");
-            if (collider.tag == "Player")
+            if (collider.tag == "LPlayer")
             {
                 Debug.Log("是玩家");
                 Entity entity = collider.GetComponent<Entity>();
@@ -61,7 +61,7 @@ namespace Mod_Level
 
         private void ExitRegion(Collider2D collider)
         {
-            if (collider.tag == "Player")
+            if (collider.tag == "LPlayer")
             {
                 Entity entity = collider.GetComponent<Entity>();
                 if (entity == null) return;
