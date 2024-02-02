@@ -4,21 +4,12 @@ using ER.Items;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Mod_Level.Attributes;
 using Random = System.Random;
 
 namespace Mod_Level
 {
-    /// <summary>
-    /// 可收集物品信息
-    /// </summary>
-    [Serializable]
-    public class CollectableInfo
-    {
-        [Tooltip("物品模板名称")]
-        public string ItemName;
-        [Tooltip("掉落概率")]
-        public float probability;
-    }
+
 
     public class Box: Entity
     {

@@ -2,7 +2,6 @@
 using ER;
 using ER.Items;
 using ER.Save;
-using Mod_Console;
 using Mod_Level;
 using Mod_Rouge;
 using System;
@@ -52,7 +51,7 @@ namespace Mod_Common
             //Settings();
 
             //设置使用的指令解释器
-            ConsolePanel.interpreter = new AInterpreter();
+            //ConsolePanel.interpreter = new AInterpreter();
             //设置存档目录
             SaveManager.Instance.savePackPath = SavePath;
             ConsolePanel.Print($"MapSettingsPath:{MapSettingsPath}");
@@ -64,7 +63,7 @@ namespace Mod_Common
             //初始化所有静态仓库
             TemplateStoreManager.Instance.Load();
 
-            SceneManager.Instance.AddScene(new LevelConfigure());
+            //SceneManager.Instance.AddScene(new LevelConfigure());
             /*
             ObjectPool pool = GetComponent<ObjectPool>();
             if (pool != null)

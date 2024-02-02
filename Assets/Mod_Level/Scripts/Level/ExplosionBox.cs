@@ -8,7 +8,7 @@ namespace ER.Entity2D
         private float HP = 1;
 
         [SerializeField]
-        private bool catchBoom = false;
+        private bool catchBoom = false;//是否接触爆炸
 
         [SerializeField]
         private float damage = 1f;//伤害值
