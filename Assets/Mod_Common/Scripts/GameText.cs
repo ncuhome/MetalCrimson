@@ -85,4 +85,8 @@ public static class GameTagText
     /// 掉落物物体标签
     /// </summary>
     public const string L_COLLECTABLE = "LCollectable";
+    /// <summary>
+    /// 前景可互动物体标签
+    /// </summary>
+    public const string L_FRONT_BLOCK = "LFrontBlock";
 }
