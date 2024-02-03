@@ -16,7 +16,17 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: efe391f036151b147b1946d8687c4396
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: c31f5491be4d40a43af47848285d8276
+    m_Address: '@res/images/image_1'
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 261212b977f594d5dbc48631a5c1295c
+    m_Address: Assets/sprite/tileset-sliced.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 763337651574aed4ca6c9f9e0d0c6a87, type: 2}
   m_SchemaSet:
