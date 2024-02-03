@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7327405751992306336
+--- !u!1 &8264401111892742645
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,44 +8,43 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1523650086789736686}
-  - component: {fileID: 7435064813026057660}
-  - component: {fileID: 2257374100282364390}
-  - component: {fileID: 8383003039544101953}
-  - component: {fileID: 693571148104325249}
-  - component: {fileID: 912347903297516949}
-  - component: {fileID: 5718839175537134660}
-  - component: {fileID: 5528801471619567838}
-  - component: {fileID: 1576999670681771900}
-  m_Layer: 8
-  m_Name: DropBlock
+  - component: {fileID: 1184640989097652217}
+  - component: {fileID: 3135517306756610704}
+  - component: {fileID: 2382902019272712041}
+  - component: {fileID: 601493776004043341}
+  - component: {fileID: 723335928519521527}
+  - component: {fileID: 4214233422421942921}
+  - component: {fileID: 2759065562624371752}
+  - component: {fileID: 7404707774386519367}
+  m_Layer: 13
+  m_Name: Grass 3
   m_TagString: LDestroyableBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1523650086789736686
+--- !u!4 &1184640989097652217
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7327405751992306336}
+  m_GameObject: {fileID: 8264401111892742645}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30.81, y: -6.28, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalPosition: {x: 25.38, y: -6.52, z: -1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &7435064813026057660
+--- !u!212 &3135517306756610704
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7327405751992306336}
+  m_GameObject: {fileID: 8264401111892742645}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -79,9 +78,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300238, guid: 261212b977f594d5dbc48631a5c1295c, type: 3}
-  m_Color: {r: 0.38679248, g: 0.38679248, b: 0.38679248, a: 1}
+  m_SortingOrder: 20
+  m_Sprite: {fileID: -1288025044, guid: fa26067948e10fb46a6d0e659af4bbf1, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -91,15 +90,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &2257374100282364390
+--- !u!50 &2382902019272712041
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7327405751992306336}
-  m_BodyType: 0
+  m_GameObject: {fileID: 8264401111892742645}
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -118,13 +117,13 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &8383003039544101953
+--- !u!61 &601493776004043341
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7327405751992306336}
+  m_GameObject: {fileID: 8264401111892742645}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -154,7 +153,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.6566667, y: 0.8867344}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -163,60 +162,42 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &693571148104325249
+--- !u!114 &723335928519521527
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7327405751992306336}
+  m_GameObject: {fileID: 8264401111892742645}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41da41da89038aa4aa285ae738f27cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Attributes:
-  - {fileID: 912347903297516949}
-  - {fileID: 5718839175537134660}
-  - {fileID: 5528801471619567838}
-  - {fileID: 1576999670681771900}
---- !u!114 &912347903297516949
+  - {fileID: 4214233422421942921}
+  - {fileID: 2759065562624371752}
+  - {fileID: 7404707774386519367}
+--- !u!114 &4214233422421942921
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7327405751992306336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 542fe7dfe63b8e54ca37620b0316e49a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AttributeName: ATRegion
-  index: 0
-  listType: 2
-  TagList:
-  - LPlayer
---- !u!114 &5718839175537134660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7327405751992306336}
+  m_GameObject: {fileID: 8264401111892742645}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c19e8109511c3648b2423b3bf871a9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   AttributeName: ATActionResponse
---- !u!114 &5528801471619567838
+--- !u!114 &2759065562624371752
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7327405751992306336}
+  m_GameObject: {fileID: 8264401111892742645}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1843269ed4af8f441abd96d118e7db2e, type: 3}
@@ -224,18 +205,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttributeName: ATCanDestroyed
   HP: 1
-  destroy: 0
-  revive_time: 1
---- !u!114 &1576999670681771900
+  destroy: 1
+  revive_time: -1
+--- !u!114 &7404707774386519367
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7327405751992306336}
+  m_GameObject: {fileID: 8264401111892742645}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 792f138d64567de4ab50b78b59ac5ddb, type: 3}
+  m_Script: {fileID: 11500000, guid: 85a7c5e149db7a641a22451a890217da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttributeName: ATOnCatchDead
+  AttributeName: ATOnDeadDroppedItems
+  infos: []
