@@ -23,6 +23,8 @@ namespace Mod_Level
             state = owner.GetAttribute<ATPlayerState>();
             if (state == null) Debug.LogError("未找到角色的状态管理器:<ATPlayerState>");
 
+            interacter = owner.GetAttribute<ATInteract>();
+
             /*
             ATAnimator at = null;
             if(owner.TryGetAttribute("ATAnimator",ref at,(IAttribute _at)=>
@@ -70,6 +72,10 @@ namespace Mod_Level
         /// 玩家状态
         /// </summary>
         private ATPlayerState state;
+        /// <summary>
+        /// 交互器
+        /// </summary>
+        private ATInteract interacter;
 
         /// <summary>
         /// 辅助线绘制
@@ -179,21 +185,14 @@ namespace Mod_Level
         {
             if (state.ControlAct && !state.Vertigo)
             {
-                state.interact = ATPlayerState.InteractState.Wait;
-                Debug.Log("玩家开启交互");
-                Invoke("_Interact", 0.5f);
+                Debug.Log("执行交互");
+                var obj = interacter.Selected;
+                if(obj!=null)
+                {
+                    obj.EnterInteract();//执行交互
+                }
             }
         }
-
-        public void _Interact()
-        {
-            if (state.interact != ATPlayerState.InteractState.Interacting)
-            {
-                state.interact = ATPlayerState.InteractState.None;
-                Debug.Log("玩家关闭交互");
-            }
-        }
-
         public void Dash(InputAction.CallbackContext ctx)
         {
             if (state.ControlAct && !state.Vertigo)

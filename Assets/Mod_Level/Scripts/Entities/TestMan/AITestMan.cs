@@ -231,7 +231,6 @@ namespace Mod_Level
             }
             return false;
         }
-
         private float attack_distance = 5f;//攻击距离;
 
         private bool DoAttack(Dictionary<string, object> infos)

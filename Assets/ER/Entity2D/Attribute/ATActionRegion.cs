@@ -423,6 +423,10 @@ namespace ER.Entity2D
         {
             for (int i = 0; i < temp.Count; i++)
             {
+                if (temp[i] == null)
+                {
+                    continue;
+                }
                 Debug.Log($"动作预响应: {temp[i].gameObject.name}");
                 HitPreEvent?.Invoke(temp[i]);
                 if (temp[i].PreResponse(Info))

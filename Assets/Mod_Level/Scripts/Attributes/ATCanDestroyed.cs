@@ -58,7 +58,10 @@ namespace Mod_Level.Attributes
         /// </summary>
         private void Revive()
         {
-
+            Debug.Log("方块重生");
+            gameObject.SetActive(true);
+            destroyed = false;
+            HP = 1f;
         }
         public void DestroySelf()
         {
@@ -67,14 +70,15 @@ namespace Mod_Level.Attributes
             if (destroy)
             {
                 Destroy(gameObject);
-                if(revive_time > 0)
-                {
-                    TimerManager.Instance.RegisterTimer(ERTimer.GetBriefTimer("candestoryed" + ERinbone.RandomNumber(), Revive, revive_time));
-                }
+              
             }
             else
             {
                 gameObject.SetActive(false);
+                if (revive_time > 0)
+                {
+                    TimerManager.Instance.RegisterTimer(ERTimer.GetBriefTimer("candestoryed" + ERinbone.RandomNumber(), Revive, revive_time));
+                }
             }
         }
     }

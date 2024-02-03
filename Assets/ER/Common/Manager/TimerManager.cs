@@ -125,6 +125,7 @@ namespace ER
         /// <param name="timer"></param>
         public void RegisterTimer(ERTimer timer)
         {
+            Debug.Log("注册新的计时器"+timer.tag);
             timers.Add(timer);
             timer.last_time = Time.fixedTime;
         }

@@ -72,7 +72,7 @@ namespace Mod_Level
         public override void EffectOnStay()
         {
             //if (!poison) return;
-            Debug.Log($"池子计时器:{timer}");
+            //Debug.Log($"池子计时器:{timer}");
             timer -= Time.deltaTime;
             if(timer <=0)
             {

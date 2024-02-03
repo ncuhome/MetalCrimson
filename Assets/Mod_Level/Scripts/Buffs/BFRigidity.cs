@@ -12,16 +12,15 @@ namespace Mod_Level
         public BFRigidity()
         {
             buffName = "Rigidity";
-            repeatType = RepeatType.MoreTime;
+            repeatType = RepeatType.MaxTime;
             buffTag.Add("debuff");
         }
         public BFRigidity(BuffSetInfo setInfo):base(setInfo) 
         {
             buffName = "Rigidity";
-            repeatType = RepeatType.MoreTime;
+            repeatType = RepeatType.MaxTime;
             buffTag.Add("debuff");
         }
-
         public override void EffectOnEnter()
         {
             state = owner.Owner.GetAttribute<ATCharacterState>();

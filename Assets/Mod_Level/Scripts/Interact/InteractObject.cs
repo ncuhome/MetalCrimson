@@ -9,46 +9,34 @@ namespace Mod_Level
     /// </summary>
     public class InteractObject : MonoBehaviour, IInteractive
     {
-        [SerializeField]
-        private ATRegion region;
-
+        /// <summary>
+        /// 是否正在交互
+        /// </summary>
+        private bool interacting = false;
+        public bool Interacting=> interacting;
         private void Awake()
         {
-            region.EnterEvent += OnPlayerDisplay;
-            region.ExitEvent += ExitPlayerDisappear;
         }
         /// <summary>
         /// 玩家靠近时显示UI
         /// </summary>
-        /// <param name="collider"></param>
-        protected void OnPlayerDisplay(Collider2D collider)
+        public virtual void OnPlayerDisplay()
         {
-            Entity entity = collider.GetComponent<Entity>();
-            if (entity == null) return;
-            if(entity.gameObject.tag == GameTagText.L_PLAYER)//如果是玩家的话
+            InteractUIPanel.Instance.DisplayUI(this, new UIInfo()
             {
-                
-            }
+                 position = (Vector2)transform.position,
+                  text = "[F]交互",
+            });
         }
-
-        /// <summary>
-        /// 玩家离开时关闭UI
-        /// </summary>
-        /// <param name="collider"></param>
-        protected void ExitPlayerDisappear(Collider2D collider)
+        public virtual void EnterInteract()
         {
-
+            interacting = true;
         }
-        public void EnterInteract()
+
+        public virtual void ExitInteract()
         {
-            throw new System.NotImplementedException();
+            interacting = false;
         }
-
-        public void ExitInteract()
-        {
-            throw new System.NotImplementedException();
-        }
-
 
     }
 }

@@ -16,6 +16,7 @@ TagManager:
   - FLAttackRegion
   - FLDefenceRegion
   - FLAttackDefenceRegion
+  - LInteract
   layers:
   - Default
   - TransparentFX
@@ -31,7 +32,7 @@ TagManager:
   - LMechanism
   - LWeapon
   - LFrontBlock
-  - 
+  - LInteract
   - 
   - 
   - 

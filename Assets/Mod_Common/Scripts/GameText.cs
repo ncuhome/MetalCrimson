@@ -31,6 +31,14 @@ public static class GameLayerText
     /// 武器效果图层: 
     /// </summary>
     public const string L_WEAPON = "LWeapon";
+    /// <summary>
+    /// 前景可破坏方块图层
+    /// </summary>
+    public const string L_FRONT_BLOCK = "LFrontBlock";
+    /// <summary>
+    /// 可交互方块图层
+    /// </summary>
+    public const string L_INTERACT = "LInteract";
 }
 /// <summary>
 /// 游戏标签文本类
@@ -89,4 +97,8 @@ public static class GameTagText
     /// 前景可互动物体标签
     /// </summary>
     public const string L_FRONT_BLOCK = "LFrontBlock";
+    /// <summary>
+    /// 可交互物体标签
+    /// </summary>
+    public const string L_Interact = "LInteract";
 }

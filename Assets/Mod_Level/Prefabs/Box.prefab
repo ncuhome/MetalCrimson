@@ -206,6 +206,7 @@ MonoBehaviour:
   AttributeName: ATCanDestroyed
   HP: 1
   destroy: 1
+  revive_time: -1
 --- !u!114 &6309106619766935134
 MonoBehaviour:
   m_ObjectHideFlags: 0

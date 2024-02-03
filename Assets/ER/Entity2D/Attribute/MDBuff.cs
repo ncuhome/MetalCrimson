@@ -81,6 +81,14 @@ namespace ER.Entity2D
             /// 刷新时间
             /// </summary>
             RepeatTime,
+            /// <summary>
+            /// 取最长时间
+            /// </summary>
+            MaxTime,
+            /// <summary>
+            /// 取最大等级
+            /// </summary>
+            MaxLevel,
 
             /// <summary>
             /// 无回应但是触发加载效果
@@ -96,6 +104,7 @@ namespace ER.Entity2D
             /// 叠加时间并且触发加载效果
             /// </summary>
             MoreTimeAndEnter,
+
 
             /// <summary>
             /// 刷新时间并且触发加载效果

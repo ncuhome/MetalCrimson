@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ER.Entity2D
@@ -50,6 +51,14 @@ namespace ER.Entity2D
                         {
                             bf.level += 1;
                         }
+                        break;
+
+                    case MDBuff.RepeatType.MaxTime:
+                        bf.time = Math.Max(bf.time, buff.time);
+                        break;
+
+                    case MDBuff.RepeatType.MaxLevel:
+                        bf.level = Math.Max(bf.level, buff.level);
                         break;
 
                     case MDBuff.RepeatType.MoreLevelAndEnter:
