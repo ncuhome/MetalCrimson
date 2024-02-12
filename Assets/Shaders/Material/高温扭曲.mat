@@ -55,7 +55,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Lerpvalue: -0.3
-    - _Speed: -0.75
+    - _Speed: 0.2
     m_Colors:
     - _ColorBottom: {r: 1, g: 0.125, b: 0, a: 1}
     - _ColorTop: {r: 1, g: 0.83889174, b: 0.40943396, a: 1}
