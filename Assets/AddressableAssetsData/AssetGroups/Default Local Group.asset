@@ -212,6 +212,36 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b24e12e68db9e1845a0750227493849e
+    m_Address: Assets/res/particle/explode.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2896739d0bf36814e857a4dfb50b6fa6
+    m_Address: Assets/res/particle/fire.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5d41a3720b8ddc644a591b9a7eb5d838
+    m_Address: Assets/res/particle/portal.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 76f84e4bb9192e244bf44898b1c9bd44
+    m_Address: Assets/res/particle/rain.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5a9b12aef701a174b807969cab622577
+    m_Address: Assets/res/particle/water flower.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 32d69494823fae04a91ed61b6a38b051
+    m_Address: Assets/res/particle/spark.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 763337651574aed4ca6c9f9e0d0c6a87, type: 2}
   m_SchemaSet:

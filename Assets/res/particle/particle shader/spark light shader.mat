@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_New Shader Graph
+  m_Name: spark light shader
   m_Shader: {fileID: -6465566751694194690, guid: 86a2e63efffd6d14fb873151d5677cef, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -46,7 +46,7 @@ Material:
     m_Ints: []
     m_Floats: []
     m_Colors:
-    - _glow_color: {r: 4.380205, g: 4.380205, b: 4.380205, a: 0}
+    - _glow_color: {r: 11.892601, g: 8.544895, b: 6.571383, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &255703785424780899
 MonoBehaviour:
