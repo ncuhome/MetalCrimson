@@ -27,6 +27,191 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1085cadde40aecf4ca1adaf610edd4f3
+    m_Address: Assets/res/audios/soundss/step/cloth3.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: caa840ac77e640948b5c52de41181916
+    m_Address: Assets/res/audios/soundss/step/grass1.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cb052583fb34bc949baae16b9874988d
+    m_Address: Assets/res/audios/soundss/step/grass2.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1683e1b551d1a0e4dbdb50187ee3e567
+    m_Address: Assets/res/audios/soundss/step/grass3.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fa3c5715519553c42bee1f86f19b9ab6
+    m_Address: Assets/res/audios/soundss/step/grass4.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dff4dc4f9d05b784795525ee00d5befd
+    m_Address: Assets/res/audios/soundss/step/stone4.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8003bc76460be5b47a148fd5343692b0
+    m_Address: Assets/res/audios/soundss/step/wood1.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a66f9e9be831d2e48a48a23299e1e1c1
+    m_Address: Assets/res/audios/soundss/dig/wood1.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 46cf5fd42efa84849914236e19753013
+    m_Address: Assets/res/audios/soundss/dig/grass_1.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 95dd0048bdfd46943b646b9ad28539b0
+    m_Address: Assets/res/audios/soundss/dig/grass3.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3c8c018b444d6a44c8237ddd0201cbcc
+    m_Address: Assets/res/audios/soundss/dig/cloth2.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 228af68a01657cf44b3e2307d5e6d99b
+    m_Address: Assets/res/audios/soundss/dig/cloth3.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 914e02c6a8f44994f940509c9b2bbd09
+    m_Address: Assets/res/audios/soundss/dig/cloth4.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a8cb30381a78950498fcb6c7790b0932
+    m_Address: Assets/res/audios/soundss/dig/grass_2.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cbed8913e04190a45a2dcb801b975829
+    m_Address: Assets/res/audios/soundss/dig/grass_4.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c4e1528f9eece9847bffb3efcf0f7e2b
+    m_Address: Assets/res/audios/soundss/dig/grass_5.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0d4d997b9ac83404ca3992fa0fda3cb8
+    m_Address: Assets/res/audios/soundss/dig/grass_6.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4df9c689aafe0346a0dfef64efa2dbb
+    m_Address: Assets/res/audios/soundss/dig/stone1.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8960cc8f36a5abc47b20cf39163131b6
+    m_Address: Assets/res/audios/soundss/dig/stone3.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f0b566cc812266b4480484b21be5f382
+    m_Address: Assets/res/audios/soundss/dig/wood2.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b368ff0991bd3244198a90812e905d7e
+    m_Address: Assets/res/audios/soundss/dig/wood3.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4f5796bbf88cab74cb0adf9853e52f54
+    m_Address: Assets/res/audios/soundss/dig/wood4.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cc0010536b42d8e4f9d12fce321d9432
+    m_Address: Assets/res/audios/soundss/equip/equip_chain1.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f5402e2d351f79a4e93f288ae34e6b70
+    m_Address: Assets/res/audios/soundss/equip/equip_chain2.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9d5fe88875eeb4349a9c21ed94c69b0a
+    m_Address: Assets/res/audios/soundss/Portals/teleport (1).wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7c2828a1591f0224cb6e0ed84275a891
+    m_Address: Assets/res/audios/soundss/Portals/teleport (2).wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 511972bf72977b2468da79742e81793b
+    m_Address: Assets/res/audios/soundss/Portals/teleport (3).wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7a0ab484d25a7654a88206373eb6a423
+    m_Address: Assets/res/audios/soundss/Portals/teleport (4).wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cdb0338a959466a419397c73f48a5803
+    m_Address: Assets/res/audios/soundss/Portals/teleport (5).wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b10e9fb7cbdad9947a648d0e0cda1c15
+    m_Address: Assets/res/audios/soundss/fire burning/fire_crackle1.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd5e172a111771e4f9d4a02525bdf958
+    m_Address: Assets/res/audios/soundss/fire burning/fire_crackle2.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d52b191ba105b5b45a2157110411d639
+    m_Address: Assets/res/audios/soundss/fire burning/fire_crackle3.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7caaff8990c682e45aada9de05a3553b
+    m_Address: Assets/res/audios/soundss/fire burning/fire_crackle4.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2a439098a64a6b4199831975b1bd2cd
+    m_Address: Assets/res/audios/soundss/fire burning/fire_crackle5.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 65dea696b771efd42adc9a527095f42c
+    m_Address: Assets/res/audios/soundss/Treasure chests/open1.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 110e635df85c8a641bfe5830e0cfb407
+    m_Address: Assets/res/audios/soundss/Treasure chests/open2.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 76f456f5344830f4281ab6046c354330
+    m_Address: Assets/res/particle/bleed.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 763337651574aed4ca6c9f9e0d0c6a87, type: 2}
   m_SchemaSet:
