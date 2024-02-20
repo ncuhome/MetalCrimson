@@ -11,13 +11,18 @@ namespace Mod_Item
     /// </summary>
     public class ResourceStore
     {
-        private Dictionary<string,>
+        private Dictionary<string, SpriteResource> sprites = new Dictionary<string, SpriteResource>();
+        private Dictionary<string,AudioResource> audios = new Dictionary<string, AudioResource>();
+        private Dictionary<string,TextResource> texts = new Dictionary<string, TextResource>();
+        private Dictionary<string,IMMaterial> marerials = new Dictionary<string,IMMaterial>();
+        private Dictionary<string, IMComponent> components = new Dictionary<string, IMComponent>();
+        private Dictionary<string, IMComponentMold> component_molds = new Dictionary<string, IMComponentMold>();
         /// <summary>
         /// 判断指定资源是否已经加载
         /// </summary>
         /// <param name="registryName"></param>
         /// <returns></returns>
-        public bool Loaded(string registryName)
+        public bool IsLoaded(string registryName)
         {
             string[] part = registryName.Split(':');
             if (part[1] == "mc")//本模组名称
@@ -31,10 +36,11 @@ namespace Mod_Item
                     case "material":
                         break;
                     case "component_mold":
-                        break;
+                        return component_molds.ContainsKey(registryName);
                     case "component":
-                        break;
+                        return components.ContainsKey(registryName);
                     case "item":
+                        Debug.Log("代码未完善");
                         break;
                     default:
                         Debug.Log($"错误资源类别:{part[0]}, 无法读取该资源信息");
@@ -45,6 +51,7 @@ namespace Mod_Item
             {
                 Debug.Log("模组系统暂未完成, 无法读取该资源信息");
             }
+            return false;
         }
 
         public IResource this[string registryName]
@@ -58,7 +65,7 @@ namespace Mod_Item
                     switch(part[0])
                     {
                         case "img":
-                            return sr;
+                            break;
                         case "wav":
                             break;
                         case "txt":
@@ -70,6 +77,7 @@ namespace Mod_Item
                         case "component":
                             break;
                         case "item":
+                            Debug.Log("代码未完善");
                             break;
                         default:
                             Debug.Log($"错误资源类别:{part[0]}, 无法读取该资源信息");
@@ -80,6 +88,7 @@ namespace Mod_Item
                 {
                     Debug.Log("模组系统暂未完成, 无法读取该资源信息"); 
                 }
+                return null;
             }
         }
     }
