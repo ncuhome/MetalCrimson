@@ -121,7 +121,7 @@ MonoBehaviour:
   region: {fileID: 8293198053533556252}
   regionType: 0
   actor: {fileID: 5063202737629355887}
-  actionType: Unknown
+  actionType: Attack
   actionName: Unknown
   time: 1
   remainTime: 1

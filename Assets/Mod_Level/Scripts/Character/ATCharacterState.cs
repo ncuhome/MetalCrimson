@@ -51,6 +51,9 @@ namespace Mod_Level
             mana.SetMax(this["Mana", true], null);
             this["Speed"] = defaultSpeed;
             this["Jump"] = defaultJump;
+            this["Defence"] = 0;
+            this["DefenceMultiply"] = 1.0f;
+            this["Tenacity"] = 1.0f;
 
             ATAnimator ator = owner.GetAttribute<ATAnimator>();
             if (animator != null)

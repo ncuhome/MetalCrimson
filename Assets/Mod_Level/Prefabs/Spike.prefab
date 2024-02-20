@@ -205,7 +205,7 @@ MonoBehaviour:
   region: {fileID: 7177852094975756384}
   regionType: 0
   actor: {fileID: 0}
-  actionType: Unkown
+  actionType: Attack
   actionName: Unkown
   time: -1
   remainTime: 1

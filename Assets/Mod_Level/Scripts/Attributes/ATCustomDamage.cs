@@ -82,5 +82,13 @@ namespace Mod_Level.Attributes
             CircleCollider2D collider = region.GetComponent<CircleCollider2D>();
             collider.radius = radius;   
         }
+        [ContextMenu("重设属性")]
+        private void ResetStatus()
+        {
+            region.infos["damage"] = damage;
+            region.infos["repel_mode"] = ATRepel.RepelMode.AutoDirection;
+            region.infos["repel_power"] = repel_pwoer;
+            AddRigidBuff(region, rigid_time);
+        }
     }
 }
