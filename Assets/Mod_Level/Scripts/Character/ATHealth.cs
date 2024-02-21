@@ -1,4 +1,5 @@
 ﻿using ER.Entity2D;
+using ER.UI;
 using System;
 using UnityEngine;
 
@@ -49,6 +50,21 @@ namespace Mod_Level
                     {
                         dg -= state["Defence"];
                     }
+                    if(owner.CompareTag(GameTagText.L_PLAYER))
+                    {
+                        Debug.Log($"伤害量:{dg},阈值:{Max / 3},{Value / 2}");
+                        if (dg >= Max / 3 || dg >= Value / 2)
+                        {
+                            Debug.Log("震动摄像头:强");
+                            RigidbodyFollowCamera.Instance.Shake(1.2f, 0.2f);
+                        }
+                        else
+                        {
+                            Debug.Log("震动摄像头:弱");
+                            RigidbodyFollowCamera.Instance.Shake(0.2f, 0.4f);
+                        }
+                    }
+                    
                     ModifyValue(-dg, actionInfo.actor);
                     if(charactor!= null)
                         charactor.Flash();

@@ -5,7 +5,7 @@ namespace ER.UI
     /// <summary>
     /// 玩家跟随镜头
     /// </summary>
-    public class RigidbodyFollowCamera : MonoBehaviour
+    public class RigidbodyFollowCamera : MonoSingleton<RigidbodyFollowCamera>
     {
         #region 属性
 
