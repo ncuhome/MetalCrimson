@@ -521,15 +521,15 @@ namespace Mod_Console
                     switch (index)
                     {
                         case 1:
-                            HammeringSystem.Instance.HammerMaterial(0.5f);
+                            HammeringSystem.Instance.HammerMaterial();
                             break;
 
                         case 2:
-                            HammeringSystem.Instance.HammerMaterial(0.9f);
+                            HammeringSystem.Instance.HammerMaterial();
                             break;
 
                         case 3:
-                            HammeringSystem.Instance.HammerMaterial(1.0f);
+                            HammeringSystem.Instance.HammerMaterial();
                             break;
                     }
                 }
@@ -540,7 +540,7 @@ namespace Mod_Console
 
         private Data CMD_scene_load(Data[] parameters)
         {
-            if(parameters.IsMate(DataType.Text))
+            if (parameters.IsMate(DataType.Text))
             {
                 SceneManager.LoadScene((string)parameters[0].Value);
             }

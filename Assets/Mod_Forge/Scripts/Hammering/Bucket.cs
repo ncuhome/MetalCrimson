@@ -7,7 +7,7 @@ public class Bucket : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHa
     private bool inFurnace = false;
     private Vector3 lastPosition;
 
-    // Start is called before the first frame update
+    //Start is called before the first frame update
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();

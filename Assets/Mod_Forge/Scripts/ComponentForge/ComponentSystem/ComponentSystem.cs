@@ -187,14 +187,7 @@ public class ComponentSystem : MonoBehaviour
         newComponentItem.CreateAttribute("Material_ID", materialItem.ID);
 
         ItemTemplate modelItem = TemplateStoreManager.Instance["Item"][newComponentItem.GetInt("Model_ID")];
-        newComponentItem.CreateAttribute("Density", materialItem.GetFloat("Density", false));
-        newComponentItem.CreateAttribute("Mm", newComponentItem.GetFloat("Density") * modelItem.GetFloat("CostNum"));
-        newComponentItem.CreateAttribute("Flexability", materialItem.GetFloat("Flexability", false));
-        newComponentItem.CreateAttribute("Toughness", materialItem.GetFloat("Toughness", false));
-        newComponentItem.CreateAttribute("AntiSolution", materialItem.GetFloat("AntiSolution", false));
-        newComponentItem.CreateAttribute("M", newComponentItem.GetFloat("Mm") * newComponentItem.GetFloat("Weight"));
-        newComponentItem.CreateAttribute("Dur", (newComponentItem.GetFloat("Flexability") / 8 + newComponentItem.GetFloat("Toughness")) * newComponentItem.GetFloat("Duability"));
-        newComponentItem.CreateAttribute("Sharp", newComponentItem.GetFloat("Sharpness") * (10 + newComponentItem.GetFloat("Toughness") / 10));
+
 
         ComponentType componentType = GetComponentType(TemplateStoreManager.Instance["Item"][NameTmp].GetInt("MotherModel_ID"));
         GameObject newComponentObject = Instantiate(componentPrefab, componentType.typeObject.transform);
@@ -227,14 +220,7 @@ public class ComponentSystem : MonoBehaviour
         newComponentItem.CreateAttribute("Material_ID", materialItem.ID);
 
         ItemTemplate modelItem = TemplateStoreManager.Instance["Item"][newComponentItem.GetInt("Model_ID")];
-        newComponentItem.CreateAttribute("Density", materialItem.GetFloat("Density", false));
-        newComponentItem.CreateAttribute("Mm", newComponentItem.GetFloat("Density") * modelItem.GetFloat("CostNum"));
-        newComponentItem.CreateAttribute("Flexability", materialItem.GetFloat("Flexability", false));
-        newComponentItem.CreateAttribute("Toughness", materialItem.GetFloat("Toughness", false));
-        newComponentItem.CreateAttribute("AntiSolution", materialItem.GetFloat("AntiSolution", false));
-        newComponentItem.CreateAttribute("M", newComponentItem.GetFloat("Mm") * newComponentItem.GetFloat("Weight"));
-        newComponentItem.CreateAttribute("Dur", (newComponentItem.GetFloat("Flexability") / 8 + newComponentItem.GetFloat("Toughness")) * newComponentItem.GetFloat("Duability"));
-        newComponentItem.CreateAttribute("Sharp", newComponentItem.GetFloat("Sharpness") * (10 + newComponentItem.GetFloat("Toughness") / 10));
+
 
         ComponentType componentType = GetComponentType(TemplateStoreManager.Instance["Item"][id].GetInt("MotherModel_ID"));
         GameObject newComponentObject = Instantiate(componentPrefab, componentType.typeObject.transform);

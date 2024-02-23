@@ -110,10 +110,11 @@ public class MaterialSystem : MonoBehaviour
 
         for (int i = 0; i < 6; i++)
         {
-            Debug.Log(AddNormalMaterial("RawIron"));
+            Debug.Log(AddNormalMaterial("Pyrite"));
             AddNormalMaterial(77692);
             AddNormalMaterial(77693);
             AddNormalMaterial(77694);
+            AddNormalMaterial(77695);
         }
     }
     /// <summary>
@@ -126,7 +127,7 @@ public class MaterialSystem : MonoBehaviour
         // 如果已经在库中，则数量+1
         for (int i = 0; i < materialsItemStore.Count; i++)
         {
-            if ((materialsItemStore[i].GetText("NameTmp") == NameTmp) && (!materialsItemStore[i].GetBool("IsForged")))
+            if (materialsItemStore[i].GetText("NameTmp") == NameTmp)
             {
                 materialsItemStore[i].CreateAttribute("Num", materialsItemStore[i].GetFloat("Num") + 1);
                 GetMaterialScript(i).RefreshInfo();
@@ -138,9 +139,7 @@ public class MaterialSystem : MonoBehaviour
         ItemVariable newMaterialItem = materialsItemStore[materialsItemStore.Count - 1];
 
         newMaterialItem.CreateAttribute("Num", 1f);
-        newMaterialItem.CreateAttribute("IsForged", false);
         newMaterialItem.CreateAttribute("Name", newMaterialItem.GetText("Name", false));
-        newMaterialItem.CreateAttribute("Temperature", 0f);
 
         GameObject newMaterialObject = Instantiate(materialPrefab);
         materials.Add(newMaterialObject);
@@ -164,10 +163,6 @@ public class MaterialSystem : MonoBehaviour
         // 如果已经在库中，则数量+1
         for (int i = 0; i < materialsItemStore.Count; i++)
         {
-            if (materialsItemStore[i].GetBool("IsForged"))
-            {
-                continue;
-            }
             if (materialsItemStore[i].GetInt("ID") == id)
             {
                 materialsItemStore[i].CreateAttribute("Num", materialsItemStore[i].GetFloat("Num") + 1);
@@ -181,9 +176,7 @@ public class MaterialSystem : MonoBehaviour
         ItemVariable newMaterialItem = materialsItemStore[materialsItemStore.Count - 1];
 
         newMaterialItem.CreateAttribute("Num", 1f);
-        newMaterialItem.CreateAttribute("IsForged", false);
         newMaterialItem.CreateAttribute("Name", newMaterialItem.GetText("Name", false));
-        newMaterialItem.CreateAttribute("Temperature", 0f);
 
         GameObject newMaterialObject = Instantiate(materialPrefab);
         materials.Add(newMaterialObject);
@@ -196,20 +189,28 @@ public class MaterialSystem : MonoBehaviour
         return true;
     }
 
-    public bool AddForgedMaterial(ItemVariable forgedItem)
+    public void AddForgedMaterial(string NameTmp, ForgeCompleteness forgeCompleteness)
     {
-        forgedItem.CreateAttribute("Num", 1f);
-        forgedItem.CreateAttribute("Temperature", 0f);
-        materialsItemStore.AddItem(forgedItem);
-        GameObject forgedMaterialObject = Instantiate(materialPrefab);
-        materials.Add(forgedMaterialObject);
-        forgedMaterialObject.transform.SetParent(materialsParentTrans);
-        forgedMaterialObject.transform.localScale = Vector3.one;
-
-        MaterialScript forgedMaterialScript = forgedMaterialObject.GetComponent<MaterialScript>();
-        forgedMaterialScript.MaterialItem = forgedItem;
-        forgedMaterialScript.RefreshInfo();
-        return true;
+        string[] products = null;
+        switch (forgeCompleteness)
+        {
+            case ForgeCompleteness.Bad:
+                products = TemplateStoreManager.Instance["Item"][NameTmp].GetText("Bad").Split(";");
+                break;
+            case ForgeCompleteness.Great:
+                products = TemplateStoreManager.Instance["Item"][NameTmp].GetText("Great").Split(";");
+                break;
+            case ForgeCompleteness.Perfect:
+                products = TemplateStoreManager.Instance["Item"][NameTmp].GetText("Perfect").Split(";");
+                break;
+            case ForgeCompleteness.Legend:
+                products = TemplateStoreManager.Instance["Item"][NameTmp].GetText("Legend").Split(";");
+                break;
+        }
+        foreach (string product in products)
+        {
+            AddNormalMaterial(product);
+        }
     }
 
     public void FixedMaterialOjects()

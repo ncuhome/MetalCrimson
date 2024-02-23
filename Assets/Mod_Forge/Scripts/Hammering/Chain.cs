@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 
 public class Chain : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    const int chainY = 300;
     /// <summary>
     /// 锁链对应图片
     /// </summary>
@@ -66,7 +67,6 @@ public class Chain : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
 
         rectTransform.position = new Vector3(rectTransform.position.x, newPosY, rectTransform.position.z);
 
-        IncreaseTemperature();
     }
 
     /// <summary>
@@ -75,33 +75,45 @@ public class Chain : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     public void OnEndDrag(PointerEventData eventData)
     {
         if (HammeringSystem.Instance.startHammering) { return; }
+        IncreaseChianTimes();
         rectTransform.position = lastPos;
     }
 
-    private void IncreaseTemperature()
+    private void IncreaseChianTimes()
     {
-        if (HammeringSystem.Instance.AddedMaterialNum == 0) { return; }
-        float chainTimes = (lastPosY - newPosY) / 20;
-
-        if (newPosY < lastPosY)
+        if ((rectTransform.localPosition.y < chainY) && (HammeringSystem.Instance.AddedMaterialNum != 0))
         {
-            if (HammeringSystem.Instance.temperature <= 150)
+            if (HammeringSystem.Instance.chainTimes < 10)
             {
-                HammeringSystem.Instance.temperature += chainTimes * 25f;
-            }
-            else if (HammeringSystem.Instance.temperature <= 300f)
-            {
-                HammeringSystem.Instance.temperature += chainTimes * 12.5f;
-            }
-            else if (HammeringSystem.Instance.temperature <= 400f)
-            {
-                HammeringSystem.Instance.temperature += chainTimes * 10f;
-            }
-            else if (HammeringSystem.Instance.temperature <= 500f)
-            {
-                HammeringSystem.Instance.temperature += chainTimes * 5f;
+                HammeringSystem.Instance.StartFire();
             }
         }
-        lastPosY = newPosY;
     }
+
+    // private void IncreaseTemperature()
+    // {
+    //     if (HammeringSystem.Instance.AddedMaterialNum == 0) { return; }
+    //     float chainTimes = (lastPosY - newPosY) / 20;
+
+    //     if (newPosY < lastPosY)
+    //     {
+    //         if (HammeringSystem.Instance.temperature <= 150)
+    //         {
+    //             HammeringSystem.Instance.temperature += chainTimes * 25f;
+    //         }
+    //         else if (HammeringSystem.Instance.temperature <= 300f)
+    //         {
+    //             HammeringSystem.Instance.temperature += chainTimes * 12.5f;
+    //         }
+    //         else if (HammeringSystem.Instance.temperature <= 400f)
+    //         {
+    //             HammeringSystem.Instance.temperature += chainTimes * 10f;
+    //         }
+    //         else if (HammeringSystem.Instance.temperature <= 500f)
+    //         {
+    //             HammeringSystem.Instance.temperature += chainTimes * 5f;
+    //         }
+    //     }
+    //     lastPosY = newPosY;
+    // }
 }

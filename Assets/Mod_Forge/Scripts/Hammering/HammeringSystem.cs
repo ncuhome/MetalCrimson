@@ -1,8 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum ForgeCompleteness
+{
+    None, Bad, Great, Perfect, Legend
+}
 public class HammeringSystem : MonoBehaviour
 {
     #region 单例封装
@@ -34,13 +39,16 @@ public class HammeringSystem : MonoBehaviour
     /// 炉子里的材料
     /// </summary>
     public GameObject[] materialInFurnaces = null;
-    public Material glowMaterial;
-    public float temperature = 0f;
+    public Material glowMaterial1, glowMaterial2;
+    public int chainTimes = 0;
     public bool startHammering;
     public GameObject ChooseMaterialPanel, Slider;
-    private ER.Items.ItemVariable newItem;
     private int HitTimes;
     private bool isNewMaterial;
+    public Animator fireAnimator;
+    public ForgeCompleteness forgeCompleteness;
+    public float temperature;
+    readonly string[] temperatureString = { "DarkRed", "Red", "LightRed", "Orange", "Yellow", "LightYellow" };
     void Awake()
     {
         //构筑单例，并初始化
@@ -59,7 +67,7 @@ public class HammeringSystem : MonoBehaviour
     void Update()
     {
 
-        if (temperature > 0)
+        if (chainTimes > 0)
         {
             Slider.SetActive(false);
             ChooseMaterialPanel.SetActive(false);
@@ -72,11 +80,6 @@ public class HammeringSystem : MonoBehaviour
             ChooseMaterialPanel.SetActive(true);
             UIManager.Instance.ReturnButton.interactable = true;
             UIManager.Instance.CancelButton.interactable = true;
-        }
-
-        if (temperature < 0)
-        {
-            temperature = 0;
         }
 
     }
@@ -94,7 +97,7 @@ public class HammeringSystem : MonoBehaviour
             canFindMaterial = true;
         }
 
-        if ((AddedMaterialNum < MaxMaterialNum) && canFindMaterial)
+        if ((AddedMaterialNum < MaxMaterialNum) && canFindMaterial && (materialScript.MaterialItem.GetText("Tags") != "Product"))
         {
             AddMaterial(materialScript);
             return true;
@@ -137,8 +140,7 @@ public class HammeringSystem : MonoBehaviour
         Debug.Log("MoveBack");
         if (isNewMaterial)
         {
-            MaterialSystem.Instance.AddForgedMaterial(newItem);
-            materialScripts[id].MaterialItem.CreateAttribute("Temperature", 0f);
+            MaterialSystem.Instance.AddForgedMaterial(materialScripts[0].MaterialItem.GetText("NameTmp"), forgeCompleteness);
             materialScripts[id] = null;
             materialInFurnaces[id].SetActive(false);
             isNewMaterial = false;
@@ -164,15 +166,12 @@ public class HammeringSystem : MonoBehaviour
     {
         if (startHammering) { return; }
         if (AddedMaterialNum == 0) { return; }
-        foreach (MaterialScript materialScript in materialScripts)
-        {
-            if ((materialScript != null) && (materialScript.MaterialItem.GetInt("ForgeTemp", true) > materialScript.MaterialItem.GetFloat("Temperature", true))) { return; }
-        }
-        newItem = materialScripts[0].MaterialItem.Clone();
+        if (chainTimes == 0) { return; }
         startHammering = true;
         isNewMaterial = true;
         HitTimes = 0;
-        QTE.Instance.StartQTE();
+        forgeCompleteness = 0;
+        //QTE.Instance.StartQTE();
     }
 
     /// <summary>
@@ -180,8 +179,6 @@ public class HammeringSystem : MonoBehaviour
     /// </summary>
     public void FinishHammering()
     {
-        temperature = 0;
-
         if (AddedMaterialNum > 1)
         {
 
@@ -196,47 +193,128 @@ public class HammeringSystem : MonoBehaviour
     /// <summary>
     /// 进行材料的公式计算
     /// </summary>
-    public void HammerMaterial(float QTEPerf)
+    public void HammerMaterial()
     {
         if (AddedMaterialNum > 1)
         {
-            newItem = SynthesisMaterial();
+
         }
         else
         {
-            newItem = ForgedMaterial(QTEPerf);
+            forgeCompleteness = ForgedMaterial();
+            chainTimes = 0;
+            Debug.Log(forgeCompleteness);
         }
     }
 
     /// <summary>
     /// 锻造数值变换
     /// </summary>
-    private ER.Items.ItemVariable ForgedMaterial(float QTEPerf)
+    private ForgeCompleteness ForgedMaterial()
     {
-        ER.Items.ItemVariable item = newItem.Clone();
-        float n = Mathf.Floor(HitTimes / 5);
-        float Pref = QTEPerf;
-        float FbR = (1 + (2 * newItem.GetFloat("Temperature", true) - newItem.GetInt("ForgeTemp")) * (newItem.GetInt("MeltTemp") - newItem.GetFloat("Temperature", true))) * 5 / Mathf.Pow(2 * newItem.GetInt("MeltTemp") - newItem.GetInt("ForgeTemp"), 2);
-        float deltaFb = (4 / (n + 2) - (1 * (1 - FbR))) * Pref;
-        float ThR = Mathf.Pow(newItem.GetFloat("Temperature", true) * newItem.GetFloat("Temperature", true) / newItem.GetInt("ForgeTemp") / newItem.GetInt("MeltTemp"), newItem.GetFloat("HeatPreference"));
-        float deltaTh = Mathf.Pow(newItem.GetFloat("Toughness") * (1 + newItem.GetFloat("Pressability")) / newItem.GetFloat("Toughness", true), (1 + n - newItem.GetFloat("Stubborn")) / 2) * ThR * Pref;
-        float AtsR = FbR;
-        float deltaAts = newItem.GetFloat("AntiSolution") * (1 + newItem.GetFloat("AtsGrowth")) / (2 * newItem.GetFloat("AntiSolution", true)) * AtsR * Pref;
-        item.CreateAttribute("Flexability", item.GetFloat("Flexability", true) + deltaFb);
-        item.CreateAttribute("Toughness", item.GetFloat("Toughness", true) + deltaTh);
-        item.CreateAttribute("AntiSolution", item.GetFloat("AntiSolution", true) + deltaAts);
-        HitTimes++;
-        item.CreateAttribute("IsForged", true);
-
-        Debug.Log("Flexability=" + item.GetFloat("Flexability", true) + " ,Toughness=" + item.GetFloat("Toughness", true) + " ,AntiSolution=" + item.GetFloat("AntiSolution", true) + " ,HitTimes=" + HitTimes + ", IsForged=" + item.GetBool("IsForged", true));
-
-        return item.Clone();
+        if (GetTemperature().Equals(materialScripts[0].MaterialItem.GetText("SuitableTemperature")))
+        {
+            Debug.Log(GetTemperature());
+            if (QTE.Instance.QTEPerfect())
+            {
+                if (Random.value > 0.05f)
+                {
+                    return ForgeCompleteness.Legend;
+                }
+                else
+                {
+                    return ForgeCompleteness.Perfect;
+                }
+            }
+        }
+        if (GetTemperatures(GetTemperature()).Contains(materialScripts[0].MaterialItem.GetText("SuitableTemperature")))
+        {
+            Debug.Log(GetTemperatures(GetTemperature()));
+            if (QTE.Instance.QTEFailed() <= 1)
+            {
+                return ForgeCompleteness.Great;
+            }
+            else
+            {
+                return ForgeCompleteness.Bad;
+            }
+        }
+        if ((QTE.Instance.QTEFailed() > 2) || (!GetTemperatures(GetTemperature()).Contains(materialScripts[0].MaterialItem.GetText("SuitableTemperature"))))
+        {
+            return ForgeCompleteness.Bad;
+        }
+        return 0;
     }
     /// <summary>
     /// 叠锻数值变换
     /// </summary>
     private ER.Items.ItemVariable SynthesisMaterial()
     {
+
+        return null;
+    }
+
+    public void StartFire()
+    {
+        fireAnimator.SetTrigger("fire");
+        chainTimes++;
+        StartCoroutine("DelayRefreshColor");
+    }
+
+    public IEnumerator DelayRefreshColor()
+    {
+        yield return new WaitForSeconds(0.5f);
+        foreach (var material in materialInFurnaces)
+        {
+            if (material.activeSelf)
+            {
+                material.GetComponent<materialInFurnace>().HDRScript.RefreshColor();
+            }
+        }
+    }
+
+    private string GetTemperature()
+    {
+        switch (chainTimes)
+        {
+            case 1:
+            case 2:
+                return "DarkRed";
+            case 3:
+            case 4:
+                return "Red";
+            case 5:
+            case 6:
+                return "LightRed";
+            case 7:
+            case 8:
+                return "Orange";
+            case 9:
+                return "Yellow";
+            case 10:
+                return "LightYellow";
+            default:
+                return "Error";
+        }
+    }
+
+    private string[] GetTemperatures(string tempString)
+    {
+        if (tempString.Equals(temperatureString[0]))
+        {
+            return new string[2] { temperatureString[0], temperatureString[1] };
+        }
+        for (int i = 1; i < temperatureString.Length - 1; i++)
+        {
+            if (tempString.Equals(temperatureString[i]))
+            {
+                return new string[3] { temperatureString[i - 1], temperatureString[i], temperatureString[i + 1] };
+            }
+        }
+        if (tempString.Equals(temperatureString[temperatureString.Length - 1]))
+        {
+            return new string[2] { temperatureString[temperatureString.Length - 2], temperatureString[temperatureString.Length - 1] };
+        }
         return null;
     }
 }
