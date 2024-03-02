@@ -43,7 +43,7 @@ public class TetherSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InitTethers();
+
     }
 
     // Update is called once per frame
@@ -69,6 +69,7 @@ public class TetherSystem : MonoBehaviour
 
     public void RefreshTether()
     {
+        RefreshTetherInComponents();
         int i = 0;
         foreach (var tether in tethers)
         {
@@ -115,6 +116,22 @@ public class TetherSystem : MonoBehaviour
             }
         }
         return null;
+    }
+
+    public void RefreshTetherInComponents()
+    {
+        List<ComponentScript> components = ComponentSystem.Instance.componentInAnvil;
+        foreach (var tether in tethers)
+        {
+            tether.num = 0;
+            foreach (var component in components)
+            {
+                int productID = component.ComponentItem.GetInt("MaterialID");
+                int value;
+                TemplateStoreManager.Instance["Item"][productID].TryGetInt(tether.NameTmp, out value);
+                tether.num += value;
+            }
+        }
     }
 
 }

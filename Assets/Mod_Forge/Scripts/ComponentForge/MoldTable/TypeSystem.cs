@@ -655,6 +655,7 @@ public class TypeSystem : MonoBehaviour
         materialScript.MaterialItem.CreateAttribute("Num", materialScript.MaterialItem.GetFloat("Num") - childModelItem.GetFloat("CostNum"));
         materialScript.RefreshInfo();
         UIManager.Instance.tipScript.ShowTips(childModelItem.GetInt("P_ID"));
+
     }
 
     public void ShowCard(ChildType childType)

@@ -35,7 +35,7 @@ public class Tether : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
         Name = tetherTemplate.GetText("Name");
         tetherID = tetherTemplate.ID;
         avatarAddress = tetherTemplate.GetText("AvatarAddress");
-        num = 10;
+        num = 0;
         show = string.Equals(tetherTemplate.GetText("Show"), "TRUE");
         introductions = tetherTemplate.GetText("Introductions").Split(';');
         description = tetherTemplate.GetText("Description");

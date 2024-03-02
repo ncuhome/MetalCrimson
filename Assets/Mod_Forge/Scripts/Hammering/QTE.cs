@@ -208,6 +208,12 @@ public class QTE : MonoBehaviour
     public void FinishQTE()
     {
         Debug.Log("FinishQTE");
+        for (int i = 0; i < QTERangeNum; i++)
+        {
+            Destroy(QTERange1Transforms[i].gameObject);
+            Destroy(QTERange2Transforms[i].gameObject);
+        }
+
         HammeringSystem.Instance.HammerMaterial();
         startQTE = false;
         UIManager.Instance.ReturnButton.interactable = true;

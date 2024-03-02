@@ -27,6 +27,34 @@ public class MaterialScript : MonoBehaviour
     public void RefreshInfo()
     {
         if (MaterialItem == null) { return; }
+
+        materialNameText.text = MaterialItem.GetText("Name");
+        materialNumText.text = "拥有：" + MaterialItem.GetFloat("Num");
+
+        if (UIManager.Instance.materialProgressing.gameObject.activeSelf)
+        {
+            if (MaterialItem.GetText("Tags").Equals("Product"))
+            {
+                imageScript.canBeDrag = false;
+            }
+            else
+            {
+                imageScript.canBeDrag = true;
+            }
+        }
+
+        if (UIManager.Instance.foundry.gameObject.activeSelf)
+        {
+            if (MaterialItem.GetText("Tags").Equals("Product"))
+            {
+                imageScript.canBeDrag = true;
+            }
+            else
+            {
+                imageScript.canBeDrag = false;
+            }
+        }
+
         if (MaterialItem.GetFloat("Num") < MaterialSystem.Instance.needMaterialNum)
         {
             materialImage.color = Color.gray;
@@ -37,7 +65,9 @@ public class MaterialScript : MonoBehaviour
             imageScript.canBeDrag = true;
             materialImage.color = Color.white;
         }
-        materialNameText.text = MaterialItem.GetText("Name");
-        materialNumText.text = "拥有：" + MaterialItem.GetFloat("Num");
+        
+                
+        MaterialSystem.Instance.FixedMaterialOjects();
     }
+
 }

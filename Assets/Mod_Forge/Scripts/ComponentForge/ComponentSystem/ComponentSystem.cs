@@ -155,6 +155,7 @@ public class ComponentSystem : MonoBehaviour
         componentInAnvil = new List<ComponentScript>();
 
         ItemVariable rawIron = new ItemVariable(TemplateStoreManager.Instance["Item"]["RawIron"], true);
+        Debug.Log(rawIron.ID);
         for (int i = 0; i < 2; i++)
         {
             Debug.Log(AddComponent(8083771, rawIron));
@@ -184,7 +185,7 @@ public class ComponentSystem : MonoBehaviour
         ItemVariable newComponentItem = componentsItemStore[componentsItemStore.Count - 1];
 
         newComponentItem.CreateAttribute("Name", newComponentItem.GetText("Name", false));
-        newComponentItem.CreateAttribute("Material_ID", materialItem.ID);
+        newComponentItem.CreateAttribute("MaterialID", materialItem.ID);
 
         ItemTemplate modelItem = TemplateStoreManager.Instance["Item"][newComponentItem.GetInt("Model_ID")];
 
@@ -196,7 +197,9 @@ public class ComponentSystem : MonoBehaviour
 
         ComponentScript newComponentScript = newComponentObject.GetComponent<ComponentScript>();
         newComponentScript.ComponentItem = newComponentItem;
+
         newComponentScript.RefreshInfo();
+        MaterialSystem.Instance.FixedMaterialOjects();
 
         if (currentTypeID == 0) { currentTypeID = componentType.typeID; }
 
@@ -217,7 +220,8 @@ public class ComponentSystem : MonoBehaviour
         ItemVariable newComponentItem = componentsItemStore[componentsItemStore.Count - 1];
 
         newComponentItem.CreateAttribute("Name", newComponentItem.GetText("Name", false));
-        newComponentItem.CreateAttribute("Material_ID", materialItem.ID);
+        newComponentItem.CreateAttribute("MaterialID", materialItem.ID);
+        Debug.Log("AddComponentMaterial " + newComponentItem.GetInt("MaterialID"));
 
         ItemTemplate modelItem = TemplateStoreManager.Instance["Item"][newComponentItem.GetInt("Model_ID")];
 
@@ -230,8 +234,10 @@ public class ComponentSystem : MonoBehaviour
 
         ComponentScript newComponentScript = newComponentObject.GetComponent<ComponentScript>();
         newComponentScript.ComponentItem = newComponentItem;
+        Debug.Log("AddComponentMaterial " + newComponentScript.ComponentItem.GetInt("MaterialID"));
 
         newComponentScript.RefreshInfo();
+        MaterialSystem.Instance.FixedMaterialOjects();
 
         if (currentTypeID == 0) { currentTypeID = componentType.typeID; }
 
@@ -361,6 +367,7 @@ public class ComponentSystem : MonoBehaviour
         }
         componentLayout = GetComponentType(currentTypeID).typeObject.GetComponent<GridLayoutGroup>();
         currentComponentNum = GetComponentType(currentTypeID).typeObject.transform.childCount;
+        MaterialSystem.Instance.FixedMaterialOjects();
     }
 
     // public void AddLinkPrompt(ItemVariable newComponentItem, GameObject componentObject, ComponentScript componentScript)

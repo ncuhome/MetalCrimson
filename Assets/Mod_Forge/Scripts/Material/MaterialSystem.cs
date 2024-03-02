@@ -274,4 +274,34 @@ public class MaterialSystem : MonoBehaviour
             MaterialChooseSystem.Instance.showMore = true;
         }
     }
+
+    public void EnterMaterialProgressing()
+    {
+        foreach (var material in materials)
+        {
+            if (material.GetComponent<MaterialScript>().MaterialItem.GetText("Tags").Equals("Product"))
+            {
+                material.GetComponent<MaterialScript>().imageScript.canBeDrag = false;
+            }
+            else
+            {
+                material.GetComponent<MaterialScript>().imageScript.canBeDrag = true;
+            }
+        }
+    }
+
+    public void EnterFoundry()
+    {
+        foreach (var material in materials)
+        {
+            if (material.GetComponent<MaterialScript>().MaterialItem.GetText("Tags").Equals("Product"))
+            {
+                material.GetComponent<MaterialScript>().imageScript.canBeDrag = true;
+            }
+            else
+            {
+                material.GetComponent<MaterialScript>().imageScript.canBeDrag = false;
+            }
+        }
+    }
 }
