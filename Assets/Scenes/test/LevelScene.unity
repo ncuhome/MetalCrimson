@@ -12170,6 +12170,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8400248204764757825, guid: 5a9b12aef701a174b807969cab622577, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 9136003100253612828, guid: 5a9b12aef701a174b807969cab622577, type: 3}
       propertyPath: m_Name
       value: water flower
