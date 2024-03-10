@@ -39,6 +39,7 @@ public class ForgeConfigure : MonoBehaviour
         TypeSystem.Instance.InitTypeSystem();
         UIInputManager.Instance.InitInputManager();
         WeaponSystem.Instance.InitWeaponSystem();
+        TetherSystem.Instance.InitTethers();
         initComplete = true;
     }
 
@@ -48,6 +49,7 @@ public class ForgeConfigure : MonoBehaviour
         UIManager.Instance.chooseMaterial.gameObject.SetActive(true);
         UIManager.Instance.chooseCraft.gameObject.SetActive(false);
         MaterialSystem.Instance.ShowMaterialPanel();
+        MaterialSystem.Instance.EnterMaterialProgressing();
     }
 
     public void ExitMaterialProgressing()
@@ -62,6 +64,7 @@ public class ForgeConfigure : MonoBehaviour
         UIManager.Instance.foundry.gameObject.SetActive(true);
         UIManager.Instance.chooseMaterial.gameObject.SetActive(true);
         UIManager.Instance.chooseCraft.gameObject.SetActive(false);
+        MaterialSystem.Instance.EnterFoundry();
     }
 
     public void ExitFoundry()

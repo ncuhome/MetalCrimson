@@ -155,6 +155,7 @@ public class ComponentSystem : MonoBehaviour
         componentInAnvil = new List<ComponentScript>();
 
         ItemVariable rawIron = new ItemVariable(TemplateStoreManager.Instance["Item"]["RawIron"], true);
+        Debug.Log(rawIron.ID);
         for (int i = 0; i < 2; i++)
         {
             Debug.Log(AddComponent(8083771, rawIron));
@@ -184,17 +185,10 @@ public class ComponentSystem : MonoBehaviour
         ItemVariable newComponentItem = componentsItemStore[componentsItemStore.Count - 1];
 
         newComponentItem.CreateAttribute("Name", newComponentItem.GetText("Name", false));
-        newComponentItem.CreateAttribute("Material_ID", materialItem.ID);
+        newComponentItem.CreateAttribute("MaterialID", materialItem.ID);
 
         ItemTemplate modelItem = TemplateStoreManager.Instance["Item"][newComponentItem.GetInt("Model_ID")];
-        newComponentItem.CreateAttribute("Density", materialItem.GetFloat("Density", false));
-        newComponentItem.CreateAttribute("Mm", newComponentItem.GetFloat("Density") * modelItem.GetFloat("CostNum"));
-        newComponentItem.CreateAttribute("Flexability", materialItem.GetFloat("Flexability", false));
-        newComponentItem.CreateAttribute("Toughness", materialItem.GetFloat("Toughness", false));
-        newComponentItem.CreateAttribute("AntiSolution", materialItem.GetFloat("AntiSolution", false));
-        newComponentItem.CreateAttribute("M", newComponentItem.GetFloat("Mm") * newComponentItem.GetFloat("Weight"));
-        newComponentItem.CreateAttribute("Dur", (newComponentItem.GetFloat("Flexability") / 8 + newComponentItem.GetFloat("Toughness")) * newComponentItem.GetFloat("Duability"));
-        newComponentItem.CreateAttribute("Sharp", newComponentItem.GetFloat("Sharpness") * (10 + newComponentItem.GetFloat("Toughness") / 10));
+
 
         ComponentType componentType = GetComponentType(TemplateStoreManager.Instance["Item"][NameTmp].GetInt("MotherModel_ID"));
         GameObject newComponentObject = Instantiate(componentPrefab, componentType.typeObject.transform);
@@ -203,7 +197,9 @@ public class ComponentSystem : MonoBehaviour
 
         ComponentScript newComponentScript = newComponentObject.GetComponent<ComponentScript>();
         newComponentScript.ComponentItem = newComponentItem;
+
         newComponentScript.RefreshInfo();
+        MaterialSystem.Instance.FixedMaterialOjects();
 
         if (currentTypeID == 0) { currentTypeID = componentType.typeID; }
 
@@ -224,17 +220,11 @@ public class ComponentSystem : MonoBehaviour
         ItemVariable newComponentItem = componentsItemStore[componentsItemStore.Count - 1];
 
         newComponentItem.CreateAttribute("Name", newComponentItem.GetText("Name", false));
-        newComponentItem.CreateAttribute("Material_ID", materialItem.ID);
+        newComponentItem.CreateAttribute("MaterialID", materialItem.ID);
+        Debug.Log("AddComponentMaterial " + newComponentItem.GetInt("MaterialID"));
 
         ItemTemplate modelItem = TemplateStoreManager.Instance["Item"][newComponentItem.GetInt("Model_ID")];
-        newComponentItem.CreateAttribute("Density", materialItem.GetFloat("Density", false));
-        newComponentItem.CreateAttribute("Mm", newComponentItem.GetFloat("Density") * modelItem.GetFloat("CostNum"));
-        newComponentItem.CreateAttribute("Flexability", materialItem.GetFloat("Flexability", false));
-        newComponentItem.CreateAttribute("Toughness", materialItem.GetFloat("Toughness", false));
-        newComponentItem.CreateAttribute("AntiSolution", materialItem.GetFloat("AntiSolution", false));
-        newComponentItem.CreateAttribute("M", newComponentItem.GetFloat("Mm") * newComponentItem.GetFloat("Weight"));
-        newComponentItem.CreateAttribute("Dur", (newComponentItem.GetFloat("Flexability") / 8 + newComponentItem.GetFloat("Toughness")) * newComponentItem.GetFloat("Duability"));
-        newComponentItem.CreateAttribute("Sharp", newComponentItem.GetFloat("Sharpness") * (10 + newComponentItem.GetFloat("Toughness") / 10));
+
 
         ComponentType componentType = GetComponentType(TemplateStoreManager.Instance["Item"][id].GetInt("MotherModel_ID"));
         GameObject newComponentObject = Instantiate(componentPrefab, componentType.typeObject.transform);
@@ -244,8 +234,10 @@ public class ComponentSystem : MonoBehaviour
 
         ComponentScript newComponentScript = newComponentObject.GetComponent<ComponentScript>();
         newComponentScript.ComponentItem = newComponentItem;
+        Debug.Log("AddComponentMaterial " + newComponentScript.ComponentItem.GetInt("MaterialID"));
 
         newComponentScript.RefreshInfo();
+        MaterialSystem.Instance.FixedMaterialOjects();
 
         if (currentTypeID == 0) { currentTypeID = componentType.typeID; }
 
@@ -375,6 +367,7 @@ public class ComponentSystem : MonoBehaviour
         }
         componentLayout = GetComponentType(currentTypeID).typeObject.GetComponent<GridLayoutGroup>();
         currentComponentNum = GetComponentType(currentTypeID).typeObject.transform.childCount;
+        MaterialSystem.Instance.FixedMaterialOjects();
     }
 
     // public void AddLinkPrompt(ItemVariable newComponentItem, GameObject componentObject, ComponentScript componentScript)

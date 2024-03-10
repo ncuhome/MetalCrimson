@@ -93,6 +93,7 @@ public class WeaponSystem : MonoBehaviour
     {
         weaponInfoPanel.weapon = currentWeapon;
         weaponInfoPanel.RefreshInfo();
+        TetherSystem.Instance.RefreshTether();
     }
 
     public void FinishWeaponBuild()
@@ -109,35 +110,35 @@ public class WeaponSystem : MonoBehaviour
 
     public void AddAttribute(ComponentScript componentScript)
     {
-        currentWeapon.weaponItem.CreateAttribute("AntiSolution", currentWeapon.weaponItem.GetFloat("AntiSolution") + componentScript.ComponentItem.GetFloat("AntiSolution"));
-        currentWeapon.weaponItem.CreateAttribute("M", currentWeapon.weaponItem.GetFloat("M") + componentScript.ComponentItem.GetFloat("M"));
-        currentWeapon.weaponItem.CreateAttribute("Dur", currentWeapon.weaponItem.GetFloat("Dur") + componentScript.ComponentItem.GetFloat("Dur"));
-        currentWeapon.weaponItem.CreateAttribute("Sharp", currentWeapon.weaponItem.GetFloat("Sharp") + componentScript.ComponentItem.GetFloat("Sharp"));
-        currentWeapon.weaponItem.CreateAttribute("TotalPretty", currentWeapon.weaponItem.GetFloat("TotalPretty") + componentScript.ComponentItem.GetFloat("Pretty"));
-        if (ComponentSystem.Instance.componentInAnvil.Count > 0)
-        {
-            currentWeapon.weaponItem.CreateAttribute("Pretty", currentWeapon.weaponItem.GetFloat("TotalPretty") / ComponentSystem.Instance.componentInAnvil.Count);
-        }
-        else
-        {
-            currentWeapon.weaponItem.CreateAttribute("Pretty", 0f);
-        }
+        // currentWeapon.weaponItem.CreateAttribute("AntiSolution", currentWeapon.weaponItem.GetFloat("AntiSolution") + componentScript.ComponentItem.GetFloat("AntiSolution"));
+        // currentWeapon.weaponItem.CreateAttribute("M", currentWeapon.weaponItem.GetFloat("M") + componentScript.ComponentItem.GetFloat("M"));
+        // currentWeapon.weaponItem.CreateAttribute("Dur", currentWeapon.weaponItem.GetFloat("Dur") + componentScript.ComponentItem.GetFloat("Dur"));
+        // currentWeapon.weaponItem.CreateAttribute("Sharp", currentWeapon.weaponItem.GetFloat("Sharp") + componentScript.ComponentItem.GetFloat("Sharp"));
+        // currentWeapon.weaponItem.CreateAttribute("TotalPretty", currentWeapon.weaponItem.GetFloat("TotalPretty") + componentScript.ComponentItem.GetFloat("Pretty"));
+        // if (ComponentSystem.Instance.componentInAnvil.Count > 0)
+        // {
+        //     currentWeapon.weaponItem.CreateAttribute("Pretty", currentWeapon.weaponItem.GetFloat("TotalPretty") / ComponentSystem.Instance.componentInAnvil.Count);
+        // }
+        // else
+        // {
+        //     currentWeapon.weaponItem.CreateAttribute("Pretty", 0f);
+        // }
     }
 
     public void RemoveAttribute(ComponentScript componentScript)
     {
-        currentWeapon.weaponItem.CreateAttribute("AntiSolution", currentWeapon.weaponItem.GetFloat("AntiSolution") - componentScript.ComponentItem.GetFloat("AntiSolution"));
-        currentWeapon.weaponItem.CreateAttribute("M", currentWeapon.weaponItem.GetFloat("M") - componentScript.ComponentItem.GetFloat("M"));
-        currentWeapon.weaponItem.CreateAttribute("Dur", currentWeapon.weaponItem.GetFloat("Dur") - componentScript.ComponentItem.GetFloat("Dur"));
-        currentWeapon.weaponItem.CreateAttribute("Sharp", currentWeapon.weaponItem.GetFloat("Sharp") - componentScript.ComponentItem.GetFloat("Sharp"));
-        currentWeapon.weaponItem.CreateAttribute("TotalPretty", currentWeapon.weaponItem.GetFloat("TotalPretty") - componentScript.ComponentItem.GetFloat("Pretty"));
-        if (ComponentSystem.Instance.componentInAnvil.Count > 0)
-        {
-            currentWeapon.weaponItem.CreateAttribute("Pretty", currentWeapon.weaponItem.GetFloat("TotalPretty") / ComponentSystem.Instance.componentInAnvil.Count);
-        }
-        else
-        {
-            currentWeapon.weaponItem.CreateAttribute("Pretty", 0f);
-        }
+        // currentWeapon.weaponItem.CreateAttribute("AntiSolution", currentWeapon.weaponItem.GetFloat("AntiSolution") - componentScript.ComponentItem.GetFloat("AntiSolution"));
+        // currentWeapon.weaponItem.CreateAttribute("M", currentWeapon.weaponItem.GetFloat("M") - componentScript.ComponentItem.GetFloat("M"));
+        // currentWeapon.weaponItem.CreateAttribute("Dur", currentWeapon.weaponItem.GetFloat("Dur") - componentScript.ComponentItem.GetFloat("Dur"));
+        // currentWeapon.weaponItem.CreateAttribute("Sharp", currentWeapon.weaponItem.GetFloat("Sharp") - componentScript.ComponentItem.GetFloat("Sharp"));
+        // currentWeapon.weaponItem.CreateAttribute("TotalPretty", currentWeapon.weaponItem.GetFloat("TotalPretty") - componentScript.ComponentItem.GetFloat("Pretty"));
+        // if (ComponentSystem.Instance.componentInAnvil.Count > 0)
+        // {
+        //     currentWeapon.weaponItem.CreateAttribute("Pretty", currentWeapon.weaponItem.GetFloat("TotalPretty") / ComponentSystem.Instance.componentInAnvil.Count);
+        // }
+        // else
+        // {
+        //     currentWeapon.weaponItem.CreateAttribute("Pretty", 0f);
+        // }
     }
 }

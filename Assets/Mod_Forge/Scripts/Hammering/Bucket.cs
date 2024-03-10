@@ -7,7 +7,7 @@ public class Bucket : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHa
     private bool inFurnace = false;
     private Vector3 lastPosition;
 
-    // Start is called before the first frame update
+    //Start is called before the first frame update
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -47,7 +47,7 @@ public class Bucket : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHa
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "BlastFurnace")
+        if (other.tag == "FBlastFurnace")
         {
             Debug.Log("进入");
             inFurnace = true;
@@ -56,7 +56,7 @@ public class Bucket : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHa
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "BlastFurnace")
+        if (other.tag == "FBlastFurnace")
         {
             Debug.Log("退出");
             inFurnace = false;

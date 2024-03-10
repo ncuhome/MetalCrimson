@@ -1,0 +1,9 @@
+﻿string,string,string,int,int,int,int,int
+NameTmp,Name,Tags,ID,Metal,MetalDegree,NonMetallic,NonMetallicDegree
+RawIron,粗铁,Product,78691,1,2,0,0
+WroughtIron,熟铁,Product,78692,1,2,0,0
+ForgingIron,锻铁,Product,78693,1,3,0,0
+RefinedIron,精炼铁,Product,78694,2,3,0,0
+Bronze,铜,Product,78695,1,1,0,0
+ZincBismuthAlloy,锌铋合金,Product,78696,1,1,0,0
+None,,,78999,,,,
