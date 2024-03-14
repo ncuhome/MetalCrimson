@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿// Ignore Spelling: Rinbone
+
+using System.IO;
 using UnityEngine;
 
 namespace ER
@@ -61,37 +63,71 @@ namespace ER
     public static class ERinbone
     {
         private static System.Random random;
-
         /// <summary>
-        /// Res下的配置目录
+        /// 获取内部设置文件地址
         /// </summary>
-        public static string ResPathConfig
+        public static string DefSettingsAddress
         {
-            get => "configs";
+            get => "config/settings";
         }
-
         /// <summary>
-        /// Res下的音频目录
+        /// 获取用户配置目录地址
         /// </summary>
-        public static string ResPathAudio
+        public static string CustomConfigPath
         {
-            get => "audios";
+            get => Combine(Application.streamingAssetsPath, "config");
         }
-
         /// <summary>
-        /// Res下的图片目录
+        /// 获取用户设置文件地址
         /// </summary>
-        public static string ResPathImage
+        public static string CustomSettingsPath
         {
-            get => "images";
+            get => Combine(CustomConfigPath, "settings.json");
         }
-
         /// <summary>
-        /// Res资源文件夹目录(压缩)
+        /// 获取用户设置文件信息
         /// </summary>
-        public static string ResPath
+        public static FileInfo CustomSettingsFile
         {
-            get => "Assets\\Res";
+            get
+            {
+                FileInfo fileInfo = new FileInfo(CustomSettingsPath);
+                if(!fileInfo.Exists)
+                {
+                    if(!Directory.Exists(CustomConfigPath))
+                    {
+                        Directory.CreateDirectory(CustomConfigPath);
+                    }
+                    fileInfo.Create();
+                }
+                return fileInfo;
+            }
+        }
+        /// <summary>
+        /// 用户自定义资源索引器配置文件地址
+        /// </summary>
+        public static string CustomRIndexerPath
+        {
+            get => Combine(CustomConfigPath, "resource_indexer.json");
+        }
+        /// <summary>
+        /// 用户自定义资源索引器配置文件信息
+        /// </summary>
+        public static FileInfo CustomRIndexerFile
+        {
+            get
+            {
+                FileInfo fileInfo = new FileInfo(CustomRIndexerPath);
+                if (!fileInfo.Exists)
+                {
+                    if (!Directory.Exists(CustomConfigPath))
+                    {
+                        Directory.CreateDirectory(CustomConfigPath);
+                    }
+                    fileInfo.Create();
+                }
+                return fileInfo;
+            }
         }
 
         /// <summary>
@@ -126,20 +162,18 @@ namespace ER
         {
             return str1 + '/' + str2;
         }
-
         /// <summary>
         /// 获取一个随机数
         /// </summary>
         /// <param name="min"></param>
         /// <param name="max"></param>
         /// <returns></returns>
-        public static int RandomNumber(int min, int max)
+        public static int RandomNumber(int min,int max)
         {
-            if (random == null)
+            if(random == null)
                 random = new System.Random();
             return random.Next(min, max);
         }
-
         /// <summary>
         /// 获取一个随机数
         /// </summary>

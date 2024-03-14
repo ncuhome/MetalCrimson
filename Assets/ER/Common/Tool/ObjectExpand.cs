@@ -234,5 +234,36 @@ namespace ER
                 }
             }
         }
+
+        /// <summary>
+        /// 将数组中全部初始化为一个默认值
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="array"></param>
+        /// <param name="defaultValue"></param>
+        public static T[] InitDefault<T>(this T[] array, T defaultValue)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                array[i] = defaultValue;
+            }
+            return array;
+        }
+        /// <summary>
+        /// 将该uid对象注册进管理器
+        /// </summary>
+        /// <param name="obj"></param>
+        public static void Registry(this IUID obj)
+        {
+            UIDManager.Instance.Registry(obj);
+        }
+        /// <summary>
+        /// 将该uid对象从管理器中注销
+        /// </summary>
+        /// <param name="obj"></param>
+        public static void Unregistry(this IUID obj)
+        {
+            UIDManager.Instance.Unregistry(obj);
+        }
     }
 }

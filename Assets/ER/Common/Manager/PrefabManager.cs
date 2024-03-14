@@ -7,7 +7,7 @@ namespace ER
     /// <summary>
     /// 预制体管理器
     /// </summary>
-    public class PrefabManager : MonoSingleton<PrefabManager>,MonoInit
+    public class PrefabManager : MonoSingleton<PrefabManager>, MonoInit
     {
         #region 预制体
 

@@ -1,3 +1,0 @@
-﻿namespace Mod_Item
-{
-}

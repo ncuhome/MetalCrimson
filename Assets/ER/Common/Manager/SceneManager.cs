@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 namespace ER
 {
     ///场景管理器
-    public class SceneManager : MonoSingleton<SceneManager>,MonoInit
+    public class SceneManager : MonoSingleton<SceneManager>, MonoInit
     {
         [Tooltip("目标跳转场景 - 仅编辑器下使用")]
         public string AimScene;
