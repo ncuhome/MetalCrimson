@@ -1,4 +1,6 @@
-﻿using ER.Resource;
+﻿// Ignore Spelling: mold leffs
+
+using ER.Resource;
 
 namespace Mod_Item
 {

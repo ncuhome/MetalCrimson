@@ -71,6 +71,13 @@ namespace ER
             get => "config/settings";
         }
         /// <summary>
+        /// 内部设置文件的资源注册名
+        /// </summary>
+        public static string DefSettingsRegistryName
+        {
+            get => "config:erinbone:settings";
+        }
+        /// <summary>
         /// 获取用户配置目录地址
         /// </summary>
         public static string CustomConfigPath

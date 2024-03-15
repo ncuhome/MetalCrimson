@@ -13,7 +13,7 @@ namespace ER.Resource
         /// <summary>
         /// 资源头
         /// </summary>
-        public string Head { get; }
+        public string Head { get; set; }
         /// <summary>
         /// 加载资源(带有检测避免重复加载)
         /// </summary>

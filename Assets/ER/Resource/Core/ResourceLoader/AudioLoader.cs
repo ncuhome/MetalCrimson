@@ -13,7 +13,12 @@ namespace ER.Resource
     {
         private Dictionary<string, AudioResource> dic = new Dictionary<string, AudioResource>();//资源缓存 注册名:资源
         private HashSet<string> force_load = new HashSet<string>();//用于记录被强制加载的资源的注册名
-        public string Head => "wav";
+        private string head = "wav";
+        public string Head
+        {
+            get => head;
+            set => head = value;
+        }
 
 
 

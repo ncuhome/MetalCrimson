@@ -38,7 +38,7 @@ namespace Mod_Item
         /// <summary>
         /// 显示方式
         /// </summary>
-        public RLinkageEffect.DisplayType displayType;
+        public DisplayType displayType;
     }
 
     public struct LinkageEffectInfo
