@@ -55,17 +55,33 @@ namespace ER.Resource
             return force_load.ToArray();
         }
 
-        public void ELoad(string registryName, Action callback)
+        public void ELoad(string registryName, Action callback, bool skipConvert=false)
         {
             if(!dic.ContainsKey(registryName))
             {
-                Load(registryName, callback);
+                Load(registryName, callback, skipConvert);
             }
         }
-        public async void Load(string registryName, Action callback)
+        public async void Load(string registryName, Action callback, bool skipConvert=false)
         {
             bool defRes;
-            string url = ResourceIndexer.Instance.Convert(registryName, out defRes);
+
+            string url = registryName;
+            if (skipConvert)
+            {
+                if(url.StartsWith('@'))//@开头标识外部加载
+                {
+                    defRes = false;
+                }
+                else
+                {
+                    defRes= true;
+                }
+            }
+            else
+            {
+                url = ResourceIndexer.Instance.Convert(registryName, out defRes);
+            }
             if (defRes)
             {
                 Addressables.LoadAssetAsync<AudioClip>(url).Completed += (handle) =>
@@ -96,9 +112,9 @@ namespace ER.Resource
                 callback?.Invoke();
             }
         }
-        public void LoadForce(string registryName, Action callback)
+        public void LoadForce(string registryName, Action callback, bool skipConvert = false)
         {
-            Load(registryName, callback);
+            Load(registryName, callback,skipConvert);
             force_load.Add(registryName);
         }
 

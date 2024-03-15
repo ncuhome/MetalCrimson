@@ -19,13 +19,15 @@ namespace ER.Resource
         /// </summary>
         /// <param name="registryName"></param>
         /// <param name="callback"></param>
-        public void ELoad(string registryName, Action callback);
+        /// <param name="skipIndexer">是否跳过重定向, 启用时registryName直接作为加载路径</param>
+        public void ELoad(string registryName, Action callback,bool skipConvert=false);
         /// <summary>
         /// 缓存资源
         /// </summary>
         /// <param name="registryName">资源名</param>
         /// <param name="callback">加载完毕后的回调</param>
-        public void Load(string registryName, Action  callback);
+        /// <param name="skipIndexer">是否跳过重定向,启用时registryName直接作为加载路径</param>
+        public void Load(string registryName, Action  callback, bool skipConvert=false);
         /// <summary>
         /// 卸载所有资源缓存, 但是无法卸载 LoadForce 加载的资源
         /// </summary>
@@ -45,7 +47,7 @@ namespace ER.Resource
         /// </summary>
         /// <param name="registryName">资源名</param>
         /// <param name="callback">加载完毕后的回调</param>
-        public void LoadForce(string registryName, Action callback);
+        public void LoadForce(string registryName, Action callback, bool skipConvert = false);
         /// <summary>
         /// 强制卸载所有资源
         /// </summary>

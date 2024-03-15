@@ -156,6 +156,14 @@ namespace ER.Resource
             return GameResource.Instance.Get<T>(registryName);
         }
 
+        /// <summary>
+        /// 添加加载任务(批量加载资源)
+        /// </summary>
+        /// <param name="task"></param>
+        public static void AddLoadTask(LoadTask task)
+        {
+            GameResource.Instance.AddLoadTask(task);
+        }
     }
 
     /// <summary>
@@ -200,37 +208,38 @@ namespace ER.Resource
         /// <param name="callback">资源组加载完毕后回调</param>
         /// <param name="check">是否启用重复性检查, 若启用则会跳过加载已经在缓存中的资源</param>
         /// <param name="registryName"></param>
-        public void Load(Action callback,bool check,params string[] registryName)
+        /// <returns>返回一个反应当前加载情况的类对象</returns>
+        public LoadProgress Load(Action callback,bool check,params string[] registryName)
         {
             if (registryName.Length == 0)
             {
                 callback?.Invoke();
-                return;
+                return LoadProgress.Done;
             }
             Action progressAdd = null;//子回调函数
-            if (callback != null)
+            LoadProgress progress = new LoadProgress();
+            for (int i = 0; i < loadProgresses.Count; i++)//清空加载任务列表中已经完成的任务表
             {
-                for (int i = 0; i < loadProgresses.Count; i++)//清空加载任务列表中已经完成的任务表
+                if (loadProgresses[i].done)
                 {
-                    if (loadProgresses[i].done)
-                    {
-                        loadProgresses.RemoveAt(i);
-                        i--;
-                    }
+                    loadProgresses.RemoveAt(i);
+                    i--;
                 }
-                //创建新的加载任务表
-                LoadProgress progress = new LoadProgress();
-                progress.loaded = 0;
-                progress.count = registryName.Length;
-                progress.callback = callback;
-                progress.done = false;
-                loadProgresses.Add(progress);
-                progressAdd = () =>
-                {
-                    progress.AddProgress();
-                };
             }
-            for(int i=0;i< registryName.Length;i++)//逐个加载资源
+            //创建新的加载任务表
+            progress.loaded = 0;
+            progress.count = registryName.Length;
+            progress.callback = callback;
+            progress.done = false;
+
+            loadProgresses.Add(progress);
+
+            progressAdd = () =>
+            {
+                progress.AddProgress();
+            };
+
+            for (int i=0;i< registryName.Length;i++)//逐个加载资源
             {
                 string head = GR.GetTypeName(registryName[i]);
                 if(loaders.TryGetValue(head,out IResourceLoader loader))
@@ -250,42 +259,40 @@ namespace ER.Resource
                     progressAdd?.Invoke();
                 }
             }
+            return progress;
         }
         /// <summary>
         /// 强制加载指定资源
         /// </summary>
         /// <param name="callback">资源组加载完毕后回调</param>
         /// <param name="registryName">注册名</param>
-        public void LoadForce(Action callback, params string[] registryName)
+        public LoadProgress LoadForce(Action callback, params string[] registryName)
         {
             if (registryName.Length == 0)
             {
                 callback?.Invoke();
-                return;
+                return LoadProgress.Done;
             }
             Action progressAdd = null;//子回调函数
-            if (callback != null)
+            LoadProgress progress = new LoadProgress();
+            for (int i = 0; i < loadProgresses.Count; i++)//清空加载任务列表中已经完成的任务表
             {
-                for (int i = 0; i < loadProgresses.Count; i++)//清空加载任务列表中已经完成的任务表
+                if (loadProgresses[i].done)
                 {
-                    if (loadProgresses[i].done)
-                    {
-                        loadProgresses.RemoveAt(i);
-                        i--;
-                    }
+                    loadProgresses.RemoveAt(i);
+                    i--;
                 }
-                //创建新的加载任务表
-                LoadProgress progress = new LoadProgress();
-                progress.loaded = 0;
-                progress.count = registryName.Length;
-                progress.callback = callback;
-                progress.done = false;
-                loadProgresses.Add(progress);
-                progressAdd = () =>
-                {
-                    progress.AddProgress();
-                };
             }
+            //创建新的加载任务表
+            progress.loaded = 0;
+            progress.count = registryName.Length;
+            progress.callback = callback;
+            progress.done = false;
+            loadProgresses.Add(progress);
+            progressAdd = () =>
+            {
+                progress.AddProgress();
+            };
             for (int i = 0; i < registryName.Length; i++)//逐个加载资源
             {
                 string head = GR.GetTypeName(registryName[i]);
@@ -299,6 +306,7 @@ namespace ER.Resource
                     progressAdd?.Invoke();
                 }
             }
+            return progress;
         }
 
         /// <summary>
@@ -389,23 +397,26 @@ namespace ER.Resource
         {
             return Get(registryName) as T;
         }
-    }
-
-    public struct LoadProgress
-    {
-        public int loaded;
-        public int count;
-        public Action callback;
-        public bool done;
-
-        public void AddProgress()
+        /// <summary>
+        /// 添加加载任务(批量加载资源)
+        /// </summary>
+        /// <param name="task"></param>
+        public void AddLoadTask(LoadTask task)
         {
-            loaded++;
-            if (loaded >= count)
+            switch(task.clear)
             {
-                done = true;
-                callback?.Invoke();
+                case 0:
+                    Unload(task.unload);
+                    break;
+                case 1:
+                    Clear();
+                    break;
+                case 2:
+                    ClearForce();
+                    break;
             }
+            task.progress_load = Load(null, true, task.load);
+            task.progress_load_force = LoadForce(null, task.load_force);
         }
     }
 }
