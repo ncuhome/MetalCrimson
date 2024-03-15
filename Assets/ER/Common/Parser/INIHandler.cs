@@ -247,6 +247,15 @@ namespace ER.Parser
             return sections.Keys.ToArray();
         }
 
+        /// <summary>
+        /// 判断指定节段是否存在
+        /// </summary>
+        /// <param name="sectionName"></param>
+        /// <returns></returns>
+        public bool Contains(string sectionName)
+        {
+            return sections.ContainsKey(sectionName);
+        }
         private string UnescapeValue(string value)
         {
             StringBuilder unescapedValue = new StringBuilder();

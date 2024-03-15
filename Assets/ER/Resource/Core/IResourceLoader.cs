@@ -23,6 +23,8 @@ namespace ER.Resource
         public void ELoad(string registryName, Action callback,bool skipConvert=false);
         /// <summary>
         /// 缓存资源
+        /// 注意: 如果是启用 skipConvert 模式, 那么需要在封装资源时处理新的 registryName ,因为这个模式下 registryName 仅代表加载路径
+        /// 对于这种情况资源注册名可以使用: 加载器的资源头:erinbone:加载路径 , 虽然不能通过这个注册名加载这个资源, 但是可以确保其他资源访问是没有问题的
         /// </summary>
         /// <param name="registryName">资源名</param>
         /// <param name="callback">加载完毕后的回调</param>

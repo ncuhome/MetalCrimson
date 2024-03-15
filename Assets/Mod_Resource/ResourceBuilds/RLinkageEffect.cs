@@ -1,6 +1,6 @@
 ﻿using ER.Resource;
 
-namespace Mod_Item
+namespace Mod_Resource
 {
     /// <summary>
     /// 羁绊

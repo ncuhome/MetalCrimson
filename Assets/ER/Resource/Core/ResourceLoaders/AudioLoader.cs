@@ -69,14 +69,17 @@ namespace ER.Resource
             string url = registryName;
             if (skipConvert)
             {
-                if(url.StartsWith('@'))//@开头标识外部加载
+                if (url.StartsWith('@'))//@开头标识外部加载
                 {
+                    url = url.Substring(1);
                     defRes = false;
                 }
                 else
                 {
-                    defRes= true;
+                    defRes = true;
                 }
+                //处理注册名, head 使用解析器的 head, 模组使用 erinbone, 路径保持原样
+                registryName = $"{head}:erinbone:{url}";
             }
             else
             {

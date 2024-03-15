@@ -102,6 +102,29 @@ namespace ER.Resource
         {
             GameResource.Instance.LoadForce(callback, registryName);
         }
+        /// <summary>
+        /// 使用地址直接加载资源
+        /// </summary>
+        /// <param name="callback">加载完毕后回调</param>
+        /// <param name="check">是否跳过重复性检查</param>
+        /// <param name="head">资源头:决定使用什么加载器加载该资源</param>
+        /// <param name="paths">资源加载路径, 如果@为前缀则表示为外部资源</param>
+        /// <returns></returns>
+        public static LoadProgress LoadWithPath(Action callback, bool check,string head, params string[] paths)
+        {
+            return GameResource.Instance.LoadWithPath(callback, check, head,paths);
+        }
+        /// <summary>
+        /// 使用地址直接加载资源(强制加载)
+        /// </summary>
+        /// <param name="callback">加载完毕后回调</param>
+        /// <param name="head">资源头:决定使用什么加载器加载该资源</param>
+        /// <param name="paths">资源加载路径, 如果@为前缀则表示为外部资源</param>
+        /// <returns></returns>
+        public static LoadProgress LoadWithPathForce(Action callback, string head, params string[] paths)
+        {
+            return GameResource.Instance.LoadWithPathForce(callback,head, paths);
+        }
 
         /// <summary>
         /// 清除所有资源缓存(除了强制加载的资源)
@@ -125,7 +148,7 @@ namespace ER.Resource
         public static void Unload(params string[] registryName)
         {
             GameResource.Instance.Unload(registryName);
-        }
+        } 
         /// <summary>
         /// 判断指定资源是否已经加载
         /// </summary>
@@ -203,6 +226,37 @@ namespace ER.Resource
             loaders.Clear();
         }
         /// <summary>
+        /// 创建一个任务记录器, 返回一个增加进度的委托
+        /// </summary>
+        /// <param name="count"></param>
+        /// <param name="callback"></param>
+        /// <returns></returns>
+        private Action CresteLoadProgress(int count,Action callback,out LoadProgress back_progress)
+        {
+            LoadProgress progress = new LoadProgress();
+            for (int i = 0; i < loadProgresses.Count; i++)//清空加载任务列表中已经完成的任务表
+            {
+                if (loadProgresses[i].done)
+                {
+                    loadProgresses.RemoveAt(i);
+                    i--;
+                }
+            }
+            //创建新的加载任务表
+            progress.loaded = 0;
+            progress.count = count;
+            progress.callback = callback;
+            progress.done = false;
+            loadProgresses.Add(progress);
+
+            back_progress = progress;
+            return () =>
+            {
+                progress.AddProgress();
+            }; 
+        }
+
+        /// <summary>
         /// 加载指定资源
         /// </summary>
         /// <param name="callback">资源组加载完毕后回调</param>
@@ -216,28 +270,8 @@ namespace ER.Resource
                 callback?.Invoke();
                 return LoadProgress.Done;
             }
-            Action progressAdd = null;//子回调函数
-            LoadProgress progress = new LoadProgress();
-            for (int i = 0; i < loadProgresses.Count; i++)//清空加载任务列表中已经完成的任务表
-            {
-                if (loadProgresses[i].done)
-                {
-                    loadProgresses.RemoveAt(i);
-                    i--;
-                }
-            }
-            //创建新的加载任务表
-            progress.loaded = 0;
-            progress.count = registryName.Length;
-            progress.callback = callback;
-            progress.done = false;
-
-            loadProgresses.Add(progress);
-
-            progressAdd = () =>
-            {
-                progress.AddProgress();
-            };
+            LoadProgress progress;
+            Action progressAdd = CresteLoadProgress(registryName.Length,callback,out progress);
 
             for (int i=0;i< registryName.Length;i++)//逐个加载资源
             {
@@ -246,11 +280,11 @@ namespace ER.Resource
                 {
                     if(check)
                     {
-                        loader.ELoad(registryName[i], callback);
+                        loader.ELoad(registryName[i], progressAdd);
                     }
                     else
                     {
-                        loader.Load(registryName[i], callback);
+                        loader.Load(registryName[i], progressAdd);
                     }
                 }
                 else//如果没有找到加载器则报错
@@ -273,26 +307,10 @@ namespace ER.Resource
                 callback?.Invoke();
                 return LoadProgress.Done;
             }
-            Action progressAdd = null;//子回调函数
-            LoadProgress progress = new LoadProgress();
-            for (int i = 0; i < loadProgresses.Count; i++)//清空加载任务列表中已经完成的任务表
-            {
-                if (loadProgresses[i].done)
-                {
-                    loadProgresses.RemoveAt(i);
-                    i--;
-                }
-            }
-            //创建新的加载任务表
-            progress.loaded = 0;
-            progress.count = registryName.Length;
-            progress.callback = callback;
-            progress.done = false;
-            loadProgresses.Add(progress);
-            progressAdd = () =>
-            {
-                progress.AddProgress();
-            };
+
+            LoadProgress progress;
+            Action progressAdd = CresteLoadProgress(registryName.Length, callback, out progress);
+
             for (int i = 0; i < registryName.Length; i++)//逐个加载资源
             {
                 string head = GR.GetTypeName(registryName[i]);
@@ -303,6 +321,76 @@ namespace ER.Resource
                 else//如果没有找到加载器则报错
                 {
                     Debug.LogWarning($"缺失 {head} 资源加载器, <{registryName[i]}>资源加载失败");
+                    progressAdd?.Invoke();
+                }
+            }
+            return progress;
+        }
+        /// <summary>
+        /// 使用地址直接加载资源
+        /// </summary>
+        /// <param name="callback">加载完毕后回调</param>
+        /// <param name="check">是否跳过重复性检查</param>
+        /// <param name="head">资源头:决定使用什么加载器加载该资源</param>
+        /// <param name="paths">资源加载路径, 如果@为前缀则表示为外部资源</param>
+        /// <returns></returns>
+        public LoadProgress LoadWithPath(Action callback,bool check, string head, params string[] paths)
+        {
+            if (paths.Length == 0)
+            {
+                callback?.Invoke();
+                return LoadProgress.Done;
+            }
+            LoadProgress progress;
+            Action progressAdd = CresteLoadProgress(paths.Length, callback, out progress);
+
+            for (int i = 0; i < paths.Length; i++)//逐个加载资源
+            {
+                if (loaders.TryGetValue(head, out IResourceLoader loader))
+                {
+                    if (check)
+                    {
+                        loader.ELoad(paths[i], progressAdd,true);
+                    }
+                    else
+                    {
+                        loader.Load(paths[i], progressAdd,true);
+                    }
+                }
+                else//如果没有找到加载器则报错
+                {
+                    Debug.LogWarning($"缺失 {head} 资源加载器, <{paths[i]}>资源加载失败");
+                    progressAdd?.Invoke();
+                }
+            }
+            return progress;
+        }
+        /// <summary>
+        /// 使用地址直接加载资源(强制加载)
+        /// </summary>
+        /// <param name="callback">加载完毕后回调</param>
+        /// <param name="head">资源头:决定使用什么加载器加载该资源</param>
+        /// <param name="paths">资源加载路径, 如果@为前缀则表示为外部资源</param>
+        /// <returns></returns>
+        public LoadProgress LoadWithPathForce(Action callback, string head, params string[] paths)
+        {
+            if (paths.Length == 0)
+            {
+                callback?.Invoke();
+                return LoadProgress.Done;
+            }
+            LoadProgress progress;
+            Action progressAdd = CresteLoadProgress(paths.Length, callback, out progress);
+
+            for (int i = 0; i < paths.Length; i++)//逐个加载资源
+            {
+                if (loaders.TryGetValue(head, out IResourceLoader loader))
+                {
+                    loader.LoadForce(paths[i], callback,true);
+                }
+                else//如果没有找到加载器则报错
+                {
+                    Debug.LogWarning($"缺失 {head} 资源加载器, <{paths[i]}>资源加载失败");
                     progressAdd?.Invoke();
                 }
             }

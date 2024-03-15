@@ -1,7 +1,7 @@
 ﻿using ER.Resource;
 using UnityEngine;
 
-namespace Mod_Item
+namespace Mod_Resource
 {
     //物品:材料
     public class RMaterial : IResource

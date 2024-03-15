@@ -1,6 +1,7 @@
 ﻿using ER;
 using ER.Resource;
 using ER.Template;
+using Mod_Resource;
 using System;
 using System.Security.Policy;
 using UnityEditor;
@@ -25,6 +26,8 @@ public class GameInit_0 : MonoBehaviour,MonoInit
         configLoader.Head = "config";
         GR.AddLoader(configLoader);
 
+        //语言资源加载器
+        GR.AddLoader(new LanguageLoader());
         MonoLoader.InitCallback();
     }
 }

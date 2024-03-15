@@ -22,6 +22,19 @@ namespace ER.Parser
 
         #region 读取
 
+        public static INIParser ParseFile(string filePath)
+        {
+            INIParser parser = new INIParser();
+            parser.ParseINIFile(filePath);
+            return parser;
+        }
+        public static INIParser ParseText(string text)
+        {
+            INIParser parser = new INIParser();
+            parser.ParseINIText(text);
+            return parser;
+        }
+
         public void ParseINIFile(string filePath)
         {
             if (!File.Exists(filePath))
@@ -78,7 +91,9 @@ namespace ER.Parser
         #endregion 读取
 
         #region 内容操作
-
+        /// <summary>
+        /// 清空所有缓存
+        /// </summary>
         public void Clear()
         {
             sections.Clear();
@@ -123,7 +138,12 @@ namespace ER.Parser
                 }
             }
         }
-
+        /// <summary>
+        /// 获取指定节段的指定键值
+        /// </summary>
+        /// <param name="section"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public string GetValue(string section, string key)
         {
             if (sections.TryGetValue(section, out var sectionData))
@@ -136,7 +156,11 @@ namespace ER.Parser
 
             return null;
         }
-
+        /// <summary>
+        /// 获取指定节段
+        /// </summary>
+        /// <param name="sectionName"></param>
+        /// <returns></returns>
         public Dictionary<string, string> GetSection(string sectionName)
         {
             if (sections.TryGetValue(sectionName, out var sectionData))
@@ -153,6 +177,16 @@ namespace ER.Parser
         {
             return sections.Keys.ToArray();
         }
+        /// <summary>
+        /// 判断指定节段是否存在
+        /// </summary>
+        /// <param name="sectionName"></param>
+        /// <returns></returns>
+        public bool Contains(string sectionName)
+        {
+            return sections.ContainsKey(sectionName);
+        }
+
         private void AddSection(string section)
         {
             if (!sections.ContainsKey(section))
