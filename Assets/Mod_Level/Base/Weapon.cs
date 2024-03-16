@@ -1,24 +1,12 @@
 ﻿using ER.Resource;
+using Mod_Resource;
+using UnityEngine;
 
-namespace Mod_Resource
+namespace Mod_Level
 {
-    public class RWeapon:IResource
+    class Weapon
     {
-        private string registryName;
-        /// <summary>
-        /// 物品贴图资源
-        /// </summary>
-
-        private SpriteResource sprite;
-        public string RegistryName { get => registryName; }
-        /// <summary>
-        /// 显示名称 资源路径
-        /// </summary>
-        private string displayNamePath;
-        /// <summary>
-        /// 显示名称
-        /// </summary>
-        private string displayName;
+        private Sprite sprite;
 
         /// <summary>
         /// 组成部件;

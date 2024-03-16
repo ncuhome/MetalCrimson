@@ -15,7 +15,7 @@ namespace Mod_Resource
     {
         private Dictionary<string, RComponent> dic = new Dictionary<string, RComponent>();//资源缓存 注册名:资源
         private HashSet<string> force_load = new HashSet<string>();//用于记录被强制加载的资源的注册名
-        private string head = "component";
+        private string head = "comp";
         public string Head
         {
             get => head;

@@ -138,6 +138,7 @@ namespace Mod_Resource
         public string displayPath;//相关文本路径
         public string displayNameKey;//名称键
         public string descriptionKey;//描述键
+
         public string moldName;//模具名称
         public LinkageEffectStack[] leffs;//默认羁绊
         public float weight;//默认部件重量

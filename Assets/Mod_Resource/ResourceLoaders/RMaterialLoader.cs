@@ -1,4 +1,7 @@
-﻿using ER.Resource;
+﻿
+
+
+using ER.Resource;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,11 +14,11 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Mod_Resource
 {
-    public class RComponentMoldLoader : IResourceLoader
+    public class RMaterialLoader : IResourceLoader
     {
-        private Dictionary<string, RComponentMold> dic = new Dictionary<string, RComponentMold>();//资源缓存 注册名:资源
+        private Dictionary<string, RMaterial> dic = new Dictionary<string, RMaterial>();//资源缓存 注册名:资源
         private HashSet<string> force_load = new HashSet<string>();//用于记录被强制加载的资源的注册名
-        private string head = "compm";
+        private string head = "mat";
         public string Head
         {
             get => head;
@@ -26,7 +29,7 @@ namespace Mod_Resource
 
         public void Clear()
         {
-            Dictionary<string, RComponentMold> _dic = new Dictionary<string, RComponentMold>();
+            Dictionary<string, RMaterial> _dic = new Dictionary<string, RMaterial>();
             foreach (var res in dic)
             {
                 if (force_load.Contains(res.Key))
@@ -117,10 +120,10 @@ namespace Mod_Resource
             }
         }
 
-        private RComponentMold CreateItem(string registryName, string json)
+        private RMaterial CreateItem(string registryName, string json)
         {
-            RComponentMoldInfo infos = JsonConvert.DeserializeObject<RComponentMoldInfo>(json);
-            RComponentMold component = new RComponentMold(infos);
+            RMaterialInfo infos = JsonConvert.DeserializeObject<RMaterialInfo>(json);
+            RMaterial component = new RMaterial(infos);
             return component;
         }
 
