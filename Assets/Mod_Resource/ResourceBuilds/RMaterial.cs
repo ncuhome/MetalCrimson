@@ -1,4 +1,5 @@
 ﻿using ER.Resource;
+using Mod_Forge;
 using Mod_Resource;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,8 @@ namespace Mod_Resource
         #region 本体属性
 
         private LinkageEffectStack[] leffs;//默认羁绊
+        private string color;//16进制: 金属颜色
+        private TemperatureColor suitable;//适宜锻造温度
 
         #endregion 本体属性
 
@@ -83,6 +86,16 @@ namespace Mod_Resource
         /// 显示描述
         /// </summary>
         public string Description { get => description; }
+        /// <summary>
+        /// 16进制: 金属颜色
+        /// </summary>
+        public string Color { get => color; }
+        /// <summary>
+        /// 适宜锻造温度
+        /// </summary>
+        public TemperatureColor Suitable =>suitable;
+
+
 
         #endregion 访问
 
@@ -93,7 +106,10 @@ namespace Mod_Resource
             textRegistryName = info.textRegistryName;
             displayNameKey = info.displayNameKey;
             descriptionKey = info.descriptionKey;
+
             leffs = info.leffs;
+            color = info.color;
+            suitable = info.suitable;
 
             Dictionary<string, string> displayText = GR.Get<LanguageResource>(textRegistryName)?.GetInfos(displayPath);
             if (displayText != null)
@@ -115,5 +131,7 @@ namespace Mod_Resource
         public string descriptionKey;//描述键
 
         public LinkageEffectStack[] leffs;//默认羁绊
+        public string color;//16进制: 金属颜色
+        public TemperatureColor suitable;//适宜锻造温度
     }
 }

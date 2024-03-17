@@ -1,5 +1,6 @@
 ﻿using ER.Control;
 using ER.Parser;
+using ER.Template;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace ER
 {
-    public class ConsolePanel : MonoControlPanel
+    public class ConsolePanel : MonoControlPanel,MonoInit
     {
         #region 单例封装
 
@@ -206,29 +207,6 @@ namespace ER
         }
 
         /// <summary>
-        /// 向控制台打印消息
-        /// </summary>
-        /// <param name="txt">消息</param>
-        private void _Print(string txt, bool newLine = true)
-        {
-            if (newLine) { monitor.text += '\n'; }
-            monitor.text += txt;
-            LimitLines();
-        }
-
-        /// <summary>
-        /// 向控制台打印异常消息
-        /// </summary>
-        /// <param name="txt"></param>
-        /// <param name="newLine"></param>
-        private void _PrintError(string txt, bool newLine = true)
-        {
-            if (newLine) { monitor.text += '\n'; }
-            monitor.text += new StringBuilder("<color=red>").Append(txt).Append("</color>");
-            LimitLines();
-        }
-
-        /// <summary>
         /// 清空控制台消息
         /// </summary>
         public void Clear()
@@ -253,6 +231,29 @@ namespace ER
         #endregion 功能函数
 
         #region 内部函数
+
+        /// <summary>
+        /// 向控制台打印消息
+        /// </summary>
+        /// <param name="txt">消息</param>
+        private void _Print(string txt, bool newLine = true)
+        {
+            if (newLine) { monitor.text += '\n'; }
+            monitor.text += txt;
+            LimitLines();
+        }
+
+        /// <summary>
+        /// 向控制台打印异常消息
+        /// </summary>
+        /// <param name="txt"></param>
+        /// <param name="newLine"></param>
+        private void _PrintError(string txt, bool newLine = true)
+        {
+            if (newLine) { monitor.text += '\n'; }
+            monitor.text += new StringBuilder("<color=red>").Append(txt).Append("</color>");
+            LimitLines();
+        }
 
         /// <summary>
         /// 限制消息行数
@@ -337,6 +338,15 @@ namespace ER
                     }
                 }
             }
+        }
+
+        public void Init()
+        {
+            if (!gameObject.activeSelf)
+                gameObject.SetActive(true);
+            if (!enabled)
+                enabled = true;
+            MonoLoader.InitCallback();
         }
 
         #endregion 内部函数

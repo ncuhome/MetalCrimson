@@ -592,7 +592,7 @@ Transform:
   m_Children:
   - {fileID: 2542406881288804002}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2542406882129880831
 MonoBehaviour:
@@ -603,15 +603,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 2542406882129880830}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb984f93a5462fd489ac2920248f61ef, type: 3}
+  m_Script: {fileID: 11500000, guid: d152c18bb4dbcbb409c5c5c73cfba720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 2542406881288804029}
-  monitor: {fileID: 2542406882164341430}
-  input: {fileID: 2542406881983814211}
+  handleName: ConsolePanel
+  font: {fileID: 11400000, guid: 1e19c54b2f8cf474087e6df61682aa2b, type: 2}
   maxLines: 50
   maxHistory: 20
   history: []
+  canvas: {fileID: 2542406881288804029}
+  monitor: {fileID: 2542406882164341430}
+  input: {fileID: 2542406881983814211}
 --- !u!1 &2542406882164341424
 GameObject:
   m_ObjectHideFlags: 0

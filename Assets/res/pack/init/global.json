@@ -1,0 +1,9 @@
+{
+    "clear" : 0,
+    "unload" : [],
+    "load":[
+        "comp:mc:",
+        "comp:mc:",
+    ],
+    "load_force":[]
+}

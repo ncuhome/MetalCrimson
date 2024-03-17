@@ -21,6 +21,7 @@ public class GameInit_0 : MonoBehaviour,MonoInit
         GR.AddLoader(new TextLoader());
         GR.AddLoader(new AudioLoader());
         GR.AddLoader(new LanguageLoader());
+        GR.AddLoader(new LoadTaskLoader());
 
         //配置文件加载器(由 TextLoader 改)
         TextLoader configLoader = new TextLoader();
