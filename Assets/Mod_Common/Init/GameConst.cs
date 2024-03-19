@@ -4,6 +4,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ScreenResolution
+{
+    /// <summary>
+    /// 2k分辨率
+    /// </summary>
+    K2,
+    /// <summary>
+    /// 4k分辨率
+    /// </summary>
+    K4,
+}
+
 public static class GameConst 
 {
     /// <summary>

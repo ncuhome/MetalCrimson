@@ -65,6 +65,19 @@ namespace ER
                 Debug.LogWarning("对象池不存在：" + poolName);
             }
         }
+        /// <summary>
+        /// 获取指定池
+        /// </summary>
+        /// <param name="poolName"></param>
+        /// <returns></returns>
+        public ObjectPool GetPool(string poolName)
+        {
+            if(poolDictionary.TryGetValue(poolName,out ObjectPool pool))
+            {
+                return pool;
+            }
+            return null;
+        }
 
         /// <summary>
         /// 注册对象池

@@ -65,6 +65,16 @@ namespace ER.Resource
         /// <param name="registryName">资源注册名</param>
         /// <returns></returns>
         public IResource Get(string registryName);
+        /// <summary>
+        /// 获取所有已经被加载的资源
+        /// </summary>
+        /// <returns></returns>
+        public IResource[] GetAll();
+        /// <summary>
+        /// 获取所有已经被加载的资源名称
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetAllRegistryName();
 
     }
 }

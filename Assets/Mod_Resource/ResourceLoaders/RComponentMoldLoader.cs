@@ -141,5 +141,16 @@ namespace Mod_Resource
                 force_load.Remove(registryName);
             }
         }
+
+        public IResource[] GetAll()
+        {
+            return dic.Values.ToArray();
+        }
+
+        public string[] GetAllRegistryName()
+        {
+            return dic.Keys.ToArray();
+        }
+
     }
 }
