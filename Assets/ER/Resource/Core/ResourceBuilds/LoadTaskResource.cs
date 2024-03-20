@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ER.Resource
 {
     /// <summary>
-    /// 加载包资源
+    /// 音频资源
     /// </summary>
     public class LoadTaskResource : IResource
     {

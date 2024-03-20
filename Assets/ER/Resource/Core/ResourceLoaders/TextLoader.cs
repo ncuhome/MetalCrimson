@@ -13,6 +13,7 @@ namespace ER.Resource
     {
         private Dictionary<string,TextResource> dic = new Dictionary<string, TextResource>();//资源缓存 注册名:资源
         private HashSet<string> force_load = new HashSet<string>();//用于记录被强制加载的资源的注册名
+        private static TextResource error = new TextResource("txt;erinbone:error","txt.error");
         private string head = "txt";
         public string Head
         {
@@ -47,7 +48,12 @@ namespace ER.Resource
 
         public IResource Get(string registryName)
         {
-            return dic[registryName];
+            if (dic.TryGetValue(registryName, out var resource))
+            {
+                return resource;
+            }
+            Debug.LogError($"访问文本资源不存在:{registryName}");
+            return null;
         }
 
         public string[] GetForceResource()
@@ -141,6 +147,5 @@ namespace ER.Resource
         {
             return dic.Keys.ToArray();
         }
-
     }
 }

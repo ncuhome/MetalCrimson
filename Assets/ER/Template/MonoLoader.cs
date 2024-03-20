@@ -29,11 +29,12 @@ namespace ER.Template
                 MonoInit mi = cp as MonoInit;
                 if(mi != null)
                 {
+                    Debug.Log($"初始化:{mi.GetType().Name}, 剩余 {components.Count} 项目");
                     mi.Init();
                 }
                 else
                 {
-                    Destroy(gameObject);
+                    Debug.LogError("错误初始化加载器");
                 }
             }
             else

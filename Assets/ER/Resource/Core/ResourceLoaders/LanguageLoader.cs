@@ -49,7 +49,12 @@ namespace Mod_Resource
 
         public IResource Get(string registryName)
         {
-            return dic[registryName];
+            if (dic.TryGetValue(registryName, out var resource))
+            {
+                return resource;
+            }
+            Debug.LogError($"访问语言资源不存在:{registryName}");
+            return null;
         }
 
         public string[] GetForceResource()

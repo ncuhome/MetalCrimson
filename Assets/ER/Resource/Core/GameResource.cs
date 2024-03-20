@@ -10,7 +10,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.Networking;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using static ER.Resource.GameResource;
-using static UnityEngine.Rendering.PostProcessing.PostProcessResources;
 
 namespace ER.Resource
 {
@@ -58,23 +57,26 @@ namespace ER.Resource
             string[] parts = registryName.Split(':');
             return ERinbone.Combine(parts[0], parts[2]);
         }
+
         /// <summary>
-        /// 获取注册名部分路径
+        /// 获取注册名的部分路径
         /// </summary>
         /// <param name="registryName"></param>
         /// <returns></returns>
         public static string GetAddress(string registryName)
         {
             string[] parts = registryName.Split(':');
-            string path = parts[2];
-            for(int i=3;i<parts.Length;i++)
+            string address = string.Empty;
+            for (int i = 2; i < parts.Length; i++)
             {
-                path += ":" + parts[i];
+                address += parts[i];
+                if (i < parts.Length - 1)
+                {
+                    address += ":";
+                }
             }
-            return path;
+            return address;
         }
-
-
 
         /// <summary>
         /// 添加资源加载器
@@ -194,7 +196,6 @@ namespace ER.Resource
         {
             return GameResource.Instance.Get<T>(registryName);
         }
-
         /// <summary>
         /// 获取指定资源类型的所有已被加载的资源
         /// </summary>

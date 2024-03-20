@@ -30,17 +30,23 @@ public class GameSettings : MonoSingleton<GameSettings>,ISettings,MonoInit
     
     public void Init()
     {
+        ConsolePanel.Print("[GameSettings]: 初始化中");
+        Debug.Log("[GameSettings]: 初始化中");
         configs = new INIParser();
         changes = new INIHandler();
-        GR.LoadWithPathForce(LoadCustom, "config",ERinbone.DefSettingsAddress);
+        GR.LoadForce(LoadCustom,ERinbone.DefSettingsRegistryName);
     }
 
     private void LoadCustom()
     {
+        ConsolePanel.Print("[GameSettings]: 完成本地配置加载");
+        Debug.Log("[GameSettings]: 完成本地配置加载");
         GR.LoadWithPathForce(InitUpdate, "config",'@'+ERinbone.CustomSettingsPath);
     }
     private void InitUpdate()//加载完资源后开始注入配置信息
     {
+        ConsolePanel.Print("[GameSettings]: 完成外部配置加载");
+        Debug.Log("[GameSettings]: 完成外部配置加载");
         string def_txt = GR.Get<TextResource>($"config:erinbone:{ERinbone.DefSettingsAddress}").Value;
         string cus_txt = GR.Get<TextResource>($"config:erinbone:{ERinbone.CustomSettingsPath}").Value;
         configs.ParseINIText(def_txt);

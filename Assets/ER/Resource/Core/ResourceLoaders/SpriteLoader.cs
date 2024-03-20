@@ -48,7 +48,12 @@ namespace ER.Resource
 
         public IResource Get(string registryName)
         {
-            return dic[registryName];
+            if (dic.TryGetValue(registryName, out var resource))
+            {
+                return resource;
+            }
+            Debug.LogError($"访问图片资源不存在:{registryName}");
+            return null;
         }
 
         public string[] GetForceResource()
@@ -143,6 +148,5 @@ namespace ER.Resource
         {
             return dic.Keys.ToArray();
         }
-
     }
 }
