@@ -1,0 +1,7 @@
+{
+    "registryName":"cmt:mc:held",
+    "spriteName":"img:mc:cmt/held",
+    "textRegistryName":"lang:mc:cmt/infos",
+
+    "displayPath":"held"
+}

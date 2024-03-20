@@ -1,0 +1,14 @@
+{
+    "registryName":"compm:mc:smooth_long_pole",
+    "spriteName":"img:mc:compm/smooth_long_pole",
+    "textRegistryName":"lang:mc:compm/infos",
+    
+    "displayPath":"smooth_long_pole",
+    "displayNameKey":"displayName",
+    "descriptionKey":"description",
+
+    "type":"cmt:mc:pole",
+    "target":"comp:mc:smooth_long_pole",
+    "muti_weight":1,
+    "cost":2
+}

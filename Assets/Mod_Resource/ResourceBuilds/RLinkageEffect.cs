@@ -22,10 +22,9 @@ namespace Mod_Resource
         private string spriteName;//图片资源的注册名
         private string textRegistryName;//文本资源注册名
         private string displayPath;//相关文本路径
-        private string displayNameKey;//名称键
-        private string descriptionKey;//描述键
 
         private DisplayType displayType;//显示方式
+        private int[] activation_threshold;//激活阈值
 
         private SpriteResource sprite;//图片资源
         private string displayName;//显示名称
@@ -45,14 +44,6 @@ namespace Mod_Resource
         /// 相关文本路径
         /// </summary>
         public string DisplayPath { get => displayPath; }
-        /// <summary>
-        /// 名称键
-        /// </summary>
-        public string DisplayNameKey { get => displayNameKey; }
-        /// <summary>
-        /// 描述键
-        /// </summary>
-        public string DescriptionKey { get => descriptionKey; }
         /// <summary>
         /// 显示方式
         /// </summary>
@@ -75,16 +66,15 @@ namespace Mod_Resource
             registryName = info.registryName;
             spriteName = info.spriteName;
             textRegistryName = info.textRegistryName;
-            displayNameKey = info.displayNameKey;
-            descriptionKey = info.descriptionKey;
 
             displayType = info.displayType;
+            activation_threshold = info.activation_threshold;
 
             Dictionary<string, string> displayText = GR.Get<LanguageResource>(textRegistryName)?.GetInfos(displayPath);
             if (displayText != null)
             {
-                displayName = displayText["displayName"];
-                description = displayText["description"];
+                displayName = displayText[MetalCrimson.NameKey];
+                description = displayText[MetalCrimson.DescriptionKey];
             }
             sprite = GR.Get<SpriteResource>(spriteName);
         }
@@ -100,10 +90,9 @@ namespace Mod_Resource
         public string spriteName;//图片资源的注册名
         public string textRegistryName;//文本资源注册名
         public string displayPath;//相关文本路径
-        public string displayNameKey;//名称键
-        public string descriptionKey;//描述键
 
         public DisplayType displayType;//显示方式
+        public int[] activation_threshold;//激活阈值
     }
 
     //羁绊堆

@@ -1,0 +1,9 @@
+{
+    "registryName":"cmt:mc:axe(本体注册名)",
+    "spriteName":"img:mc:axe(图片注册名)",
+    "textRegistryName":"lang:mc:cmt/infos(引用文本注册名)",
+
+    "displayPath":"axe(文本键)",
+    "displayNameKey":"displayName(名称键)",
+    "descriptionKey":"description(描述)"
+}

@@ -1,0 +1,17 @@
+{
+    "clear":0,
+    "unload":[],
+    "load":[
+        "compm:mc:cross_quillion",
+        "compm:mc:gaint_sword",
+        "compm:mc:hand_axe",
+        "compm:mc:long_sword",
+        "compm:mc:sharp_held",
+        "compm:mc:short_spear",
+        "compm:mc:smooth_bind",
+        "compm:mc:smooth_hilt",
+        "compm:mc:smooth_long_pole",
+        "compm:mc:straight_sword"
+    ],
+    "load_force":[]
+}

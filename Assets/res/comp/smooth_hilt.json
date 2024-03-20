@@ -1,0 +1,26 @@
+{
+    "registryName":"comp:mc:smooth_hilt",
+    "spriteName":"img:mc:comp/smooth_hilt",
+    "textRegistryName":"lang:mc:comp/infos",
+    
+    "displayPath":"smooth_hilt",
+    "descriptions":[
+        {
+            "key":"displayName",
+            "tag":"display"
+        },
+        {
+            "key":"description",
+            "tag":"display"
+        }
+
+    ],
+    "leff":[
+    ],
+    "mold":"compm:mc:smooth_hilt",
+    "weight":1,
+    "in_diameter":180,
+    "out_diameter":10,
+    "stackable":true,
+    "amountMax":64
+}

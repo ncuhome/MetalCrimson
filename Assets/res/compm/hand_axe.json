@@ -1,0 +1,14 @@
+{
+    "registryName":"compm:mc:hand_axe",
+    "spriteName":"img:mc:compm/mooth_hilt",
+    "textRegistryName":"lang:mc:compm/infos",
+    
+    "displayPath":"hand_axe",
+    "displayNameKey":"displayName",
+    "descriptionKey":"description",
+
+    "type":"cmt:mc:hilt",
+    "target":"comp:mc:hand_axe",
+    "muti_weight":1,
+    "cost":0.5
+}

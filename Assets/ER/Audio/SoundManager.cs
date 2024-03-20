@@ -14,7 +14,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 namespace ER
 {
     /// <summary>
-    /// 声音管理器, 已接入 GameResouce 系统
+    /// 声音管理器, 已接入 GameResouce 系统 
     /// </summary>
     public class SoundManager: MonoSingleton<SoundManager>,MonoInit
     {

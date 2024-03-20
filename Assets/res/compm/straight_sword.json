@@ -1,0 +1,14 @@
+{
+    "registryName":"compm:mc:straight_sword",
+    "spriteName":"img:mc:compm/straight_sword",
+    "textRegistryName":"lang:mc:compm/infos",
+    
+    "displayPath":"straight_sword",
+    "displayNameKey":"displayName",
+    "descriptionKey":"description",
+
+    "type":"cmt:mc:sword",
+    "target":"comp:mc:straight_sword",
+    "muti_weight":1,
+    "cost":1
+}

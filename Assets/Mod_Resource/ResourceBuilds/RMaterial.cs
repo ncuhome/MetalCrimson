@@ -75,12 +75,12 @@ namespace Mod_Resource
         /// <summary>
         /// 显示名称
         /// </summary>
-        public string DisplayName { get => descriptions["name"].text;  }
+        public string DisplayName { get => descriptions[MetalCrimson.NameKey].text;  }
 
         /// <summary>
         /// 显示描述
         /// </summary>
-        public string Description { get => descriptions["description"].text;  }
+        public string Description { get => descriptions[MetalCrimson.DescriptionKey].text;  }
         /// <summary>
         /// 16进制: 金属颜色
         /// </summary>

@@ -1,0 +1,15 @@
+{
+    
+    "registryName":"compm:mc:cross_quillion(注册名)",
+    "spriteName":"img:mc:cross_quillion(图片注册名)",
+    "textRegistryName":"lang:mc:compm/infos(引用文本注册名)",
+
+    "displayPath":"cross_quillion(文本键)",
+    "displayNameKey":"displayName(名称文本键)",
+    "descriptionKey":"description(描述文本键)",
+
+    "type":"cmt:mc:quillion(所属类型)",
+    "target":"comp:mc:cross_quillion(目标部件)",
+    "muti_weight":1,//重量系数
+    "cost":0.5//建造消耗
+}

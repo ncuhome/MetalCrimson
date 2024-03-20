@@ -1,0 +1,26 @@
+{
+    "registryName":"comp:mc:long_sword",
+    "spriteName":"img:mc:comp/long_sword",
+    "textRegistryName":"lang:mc:comp/infos",
+    
+    "displayPath":"long_sword",
+    "descriptions":[
+        {
+            "key":"displayName",
+            "tag":"display"
+        },
+        {
+            "key":"description",
+            "tag":"display"
+        }
+
+    ],
+    "leff":[
+    ],
+    "mold":"compm:mc:long_sword",
+    "weight":1,
+    "in_diameter":0,
+    "out_diameter":200,
+    "stackable":true,
+    "amountMax":64
+}

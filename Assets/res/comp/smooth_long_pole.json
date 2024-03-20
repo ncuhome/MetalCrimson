@@ -1,0 +1,26 @@
+{
+    "registryName":"comp:mc:smooth_long_pole",
+    "spriteName":"img:mc:comp/smooth_long_pole",
+    "textRegistryName":"lang:mc:comp/infos",
+    
+    "displayPath":"smooth_long_pole",
+    "descriptions":[
+        {
+            "key":"displayName",
+            "tag":"display"
+        },
+        {
+            "key":"description",
+            "tag":"display"
+        }
+
+    ],
+    "leff":[
+    ],
+    "mold":"compm:mc:smooth_long_pole",
+    "weight":1,
+    "in_diameter":160,
+    "out_diameter":10,
+    "stackable":true,
+    "amountMax":64
+}

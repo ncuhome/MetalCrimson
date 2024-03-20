@@ -1,0 +1,7 @@
+{
+    "registryName":"cmt:mc:sword",
+    "spriteName":"img:mc:cmt/sword",
+    "textRegistryName":"lang:mc:cmt/infos",
+
+    "displayPath":"sword"
+}

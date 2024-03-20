@@ -1,0 +1,32 @@
+{
+    "cross_quillion":{
+        "name":"十字护手"
+    },
+    "gaint_sword":{
+        "name":"直巨剑刃"
+    },
+    "hand_axe":{
+        "name":"手斧刃"
+    },
+    "long_sword":{
+        "name":"双手剑刃"
+    },
+    "sharp_held":{
+        "name":"尖柄头"
+    },
+    "short_spear":{
+        "name":"短矛矛头"
+    },
+    "smooth_bind":{
+        "name":"平滑绑定节"
+    },
+    "smooth_hilt":{
+        "name":"平滑握柄"
+    },
+    "smooth_long_pole":{
+        "name":"平滑长杆"
+    },
+    "straight_sword":{
+        "name":"直剑刃"
+    }
+}

@@ -1,8 +1,10 @@
 ﻿using ER;
 using ER.Parser;
+using ER.Resource;
 using ER.Save;
 using Mod_Rouge;
 using System.IO;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -316,6 +318,15 @@ public partial class AInterpreter : DefaultInterpreter
         return Data.Empty;
     }
 
+    private Data CMD_forge_load_packs(Data[] parameters)
+    {
+        GR.Load(()=>
+        {
+            Print("完成加载");
+        },true,"pack:mc:all/cmt", "pack:mc:all/compm");
+        return Data.Empty;
+    }
+
     #endregion 指令函数
 
     public override Data EffectuateSuper(string commandName, Data[] parameters)
@@ -352,23 +363,8 @@ public partial class AInterpreter : DefaultInterpreter
             case "map_select"://模拟肉鸽地图选择房间
                 return CMD_map_select(parameters);
 
-            case "forge_addItem"://材料加工：往炉子里加物品
-                return CMD_forge_addItem(parameters);
-
-            case "forge_removeItem"://材料加工：从炉子内移除物品
-                return CMD_forge_removeItem(parameters);
-
-            case "forge_temperature"://材料加工：显示炉子温度
-                return CMD_forge_temperature();
-
-            case "forge_temperature_set"://材料加工：控制炉子温度
-                return CMD_forge_temperature_set(parameters);
-
-            case "forge_end":
-                return CMD_forge_end();
-
-            case "forge":
-                return CMD_forge(parameters);
+            case "forge_load_packs":
+                return CMD_forge_load_packs(parameters);
 
             default:
                 return Data.Error;

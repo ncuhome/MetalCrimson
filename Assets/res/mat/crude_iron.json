@@ -1,0 +1,14 @@
+{
+    "registryName":"material:mc:crude iron",
+    "effects":[
+        {
+            "effect_name":"metal",
+            "level":1
+        },
+        {
+            "effect_name":"metality",
+            "level":2
+        }
+    ],
+    "weight":0
+}

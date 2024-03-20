@@ -1,0 +1,12 @@
+{
+    "registryName":"leff:mc:metality",
+    "spriteName":"img:mc:leff/metality",
+    "textRegistryName":"lang:mc:leff/infos",
+    "displayPath":"metality",
+    "displayNameKey":"displayName",
+    "descriptionKey":"description",
+    "displayType":1,
+    "activation_threshold":[
+        0
+    ]
+}

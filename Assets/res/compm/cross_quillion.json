@@ -1,0 +1,15 @@
+{
+    
+    "registryName":"compm:mc:cross_quillion",
+    "spriteName":"img:mc:compm/cross_quillion",
+    "textRegistryName":"lang:mc:compm/infos",
+
+    "displayPath":"cross_quillion",
+    "displayNameKey":"displayName",
+    "descriptionKey":"description",
+
+    "type":"cmt:mc:quillion",
+    "target":"comp:mc:cross_quillion",
+    "muti_weight":1,
+    "cost":0.5
+}

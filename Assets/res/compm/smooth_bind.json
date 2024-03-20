@@ -1,0 +1,14 @@
+{
+    "registryName":"compm:mc:smooth_bind",
+    "spriteName":"img:mc:compm/mooth_hilt",
+    "textRegistryName":"lang:mc:compm/infos",
+    
+    "displayPath":"smooth_bind",
+    "displayNameKey":"displayName",
+    "descriptionKey":"description",
+
+    "type":"cmt:mc:hilt",
+    "target":"comp:mc:smooth_bind",
+    "muti_weight":1,
+    "cost":0.5
+}

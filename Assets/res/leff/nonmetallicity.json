@@ -1,0 +1,12 @@
+{
+    "registryName":"leff:mc:nonmetallicity",
+    "spriteName":"img:mc:leff/nonmetallicity",
+    "textRegistryName":"lang:mc:leff/infos",
+    "displayPath":"nonmetallicity",
+    "displayNameKey":"displayName",
+    "descriptionKey":"description",
+    "displayType":1,
+    "activation_threshold":[
+        0
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "aolloy":{
+        "displayName":"合金",
+        "description":""
+    },
+    "ignite":{
+        "displayName":"点燃",
+        "description":""
+    },
+    "metal":{
+        "displayName":"金属",
+        "description":""
+    },
+    "metality":{
+        "displayName":"金属度",
+        "description":""
+    },
+    "nonmetal":{
+        "displayName":"非金属",
+        "description":""
+    },
+    "nonmetallicity":{
+        "displayName":"非金属度",
+        "description":""
+    },
+    "thermophilic":{
+        "displayName":"嗜热",
+        "description":""
+    }
+}

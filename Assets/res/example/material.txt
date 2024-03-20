@@ -1,0 +1,20 @@
+{
+    //注册名
+    "registryName":"material:mc:crude iron",
+    //拥有羁绊
+    "effects":[
+        //羁绊结构体
+        {
+            //羁绊注册名
+            "effect_name":"linkage_effect:mc:metal",
+            //羁绊等级
+            "level":1
+        },
+        {
+            "effect_name":"linkage_effect:mc:metality",
+            "level":2
+        }
+    ],
+    //重量
+    "weight":0
+}

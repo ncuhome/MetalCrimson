@@ -1,0 +1,14 @@
+{
+    "registryName":"compm:mc:short_spear",
+    "spriteName":"img:mc:compm/mooth_hilt",
+    "textRegistryName":"lang:mc:compm/infos",
+    
+    "displayPath":"short_spear",
+    "displayNameKey":"displayName",
+    "descriptionKey":"description",
+
+    "type":"cmt:mc:hilt",
+    "target":"comp:mc:short_spear",
+    "muti_weight":1,
+    "cost":0.5
+}

@@ -1,0 +1,12 @@
+{
+    "page":{
+        "title_0":"选择模具类型",
+        "title_1":"选择模具",
+        "title_2":"选择材料"
+    },
+    "info_panel":{
+        "io":"I/O",
+        "cost":"消耗",
+        "description":"描述"
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "registryName":"leff:mc:ignite",
+    "spriteName":"img:mc:leff/ignite",
+    "textRegistryName":"lang:mc:leff/infos",
+    "displayPath":"ignite",
+    "displayNameKey":"displayName",
+    "descriptionKey":"description",
+    "displayType":0,
+    "activation_threshold":[
+        3,5,7
+    ]
+}

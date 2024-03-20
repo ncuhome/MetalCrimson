@@ -13,7 +13,7 @@ namespace ER.Resource
     {
         private Dictionary<string,TextResource> dic = new Dictionary<string, TextResource>();//资源缓存 注册名:资源
         private HashSet<string> force_load = new HashSet<string>();//用于记录被强制加载的资源的注册名
-        private string head = "img";
+        private string head = "txt";
         public string Head
         {
             get => head;

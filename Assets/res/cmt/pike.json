@@ -1,0 +1,7 @@
+{
+    "registryName":"cmt:mc:pike",
+    "spriteName":"img:mc:cmt/pike",
+    "textRegistryName":"lang:mc:cmt/infos",
+
+    "displayPath":"pike"
+}

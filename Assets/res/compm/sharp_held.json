@@ -1,0 +1,14 @@
+{
+    "registryName":"compm:mc:sharp_held",
+    "spriteName":"img:mc:compm/mooth_hilt",
+    "textRegistryName":"lang:mc:compm/infos",
+    
+    "displayPath":"sharp_held",
+    "displayNameKey":"displayName",
+    "descriptionKey":"description",
+
+    "type":"cmt:mc:hilt",
+    "target":"comp:mc:sharp_held",
+    "muti_weight":1,
+    "cost":0.5
+}

@@ -1,0 +1,26 @@
+{
+    "registryName":"comp:mc:smooth_bind",
+    "spriteName":"img:mc:comp/smooth_bind",
+    "textRegistryName":"lang:mc:comp/infos",
+    
+    "displayPath":"smooth_bind",
+    "descriptions":[
+        {
+            "key":"displayName",
+            "tag":"display"
+        },
+        {
+            "key":"description",
+            "tag":"display"
+        }
+
+    ],
+    "leff":[
+    ],
+    "mold":"compm:mc:smooth_bind",
+    "weight":1,
+    "in_diameter":100,
+    "out_diameter":160,
+    "stackable":true,
+    "amountMax":64
+}

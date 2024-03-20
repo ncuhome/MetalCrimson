@@ -1,0 +1,26 @@
+{
+    "registryName":"comp:mc:cross_quillion",
+    "spriteName":"img:mc:comp/cross_quillion",
+    "textRegistryName":"lang:mc:comp/infos",
+    
+    "displayPath":"cross_quillion",
+    "descriptions":[
+        {
+            "key":"displayName",
+            "tag":"display"
+        },
+        {
+            "key":"description",
+            "tag":"display"
+        }
+
+    ],
+    "leff":[
+    ],
+    "mold":"compm:mc:cross_quillion",
+    "weight":1,
+    "in_diameter":180,
+    "out_diameter":180,
+    "stackable":true,
+    "amountMax":64
+}

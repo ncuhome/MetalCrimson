@@ -58,6 +58,21 @@ namespace ER.Resource
             string[] parts = registryName.Split(':');
             return ERinbone.Combine(parts[0], parts[2]);
         }
+        /// <summary>
+        /// 获取注册名部分路径
+        /// </summary>
+        /// <param name="registryName"></param>
+        /// <returns></returns>
+        public static string GetAddress(string registryName)
+        {
+            string[] parts = registryName.Split(':');
+            string path = parts[2];
+            for(int i=3;i<parts.Length;i++)
+            {
+                path += ":" + parts[i];
+            }
+            return path;
+        }
 
 
 

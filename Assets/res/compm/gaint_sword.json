@@ -1,0 +1,14 @@
+{
+    "registryName":"compm:mc:gaint_sword",
+    "spriteName":"img:mc:compm/mooth_hilt",
+    "textRegistryName":"lang:mc:compm/infos",
+    
+    "displayPath":"gaint_sword",
+    "displayNameKey":"displayName",
+    "descriptionKey":"description",
+
+    "type":"cmt:mc:hilt",
+    "target":"comp:mc:gaint_sword",
+    "muti_weight":1,
+    "cost":0.5
+}

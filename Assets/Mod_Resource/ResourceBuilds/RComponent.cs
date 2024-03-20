@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: mold leffs
+﻿// Ignore Spelling: Mold
 
 using ER.ItemStorage;
 using ER.Resource;
@@ -7,6 +7,9 @@ using System.Linq;
 
 namespace Mod_Resource
 {
+    /// <summary>
+    /// 部件模具
+    /// </summary>
     public class RComponent : IItemResource
     {
         #region 引用资源
@@ -14,16 +17,19 @@ namespace Mod_Resource
         private string spriteName;//图片资源的注册名
         private string textRegistryName;//文本资源注册名
         private string displayPath;//相关文本路径
+        private Dictionary<string,DescriptionInfo> descriptions;//描述
+
         #endregion 引用资源
 
         #region 本体属性
 
-        private string moldName;//模具名称
-        private LinkageEffectStack[] leffs;//默认羁绊
-        private float weight;//默认部件重量
-        private int in_diameter;//输入直径
-        private int out_diameter;//输出直径
-        private float cost;//建造花费
+        private string moldName;//模具注册名
+        private LinkageEffectStack[] leffs;//部件羁绊堆
+        private float weight;//重量
+        private int in_diameter;//IN端直径
+        private int out_diameter;//OUT端直径
+        private bool stackable;//是否可堆叠
+        private int amountMax;//堆叠上限
 
         #endregion 本体属性
 
@@ -33,21 +39,23 @@ namespace Mod_Resource
 
         #endregion 引用资源属性
 
-        #region 物品堆
-
-        private bool stackable;//是否可堆叠
-        private int amountMax;//堆叠上限
-        private Dictionary<string, DescriptionInfo> descriptions;//描述文本
-        #endregion
-
-        #region 访问
-
-        public string RegistryName => registryName;
-
         /// <summary>
-        /// 图片资源名称
+        /// IN端直径
         /// </summary>
-        public string SpriteName => spriteName;
+        public int In_diameter => in_diameter;
+        /// <summary>
+        /// OUT端直径
+        /// </summary>
+        public int Out_diameter => out_diameter;
+        /// <summary>
+        /// 所带羁绊堆
+        /// </summary>
+        public LinkageEffectStack[] Leffs => leffs;
+        public string RegistryName { get => registryName; }
+        /// <summary>
+        /// 图片资源注册名
+        /// </summary>
+        public string SpriteName { get => spriteName; }
         /// <summary>
         /// 文本资源注册名
         /// </summary>
@@ -59,81 +67,52 @@ namespace Mod_Resource
         public string DisplayPath { get => displayPath; }
 
         /// <summary>
-        /// 模具注册名
+        /// 显示名称
+        /// </summary>
+        public string DisplayName { get => descriptions[MetalCrimson.NameKey].text; }
+
+        /// <summary>
+        /// 描述
+        /// </summary>
+        public string Description { get => descriptions[MetalCrimson.DescriptionKey].text; }
+        /// <summary>
+        /// 所属模具
         /// </summary>
         public string MoldName => moldName;
-
-        /// <summary>
-        /// 默认羁绊
-        /// </summary>
-        public LinkageEffectStack[] Leffs { get => leffs; }
-
-        /// <summary>
-        /// 默认部件重量
-        /// </summary>
-        public float Weight { get => weight; }
-
-        /// <summary>
-        /// 输入直径
-        /// </summary>
-        public int In_diameter { get => in_diameter; }
-
-        /// <summary>
-        /// 输出直径
-        /// </summary>
-        public int Out_diameter { get => out_diameter; }
-        /// <summary>
-        /// 建造花费
-        /// </summary>
-        public float Cost { get => cost; }  
         /// <summary>
         /// 图片资源
         /// </summary>
-        public SpriteResource Sprite=> sprite;
-
-        /// <summary>
-        /// 显示名称
-        /// </summary>
-        public string DisplayName { get => descriptions["name"].text; }
-
-        /// <summary>
-        /// 显示描述
-        /// </summary>
-        public string Description { get => descriptions["description"].text; }
+        public SpriteResource Sprite { get => sprite; }
 
         public DescriptionInfo[] Descriptions => descriptions.Values.ToArray();
-        public bool Stackable => stackable;
-        public int AmountMax => amountMax;
 
-        #endregion 访问
+        public bool Stackable => stackable;
+
+        public int AmountMax => amountMax;
 
         public RComponent(RComponentInfo info)
         {
             registryName = info.registryName;
             spriteName = info.spriteName;
             textRegistryName = info.textRegistryName;
-            moldName = info.moldName;
-            leffs = info.leffs;
+            displayPath = info.displayPath;
+            moldName = info.mold;
+            leffs = info.leff;
             weight = info.weight;
             in_diameter = info.in_diameter;
             out_diameter = info.out_diameter;
-            cost = info.cost;
-
             stackable = info.stackable;
             amountMax = info.amountMax;
 
-            Dictionary<string,string> displayText = GR.Get<LanguageResource>(textRegistryName)?.GetInfos(displayPath);
-            if(displayText!=null)
+            Dictionary<string, string> displayText = GR.Get<LanguageResource>(textRegistryName)?.GetInfos(displayPath);
+            descriptions = new Dictionary<string, DescriptionInfo>();
+            if (displayText != null)
             {
-                DescriptionInfo[] dif = info.descriptions;
-                for (int i = 0; i < dif.Length; i++)
+                for(int i =0;i<info.descriptions.Length;i++)
                 {
-                    string key = dif[i].key;
-                    DescriptionInfo ifs = new DescriptionInfo();
-                    ifs.key = key;
-                    ifs.text = displayText[key];
-                    ifs.tag = dif[i].tag;
-                    descriptions[key] = ifs;
+                    DescriptionInfo des = info.descriptions[i];
+                    des.text = displayText[des.key];
+                    descriptions[des.key] = des;
                 }
             }
             sprite = GR.Get<SpriteResource>(spriteName);
@@ -146,14 +125,13 @@ namespace Mod_Resource
         public string spriteName;//图片资源的注册名
         public string textRegistryName;//文本资源注册名
         public string displayPath;//相关文本路径
-        public DescriptionInfo[] descriptions;//描述
 
-        public string moldName;//模具名称
-        public LinkageEffectStack[] leffs;//默认羁绊
-        public float weight;//默认部件重量
-        public int in_diameter;//输入直径
-        public int out_diameter;//输出直径
-        public float cost;//建造花费
+        public DescriptionInfo[] descriptions;
+        public string mold;//模具注册名
+        public LinkageEffectStack[] leff;//部件羁绊堆
+        public float weight;//重量
+        public int in_diameter;//IN端直径
+        public int out_diameter;//OUT端直径
 
         public bool stackable;//是否可堆叠
         public int amountMax;//堆叠上限

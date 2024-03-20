@@ -18,14 +18,11 @@ namespace Mod_Resource
         private string spriteName;//图片资源的注册名
         private string textRegistryName;//文本资源注册名
         private string displayPath;//相关文本路径
-        private string displayNameKey;//名称键
-        private string descriptionKey;//描述键
 
         #endregion 引用资源
 
         #region 本体属性
 
-        private string[] interfaceTags;//接口标签
 
         #endregion 本体属性
 
@@ -51,18 +48,6 @@ namespace Mod_Resource
         /// </summary>
         public string DisplayPath { get => displayPath; }
         /// <summary>
-        /// 名称键
-        /// </summary>
-        public string DisplayNameKey { get => displayNameKey; }
-        /// <summary>
-        /// 描述键
-        /// </summary>
-        public string DescriptionKey { get => descriptionKey; }
-        /// <summary>
-        /// 接口标签
-        /// </summary>
-        public string[] InterfaceTags { get => interfaceTags; }
-        /// <summary>
         /// 图片资源
         /// </summary>
         public SpriteResource Sprite { get => sprite; }
@@ -80,15 +65,12 @@ namespace Mod_Resource
             registryName = info.registryName;
             spriteName = info.spriteName;
             textRegistryName = info.textRegistryName;
-            displayNameKey = info.displayNameKey;
-            descriptionKey = info.descriptionKey;
-            interfaceTags = info.interfaceTags;
 
             Dictionary<string, string> displayText = GR.Get<LanguageResource>(textRegistryName)?.GetInfos(displayPath);
             if (displayText != null)
             {
-                displayName = displayText["displayName"];
-                description = displayText["description"];
+                displayName = displayText[MetalCrimson.NameKey];
+                description = displayText[MetalCrimson.DescriptionKey];
             }
             sprite = GR.Get<SpriteResource>(spriteName);
         }
@@ -100,10 +82,7 @@ namespace Mod_Resource
         public string spriteName;//图片资源的注册名
         public string textRegistryName;//文本资源注册名
         public string displayPath;//相关文本路径
-        public string displayNameKey;//名称键
-        public string descriptionKey;//描述键
 
-        public string[] interfaceTags;//接口标签
 
     }
 }

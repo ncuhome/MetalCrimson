@@ -1,0 +1,26 @@
+{
+    "registryName":"comp:mc:sharp_held",
+    "spriteName":"img:mc:comp/sharp_held",
+    "textRegistryName":"lang:mc:comp/infos",
+    
+    "displayPath":"sharp_held",
+    "descriptions":[
+        {
+            "key":"displayName",
+            "tag":"display"
+        },
+        {
+            "key":"description",
+            "tag":"display"
+        }
+
+    ],
+    "leff":[
+    ],
+    "mold":"compm:mc:sharp_held",
+    "weight":1,
+    "in_diameter":10,
+    "out_diameter":0,
+    "stackable":true,
+    "amountMax":64
+}

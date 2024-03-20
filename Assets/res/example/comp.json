@@ -1,0 +1,32 @@
+{
+    "registryName":"comp:mc:cross_quillion(本体注册名)",
+    "spriteName":"img:mc:cross_quillion(图片注册名)",
+    "textRegistryName":"lang:mc:comp/infos(引用文本注册名)",
+    
+    "displayPath":"cross_quillion(文本键)",
+    "descriptions":[
+        //填入描述属性
+        {
+            "key":"name(文本键)",
+            "tag":"display(文本标签)"
+        },
+        {
+            "key":"description",
+            "tag":"display"
+        }
+
+    ],
+    "leff":[
+        //填入羁绊属性
+        {
+            "registryName":"leff:mc:test(羁绊注册名)",
+            "level":1//羁绊等级(层数)
+        }
+    ],
+    "mold":"compm:mc:cross_quillion(所属模具注册名)",
+    "weight":1,//重量
+    "in_diameter":180,//IN端口
+    "out_diameter":180,//OUT端口
+    "stackable":true,//是否可堆叠
+    "amountMax":64//堆叠上限
+}

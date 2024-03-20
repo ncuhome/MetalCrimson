@@ -13,4 +13,13 @@ public static class MetalCrimson
         BoxCollider2D collider= transform.GetComponent<BoxCollider2D>();
         collider.size = new Vector2(transform.sizeDelta.x,transform.sizeDelta.y);
     }
+    /// <summary>
+    /// 显示名称键
+    /// </summary>
+    public const string NameKey = "displayName";
+    /// <summary>
+    /// 描述键
+    /// </summary>
+    public const string DescriptionKey = "description";
+
 }

@@ -1,0 +1,14 @@
+{
+    "registryName":"compm:mc:long_sword",
+    "spriteName":"img:mc:compm/mooth_hilt",
+    "textRegistryName":"lang:mc:compm/infos",
+    
+    "displayPath":"long_sword",
+    "displayNameKey":"displayName",
+    "descriptionKey":"description",
+
+    "type":"cmt:mc:hilt",
+    "target":"comp:mc:long_sword",
+    "muti_weight":1,
+    "cost":0.5
+}

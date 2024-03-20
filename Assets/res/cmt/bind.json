@@ -1,0 +1,7 @@
+{
+    "registryName":"cmt:mc:bind",
+    "spriteName":"img:mc:cmt/bind",
+    "textRegistryName":"lang:mc:cmt/infos",
+
+    "displayPath":"bind"
+}

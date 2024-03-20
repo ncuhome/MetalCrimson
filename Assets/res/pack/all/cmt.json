@@ -1,0 +1,16 @@
+{
+    "clear":0,
+    "unload":[],
+    "load":[
+        "cmt:mc:axe",
+        "cmt:mc:bind",
+        "cmt:mc:held",
+        "cmt:mc:hilt",
+        "cmt:mc:pike",
+        "cmt:mc:pole",
+        "cmt:mc:quillion",
+        "cmt:mc:spear",
+        "cmt:mc:sword"
+    ],
+    "load_force":[]
+}
