@@ -77,4 +77,5 @@ namespace ER.Resource
         public string[] GetAllRegistryName();
 
     }
+
 }

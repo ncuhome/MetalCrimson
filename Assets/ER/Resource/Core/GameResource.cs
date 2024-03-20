@@ -57,7 +57,6 @@ namespace ER.Resource
             string[] parts = registryName.Split(':');
             return ERinbone.Combine(parts[0], parts[2]);
         }
-
         /// <summary>
         /// 获取注册名的部分路径
         /// </summary>
@@ -67,10 +66,10 @@ namespace ER.Resource
         {
             string[] parts = registryName.Split(':');
             string address = string.Empty;
-            for (int i = 2; i < parts.Length; i++)
+            for(int i=2;i<parts.Length;i++)
             {
                 address += parts[i];
-                if (i < parts.Length - 1)
+                if(i<parts.Length-1)
                 {
                     address += ":";
                 }
