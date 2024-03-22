@@ -1,0 +1,8 @@
+{
+    "clear":0,
+    "unload":[],
+    "load":[
+        "comp:mc:short_spear"
+    ],
+    "load_force":[]
+}

@@ -1,6 +1,6 @@
 {
     "registryName":"compm:mc:short_spear",
-    "spriteName":"img:mc:compm/mooth_hilt",
+    "spriteName":"img:mc:compm/short_spear",
     "textRegistryName":"lang:mc:compm/infos",
     
     "displayPath":"short_spear",

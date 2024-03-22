@@ -20,11 +20,8 @@ namespace Mod_Forge
         private List<PGroup> groups = new List<PGroup>();//使用中的 分组对象
         private List<PMaterialItem> materialList = new List<PMaterialItem>();//使用中的 材料对象
 
-        private LoadTask type_all;//缓存加载任务
-        private LoadTask mold_all;//缓存加载任务
 
 
-        private bool inited = false;//是否完成初始化
         private LanguageResource lang;//相关文本资源
 
         private LoadTaskResource selected;//用于缓存记录玩家选择了哪一种模具类型, 以及该类型下的所有模具
@@ -74,12 +71,14 @@ namespace Mod_Forge
             {
                 PGroup g = (PGroup)pool_PGroup.GetObject();
                 groups.Add(g);
+                g.transform.SetParent(Content);
                 return g;
             }
             PGroup lg = groups[groups.Count - 1];
             if (lg.IsFull())
             {
                 lg = (PGroup)pool_PGroup.GetObject();
+                lg.transform.SetParent(Content);
                 groups.Add(lg);
                 return lg;
             }
@@ -98,17 +97,17 @@ namespace Mod_Forge
         }
         #endregion
 
+
+        private LoadTask task_1;//缓存加载任务
+        private LoadTask task_2;//缓存加载任务
+        private int init = 0;//初始化阶段
+        private bool inited = true;//是否完成初始化
         private void Awake()
         {
             string lang_path = "lang:mc:ui/forge/component_maker";
             this.RegisterAnchor("ComponentMaker");
 
-            LoadTaskResource task_1 = GR.Get<LoadTaskResource>("pack:mc:all/cmt");//模具类型注册表
-            LoadTaskResource task_2 = GR.Get<LoadTaskResource>("pack:mc:all/compm");//模具类型注册表
-            type_all = task_1.Value;
-            mold_all = task_2.Value;
-            GR.AddLoadTask(type_all);
-            GR.AddLoadTask(mold_all);
+            _LoadTask1();
 
             GR.Load(()=>
             {
@@ -117,7 +116,23 @@ namespace Mod_Forge
             }, true,lang_path);
 
             UIInit();
-            inited = false;
+        }
+
+        private void _LoadTask1()
+        {
+            task_1 = GR.Get<LoadTaskResource>("pack:mc:all/cmt_demand").Value;//模具类型注册表
+            task_2 = GR.Get<LoadTaskResource>("pack:mc:all/compm_demand").Value;//模具类型注册表
+            GR.AddLoadTask(task_1);
+            GR.AddLoadTask(task_2);
+            init = 1;
+        }
+        private void _LoadTask2()
+        {
+            task_1 = GR.Get<LoadTaskResource>("pack:mc:all/cmt").Value;//模具类型注册表
+            task_2 = GR.Get<LoadTaskResource>("pack:mc:all/compm").Value;//模具类型注册表
+            GR.AddLoadTask(task_1);
+            GR.AddLoadTask(task_2);
+            init = 2;
         }
 
         private void Start()
@@ -130,15 +145,25 @@ namespace Mod_Forge
 
         private void Update()
         {
-            if(!inited)
+            switch (init)
             {
-                inited = type_all.progress_load.done && mold_all.progress_load.done;
-                if(inited)
-                {
-                    Debug.Log("加载资源完成");
-                    page = 0;
-                    UpdateToTypePage();
-                }
+                case 1:
+                    if(task_1.progress_load.done && task_2.progress_load.done)
+                    {
+                        Debug.Log("加载模具前置资源完毕");
+                        _LoadTask2();
+                    }
+                    break;
+                    
+                case 2:
+                    if (task_1.progress_load.done && task_2.progress_load.done)
+                    {
+                        Debug.Log("加载模具资源完毕");
+                        page = 0;
+                        UpdateToTypePage();
+                        init = -1;
+                    }
+                    break;
             }
         }
 

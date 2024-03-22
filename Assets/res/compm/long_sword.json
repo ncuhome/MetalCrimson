@@ -1,6 +1,6 @@
 {
     "registryName":"compm:mc:long_sword",
-    "spriteName":"img:mc:compm/mooth_hilt",
+    "spriteName":"img:mc:compm/long_sword",
     "textRegistryName":"lang:mc:compm/infos",
     
     "displayPath":"long_sword",

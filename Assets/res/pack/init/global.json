@@ -2,8 +2,33 @@
     "clear" : 0,
     "unload" : [],
     "load":[
-        "comp:mc:",
-        "comp:mc:",
     ],
-    "load_force":[]
+    "load_force":[
+        "pack:mc:all/cmt",
+        "pack:mc:all/cmt_demand",
+        "pack:mc:all/compm",
+        "pack:mc:all/compm_demand",
+        "pack:mc:all/comp",
+        "pack:mc:all/comp_demand",
+
+        "pack:mc:compm/axe",
+        "pack:mc:compm/bind",
+        "pack:mc:compm/held",
+        "pack:mc:compm/hilt",
+        "pack:mc:compm/pike",
+        "pack:mc:compm/pole",
+        "pack:mc:compm/quillion",
+        "pack:mc:compm/spear",
+        "pack:mc:compm/sword",
+
+        "pack:mc:comp/axe",
+        "pack:mc:comp/bind",
+        "pack:mc:comp/held",
+        "pack:mc:comp/hilt",
+        "pack:mc:comp/pike",
+        "pack:mc:comp/pole",
+        "pack:mc:comp/quillion",
+        "pack:mc:comp/spear",
+        "pack:mc:comp/sword"
+    ]
 }

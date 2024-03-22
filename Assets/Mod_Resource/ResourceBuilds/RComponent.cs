@@ -96,6 +96,7 @@ namespace Mod_Resource
             spriteName = info.spriteName;
             textRegistryName = info.textRegistryName;
             displayPath = info.displayPath;
+
             moldName = info.mold;
             leffs = info.leff;
             weight = info.weight;

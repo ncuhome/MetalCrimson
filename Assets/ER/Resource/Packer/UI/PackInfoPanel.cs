@@ -1,5 +1,6 @@
 ﻿using ER.Parser;
 using ER.UI;
+using ER.UI.Animator;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -44,11 +45,10 @@ namespace ER.ResourcePacker
         private RectTransform Background;
 
         #region 动画cd
-
-        private UIAnimationInfo cd_panel;
-        private UIAnimationInfo cd_text_1_fade;
-        private UIAnimationInfo cd_text_2_fade;
-        private UIAnimationInfo cd_text_3_fade;
+        private UIAnimationCD cd_panel;
+        private UIAnimationCD cd_text_1_fade;
+        private UIAnimationCD cd_text_2_fade;
+        private UIAnimationCD cd_text_3_fade;
 
         [SerializeField]
         [Tooltip("动画速率")]
@@ -63,18 +63,38 @@ namespace ER.ResourcePacker
         private void Awake()
         {
             rectTransform = GetComponent<RectTransform>();
-            cd_panel = UIAnimator.CreateAnimationInfo(Background);
-            cd_text_1_fade = UIAnimator.CreateAnimationInfo(titleText.rectTransform);
-            cd_text_2_fade = UIAnimator.CreateAnimationInfo(versionText.rectTransform);
-            cd_text_3_fade = UIAnimator.CreateAnimationInfo(authorText.rectTransform);
 
-            cd_panel.speed = animation_speed;
-            cd_text_1_fade.speed = animation_text_speed;
-            cd_text_2_fade.speed = animation_text_speed;
-            cd_text_3_fade.speed = animation_text_speed;
+            cd_panel = Background.CreateUICD("left_open_x1");
+            cd_text_1_fade = titleText.rectTransform.CreateUICD("gradient_x1");
+            cd_text_1_fade["origin"] = titleText;
+            cd_text_2_fade = versionText.rectTransform.CreateUICD("gradient_x2");
+            cd_text_2_fade["origin"] = versionText;
+            cd_text_3_fade = authorText.rectTransform.CreateUICD("gradient_x3");
+            cd_text_3_fade["origin"] = authorText;
+
             titleText.color = titleText.color.ModifyAlpha(0);
             versionText.color = versionText.color.ModifyAlpha(0);
             authorText.color = authorText.color.ModifyAlpha(0);
+
+            cd_panel["speed"] = animation_speed;
+            cd_text_1_fade["speed"] = animation_text_speed;
+            cd_text_2_fade["speed"] = animation_text_speed;
+            cd_text_3_fade["speed"] = animation_text_speed;
+
+            cd_panel.Type = "box";
+            cd_text_1_fade.Type = "gradient";
+            cd_text_2_fade.Type = "gradient";
+            cd_text_3_fade.Type = "gradient";
+
+            cd_text_1_fade["type"] = "gradient_alpha";
+            cd_text_2_fade["type"] = "gradient_alpha";
+            cd_text_3_fade["type"] = "gradient_alpha";
+
+            cd_panel.Register();
+            cd_text_1_fade.Register();
+            cd_text_2_fade.Register();
+            cd_text_3_fade.Register();
+
             gameObject.SetActive(false);
         }
 
@@ -105,46 +125,64 @@ namespace ER.ResourcePacker
             versionText.color = versionText.color.ModifyAlpha(0);
             authorText.color = authorText.color.ModifyAlpha(0);
 
-            cd_panel.type = UIAnimator.AnimationType.BoxOpen_Left;
-            cd_panel.callBack = () =>
+            cd_panel["type"] = "box_open";
+            cd_panel["dir_open"] = Dir4.Left;
+            cd_panel.SetCallback(() =>
             {
-                UIAnimator.Instance.StartAnimation(cd_text_1_fade);
-                UIAnimator.Instance.StartAnimation(cd_text_2_fade);
-                UIAnimator.Instance.StartAnimation(cd_text_3_fade);
-            };
-            cd_text_1_fade.type = UIAnimator.AnimationType.FadeIn;
-            cd_text_1_fade.callBack = null;
-            cd_text_2_fade.type = UIAnimator.AnimationType.FadeIn;
-            cd_text_3_fade.type = UIAnimator.AnimationType.FadeIn;
+                cd_text_1_fade.Start();
+                cd_text_2_fade.Start();
+                cd_text_3_fade.Start();
+            });
 
-            UIAnimator.Instance.StartAnimation(cd_panel);
+            cd_text_1_fade["start"] = 0f;
+            cd_text_2_fade["start"] = 0f;
+            cd_text_3_fade["start"] = 0f;
+
+
+            cd_text_1_fade["end"] = 1f;
+            cd_text_2_fade["end"] = 1f;
+            cd_text_3_fade["end"] = 1f;
+
+            cd_text_1_fade.SetCallback(null);
+
+            cd_panel.Start();
         }
 
         public void ClosePanel()
         {
-            cd_panel.type = UIAnimator.AnimationType.BoxClose_Right;
-            cd_panel.callBack = () => { gameObject.SetActive(false); };
-
-            cd_text_1_fade.type = UIAnimator.AnimationType.FadeOut;
-            cd_text_1_fade.callBack = () =>
+            cd_panel["type"] = "box_close";
+            cd_panel["dir_open"] = Dir4.Right;
+            cd_panel.SetCallback(() =>
             {
-                UIAnimator.Instance.StartAnimation(cd_panel);
-            };
-            cd_text_2_fade.type = UIAnimator.AnimationType.FadeOut;
-            cd_text_3_fade.type = UIAnimator.AnimationType.FadeOut;
+                Destroy(gameObject);
+            });
 
-            UIAnimator.Instance.StartAnimation(cd_text_1_fade);
-            UIAnimator.Instance.StartAnimation(cd_text_2_fade);
-            UIAnimator.Instance.StartAnimation(cd_text_3_fade);
+            cd_text_1_fade["start"] = 1f;
+            cd_text_2_fade["start"] = 1f;
+            cd_text_3_fade["start"] = 1f;
+
+
+            cd_text_1_fade["end"] = 0f;
+            cd_text_2_fade["end"] = 0f;
+            cd_text_3_fade["end"] = 0f;
+
+
+            cd_text_1_fade.SetCallback(() => cd_panel.Start());
+
+            cd_text_1_fade.Start();
+            cd_text_2_fade.Start();
+            cd_text_3_fade.Start();
+
+
         }
 
         private void OnValidate()
         {
             if (cd_panel == null || cd_text_1_fade == null || cd_text_2_fade == null || cd_text_3_fade == null) return;
-            cd_panel.speed = animation_speed;
-            cd_text_1_fade.speed = animation_text_speed;
-            cd_text_2_fade.speed = animation_text_speed;
-            cd_text_3_fade.speed = animation_text_speed;
+            cd_panel["speed"] = animation_speed;
+            cd_text_1_fade["speed"] = animation_text_speed;
+            cd_text_2_fade["speed"] = animation_text_speed;
+            cd_text_3_fade["speed"] = animation_text_speed;
         }
     }
 }

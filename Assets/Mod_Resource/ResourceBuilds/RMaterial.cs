@@ -105,6 +105,7 @@ namespace Mod_Resource
             registryName = info.registryName;
             spriteName = info.spriteName;
             textRegistryName = info.textRegistryName;
+            displayPath = info.displayPath;
 
             leffs = info.leffs;
             color = info.color;

@@ -13,6 +13,7 @@ namespace ER.Resource
     {
         protected Dictionary<string, T> dic = new Dictionary<string, T>();//资源缓存 注册名:资源
         protected HashSet<string> force_load = new HashSet<string>();//用于记录被强制加载的资源的注册名
+        [SerializeField]
         protected string head = "res";
 
         public string Head
@@ -20,8 +21,6 @@ namespace ER.Resource
             get => head;
             set => head = value;
         }
-
-
 
         public void Clear()
         {
@@ -58,6 +57,10 @@ namespace ER.Resource
             if (!dic.ContainsKey(registryName))
             {
                 Load(registryName, callback, skipConvert);
+            }
+            else
+            {
+                callback?.Invoke();
             }
         }
         public void Load(string registryName, Action callback, bool skipConvert = false)

@@ -1,0 +1,8 @@
+{
+    "clear":0,
+    "unload":[],
+    "load":[
+        "comp:mc:smooth_bind"
+    ],
+    "load_force":[]
+}

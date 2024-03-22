@@ -16,6 +16,11 @@ public class GameSettings : MonoSingleton<GameSettings>,ISettings,MonoInit
     private INIParser configs;
     private INIHandler changes;
 
+    /// <summary>
+    /// 返回一个string,string字典
+    /// </summary>
+    /// <param name="registryName"></param>
+    /// <returns></returns>
     public object GetSettings(string registryName)
     {
         if(changes.Contains(registryName))
@@ -47,7 +52,7 @@ public class GameSettings : MonoSingleton<GameSettings>,ISettings,MonoInit
     {
         ConsolePanel.Print("[GameSettings]: 完成外部配置加载");
         Debug.Log("[GameSettings]: 完成外部配置加载");
-        string def_txt = GR.Get<TextResource>($"config:erinbone:{ERinbone.DefSettingsAddress}").Value;
+        string def_txt = GR.Get<TextResource>(ERinbone.DefSettingsRegistryName).Value;
         string cus_txt = GR.Get<TextResource>($"config:erinbone:{ERinbone.CustomSettingsPath}").Value;
         configs.ParseINIText(def_txt);
         changes.ParseINIText(cus_txt);

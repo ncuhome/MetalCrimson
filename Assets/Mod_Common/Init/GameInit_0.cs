@@ -15,28 +15,26 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 /// </summary>
 public class GameInit_0 : MonoBehaviour,MonoInit
 {
+    private LoadTask task;
     public void Init()
     {
-        GR.AddLoader(new SpriteLoader());
-        GR.AddLoader(new TextLoader());
-        GR.AddLoader(new AudioLoader());
-        GR.AddLoader(new LanguageLoader());
-        GR.AddLoader(new LoadTaskLoader());
-
-        //配置文件加载器(由 TextLoader 改)
-        TextLoader configLoader = new TextLoader();
-        configLoader.Head = "config";
-        GR.AddLoader(configLoader);
-
-
-
-        //其他游戏资源加载器
-        GR.AddLoader(new RComponentLoader());
-        GR.AddLoader(new RComponentMoldLoader());
-        GR.AddLoader(new RComponentMoldTypeLoader());
-        GR.AddLoader(new RLinkageEffectLoader());
-        GR.AddLoader(new RMaterialLoader());
-
-        MonoLoader.InitCallback();
+        GR.LoadForce(() =>
+        {
+            Debug.Log("[GameInit_0]: 完成全局包配置加载");
+            task = GR.Get<LoadTaskResource>("pack:mc:init/global").Value;
+            GR.AddLoadTask(task);
+            enabled = true;
+            
+        },"pack:mc:init/global");
+        
+    }
+    private void Update()
+    {
+        if(task!= null && task.progress_load.done)
+        {
+            Debug.Log("[GameInit_0]: 所有加载包加载完毕");
+            MonoLoader.InitCallback();
+            enabled = false;
+        }
     }
 }

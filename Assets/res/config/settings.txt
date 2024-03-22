@@ -1,6 +1,6 @@
-[screen]
+﻿[screen]
 # 屏幕分辨率选择
 # K2: 2k分辨率
 # K4: 4k分辨率
 # 允许的值: K4, K2
-resolution = K4
+resolution = K2

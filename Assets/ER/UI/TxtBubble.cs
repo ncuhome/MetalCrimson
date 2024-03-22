@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using ER.UI.Animator;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -88,9 +89,7 @@ namespace ER.UI
         /// </summary>
         public void OpenPanel()
         {
-            UIAnimator.Instance.AddAnimation(trf, UIAnimator.AnimationType.BoxOpen_Bottom, Opened);
-            UIAnimator.Instance.GetAnimationInfo(trf).speed = animation_speed;
-            UIAnimator.Instance.StartAnimation(trf);
+            cd_open.Start();
             charIndex = 0;
             if (!gameObject.activeSelf)
             {
@@ -105,9 +104,7 @@ namespace ER.UI
         public void ClosePanel()
         {
             text.color = new Color(0, 0, 0, 0);
-            UIAnimator.Instance.AddAnimation(trf, UIAnimator.AnimationType.BoxClose_Top, Closed);
-            UIAnimator.Instance.GetAnimationInfo(trf).speed = animation_speed;
-            UIAnimator.Instance.StartAnimation(trf);
+            cd_close.Start();
         }
 
         /// <summary>
@@ -139,6 +136,25 @@ namespace ER.UI
         #endregion 功能函数
 
         #region Unity
+        UIAnimationCD cd_open;
+        UIAnimationCD cd_close;
+
+        private void Awake()
+        {
+            cd_open = trf.CreateUICD("cd_x0");
+            cd_open.Type = "box";
+            cd_open["type"] = "box_open";
+            cd_open["dir"] = Dir4.Down;
+            cd_open["speed"] = animation_speed;
+            cd_open.Register();
+
+            cd_close = trf.CreateUICD("cd_x0");
+            cd_close.Type = "box";
+            cd_close["type"] = "box_close";
+            cd_close["dir"] = Dir4.Up;
+            cd_close["speed"] = animation_speed;
+            cd_close.Register();
+        }
 
         private void Update()
         {

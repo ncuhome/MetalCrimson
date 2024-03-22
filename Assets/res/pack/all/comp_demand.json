@@ -1,0 +1,18 @@
+{
+    "clear":0,
+    "unload":[],
+    "load":[
+        "lang:mc:comp/infos",
+        "img:mc:comp/cross_quillion",
+        "img:mc:comp/gaint_sword",
+        "img:mc:comp/hand_axe",
+        "img:mc:comp/long_sword",
+        "img:mc:comp/sharp_held",
+        "img:mc:comp/short_spear",
+        "img:mc:comp/smooth_bind",
+        "img:mc:comp/smooth_hilt",
+        "img:mc:comp/smooth_long_pole",
+        "img:mc:comp/straight_sword"
+    ],
+    "load_force":[]
+}

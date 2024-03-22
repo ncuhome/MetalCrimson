@@ -1,0 +1,8 @@
+{
+    "clear":0,
+    "unload":[],
+    "load":[
+        "compm:mc:cross_quillion"
+    ],
+    "load_force":[]
+}

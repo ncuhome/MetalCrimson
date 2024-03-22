@@ -179,7 +179,12 @@ namespace ER.ItemStorage
         {
             Dictionary<string,object> dt = new  Dictionary<string,object>();
             dt["stackCount"] = stackCount;
-            dt["stacks"] = stacks;
+            string[] uids = new string[stacks.Length];
+            for(int i=0;i<uids.Length;i++)
+            {
+                uids[i] = stacks[i].UUID.ToString();
+            }
+            dt["stacks"] = uids;
             ObjectUIDInfo data = new ObjectUIDInfo()
             {
                 uuid = uuid.ToString(),
@@ -190,6 +195,7 @@ namespace ER.ItemStorage
 
         public void Deserialize(ObjectUIDInfo data)
         {
+            this.Unregistry();
             UID uid = new UID(data.uuid);
             if(uid.ClassName!=ClassName)
             {
@@ -200,6 +206,7 @@ namespace ER.ItemStorage
             uuid = uid;
             stacks = (IItemStack[])data.data["stacks"];
             stackCount = (int)data.data["stackCount"];
+            this.Registry();
         }
 
         public ItemContainer()

@@ -1,16 +1,17 @@
 ﻿using ER;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Mod_Forge
 {
 
     public class PGroup : Water
     {
-        private Water[] water;
-        private int count = 0;
+        private List<Water> water = new List<Water>();
 
         public bool IsFull()
         {
-            return count >= water.Length;
+            return  water.Count>=ComponentMaker.lay_max;
         }
 
         /// <summary>
@@ -19,17 +20,18 @@ namespace Mod_Forge
         /// <param name="w"></param>
         public void Add(Water w)
         {
+            Debug.Log("添加新元素");
             if (IsFull()) return;
-            water[count] = w;
-            count++;
+            water.Add(w);
             w.transform.SetParent(transform);
         }
         public void Clear()
         {
-            for(int i = 0; i < count; i++)
+            for(int i = 0; i < water.Count; i++)
             {
                 water[i].Destroy();
             }
+            water.Clear();
         }
 
         public Water this[int index]
@@ -39,8 +41,7 @@ namespace Mod_Forge
 
         public override void ResetState()
         {
-            water = new Water[ComponentMaker.lay_max];
-            count = 0;
+            Clear();
         }
 
         protected override void OnHide()

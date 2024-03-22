@@ -2,6 +2,7 @@
 using ER.Parser;
 using ER.Resource;
 using ER.Save;
+using ER.UTask;
 using Mod_Rouge;
 using System.IO;
 using UnityEngine;
@@ -10,7 +11,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// 指令解释器A
 /// </summary>
-public partial class AInterpreter : DefaultInterpreter
+public partial class AInterpreter : DefaultInterpreter,IUTaskSender
 {
     #region 指令函数
 
@@ -320,11 +321,41 @@ public partial class AInterpreter : DefaultInterpreter
 
     private Data CMD_forge_load_packs(Data[] parameters)
     {
-        GR.Load(()=>
+        LoadTask[] tasks = new LoadTask[6];
+        tasks[0] = GR.Get<LoadTaskResource>("pack:mc:all/cmt_demand").Value;
+        tasks[1] = GR.Get<LoadTaskResource>("pack:mc:all/compm_demand").Value;
+        tasks[2] = GR.Get<LoadTaskResource>("pack:mc:all/comp_demand").Value;
+        tasks[3] = GR.Get<LoadTaskResource>("pack:mc:all/cmt").Value;
+        tasks[4] = GR.Get<LoadTaskResource>("pack:mc:all/compm").Value;
+        tasks[5] = GR.Get<LoadTaskResource>("pack:mc:all/comp").Value;
+        for(int i=0;i<tasks.Length;i++)
         {
-            Print("完成加载");
-        },true,"pack:mc:all/cmt", "pack:mc:all/compm");
+            GR.AddLoadTask(tasks[i]);
+        }
+        UpdateTask utk = this.CreateTask(() =>
+        {
+            bool ok = true;
+            for(int i=0;i<tasks.Length;i++)
+            {
+                ok = ok && tasks[i].progress_load.done && tasks[i].progress_load_force.done;
+                if (!ok) break;
+            }
+            if(ok)
+            {
+                Debug.Log("[ConsolePanel]: 资源加载完毕");
+                Print("[ConsolePanel]: 资源加载完毕");
+                return true;
+            }
+            return false;
+            
+        });
+        utk.Tag = "load_packs";
         return Data.Empty;
+    }
+
+    public void TaskCallback(TaskStatus status, string tag)
+    {
+        Debug.Log($"[ConsolePanel]: {tag} UTask : {status}");
     }
 
     #endregion 指令函数
@@ -370,4 +401,5 @@ public partial class AInterpreter : DefaultInterpreter
                 return Data.Error;
         }
     }
+
 }

@@ -23,7 +23,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1085cadde40aecf4ca1adaf610edd4f3
-    m_Address: Assets/res/audios/soundss/step/cloth3.wav
+    m_Address: audios/soundss/step/cloth3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -203,7 +203,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 76f456f5344830f4281ab6046c354330
-    m_Address: Assets/res/particle/bleed.prefab
+    m_Address: particle/bleed
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -219,11 +219,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b2a3b9154be7e804bac0021a0ab48348
     m_Address: wav:mc:sounds/step/wood_2
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bd2c88dcb2fc4ea438e9df105afafa18
-    m_Address: config.ResourceIndexer
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -388,7 +383,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dacbaf590040dc8409fe8d5a68530416
-    m_Address: lang/comp/infos
+    m_Address: lang/compm/infos
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -399,6 +394,266 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6e5b5a841a13a954b8675e0631935d15
     m_Address: config/settings
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 20b26cfe81669d14d8a2eb7b378430fb
+    m_Address: pack/init/global
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 963899e981c48e948a238cfbc65b15a6
+    m_Address: img/cmt/bind
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 82a1ca6132a466648ba491ccc70b9a1a
+    m_Address: img/compm/gaint_sword
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7358a07e65b79c7429ad012955ea687c
+    m_Address: img/compm/hand_axe
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 24413d92168f4ea448f59923febca880
+    m_Address: img/compm/short_spear
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 11044351d9434814e87b82d398bfa0d6
+    m_Address: img/compm/smooth_long_pole
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c1a3a60dd9e627545afc25aa0b96e873
+    m_Address: img/compm/straight_sword
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 47b60484c4561c14cb87fb348beb637e
+    m_Address: img/compm/sharp_held
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 29d09f341ddbccf48baf88773596ab1b
+    m_Address: img/compm/cross_quillion
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6c93499d1ef7d264f9ea1400664f7902
+    m_Address: img/compm/smooth_bind
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6dd7bbaa487222d43958c088e776d45e
+    m_Address: img/compm/long_sword
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6485218e837f21e4193b6d19c2becb76
+    m_Address: img/compm/smooth_hilt
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 30b7ac8f4ae5ff64bb3f40eed0192de4
+    m_Address: pack/all/cmt_demand
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3ef533aaaa592d64e8115645a5a6a6f6
+    m_Address: pack/all/compm_demand
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 86cd8a983ab5ea9428ec378137df579c
+    m_Address: pack/compm/axe
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3934923e9531d764b9688c7d9f687858
+    m_Address: pack/compm/pole
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b9b3b41b200697b47b3472489988458c
+    m_Address: pack/compm/held
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f5979e4b7ecd08644b99e6122fa808d9
+    m_Address: pack/compm/quillion
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a57a543e523402743906c49226bfb9ec
+    m_Address: pack/compm/spear
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 18e637d7cc9bd94488c5951ed014bd92
+    m_Address: pack/compm/sword
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cb21946573f28a64ba15b3bebe5cb164
+    m_Address: pack/compm/pike
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 093c4ef13f112034bb440ae5f94280e9
+    m_Address: pack/compm/bind
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0a0481029bc20ee4d9524a5e17dbddb6
+    m_Address: pack/compm/hilt
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f5bea1a869894034095fe76d03bf5a41
+    m_Address: pack/all/comp
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a220b09200f6b184aa985356e1a84924
+    m_Address: pack/comp/axe
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7929cb34e93781145a5756e338d8415a
+    m_Address: pack/comp/held
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: add728640b109814c92d4640c8bd0c90
+    m_Address: pack/comp/bind
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1473c9b94ee091c44b31b8c4f41e7015
+    m_Address: pack/comp/pike
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ca4e3a170754a584994ba06ac97d2924
+    m_Address: pack/comp/hilt
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 985517ceb393cc844a3829369a2f0a41
+    m_Address: pack/comp/pole
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1353b09955d7b6944acfca10c01106ae
+    m_Address: pack/comp/spear
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b526c1ce959c3fe4c99a5ef84e733e8a
+    m_Address: pack/comp/quillion
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 84b27456061ee0944846341046e10d77
+    m_Address: pack/comp/sword
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3f068028290954949b560cee7b775c5f
+    m_Address: lang/comp/infos
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d8361f9da71c92a48bbf673035842f54
+    m_Address: pack/all/comp_demand
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b6a9ac30d77684c4db5d3f1f2e66d416
+    m_Address: img/comp/cross_quillion
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 03fdcd5a026ebf742b4de61d23b583a3
+    m_Address: img/comp/hand_axe
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: afe82deeb601a7b47857bfeaa2221be7
+    m_Address: img/comp/sharp_held
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 58dfb246b9198084f82b5c754b85e098
+    m_Address: img/comp/long_sword
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7a2871f20322461409ada5f7006c081e
+    m_Address: img/comp/smooth_hilt
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 56e9aa32782bbcf419577e73b3c63f03
+    m_Address: img/comp/smooth_long_pole
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1dbfdfff4946d0e44a11cf4387eb3d7f
+    m_Address: img/comp/gaint_sword
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 06c4a23062c65414f98875afe8ced7f2
+    m_Address: img/comp/short_spear
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e1d1d92d521144646a1d373d354a0db0
+    m_Address: img/comp/straight_sword
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3c25cd7b0febbd84cbe2ef18e33d6097
+    m_Address: img/cmt/held
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e86bcf0412ba8e849832216cea485633
+    m_Address: img/cmt/sword
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3479eaca4ed8a694581170a8c378cabd
+    m_Address: img/cmt/axe
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a6b7f7c3799b9cb40ad857f718db46fe
+    m_Address: img/cmt/pole
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e103cb85e9164d846aed240eff67430c
+    m_Address: img/cmt/quillion
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 23d85df25c4058348a4bbeb55fcd9ac3
+    m_Address: img/cmt/hilt
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8e71fa0b2743cdf408cf747bc32bcfa3
+    m_Address: img/cmt/spear
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4d4cf4520cf74dd4487be27bd99b52fd
+    m_Address: img/cmt/pike
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

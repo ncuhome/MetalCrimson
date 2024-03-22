@@ -65,6 +65,7 @@ namespace Mod_Resource
             registryName = info.registryName;
             spriteName = info.spriteName;
             textRegistryName = info.textRegistryName;
+            displayPath = info.displayPath;
 
             Dictionary<string, string> displayText = GR.Get<LanguageResource>(textRegistryName)?.GetInfos(displayPath);
             if (displayText != null)

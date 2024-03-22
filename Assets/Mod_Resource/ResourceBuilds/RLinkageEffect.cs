@@ -66,6 +66,7 @@ namespace Mod_Resource
             registryName = info.registryName;
             spriteName = info.spriteName;
             textRegistryName = info.textRegistryName;
+            displayPath = info.displayPath;
 
             displayType = info.displayType;
             activation_threshold = info.activation_threshold;

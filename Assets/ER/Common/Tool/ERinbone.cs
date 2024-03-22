@@ -89,7 +89,7 @@ namespace ER
         /// </summary>
         public static string CustomSettingsPath
         {
-            get => Combine(CustomConfigPath, "settings.json");
+            get => Combine(CustomConfigPath, "settings.ini");
         }
         /// <summary>
         /// 获取用户设置文件信息

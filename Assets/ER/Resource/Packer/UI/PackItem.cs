@@ -1,6 +1,7 @@
 ﻿using ER.Control;
 using ER.Parser;
 using ER.UI;
+using ER.UI.Animator;
 using System.IO;
 using System.Text;
 using TMPro;
@@ -89,11 +90,11 @@ namespace ER.ResourcePacker
 
         #region 动画cd
 
-        private UIAnimationInfo cd_panel;
-        private UIAnimationInfo cd_text_1_fade;
-        private UIAnimationInfo cd_text_2_fade;
-        private UIAnimationInfo cd_text_3_fade;
-        private UIAnimationInfo cd_button_fade;
+        private UIAnimationCD cd_panel;
+        private UIAnimationCD cd_text_1_fade;
+        private UIAnimationCD cd_text_2_fade;
+        private UIAnimationCD cd_text_3_fade;
+        private UIAnimationCD cd_button_fade;
 
         [SerializeField]
         [Tooltip("动画速率")]
@@ -110,26 +111,52 @@ namespace ER.ResourcePacker
         private void Awake()
         {
             rectTransform = GetComponent<RectTransform>();
-            cd_panel = UIAnimator.CreateAnimationInfo(Background);
-            cd_text_1_fade = UIAnimator.CreateAnimationInfo(titleText.rectTransform);
-            cd_text_2_fade = UIAnimator.CreateAnimationInfo(versionText.rectTransform);
-            cd_text_3_fade = UIAnimator.CreateAnimationInfo(authorText.rectTransform);
+
+            cd_panel = Background.CreateUICD("left_open_x1");
+            cd_text_1_fade = titleText.rectTransform.CreateUICD("gradient_x1");
+            cd_text_1_fade["origin"] = titleText;
+            cd_text_2_fade = versionText.rectTransform.CreateUICD("gradient_x2");
+            cd_text_2_fade["origin"] = versionText;
+            cd_text_3_fade = authorText.rectTransform.CreateUICD("gradient_x3");
+            cd_text_3_fade["origin"] = authorText;
+
             if (button != null)
             {
                 button.onClick.AddListener(ClosePanel);
-                cd_button_fade = UIAnimator.CreateAnimationInfo(button.GetComponent<RectTransform>());
+                cd_button_fade = button.GetComponent<RectTransform>().CreateUICD("gradient_x4");
+                cd_button_fade.Type = "gradient";
+                cd_button_fade["origin"] = button.image;
+                cd_button_fade["speed"] = animation_fade_speed;
+                cd_button_fade["type"] = "gradient_alpha";
+
                 button.image.color = button.image.color.ModifyAlpha(0);
-                cd_button_fade.speed = animation_fade_speed;
+                cd_button_fade.Register();
             }
 
             titleText.color = titleText.color.ModifyAlpha(0);
             versionText.color = versionText.color.ModifyAlpha(0);
             authorText.color = authorText.color.ModifyAlpha(0);
 
-            cd_panel.speed = animation_speed;
-            cd_text_1_fade.speed = animation_fade_speed;
-            cd_text_2_fade.speed = animation_fade_speed;
-            cd_text_3_fade.speed = animation_fade_speed;
+            cd_panel["speed"] = animation_fade_speed;
+            cd_text_1_fade["speed"] = animation_fade_speed;
+            cd_text_2_fade["speed"] = animation_fade_speed;
+            cd_text_3_fade["speed"] = animation_fade_speed;
+
+            cd_panel.Type = "box";
+            cd_text_1_fade.Type = "gradient";
+            cd_text_2_fade.Type = "gradient";
+            cd_text_3_fade.Type = "gradient";
+
+            cd_text_1_fade["type"] = "gradient_alpha";
+            cd_text_2_fade["type"] = "gradient_alpha";
+            cd_text_3_fade["type"] = "gradient_alpha";
+
+            cd_panel.Register();
+            cd_text_1_fade.Register();
+            cd_text_2_fade.Register();
+            cd_text_3_fade.Register();
+
+
         }
 
         private void Start()
@@ -223,42 +250,72 @@ namespace ER.ResourcePacker
         {
             if (!gameObject.activeSelf)
                 gameObject.SetActive(true);
-            cd_panel.type = UIAnimator.AnimationType.BoxOpen_Left;
-            cd_panel.callBack = () =>
-            {
-                UIAnimator.Instance.StartAnimation(cd_text_1_fade);
-                UIAnimator.Instance.StartAnimation(cd_text_2_fade);
-                UIAnimator.Instance.StartAnimation(cd_text_3_fade);
-                UIAnimator.Instance.StartAnimation(cd_button_fade);
-            };
-            cd_text_1_fade.type = UIAnimator.AnimationType.FadeIn;
-            cd_text_1_fade.callBack = null;
-            cd_text_2_fade.type = UIAnimator.AnimationType.FadeIn;
-            cd_text_3_fade.type = UIAnimator.AnimationType.FadeIn;
-            if (cd_button_fade != null) cd_button_fade.type = UIAnimator.AnimationType.FadeIn;
 
-            UIAnimator.Instance.StartAnimation(cd_panel);
+            cd_panel["type"] = "box_open";
+            cd_panel["dir_open"] = Dir4.Left;
+            cd_panel.SetCallback(() =>
+            {
+                cd_text_1_fade.Start();
+                cd_text_2_fade.Start();
+                cd_text_3_fade.Start();
+                cd_button_fade?.Start();
+            });
+
+            cd_text_1_fade["start"] = 0f;
+            cd_text_2_fade["start"] = 0f;
+            cd_text_3_fade["start"] = 0f;
+            
+
+            cd_text_1_fade["end"] = 1f;
+            cd_text_2_fade["end"] = 1f;
+            cd_text_3_fade["end"] = 1f;
+
+            if (cd_button_fade != null)
+            {
+                cd_button_fade["start"] = 0f;
+                cd_button_fade["end"] = 1f;
+            }
+
+            cd_text_1_fade.SetCallback(null);
+
+            cd_panel.Start();
         }
 
         public void ClosePanel()
         {
             if (button != null) button.onClick.RemoveAllListeners();
-            cd_panel.type = UIAnimator.AnimationType.BoxClose_Right;
-            cd_panel.callBack = () => { Destroy(gameObject); };
 
-            cd_text_1_fade.type = UIAnimator.AnimationType.FadeOut;
-            cd_text_1_fade.callBack = () =>
+            cd_panel["type"] = "box_close";
+            cd_panel["dir_open"] = Dir4.Right;
+            cd_panel.SetCallback(() =>
             {
-                UIAnimator.Instance.StartAnimation(cd_panel);
-            };
-            cd_text_2_fade.type = UIAnimator.AnimationType.FadeOut;
-            cd_text_3_fade.type = UIAnimator.AnimationType.FadeOut;
-            if (cd_button_fade != null) cd_button_fade.type = UIAnimator.AnimationType.FadeOut;
+                Destroy(gameObject);
+            });
 
-            UIAnimator.Instance.StartAnimation(cd_text_1_fade);
-            UIAnimator.Instance.StartAnimation(cd_text_2_fade);
-            UIAnimator.Instance.StartAnimation(cd_text_3_fade);
-            UIAnimator.Instance.StartAnimation(cd_button_fade);
+            cd_text_1_fade["start"] = 1f;
+            cd_text_2_fade["start"] = 1f;
+            cd_text_3_fade["start"] = 1f;
+
+
+            cd_text_1_fade["end"] = 0f;
+            cd_text_2_fade["end"] = 0f;
+            cd_text_3_fade["end"] = 0f;
+
+
+            cd_text_1_fade.SetCallback(()=>cd_panel.Start());
+
+            if (cd_button_fade != null)
+            {
+                cd_button_fade["start"] = 1f;
+                cd_button_fade["end"] = 0f;
+                cd_button_fade.Start();
+            }
+
+            cd_text_1_fade.Start();
+            cd_text_2_fade.Start();
+            cd_text_3_fade.Start();
+
+
         }
 
         #endregion 功能

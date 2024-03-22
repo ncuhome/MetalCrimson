@@ -1,6 +1,6 @@
 {
     "registryName":"compm:mc:hand_axe",
-    "spriteName":"img:mc:compm/mooth_hilt",
+    "spriteName":"img:mc:compm/hand_axe",
     "textRegistryName":"lang:mc:compm/infos",
     
     "displayPath":"hand_axe",

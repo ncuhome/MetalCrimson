@@ -15,7 +15,7 @@ namespace Mod_Forge
         private GameObject Self;
         [Tooltip("物品容器")]
         [SerializeField]
-        private GameObject Content;
+        private RectTransform Content;
         /// <summary>
         /// 页数:
         /// 0:选择模具;类型
@@ -99,6 +99,7 @@ namespace Mod_Forge
         {
             ClearGroup();
             RComponentMoldType[] types = GR.GetAll<RComponentMoldType>("cmt");
+            Debug.Log($"跳转类型选择:{types.Length}");
             for (int i = 0; i < types.Length; i++)
             {
                 PTypeItem item = (PTypeItem)pool_PTypeItem.GetObject();
@@ -113,6 +114,7 @@ namespace Mod_Forge
         {
             ClearGroup();
             string[] loads = selected.Value.load;
+            Debug.Log($"跳转模具选择:{loads.Length}");
             for (int i = 0; i < loads.Length; i++)
             {
                 PMoldItem item = (PMoldItem)pool_PMoldItem.GetObject();

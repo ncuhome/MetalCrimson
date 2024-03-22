@@ -84,7 +84,8 @@ namespace Mod_Resource
         {
             registryName = info.registryName;
             spriteName = info.spriteName;
-            textRegistryName = info.textRegistryName;
+            textRegistryName = info.textRegistryName; 
+            displayPath = info.displayPath;
 
             typeName = info.type;
             targetName = info.target;
@@ -94,8 +95,22 @@ namespace Mod_Resource
             Dictionary<string, string> displayText = GR.Get<LanguageResource>(textRegistryName)?.GetInfos(displayPath);
             if (displayText != null)
             {
-                displayName = displayText[MetalCrimson.NameKey];
-                description = displayText[MetalCrimson.DescriptionKey];
+                if(displayText.TryGetValue(MetalCrimson.NameKey,out string value))
+                {
+                    displayName = value;
+                }
+                else
+                {
+                    displayName = "error:loss";
+                }
+                if (displayText.TryGetValue(MetalCrimson.DescriptionKey, out string value_2))
+                {
+                    description = value_2;
+                }
+                else
+                {
+                    displayName = "error:loss";
+                }
             }
             sprite = GR.Get<SpriteResource>(spriteName);
         }

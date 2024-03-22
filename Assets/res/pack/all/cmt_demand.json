@@ -1,0 +1,17 @@
+{
+    "clear":0,
+    "unload":[],
+    "load":[
+        "lang:mc:cmt/infos",
+        "img:mc:cmt/axe",
+        "img:mc:cmt/bind",
+        "img:mc:cmt/held",
+        "img:mc:cmt/hilt",
+        "img:mc:cmt/pike",
+        "img:mc:cmt/pole",
+        "img:mc:cmt/quillion",
+        "img:mc:cmt/spear",
+        "img:mc:cmt/sword"
+    ],
+    "load_force":[]
+}

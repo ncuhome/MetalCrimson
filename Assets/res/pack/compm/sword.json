@@ -1,0 +1,9 @@
+{
+    "clear":0,
+    "unload":[],
+    "load":[
+        "compm:mc:gaint_sword",
+        "compm:mc:straight_sword"
+    ],
+    "load_force":[]
+}
