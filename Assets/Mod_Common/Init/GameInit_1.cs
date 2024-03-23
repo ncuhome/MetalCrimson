@@ -6,7 +6,7 @@ public class GameInit_1 : MonoBehaviour, MonoInit
 {
     public void Init()
     {
-        GR.LoadForce(null,"pack:mc:init/global");
+        GR.LoadForce(MonoLoader.InitCallback,"pack:mc:init/global");
     }
 
     

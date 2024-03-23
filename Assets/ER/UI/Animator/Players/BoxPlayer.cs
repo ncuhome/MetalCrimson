@@ -31,6 +31,7 @@ namespace Assets.ER.UI.Animator.Players
 
         public bool Update(UIAnimationCD cd,float deltaTime)
         {
+            if (cd.Status != CDStatus.Playing) return true;
             string type = (string)cd["type"];
             switch(type)
             {
@@ -54,13 +55,12 @@ namespace Assets.ER.UI.Animator.Players
             float speed = (float)cd["speed"];
             float done = (float)cd.GetVar("distance_done",0f);
 
+
             float delta_dis = Mathf.Min(speed * deltaTime,dis-done);//防止移动超过要求距离
 
             done += delta_dis;
             cd.SetVar("distance_done", done);
 
-
-            Debug.Log($"dis:{dis} done:{done}  move:{delta_dis} delta-time:{deltaTime}");
 
             Vector2 dir = ((Vector2)cd["dir"]).normalized;
             cd.Owner.position += (Vector3)dir * delta_dis;

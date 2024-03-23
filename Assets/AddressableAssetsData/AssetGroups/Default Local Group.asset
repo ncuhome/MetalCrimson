@@ -657,6 +657,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4911aa533eb1304382ec87e960307d1
+    m_Address: img/comp/smooth_bind
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 763337651574aed4ca6c9f9e0d0c6a87, type: 2}
   m_SchemaSet:

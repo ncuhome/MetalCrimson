@@ -1,6 +1,8 @@
-﻿using ER;
+﻿using Assets.ER.UI.Animator.Players;
+using ER;
 using ER.Resource;
 using ER.Template;
+using ER.UI.Animator;
 using Mod_Resource;
 using System;
 using System.Security.Policy;
@@ -26,6 +28,9 @@ public class GameInit_0 : MonoBehaviour,MonoInit
             enabled = true;
             
         },"pack:mc:init/global");
+
+        UIAnimator.Instance.AddPlayer(new BoxPlayer());
+        UIAnimator.Instance.AddPlayer(new GradientPlayer());
         
     }
     private void Update()

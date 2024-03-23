@@ -112,7 +112,10 @@ namespace Mod_Resource
                 for(int i =0;i<info.descriptions.Length;i++)
                 {
                     DescriptionInfo des = info.descriptions[i];
-                    des.text = displayText[des.key];
+                    if(!displayText.TryGetValue(des.key, out des.text))
+                    {
+                        des.text = string.Empty;
+                    }
                     descriptions[des.key] = des;
                 }
             }

@@ -45,7 +45,7 @@ namespace ER.ItemStorage
         public void Deserialize(ObjectUIDInfo data)
         {
             uuid = new UID(data.uuid);
-            if(data.data.TryGetValue("resource",out object registryName))
+            if (data.data.TryGetValue("resource", out object registryName))
             {
                 resource = GR.Get<IItemResource>((string)registryName);
             }
@@ -55,7 +55,7 @@ namespace ER.ItemStorage
             }
             if (data.data.TryGetValue("descriptions", out object _descriptions))
             {
-                descriptions = _descriptions as DescriptionInfo[] ;
+                descriptions = _descriptions as DescriptionInfo[];
             }
             if (data.data.TryGetValue("amount", out object _amount))
             {
@@ -84,9 +84,32 @@ namespace ER.ItemStorage
             return data;
         }
 
+        public IItemStack Copy()
+        {
+            DescriptionInfo[] des = new DescriptionInfo[descriptions.Length];
+            for (int i = 0; i < des.Length; i++)
+            {
+                des[i] = descriptions[i];
+            }
+            Dictionary<string, object> _infos = new Dictionary<string, object>();
+            foreach (var info in infos)
+            {
+                _infos.Add(info.Key, info.Value);
+            }
+            return new ItemStack()
+            {
+                resource = resource,
+                displayName = displayName,
+                descriptions = des,
+                amount = amount,
+                stackable = stackable,
+                infos = _infos
+            };
+        }
+
         public ItemStack()
         {
-            uuid = new UID(ClassName,GetHashCode());
+            uuid = new UID(ClassName, GetHashCode());
         }
     }
 }

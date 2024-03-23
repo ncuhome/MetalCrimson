@@ -20,8 +20,6 @@ namespace Mod_Forge
         private List<PGroup> groups = new List<PGroup>();//使用中的 分组对象
         private List<PMaterialItem> materialList = new List<PMaterialItem>();//使用中的 材料对象
 
-
-
         private LanguageResource lang;//相关文本资源
 
         private LoadTaskResource selected;//用于缓存记录玩家选择了哪一种模具类型, 以及该类型下的所有模具
@@ -45,6 +43,8 @@ namespace Mod_Forge
             UpdateToMakerPage();
 
         }
+
+
         #region 私有方法
 
         /// <summary>

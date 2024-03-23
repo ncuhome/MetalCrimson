@@ -126,6 +126,16 @@ namespace ER.ItemStorage
         {
             return StackCount >= Size;
         }
+        /// <summary>
+        /// 添加物品, 优先堆叠, 如果不可堆叠则在新空栏添加
+        /// </summary>
+        /// <param name="stack"></param>
+        /// <param name="reside">如果剩余空位无法填充返回剩余物品堆</param>
+        /// <returns></returns>
+        public IItemStack Append(IItemStack stack)
+        {
+
+        }
 
         /// <summary>
         /// 向容器第一个空栏添加新的物品堆

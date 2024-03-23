@@ -31,6 +31,7 @@ namespace Assets.ER.UI.Animator.Players
 
         public bool Update(UIAnimationCD cd, float deltaTime)
         {
+            if (cd.Status != CDStatus.Playing) return true;
             string type = (string)cd["type"];
             switch (type)
             {

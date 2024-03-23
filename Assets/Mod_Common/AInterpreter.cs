@@ -321,13 +321,11 @@ public partial class AInterpreter : DefaultInterpreter,IUTaskSender
 
     private Data CMD_forge_load_packs(Data[] parameters)
     {
-        LoadTask[] tasks = new LoadTask[6];
-        tasks[0] = GR.Get<LoadTaskResource>("pack:mc:all/cmt_demand").Value;
-        tasks[1] = GR.Get<LoadTaskResource>("pack:mc:all/compm_demand").Value;
-        tasks[2] = GR.Get<LoadTaskResource>("pack:mc:all/comp_demand").Value;
-        tasks[3] = GR.Get<LoadTaskResource>("pack:mc:all/cmt").Value;
-        tasks[4] = GR.Get<LoadTaskResource>("pack:mc:all/compm").Value;
-        tasks[5] = GR.Get<LoadTaskResource>("pack:mc:all/comp").Value;
+        LoadTask[] tasks = new LoadTask[3];
+        tasks[0] = GR.Get<LoadTaskResource>("pack:mc:all/cmt").Value;
+        tasks[1] = GR.Get<LoadTaskResource>("pack:mc:all/compm").Value;
+        tasks[2] = GR.Get<LoadTaskResource>("pack:mc:all/comp").Value;
+
         for(int i=0;i<tasks.Length;i++)
         {
             GR.AddLoadTask(tasks[i]);
@@ -350,6 +348,41 @@ public partial class AInterpreter : DefaultInterpreter,IUTaskSender
             
         });
         utk.Tag = "load_packs";
+        utk.Start();
+        return Data.Empty;
+    }
+
+    private Data CMD_forge_load_demand(Data[] parameters)
+    {
+        LoadTask[] tasks = new LoadTask[3];
+
+        tasks[0] = GR.Get<LoadTaskResource>("pack:mc:all/cmt_demand").Value;
+        tasks[1] = GR.Get<LoadTaskResource>("pack:mc:all/compm_demand").Value;
+        tasks[2] = GR.Get<LoadTaskResource>("pack:mc:all/comp_demand").Value;
+
+        for (int i = 0; i < tasks.Length; i++)
+        {
+            GR.AddLoadTask(tasks[i]);
+        }
+        UpdateTask utk = this.CreateTask(() =>
+        {
+            bool ok = true;
+            for (int i = 0; i < tasks.Length; i++)
+            {
+                ok = ok && tasks[i].progress_load.done && tasks[i].progress_load_force.done;
+                if (!ok) break;
+            }
+            if (ok)
+            {
+                Debug.Log("[ConsolePanel]: 前置资源加载完毕");
+                Print("[ConsolePanel]: 前置资源加载完毕");
+                return true;
+            }
+            return false;
+
+        });
+        utk.Tag = "load_packs_demand";
+        utk.Start();
         return Data.Empty;
     }
 
@@ -396,6 +429,9 @@ public partial class AInterpreter : DefaultInterpreter,IUTaskSender
 
             case "forge_load_packs":
                 return CMD_forge_load_packs(parameters);
+
+            case "forge_load_demand":
+                return CMD_forge_load_demand(parameters);
 
             default:
                 return Data.Error;

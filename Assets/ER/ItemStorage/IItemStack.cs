@@ -35,6 +35,11 @@ namespace ER.ItemStorage
         /// 拓展属性
         /// </summary>
         public Dictionary<string, object> Infos { get; set; }
+        /// <summary>
+        /// 复制一个和自身属性相同的对象
+        /// </summary>
+        /// <returns></returns>
+        public IItemStack Copy();
 
     }
 }

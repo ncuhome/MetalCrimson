@@ -322,6 +322,7 @@ namespace ER.Resource
                 string head = GR.GetTypeName(registryName[i]);
                 if(loaders.TryGetValue(head,out IResourceLoader loader))
                 {
+                    Debug.Log($"正在加载: {registryName[i]}, check:{check}");
                     if(check)
                     {
                         loader.ELoad(registryName[i], progressAdd);

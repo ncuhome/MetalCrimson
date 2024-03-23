@@ -9,6 +9,8 @@ namespace ER.UI.Animator
 
         private HashSet<UIAnimationCD> playing_cds = new HashSet<UIAnimationCD>();//正在播放的碟子
 
+        private List<UIAnimationCD> play_cache = new List<UIAnimationCD>();//播放缓存区,防止在遍历playing_cds时发生插入
+
         private HashSet<UIAnimationCD> wait_cds = new HashSet<UIAnimationCD>();//停止播放的碟子
 
         private Dictionary<string, IUIPlayer> players = new Dictionary<string, IUIPlayer>();//播放器
@@ -52,7 +54,12 @@ namespace ER.UI.Animator
             {
                 wait_cds.Remove(cd);
             }
-            playing_cds.Add(cd);
+            if(!play_cache.Contains(cd))
+            {
+                Debug.Log("添加新的cd");
+                play_cache.Add(cd);
+            }
+            
         }
         /// <summary>
         /// 注销指定动画碟子
@@ -93,34 +100,50 @@ namespace ER.UI.Animator
             move.Clear();
             float delta = Time.deltaTime;
 
-            Debug.Log("cd数:"+playing_cds.Count);
+            //Debug.Log("cd数:"+playing_cds.Count);
+
+            for(int i=0;i< play_cache.Count;i++)
+            {
+                playing_cds.Add(play_cache[i]);
+                play_cache.RemoveAt(i);
+                i--;
+            }
+
             foreach (var cd in playing_cds)
             {
-                Debug.Log("正在播放:" + cd.Tag);
+                //Debug.Log("正在播放:" + cd.Tag);
                 if (players.TryGetValue(cd.Type, out IUIPlayer player))
                 {
-                    if (!player.Update(cd, delta)) return;
+                    if (!player.Update(cd, delta)) continue;
                     //已结束
                     if (cd.auto_destroy)
+                    {
                         dest.Add(cd);
+                    }
                     else
+                    {
                         move.Add(cd);
+                    }
+                        
                 }
                 else
                 {
                     Debug.LogError($"未找到制定UI动画播放器:{cd.Type}");
                 }
             }
-
+            //Debug.Log($"待销毁:{dest.Count}\n" +
+                //$"待移除:{move.Count}\n");
             for(int i=0;i<dest.Count;i++)
             {
                 Unregister(dest[i]);
                 playing_cds.Remove(dest[i]);
+                Debug.Log($"销毁:{GetKey(dest[i])}");
             }
             for (int i = 0; i < move.Count; i++)
             {
                 wait_cds.Add(move[i]);
                 playing_cds.Remove(move[i]);
+                Debug.Log($"移除:{GetKey(move[i])}");
             }
         }
     }

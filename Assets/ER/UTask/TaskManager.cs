@@ -12,6 +12,8 @@ namespace ER.UTask
     public class TaskManager:MonoSingletonAutoCreate<TaskManager>
     {
         private HashSet<UpdateTask> tasks = new HashSet<UpdateTask>();
+
+        private List<UpdateTask> remove = new List<UpdateTask>();//待移除的缓存
         /// <summary>
         /// 注册任务进表
         /// </summary>
@@ -26,7 +28,7 @@ namespace ER.UTask
         /// <param name="task"></param>
         public void Unregister(UpdateTask task)
         {
-            tasks.Remove(task);
+            remove.Add(task);
         }
         /// <summary>
         /// 中断指定对象的所有任务
@@ -43,23 +45,37 @@ namespace ER.UTask
             }
         }
 
-        private void Update()
+        private void Remove()
         {
+            if (remove.Count == 0) return;
+            for(int i=0;i<remove.Count; i++)
+            {
+                tasks.Remove(remove[i]);
+            }
+            remove.Clear();
+        }
+
+        private void CheckAndUpdate()
+        {
+            if (tasks.Count == 0) return;
+            Remove();
             foreach (UpdateTask task in tasks)
             {
                 if (task.Status != TaskStatus.Running) continue;
-                if(task.Action==null)
+                if (task.Action == null)
                 {
                     task.Done();
+                    continue;
                 }
-                else
-                {
-                    if(task.Action())
-                    {
-                        task.Done();
-                    }
-                }
+                if (task.Action()) task.Done();
+                
+                    
             }
+        }
+
+        private void Update()
+        {
+            CheckAndUpdate();
         }
     }
 

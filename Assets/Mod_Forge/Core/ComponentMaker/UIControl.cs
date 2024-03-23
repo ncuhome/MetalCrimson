@@ -30,8 +30,16 @@ namespace Mod_Forge
         private TMP_Text txt_title;
 
         [Header("按钮")]
-        public Button bt_close;
-        public Button bt_return;
+        [SerializeField]
+        private Button bt_close;
+        [SerializeField]
+        private Button bt_return;
+
+        [Header("页面")]
+        [SerializeField]
+        private GameObject page_0_1;
+        [SerializeField]
+        private GameObject page_2;
 
 
 
@@ -48,7 +56,7 @@ namespace Mod_Forge
         public void Open()
         {
             page = 0;
-
+            SelectPage(page);
             UpdateUI();
 
         }
@@ -61,6 +69,7 @@ namespace Mod_Forge
             if (page > 0)
             {
                 page--;
+                SelectPage(page);
                 switch (page)
                 {
                     case 0:
@@ -80,6 +89,7 @@ namespace Mod_Forge
             if (page < 3)
             {
                 page++;
+                SelectPage(page);
                 switch (page)
                 {
                     case 1:
@@ -89,6 +99,22 @@ namespace Mod_Forge
                         UpdateToMakerPage();
                         break;
                 }
+            }
+        }
+
+        private void SelectPage(int page)
+        {
+            switch(page)
+            {
+                case 0:
+                case 1:
+                    page_0_1.SetActive(true);
+                    page_2.SetActive(false);
+                    break;
+                case 2:
+                    page_0_1.SetActive(false);
+                    page_2.SetActive(true);
+                    break;
             }
         }
 
@@ -163,7 +189,7 @@ namespace Mod_Forge
         private void UIInit()
         {
             bt_close?.onClick.AddListener(Close);
-            bt_return.onClick.AddListener(Return);
+            bt_return?.onClick.AddListener(Return);
 
             Dictionary<string, string> screen_settings = (Dictionary<string, string>)GameSettings.Instance.GetSettings("screen");
             string resl = screen_settings["resolution"];//分辨率;
